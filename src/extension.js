@@ -1,6 +1,10 @@
 'use strict';
 const vscode = require('vscode');
 const { KeyboardMacro } = require('./keyboard_macro.js');
+const { TypingRecorder } = require('./typing_recorder.js');
+
+const keyboardMacro = KeyboardMacro();
+const typingRecorder = TypingRecorder();
 
 function activate(context) {
     const CommandPrefix = 'kb-macro.';
@@ -12,24 +16,42 @@ function activate(context) {
             vscode.commands.registerTextEditorCommand(commandName, func)
         );
     };
+    const addEventListener = function(event, func) {
+        context.subscriptions.push(event(func));
+    };
 
-    registerCommand('startRecording', KeyboardMacro.startRecording);
-    registerCommand('cancelRecording', KeyboardMacro.cancelRecording);
-    registerCommand('finishRecording', KeyboardMacro.finishRecording);
-    registerCommand('playback', KeyboardMacro.playback);
-    registerCommand('wrap', KeyboardMacro.wrap);
+    registerCommand('startRecording', keyboardMacro.startRecording);
+    registerCommand('cancelRecording', keyboardMacro.cancelRecording);
+    registerCommand('finishRecording', keyboardMacro.finishRecording);
+    registerCommand('playback', keyboardMacro.playback);
+    registerCommand('wrap', keyboardMacro.wrap);
 
-    KeyboardMacro.setOnChangeRecordingState(function({ recording, reason }) {
+    keyboardMacro.setOnChangeRecordingState(function({ recording, reason }) {
+        if (recording) {
+            typingRecorder.start(vscode.window.activeTextEditor);
+        } else {
+            typingRecorder.stop();
+        }
+
         const contextName = ContextPrefix + 'recording';
         vscode.commands.executeCommand('setContext', contextName, recording);
 
         if (recording) {
             vscode.window.showInformationMessage('Recording started!');
-        } else if (reason === KeyboardMacro.RecordingStateReason.Cancel) {
+        } else if (reason === keyboardMacro.RecordingStateReason.Cancel) {
             vscode.window.showInformationMessage('Recording canceled!');
         } else {
             vscode.window.showInformationMessage('Recording finished!');
         }
+    });
+
+    addEventListener(
+        vscode.workspace.onDidChangeTextDocument,
+        typingRecorder.processDocumentChangeEvent
+    );
+
+    typingRecorder.setOnDetectTyping(function(commandInfo) {
+        keyboardMacro.push(commandInfo);
     });
 }
 
@@ -37,5 +59,6 @@ function deactivate() {}
 
 module.exports = {
     activate,
-    deactivate
+    deactivate,
+    keyboardMacro
 };

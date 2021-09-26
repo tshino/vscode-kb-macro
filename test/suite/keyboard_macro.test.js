@@ -1,115 +1,111 @@
 'use strict';
 const assert = require('assert');
 const vscode = require('vscode');
-const { TestUtil } = require('./test_util.js');
 const { KeyboardMacro } = require('../../src/keyboard_macro.js');
 
 describe('KeybaordMacro', () => {
-    let textEditor;
+    const keyboardMacro = KeyboardMacro();
 
     before(async () => {
         vscode.window.showInformationMessage('Started test for KeyboardMacro.');
-        textEditor = await TestUtil.setupTextEditor({
-            content: '',
-            language: 'plaintext'
-        });
     });
 
     describe('setOnChangeRecordingState', () => {
         beforeEach(async () => {
-            KeyboardMacro.cancelRecording();
+            keyboardMacro.cancelRecording();
         });
         it('should set callback function', async () => {
             const logs = [];
 
-            KeyboardMacro.setOnChangeRecordingState(() => {
+            keyboardMacro.setOnChangeRecordingState(() => {
                 logs.push('invoked');
             });
-            KeyboardMacro.startRecording();
-            KeyboardMacro.finishRecording();
+            keyboardMacro.startRecording();
+            keyboardMacro.finishRecording();
 
             assert.deepStrictEqual(logs, ['invoked', 'invoked']);
         });
     });
     describe('startRecording', () => {
         beforeEach(async () => {
-            KeyboardMacro.setOnChangeRecordingState(null);
-            KeyboardMacro.cancelRecording();
+            keyboardMacro.setOnChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
         });
         it('should activate recording state', async () => {
-            KeyboardMacro.startRecording();
+            keyboardMacro.startRecording();
 
-            assert.strictEqual(KeyboardMacro.isRecording(), true);
+            assert.strictEqual(keyboardMacro.isRecording(), true);
         });
         it('should invoke callback function', async () => {
             const logs = [];
-            KeyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
+            keyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
                 logs.push({ recording, reason });
             });
 
-            KeyboardMacro.startRecording();
+            keyboardMacro.startRecording();
 
             assert.deepStrictEqual(logs, [
-                { recording: true, reason: KeyboardMacro.RecordingStateReason.Start }
+                { recording: true, reason: keyboardMacro.RecordingStateReason.Start }
             ]);
         });
         it('should ignore multiple calls', async () => {
             const logs = [];
-            KeyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
+            keyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
                 logs.push({ recording, reason });
             });
 
-            KeyboardMacro.startRecording(); // 1
-            KeyboardMacro.startRecording(); // 2
+            keyboardMacro.startRecording(); // 1
+            keyboardMacro.startRecording(); // 2
 
-            assert.strictEqual(KeyboardMacro.isRecording(), true);
+            assert.strictEqual(keyboardMacro.isRecording(), true);
             assert.deepStrictEqual(logs, [
-                { recording: true, reason: KeyboardMacro.RecordingStateReason.Start }
+                { recording: true, reason: keyboardMacro.RecordingStateReason.Start }
             ]);
         });
     });
     describe('cancelRecording', () => {
         beforeEach(async () => {
-            KeyboardMacro.setOnChangeRecordingState(null);
-            KeyboardMacro.cancelRecording();
+            keyboardMacro.setOnChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
         });
         it('should deactivate recording state', async () => {
-            KeyboardMacro.startRecording();
-            KeyboardMacro.cancelRecording();
+            keyboardMacro.startRecording();
+            keyboardMacro.cancelRecording();
 
-            assert.strictEqual(KeyboardMacro.isRecording(), false);
+            assert.strictEqual(keyboardMacro.isRecording(), false);
         });
         it('should invoke callback function', async () => {
             const logs = [];
-            KeyboardMacro.startRecording();
-            KeyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
+            keyboardMacro.startRecording();
+            keyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
                 logs.push({ recording, reason });
             });
 
-            KeyboardMacro.cancelRecording();
+            keyboardMacro.cancelRecording();
 
             assert.deepStrictEqual(logs, [
-                { recording: false, reason: KeyboardMacro.RecordingStateReason.Cancel }
+                { recording: false, reason: keyboardMacro.RecordingStateReason.Cancel }
             ]);
         });
         it('should ignore multiple calls', async () => {
             const logs = [];
-            KeyboardMacro.startRecording();
-            KeyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
+            keyboardMacro.startRecording();
+            keyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
                 logs.push({ recording, reason });
             });
 
-            KeyboardMacro.cancelRecording(); // 1
-            KeyboardMacro.cancelRecording(); // 2
+            keyboardMacro.cancelRecording(); // 1
+            keyboardMacro.cancelRecording(); // 2
 
-            assert.strictEqual(KeyboardMacro.isRecording(), false);
+            assert.strictEqual(keyboardMacro.isRecording(), false);
             assert.deepStrictEqual(logs, [
-                { recording: false, reason: KeyboardMacro.RecordingStateReason.Cancel }
+                { recording: false, reason: keyboardMacro.RecordingStateReason.Cancel }
             ]);
         });
         // TODO: add tests of discarding sequence
     });
     // TODO: add tests for finishRecording
+    // TODO: add tests for push
     // TODO: add tests for playback
     // TODO: add tests for wrap
 });

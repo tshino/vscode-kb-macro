@@ -1,7 +1,7 @@
 'use strict';
 const vscode = require('vscode');
 
-const KeyboardMacro = (function() {
+const KeyboardMacro = function() {
     const RecordingStateReason = {
         Start: 0,
         Cancel: 1,
@@ -42,6 +42,12 @@ const KeyboardMacro = (function() {
         }
     };
 
+    const push = function(info) {
+        if (recording) {
+            sequence.push(info);
+        }
+    };
+
     const invokeCommand = async function(info) {
         await vscode.commands.executeCommand(
             info.command,
@@ -56,7 +62,12 @@ const KeyboardMacro = (function() {
                 if (info.failed) {
                     continue;
                 }
-                await invokeCommand(info);
+                try {
+                    await invokeCommand(info);
+                } catch(error) {
+                    console.error(error);
+                    console.info('kb-macro: Error in playback: args=', info);
+                }
             }
         }
     };
@@ -71,11 +82,12 @@ const KeyboardMacro = (function() {
                 args: args.args || {}
             };
             try {
-                sequence.push(info);
+                push(info);
                 await invokeCommand(info);
             } catch(error) {
                 info.failed = true;
-                console.error('kb-macro: error in wrap: args=', args);
+                console.error(error);
+                console.info('kb-macro: Error in wrap: args=', args);
             }
         }
     };
@@ -86,6 +98,7 @@ const KeyboardMacro = (function() {
         startRecording,
         cancelRecording,
         finishRecording,
+        push,
         playback,
         wrap,
 
@@ -93,6 +106,6 @@ const KeyboardMacro = (function() {
         isRecording: () => { return recording; },
         getCurrentSequence: () => { return sequence; }
     };
-})();
+};
 
 module.exports = { KeyboardMacro };
