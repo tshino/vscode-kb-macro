@@ -39,8 +39,11 @@ const TypingRecorder = function() {
         }
         const changes = Array.from(event.contentChanges);
         changes.sort((a, b) => a.rangeOffset - b.rangeOffset);
-        // console.log('chg', changes);
-        notifyDetectedTyping(changes[0].text);
+        const text0 = changes[0].text;
+        const isUniformText = changes.every((chg) => chg.text === text0);
+        if (isUniformText && text0 !== '') {
+            notifyDetectedTyping(text0);
+        }
     };
 
     return {

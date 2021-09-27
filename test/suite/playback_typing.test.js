@@ -53,5 +53,20 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abXYZcd');
             assert.deepStrictEqual(getSelections(), [[10, 5]]);
         });
+        it('should detect and reproduce direct typing with multi-cursor', async () => {
+            setSelections([[0, 0], [10, 4]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'X' });
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'X');
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'abcdX');
+            assert.deepStrictEqual(getSelections(), [[0, 1], [10, 5]]);
+
+            setSelections([[14, 2], [24, 6]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(14).text, 'abXcd');
+            assert.strictEqual(textEditor.document.lineAt(24).text, '    efXgh');
+            assert.deepStrictEqual(getSelections(), [[14, 3], [24, 7]]);
+        });
     });
 });

@@ -8,6 +8,10 @@ const TestUtil = (function() {
         await vscode.window.showTextDocument(doc);
         const textEditor = vscode.window.activeTextEditor;
         assert.ok( textEditor );
+        const eol = vscode.EndOfLine.LF;
+        await textEditor.edit((edit) => {
+            edit.setEndOfLine(eol);
+        });
         return textEditor;
     };
     const resetDocument = async function(textEditor, content, options = {}) {
