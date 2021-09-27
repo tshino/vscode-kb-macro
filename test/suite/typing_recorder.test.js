@@ -16,7 +16,7 @@ describe('TypingRecorder', () => {
 
     it('should detect typing and invoke callback function', async () => {
         const logs = [];
-        typingRecorder.setOnDetectTyping(function({ args }) {
+        typingRecorder.onDetectTyping(function({ args }) {
             logs.push(args.text);
         });
 
@@ -31,7 +31,7 @@ describe('TypingRecorder', () => {
     });
     it('should not perform detection without start()', async () => {
         const logs = [];
-        typingRecorder.setOnDetectTyping(function({ args }) {
+        typingRecorder.onDetectTyping(function({ args }) {
             logs.push(args.text);
         });
 
@@ -44,7 +44,7 @@ describe('TypingRecorder', () => {
     });
     it('should not perform detection if the event is from different editor', async () => {
         const logs = [];
-        typingRecorder.setOnDetectTyping(function({ args }) {
+        typingRecorder.onDetectTyping(function({ args }) {
             logs.push(args.text);
         });
         const differentDocument = {};

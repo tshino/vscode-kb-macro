@@ -10,14 +10,14 @@ describe('KeybaordMacro', () => {
         vscode.window.showInformationMessage('Started test for KeyboardMacro.');
     });
 
-    describe('setOnChangeRecordingState', () => {
+    describe('onChangeRecordingState', () => {
         beforeEach(async () => {
             keyboardMacro.cancelRecording();
         });
         it('should set callback function', async () => {
             const logs = [];
 
-            keyboardMacro.setOnChangeRecordingState(() => {
+            keyboardMacro.onChangeRecordingState(() => {
                 logs.push('invoked');
             });
             keyboardMacro.startRecording();
@@ -28,7 +28,7 @@ describe('KeybaordMacro', () => {
     });
     describe('startRecording', () => {
         beforeEach(async () => {
-            keyboardMacro.setOnChangeRecordingState(null);
+            keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
         });
         it('should activate recording state', async () => {
@@ -38,7 +38,7 @@ describe('KeybaordMacro', () => {
         });
         it('should invoke callback function', async () => {
             const logs = [];
-            keyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
+            keyboardMacro.onChangeRecordingState(({ recording, reason }) => {
                 logs.push({ recording, reason });
             });
 
@@ -50,7 +50,7 @@ describe('KeybaordMacro', () => {
         });
         it('should ignore multiple calls', async () => {
             const logs = [];
-            keyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
+            keyboardMacro.onChangeRecordingState(({ recording, reason }) => {
                 logs.push({ recording, reason });
             });
 
@@ -65,7 +65,7 @@ describe('KeybaordMacro', () => {
     });
     describe('cancelRecording', () => {
         beforeEach(async () => {
-            keyboardMacro.setOnChangeRecordingState(null);
+            keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
         });
         it('should deactivate recording state', async () => {
@@ -77,7 +77,7 @@ describe('KeybaordMacro', () => {
         it('should invoke callback function', async () => {
             const logs = [];
             keyboardMacro.startRecording();
-            keyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
+            keyboardMacro.onChangeRecordingState(({ recording, reason }) => {
                 logs.push({ recording, reason });
             });
 
@@ -90,7 +90,7 @@ describe('KeybaordMacro', () => {
         it('should ignore multiple calls', async () => {
             const logs = [];
             keyboardMacro.startRecording();
-            keyboardMacro.setOnChangeRecordingState(({ recording, reason }) => {
+            keyboardMacro.onChangeRecordingState(({ recording, reason }) => {
                 logs.push({ recording, reason });
             });
 

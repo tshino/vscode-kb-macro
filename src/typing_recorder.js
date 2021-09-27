@@ -1,16 +1,16 @@
 'use strict';
 
 const TypingRecorder = function() {
-    let onDetectTyping  = null;
+    let onDetectTypingCallback  = null;
     let recording = false;
     let targetTextEditor = null;
 
-    const setOnDetectTyping = function(callback) {
-        onDetectTyping = callback;
+    const onDetectTyping = function(callback) {
+        onDetectTypingCallback = callback;
     };
     const notifyDetectedTyping = function(text) {
-        if (onDetectTyping) {
-            onDetectTyping({
+        if (onDetectTypingCallback) {
+            onDetectTypingCallback({
                 command: 'default:type',
                 args: {
                     text: text
@@ -44,7 +44,7 @@ const TypingRecorder = function() {
     };
 
     return {
-        setOnDetectTyping,
+        onDetectTyping,
         start,
         stop,
         processDocumentChangeEvent

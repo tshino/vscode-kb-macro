@@ -8,16 +8,16 @@ const KeyboardMacro = function() {
         Finish: 2
     };
 
-    let onChangeRecordingState = null;
+    let onChangeRecordingStateCallback = null;
     let recording = false;
     const sequence = [];
 
-    const setOnChangeRecordingState = function(callback) {
-        onChangeRecordingState = callback;
+    const onChangeRecordingState = function(callback) {
+        onChangeRecordingStateCallback = callback;
     };
     const notifyNewState = function(reason) {
-        if (onChangeRecordingState) {
-            onChangeRecordingState({ recording, reason });
+        if (onChangeRecordingStateCallback) {
+            onChangeRecordingStateCallback({ recording, reason });
         }
     };
 
@@ -94,7 +94,7 @@ const KeyboardMacro = function() {
 
     return {
         RecordingStateReason,
-        setOnChangeRecordingState,
+        onChangeRecordingState,
         startRecording,
         cancelRecording,
         finishRecording,
