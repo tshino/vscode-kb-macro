@@ -169,6 +169,44 @@ describe('TypingRecorder', () => {
 
         assert.deepStrictEqual(logs, ['a']);
     });
+    it('should detect typing with multi-cursor that extends backward', async () => {
+        const logs = [];
+        typingRecorder.onDetectTyping(function({ args }) {
+            logs.push(args.text);
+        });
+
+        setSelections([[4, 0], [3, 0]]);
+        typingRecorder.start(textEditor);
+        typingRecorder.processDocumentChangeEvent({
+            document: textEditor.document,
+            contentChanges: [
+                makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
+                makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
+            ]
+        });
+        typingRecorder.stop();
+
+        assert.deepStrictEqual(logs, ['a']);
+    });
+    it('should detect typing with multi-cursor even if the document changes are reported in reverse order', async () => {
+        const logs = [];
+        typingRecorder.onDetectTyping(function({ args }) {
+            logs.push(args.text);
+        });
+
+        setSelections([[3, 0], [4, 0]]);
+        typingRecorder.start(textEditor);
+        typingRecorder.processDocumentChangeEvent({
+            document: textEditor.document,
+            contentChanges: [
+                makeContentChange(new vscode.Range(4, 0, 4, 0), 'a'),
+                makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
+            ]
+        });
+        typingRecorder.stop();
+
+        assert.deepStrictEqual(logs, ['a']);
+    });
     it('should ignore an event of multiple insertions with non-uniform texts', async () => {
         const logs = [];
         typingRecorder.onDetectTyping(function({ args }) {
