@@ -37,12 +37,19 @@ const TypingRecorder = function() {
         if (event.contentChanges.length === 0) {
             return;
         }
+
         const changes = Array.from(event.contentChanges);
         changes.sort((a, b) => a.rangeOffset - b.rangeOffset);
+        const selections = Array.from(targetTextEditor.selections);
+        selections.sort((a, b) => a.start.compareTo(b.start));
+
         const text0 = changes[0].text;
         const isUniformText = changes.every((chg) => chg.text === text0);
-        if (isUniformText && text0 !== '') {
-            notifyDetectedTyping(text0);
+        if (changes.length === selections.length && isUniformText && text0 !== '') {
+            const rangesOfChangeEqualSelections = changes.every((chg, i) => selections[i].isEqual(chg.range));
+            if (rangesOfChangeEqualSelections) {
+                notifyDetectedTyping(text0);
+            }
         }
     };
 

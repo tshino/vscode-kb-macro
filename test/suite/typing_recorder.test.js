@@ -8,6 +8,15 @@ describe('TypingRecorder', () => {
     const typingRecorder = TypingRecorder();
     let textEditor;
 
+    const setSelections = function(array) {
+        textEditor.selections = TestUtil.arrayToSelections(array);
+    };
+    const makeContentChange = function(range, text) {
+        const rangeOffset = textEditor.document.offsetAt(range.start);
+        const rangeLength = textEditor.document.offsetAt(range.end) - rangeOffset;
+        return { range, rangeOffset, rangeLength, text };
+    };
+
     before(async () => {
         vscode.window.showInformationMessage('Started test for TypingRecorder.');
         textEditor = await TestUtil.setupTextEditor({
@@ -19,18 +28,13 @@ describe('TypingRecorder', () => {
         });
     });
 
-    const makeContentChange = function(range, text) {
-        const rangeOffset = textEditor.document.offsetAt(range.start);
-        const rangeLength = textEditor.document.offsetAt(range.end) - rangeOffset;
-        return { range, rangeOffset, rangeLength, text };
-    };
-
     it('should process events, detect typing and invoke the callback function', async () => {
         const logs = [];
         typingRecorder.onDetectTyping(function({ args }) {
             logs.push(args.text);
         });
 
+        setSelections([[3, 0]]);
         typingRecorder.start(textEditor);
         typingRecorder.processDocumentChangeEvent({
             document: textEditor.document,
@@ -48,6 +52,7 @@ describe('TypingRecorder', () => {
             logs.push(args.text);
         });
 
+        setSelections([[3, 0]]);
         typingRecorder.processDocumentChangeEvent({
             document: textEditor.document,
             contentChanges: [
@@ -64,6 +69,7 @@ describe('TypingRecorder', () => {
         });
         const differentDocument = {};
 
+        setSelections([[3, 0]]);
         typingRecorder.start(textEditor);
         typingRecorder.processDocumentChangeEvent({
             document: differentDocument,
@@ -96,11 +102,30 @@ describe('TypingRecorder', () => {
             logs.push(args.text);
         });
 
+        setSelections([[3, 0]]);
         typingRecorder.start(textEditor);
         typingRecorder.processDocumentChangeEvent({
             document: textEditor.document,
             contentChanges: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), '')
+            ]
+        });
+        typingRecorder.stop();
+
+        assert.deepStrictEqual(logs, []);
+    });
+    it('should ignore an text insertion event that occurred at a location other than the cursor', async () => {
+        const logs = [];
+        typingRecorder.onDetectTyping(function({ args }) {
+            logs.push(args.text);
+        });
+
+        setSelections([[3, 0]]);
+        typingRecorder.start(textEditor);
+        typingRecorder.processDocumentChangeEvent({
+            document: textEditor.document,
+            contentChanges: [
+                makeContentChange(new vscode.Range(2, 0, 2, 0), 'a')
             ]
         });
         typingRecorder.stop();
@@ -113,6 +138,7 @@ describe('TypingRecorder', () => {
             logs.push(args.text);
         });
 
+        setSelections([[3, 0]]);
         typingRecorder.start(textEditor);
         typingRecorder.processDocumentChangeEvent({
             document: textEditor.document,
@@ -130,6 +156,7 @@ describe('TypingRecorder', () => {
             logs.push(args.text);
         });
 
+        setSelections([[3, 0], [4, 0]]);
         typingRecorder.start(textEditor);
         typingRecorder.processDocumentChangeEvent({
             document: textEditor.document,
@@ -148,6 +175,7 @@ describe('TypingRecorder', () => {
             logs.push(args.text);
         });
 
+        setSelections([[3, 0], [4, 0]]);
         typingRecorder.start(textEditor);
         typingRecorder.processDocumentChangeEvent({
             document: textEditor.document,
