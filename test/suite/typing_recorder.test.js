@@ -8,6 +8,13 @@ describe('TypingRecorder', () => {
     const typingRecorder = TypingRecorder();
     let textEditor;
 
+    const setupDetectedTypingLog = function() {
+        const logs = [];
+        typingRecorder.onDetectTyping(function({ args }) {
+            logs.push(args.text);
+        });
+        return logs;
+    };
     const setSelections = function(array) {
         textEditor.selections = TestUtil.arrayToSelections(array);
     };
@@ -24,6 +31,14 @@ describe('TypingRecorder', () => {
         });
         typingRecorder.stop();
     };
+    const testRecording = function({ changes, precond, expectedLogs }) {
+        const logs = setupDetectedTypingLog();
+        setSelections(precond);
+
+        record(changes);
+
+        assert.deepStrictEqual(logs, expectedLogs);
+    };
 
     before(async () => {
         vscode.window.showInformationMessage('Started test for TypingRecorder.');
@@ -37,23 +52,12 @@ describe('TypingRecorder', () => {
     });
 
     it('should process events, detect typing and invoke the callback function', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
-
-        setSelections([[3, 0]]);
-        record([
+        testRecording({ changes: [
             makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
-        ]);
-
-        assert.deepStrictEqual(logs, ['a']);
+        ], precond: [[3, 0]], expectedLogs: ['a'] });
     });
     it('should not perform detection without start() called', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
+        const logs = setupDetectedTypingLog();
 
         setSelections([[3, 0]]);
         // <-- no start()
@@ -67,10 +71,7 @@ describe('TypingRecorder', () => {
         assert.deepStrictEqual(logs, []);
     });
     it('should not perform detection if the event is from a different editor', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
+        const logs = setupDetectedTypingLog();
         const differentDocument = {};
 
         setSelections([[3, 0]]);
@@ -86,108 +87,49 @@ describe('TypingRecorder', () => {
         assert.deepStrictEqual(logs, []);
     });
     it('should ignore an event without any contentChange', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
+        const logs = setupDetectedTypingLog();
 
         record([]);
 
         assert.deepStrictEqual(logs, []);
     });
     it('should ignore an event of empty text insertion', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
-
-        setSelections([[3, 0]]);
-        record([
+        testRecording({ changes: [
             makeContentChange(new vscode.Range(3, 0, 3, 0), '')
-        ]);
-
-        assert.deepStrictEqual(logs, []);
+        ], precond: [[3, 0]], expectedLogs: [] });
     });
     it('should ignore an text insertion event that occurred at a location other than the cursor', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
-
-        setSelections([[3, 0]]);
-        record([
+        testRecording({ changes: [
             makeContentChange(new vscode.Range(2, 0, 2, 0), 'a')
-        ]);
-
-        assert.deepStrictEqual(logs, []);
+        ], precond: [[3, 0]], expectedLogs: [] });
     });
     it('should detect typing with multiple characters', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
-
-        setSelections([[3, 0]]);
-        record([
+        testRecording({ changes: [
             makeContentChange(new vscode.Range(3, 0, 3, 0), 'abc')
-        ]);
-
-        assert.deepStrictEqual(logs, ['abc']);
+        ], precond: [[3, 0]], expectedLogs: ['abc'] });
     });
     it('should detect typing with multi-cursor (uniform text insertion)', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
-
-        setSelections([[3, 0], [4, 0]]);
-        record([
+        testRecording({ changes: [
             makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
             makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
-        ]);
-
-        assert.deepStrictEqual(logs, ['a']);
+        ], precond: [[3, 0], [4, 0]], expectedLogs: ['a'] });
     });
     it('should detect typing with multi-cursor that extends backward', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
-
-        setSelections([[4, 0], [3, 0]]);
-        record([
+        testRecording({ changes: [
             makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
             makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
-        ]);
-
-        assert.deepStrictEqual(logs, ['a']);
+        ], precond: [[4, 0], [3, 0]], expectedLogs: ['a'] });
     });
     it('should detect typing with multi-cursor even if the document changes are reported in reverse order', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
-
-        setSelections([[3, 0], [4, 0]]);
-        record([
+        testRecording({ changes: [
             makeContentChange(new vscode.Range(4, 0, 4, 0), 'a'),
             makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
-        ]);
-
-        assert.deepStrictEqual(logs, ['a']);
+        ], precond: [[3, 0], [4, 0]], expectedLogs: ['a'] });
     });
     it('should ignore an event of multiple insertions with non-uniform texts', async () => {
-        const logs = [];
-        typingRecorder.onDetectTyping(function({ args }) {
-            logs.push(args.text);
-        });
-
-        setSelections([[3, 0], [4, 0]]);
-        record([
+        testRecording({ changes: [
             makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
             makeContentChange(new vscode.Range(4, 0, 4, 0), 'b')
-        ]);
-
-        assert.deepStrictEqual(logs, []);
+        ], precond: [[3, 0], [4, 0]], expectedLogs: [] });
     });
 });
