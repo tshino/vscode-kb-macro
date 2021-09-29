@@ -16,6 +16,14 @@ describe('TypingRecorder', () => {
         const rangeLength = textEditor.document.offsetAt(range.end) - rangeOffset;
         return { range, rangeOffset, rangeLength, text };
     };
+    const record = function(contentChanges) {
+        typingRecorder.start(textEditor);
+        typingRecorder.processDocumentChangeEvent({
+            document: textEditor.document,
+            contentChanges: contentChanges
+        });
+        typingRecorder.stop();
+    };
 
     before(async () => {
         vscode.window.showInformationMessage('Started test for TypingRecorder.');
@@ -35,14 +43,9 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[3, 0]]);
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: [
-                makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
-            ]
-        });
-        typingRecorder.stop();
+        record([
+            makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
+        ]);
 
         assert.deepStrictEqual(logs, ['a']);
     });
@@ -53,6 +56,7 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[3, 0]]);
+        // <-- no start()
         typingRecorder.processDocumentChangeEvent({
             document: textEditor.document,
             contentChanges: [
@@ -72,7 +76,7 @@ describe('TypingRecorder', () => {
         setSelections([[3, 0]]);
         typingRecorder.start(textEditor);
         typingRecorder.processDocumentChangeEvent({
-            document: differentDocument,
+            document: differentDocument, // <-- !!
             contentChanges: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
             ]
@@ -87,12 +91,7 @@ describe('TypingRecorder', () => {
             logs.push(args.text);
         });
 
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: []
-        });
-        typingRecorder.stop();
+        record([]);
 
         assert.deepStrictEqual(logs, []);
     });
@@ -103,14 +102,9 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[3, 0]]);
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: [
-                makeContentChange(new vscode.Range(3, 0, 3, 0), '')
-            ]
-        });
-        typingRecorder.stop();
+        record([
+            makeContentChange(new vscode.Range(3, 0, 3, 0), '')
+        ]);
 
         assert.deepStrictEqual(logs, []);
     });
@@ -121,14 +115,9 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[3, 0]]);
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: [
-                makeContentChange(new vscode.Range(2, 0, 2, 0), 'a')
-            ]
-        });
-        typingRecorder.stop();
+        record([
+            makeContentChange(new vscode.Range(2, 0, 2, 0), 'a')
+        ]);
 
         assert.deepStrictEqual(logs, []);
     });
@@ -139,14 +128,9 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[3, 0]]);
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: [
-                makeContentChange(new vscode.Range(3, 0, 3, 0), 'abc')
-            ]
-        });
-        typingRecorder.stop();
+        record([
+            makeContentChange(new vscode.Range(3, 0, 3, 0), 'abc')
+        ]);
 
         assert.deepStrictEqual(logs, ['abc']);
     });
@@ -157,15 +141,10 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[3, 0], [4, 0]]);
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: [
-                makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
-                makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
-            ]
-        });
-        typingRecorder.stop();
+        record([
+            makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
+            makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
+        ]);
 
         assert.deepStrictEqual(logs, ['a']);
     });
@@ -176,15 +155,10 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[4, 0], [3, 0]]);
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: [
-                makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
-                makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
-            ]
-        });
-        typingRecorder.stop();
+        record([
+            makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
+            makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
+        ]);
 
         assert.deepStrictEqual(logs, ['a']);
     });
@@ -195,15 +169,10 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[3, 0], [4, 0]]);
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: [
-                makeContentChange(new vscode.Range(4, 0, 4, 0), 'a'),
-                makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
-            ]
-        });
-        typingRecorder.stop();
+        record([
+            makeContentChange(new vscode.Range(4, 0, 4, 0), 'a'),
+            makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
+        ]);
 
         assert.deepStrictEqual(logs, ['a']);
     });
@@ -214,15 +183,10 @@ describe('TypingRecorder', () => {
         });
 
         setSelections([[3, 0], [4, 0]]);
-        typingRecorder.start(textEditor);
-        typingRecorder.processDocumentChangeEvent({
-            document: textEditor.document,
-            contentChanges: [
-                makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
-                makeContentChange(new vscode.Range(4, 0, 4, 0), 'b')
-            ]
-        });
-        typingRecorder.stop();
+        record([
+            makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
+            makeContentChange(new vscode.Range(4, 0, 4, 0), 'b')
+        ]);
 
         assert.deepStrictEqual(logs, []);
     });
