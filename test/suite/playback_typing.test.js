@@ -2,10 +2,12 @@
 const assert = require('assert');
 const vscode = require('vscode');
 const { TestUtil } = require('./test_util.js');
+const { CommandsToTest } = require('./commands_to_test.js');
 const { keyboardMacro } = require('../../src/extension.js');
 
 describe('Typing Recording and Playback', () => {
     let textEditor;
+    const Cmd = CommandsToTest;
 
     const setSelections = function(array) {
         textEditor.selections = TestUtil.arrayToSelections(array);
@@ -113,5 +115,31 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abX');
             assert.deepStrictEqual(getSelections(), [[12, 3], [13, 3]]);
         });
+    });
+
+    describe('Enter', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                '\n'.repeat(10) +
+                'abcd\n'.repeat(10) +
+                '    efgh\n'.repeat(10)
+            ));
+        });
+        it('should record and playback pressing Enter key', async () => {
+            setSelections([[10, 2]]);
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap(textEditor, {}, Cmd.Enter);
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'ab');
+            assert.strictEqual(textEditor.document.lineAt(11).text, 'cd');
+            assert.deepStrictEqual(getSelections(), [[11, 0]]);
+
+            setSelections([[14, 3]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(14).text, 'abc');
+            assert.strictEqual(textEditor.document.lineAt(15).text, 'd');
+            assert.deepStrictEqual(getSelections(), [[15, 0]]);
+        });
+        // TODO: add more tests for Enter
     });
 });

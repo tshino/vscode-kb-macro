@@ -108,4 +108,6 @@ describe('KeybaordMacro', () => {
     // TODO: add tests for push
     // TODO: add tests for playback
     // TODO: add tests for wrap
+    // TODO: add tests for onBeginWrappedCommand
+    // TODO: add tests for onEndWrappedCommand
 });

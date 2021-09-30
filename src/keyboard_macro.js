@@ -9,6 +9,8 @@ const KeyboardMacro = function() {
     };
 
     let onChangeRecordingStateCallback = null;
+    let onBeginWrappedCommandCallback = null;
+    let onEndWrappedCommandCallback = null;
     let recording = false;
     const sequence = [];
 
@@ -19,6 +21,12 @@ const KeyboardMacro = function() {
         if (onChangeRecordingStateCallback) {
             onChangeRecordingStateCallback({ recording, reason });
         }
+    };
+    const onBeginWrappedCommand = function(callback) {
+        onBeginWrappedCommandCallback = callback;
+    };
+    const onEndWrappedCommand = function(callback) {
+        onEndWrappedCommandCallback = callback;
     };
 
     const startRecording = function() {
@@ -83,7 +91,13 @@ const KeyboardMacro = function() {
             };
             try {
                 push(info);
+                if (onBeginWrappedCommandCallback) {
+                    onBeginWrappedCommandCallback();
+                }
                 await invokeCommand(info);
+                if (onEndWrappedCommandCallback) {
+                    onEndWrappedCommandCallback();
+                }
             } catch(error) {
                 info.failed = true;
                 console.error(error);
@@ -95,6 +109,8 @@ const KeyboardMacro = function() {
     return {
         RecordingStateReason,
         onChangeRecordingState,
+        onBeginWrappedCommand,
+        onEndWrappedCommand,
         startRecording,
         cancelRecording,
         finishRecording,

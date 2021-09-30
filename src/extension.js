@@ -51,6 +51,18 @@ function activate(context) {
         }
     );
     addEventListener(
+        keyboardMacro.onBeginWrappedCommand,
+        function() {
+            typingRecorder.stop();
+        }
+    );
+    addEventListener(
+        keyboardMacro.onEndWrappedCommand,
+        function() {
+            typingRecorder.start();
+        }
+    );
+    addEventListener(
         vscode.workspace.onDidChangeTextDocument,
         typingRecorder.processDocumentChangeEvent
     );
