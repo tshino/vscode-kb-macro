@@ -85,5 +85,33 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(24).text, '    efXgh');
             assert.deepStrictEqual(getSelections(), [[14, 3], [24, 7]]);
         });
+        it('should detect and reproduce direct typing with a selection', async () => {
+            setSelections([[10, 0, 10, 2]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'X' });
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'Xcd');
+            assert.deepStrictEqual(getSelections(), [[10, 1]]);
+
+            setSelections([[12, 2, 12, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(12).text, 'abX');
+            assert.deepStrictEqual(getSelections(), [[12, 3]]);
+        });
+        it('should detect and reproduce direct typing with multiple selections', async () => {
+            setSelections([[10, 0, 10, 2], [11, 0, 11, 2]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'X' });
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'Xcd');
+            assert.strictEqual(textEditor.document.lineAt(11).text, 'Xcd');
+            assert.deepStrictEqual(getSelections(), [[10, 1], [11, 1]]);
+
+            setSelections([[12, 2, 12, 4], [13, 2, 13, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(12).text, 'abX');
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'abX');
+            assert.deepStrictEqual(getSelections(), [[12, 3], [13, 3]]);
+        });
     });
 });

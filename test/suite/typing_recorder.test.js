@@ -133,5 +133,38 @@ describe('TypingRecorder', () => {
                 makeContentChange(new vscode.Range(4, 0, 4, 0), 'b')
             ], precond: [[3, 0], [4, 0]], expectedLogs: [] });
         });
+        it('should detect typing with a selection', async () => {
+            testRecording({ changes: [
+                makeContentChange(new vscode.Range(12, 1, 12, 3), 'x')
+            ], precond: [[12, 1, 12, 3]], expectedLogs: ['x'] });
+        });
+        it('should detect typing with a selection that is reversed', async () => {
+            testRecording({ changes: [
+                makeContentChange(new vscode.Range(12, 1, 12, 3), 'x')
+            ], precond: [[12, 3, 12, 1]], expectedLogs: ['x'] });
+        });
+        it('should detect typing with a selection that contains a line-break', async () => {
+            testRecording({ changes: [
+                makeContentChange(new vscode.Range(12, 2, 13, 1), 'x')
+            ], precond: [[12, 2, 13, 1]], expectedLogs: ['x'] });
+        });
+        it('should detect typing with multiple selections', async () => {
+            testRecording({ changes: [
+                makeContentChange(new vscode.Range(12, 1, 12, 3), 'x'),
+                makeContentChange(new vscode.Range(13, 1, 13, 3), 'x')
+            ], precond: [[12, 1, 12, 3], [13, 1, 13, 3]], expectedLogs: ['x'] });
+        });
+        it('should detect typing with multiple selections that are reversed', async () => {
+            testRecording({ changes: [
+                makeContentChange(new vscode.Range(12, 1, 12, 3), 'x'),
+                makeContentChange(new vscode.Range(13, 1, 13, 3), 'x')
+            ], precond: [[12, 3, 12, 1], [13, 3, 13, 1]], expectedLogs: ['x'] });
+        });
+        it('should detect typing with multiple selections that extends backward', async () => {
+            testRecording({ changes: [
+                makeContentChange(new vscode.Range(12, 1, 12, 3), 'x'),
+                makeContentChange(new vscode.Range(13, 1, 13, 3), 'x')
+            ], precond: [[13, 3, 13, 1], [12, 3, 12, 1]], expectedLogs: ['x'] });
+        });
     });
 });
