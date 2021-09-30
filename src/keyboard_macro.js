@@ -89,19 +89,19 @@ const KeyboardMacro = function() {
                 command: args.command,
                 args: args.args || {}
             };
+            push(info);
+            if (onBeginWrappedCommandCallback) {
+                onBeginWrappedCommandCallback();
+            }
             try {
-                push(info);
-                if (onBeginWrappedCommandCallback) {
-                    onBeginWrappedCommandCallback();
-                }
                 await invokeCommand(info);
-                if (onEndWrappedCommandCallback) {
-                    onEndWrappedCommandCallback();
-                }
             } catch(error) {
                 info.failed = true;
                 console.error(error);
                 console.info('kb-macro: Error in wrap: args=', args);
+            }
+            if (onEndWrappedCommandCallback) {
+                onEndWrappedCommandCallback();
             }
         }
     };

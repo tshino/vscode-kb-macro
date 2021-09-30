@@ -142,4 +142,33 @@ describe('Typing Recording and Playback', () => {
         });
         // TODO: add more tests for Enter
     });
+
+    describe('complex cases', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                '\n'.repeat(10) +
+                'abcd\n'.repeat(10) +
+                '    efgh\n'.repeat(10)
+            ));
+        });
+        it('should record and playback: type => enter => type', async () => {
+            setSelections([[12, 2]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'C' });
+            await vscode.commands.executeCommand('type', { text: 'D' });
+            await keyboardMacro.wrap(textEditor, {}, Cmd.Enter);
+            await vscode.commands.executeCommand('type', { text: 'A' });
+            await vscode.commands.executeCommand('type', { text: 'B' });
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(12).text, 'abCD');
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'ABcd');
+            assert.deepStrictEqual(getSelections(), [[13, 2]]);
+
+            setSelections([[17, 3]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(17).text, 'abcCD');
+            assert.strictEqual(textEditor.document.lineAt(18).text, 'ABd');
+            assert.deepStrictEqual(getSelections(), [[18, 2]]);
+        });
+    });
 });

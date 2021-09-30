@@ -59,7 +59,7 @@ function activate(context) {
     addEventListener(
         keyboardMacro.onEndWrappedCommand,
         function() {
-            typingRecorder.start();
+            typingRecorder.start(vscode.window.activeTextEditor);
         }
     );
     addEventListener(
