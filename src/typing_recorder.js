@@ -1,7 +1,7 @@
 'use strict';
 const vscode = require('vscode');
 
-const TypingRecorder = function() {
+const TypingDetector = function() {
     let onDetectTypingCallback  = null;
     let recording = false;
     let targetTextEditor = null;
@@ -83,4 +83,4 @@ const TypingRecorder = function() {
     };
 };
 
-module.exports = { TypingRecorder };
+module.exports = { TypingDetector };

@@ -1,10 +1,10 @@
 'use strict';
 const vscode = require('vscode');
 const { KeyboardMacro } = require('./keyboard_macro.js');
-const { TypingRecorder } = require('./typing_recorder.js');
+const { TypingDetector } = require('./typing_recorder.js');
 
 const keyboardMacro = KeyboardMacro();
-const typingRecorder = TypingRecorder();
+const typingDetector = TypingDetector();
 
 function activate(context) {
     const CommandPrefix = 'kb-macro.';
@@ -33,9 +33,9 @@ function activate(context) {
         keyboardMacro.onChangeRecordingState,
         function({ recording, reason }) {
             if (recording) {
-                typingRecorder.start(vscode.window.activeTextEditor);
+                typingDetector.start(vscode.window.activeTextEditor);
             } else {
-                typingRecorder.stop();
+                typingDetector.stop();
             }
 
             const contextName = ContextPrefix + 'recording';
@@ -53,21 +53,21 @@ function activate(context) {
     addEventListener(
         keyboardMacro.onBeginWrappedCommand,
         function() {
-            typingRecorder.stop();
+            typingDetector.stop();
         }
     );
     addEventListener(
         keyboardMacro.onEndWrappedCommand,
         function() {
-            typingRecorder.start(vscode.window.activeTextEditor);
+            typingDetector.start(vscode.window.activeTextEditor);
         }
     );
     addEventListener(
         vscode.workspace.onDidChangeTextDocument,
-        typingRecorder.processDocumentChangeEvent
+        typingDetector.processDocumentChangeEvent
     );
     addEventListener(
-        typingRecorder.onDetectTyping,
+        typingDetector.onDetectTyping,
         keyboardMacro.push
     );
 }

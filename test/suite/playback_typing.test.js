@@ -21,7 +21,7 @@ describe('Typing Recording and Playback', () => {
         textEditor = await TestUtil.setupTextEditor({ content: '' });
     });
 
-    describe('direct typing of characters', () => {
+    describe('direct typing detection', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
                 '\n'.repeat(10) +
@@ -180,7 +180,7 @@ describe('Typing Recording and Playback', () => {
         });
     });
 
-    describe('complex cases', () => {
+    describe('complex senarios', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
                 '\n'.repeat(10) +
