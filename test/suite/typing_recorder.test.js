@@ -56,6 +56,10 @@ describe('TypingRecorder', () => {
             testRecording({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
             ], precond: [[3, 0]], expectedLogs: ['a'] });
+            assert.deepStrictEqual(
+                TestUtil.selectionsToArray(typingRecorder.getExpectedSelections()),
+                [[3, 1]]
+            );
         });
         it('should not perform detection without start() called', async () => {
             const logs = setupDetectedTypingLog();
@@ -108,12 +112,20 @@ describe('TypingRecorder', () => {
             testRecording({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'abc')
             ], precond: [[3, 0]], expectedLogs: ['abc'] });
+            assert.deepStrictEqual(
+                TestUtil.selectionsToArray(typingRecorder.getExpectedSelections()),
+                [[3, 3]]
+            );
         });
         it('should detect typing with multi-cursor (uniform text insertion)', async () => {
             testRecording({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
                 makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
             ], precond: [[3, 0], [4, 0]], expectedLogs: ['a'] });
+            assert.deepStrictEqual(
+                TestUtil.selectionsToArray(typingRecorder.getExpectedSelections()),
+                [[3, 1], [4, 1]]
+            );
         });
         it('should detect typing with multi-cursor that extends backward', async () => {
             testRecording({ changes: [
@@ -137,6 +149,10 @@ describe('TypingRecorder', () => {
             testRecording({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 12, 3), 'x')
             ], precond: [[12, 1, 12, 3]], expectedLogs: ['x'] });
+            assert.deepStrictEqual(
+                TestUtil.selectionsToArray(typingRecorder.getExpectedSelections()),
+                [[12, 2]]
+            );
         });
         it('should detect typing with a selection that is reversed', async () => {
             testRecording({ changes: [
@@ -153,6 +169,10 @@ describe('TypingRecorder', () => {
                 makeContentChange(new vscode.Range(12, 1, 12, 3), 'x'),
                 makeContentChange(new vscode.Range(13, 1, 13, 3), 'x')
             ], precond: [[12, 1, 12, 3], [13, 1, 13, 3]], expectedLogs: ['x'] });
+            assert.deepStrictEqual(
+                TestUtil.selectionsToArray(typingRecorder.getExpectedSelections()),
+                [[12, 2], [13, 2]]
+            );
         });
         it('should detect typing with multiple selections that are reversed', async () => {
             testRecording({ changes: [

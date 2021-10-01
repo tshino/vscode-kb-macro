@@ -1,9 +1,11 @@
 'use strict';
+const vscode = require('vscode');
 
 const TypingRecorder = function() {
     let onDetectTypingCallback  = null;
     let recording = false;
     let targetTextEditor = null;
+    let expectedSelections = null;
 
     const onDetectTyping = function(callback) {
         onDetectTypingCallback = callback;
@@ -27,6 +29,21 @@ const TypingRecorder = function() {
         targetTextEditor = null;
     };
 
+    const predictSelection = function(changes) {
+        let sels = [], lineOffset = 0;
+        for (let i = 0; i < changes.length; i++) {
+            let chg = changes[i];
+            let pos = chg.range.start.translate({
+                lineDelta: lineOffset,
+                characterDelta: chg.text.length
+            });
+            // lineOffset += Array.from(chg.text).filter(c => c === '\n').length;
+            lineOffset -= chg.range.end.line - chg.range.start.line;
+            sels[i] = new vscode.Selection(pos, pos);
+        }
+        return sels;
+    };
+
     const processDocumentChangeEvent = function(event) {
         if (!recording) {
             return;
@@ -48,6 +65,9 @@ const TypingRecorder = function() {
         if (changes.length === selections.length && isUniformText && text0 !== '') {
             const rangesOfChangeEqualSelections = changes.every((chg, i) => selections[i].isEqual(chg.range));
             if (rangesOfChangeEqualSelections) {
+                // Pure insertion of a single line of text or,
+                // replacing (possibly multiple) selected range(s) with a text
+                expectedSelections = predictSelection(changes);
                 notifyDetectedTyping(text0);
             }
         }
@@ -57,7 +77,8 @@ const TypingRecorder = function() {
         onDetectTyping,
         start,
         stop,
-        processDocumentChangeEvent
+        processDocumentChangeEvent,
+        getExpectedSelections: function() { return expectedSelections; } // testing purpose only
     };
 };
 
