@@ -140,7 +140,44 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(15).text, 'd');
             assert.deepStrictEqual(getSelections(), [[15, 0]]);
         });
-        // TODO: add more tests for Enter
+        it('should record and playback inserting a line break that results auto-indent', async () => {
+            setSelections([[20, 4]]);
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap(textEditor, {}, Cmd.Enter);
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(20).text, '    ');
+            assert.strictEqual(textEditor.document.lineAt(21).text, '    efgh');
+            assert.deepStrictEqual(getSelections(), [[21, 4]]);
+
+            setSelections([[24, 6]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(24).text, '    ef');
+            assert.strictEqual(textEditor.document.lineAt(25).text, '    gh');
+            assert.deepStrictEqual(getSelections(), [[25, 4]]);
+        });
+    });
+
+    describe('Tab', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                '\n'.repeat(10) +
+                'abcd\n'.repeat(10) +
+                '    efgh\n'.repeat(10)
+            ));
+        });
+        it('should record and playback pressing Tab key', async () => {
+            setSelections([[14, 0]]);
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap(textEditor, {}, Cmd.Tab);
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(14).text, '    abcd');
+            assert.deepStrictEqual(getSelections(), [[14, 4]]);
+
+            setSelections([[15, 2]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(15).text, 'ab  cd');
+            assert.deepStrictEqual(getSelections(), [[15, 4]]);
+        });
     });
 
     describe('complex cases', () => {
