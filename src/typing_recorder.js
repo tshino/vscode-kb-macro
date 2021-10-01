@@ -23,6 +23,7 @@ const TypingRecorder = function() {
     const start = function(textEditor) {
         recording = true;
         targetTextEditor = textEditor;
+        expectedSelections = Array.from(textEditor.selections);
     };
     const stop = function() {
         recording = false;
