@@ -2,7 +2,7 @@
 const assert = require('assert');
 const vscode = require('vscode');
 const { TestUtil } = require('./test_util.js');
-const { TypingDetector } = require('../../src/typing_recorder.js');
+const { TypingDetector } = require('../../src/typing_detector.js');
 
 describe('TypingDetector', () => {
     const typingDetector = TypingDetector();

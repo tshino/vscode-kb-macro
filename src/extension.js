@@ -1,7 +1,7 @@
 'use strict';
 const vscode = require('vscode');
 const { KeyboardMacro } = require('./keyboard_macro.js');
-const { TypingDetector } = require('./typing_recorder.js');
+const { TypingDetector } = require('./typing_detector.js');
 
 const keyboardMacro = KeyboardMacro();
 const typingDetector = TypingDetector();
