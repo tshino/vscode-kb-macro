@@ -23,7 +23,7 @@ const TypingDetector = function() {
     const start = function(textEditor) {
         recording = true;
         targetTextEditor = textEditor;
-        expectedSelections = Array.from(textEditor.selections);
+        expectedSelections = null;
     };
     const stop = function() {
         recording = false;
@@ -58,7 +58,7 @@ const TypingDetector = function() {
 
         const changes = Array.from(event.contentChanges);
         changes.sort((a, b) => a.rangeOffset - b.rangeOffset);
-        const selections = Array.from(targetTextEditor.selections);
+        const selections = Array.from(expectedSelections || targetTextEditor.selections);
         selections.sort((a, b) => a.start.compareTo(b.start));
 
         const text0 = changes[0].text;

@@ -33,12 +33,16 @@ describe('TypingDetector', () => {
     };
     const checkResult = function(logs, { expectedLogs, expectedPrediction }) {
         assert.deepStrictEqual(logs, expectedLogs);
-        if (expectedPrediction) {
+        if (expectedPrediction !== undefined) {
             const prediction = typingDetector.getExpectedSelections();
-            assert.deepStrictEqual(
-                TestUtil.selectionsToArray(prediction),
-                expectedPrediction
-            );
+            if (expectedPrediction === null) {
+                assert.strictEqual(prediction, expectedPrediction);
+            } else { // array
+                assert.deepStrictEqual(
+                    TestUtil.selectionsToArray(prediction),
+                    expectedPrediction
+                );
+            }
         }
     };
     const testDetection = function({ changes, precond, expectedLogs, expectedPrediction }) {
@@ -95,7 +99,7 @@ describe('TypingDetector', () => {
             });
             typingDetector.stop();
 
-            checkResult(logs, { expectedLogs: [], expectedPrediction: [[3, 0]] });
+            checkResult(logs, { expectedLogs: [], expectedPrediction: null });
         });
         it('should ignore an event without any contentChange', async () => {
             const logs = setupDetectedTypingLog();
@@ -103,17 +107,17 @@ describe('TypingDetector', () => {
             setSelections([[4, 0]]);
             processEvents([]);
 
-            checkResult(logs, { expectedLogs: [], expectedPrediction: [[4, 0]] });
+            checkResult(logs, { expectedLogs: [], expectedPrediction: null });
         });
         it('should ignore an event of empty text insertion', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), '')
-            ], precond: [[3, 0]], expectedLogs: [], expectedPrediction: [[3, 0]] });
+            ], precond: [[3, 0]], expectedLogs: [], expectedPrediction: null });
         });
         it('should ignore an text insertion event that occurred at a location other than the cursor', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(2, 0, 2, 0), 'a')
-            ], precond: [[3, 0]], expectedLogs: [], expectedPrediction: [[3, 0]] });
+            ], precond: [[3, 0]], expectedLogs: [], expectedPrediction: null });
         });
         it('should detect typing with multiple characters', async () => {
             testDetection({ changes: [
@@ -143,7 +147,7 @@ describe('TypingDetector', () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
                 makeContentChange(new vscode.Range(4, 0, 4, 0), 'b')
-            ], precond: [[3, 0], [4, 0]], expectedLogs: [], expectedPrediction: [[3, 0], [4, 0]] });
+            ], precond: [[3, 0], [4, 0]], expectedLogs: [], expectedPrediction: null });
         });
         it('should detect typing with a selection', async () => {
             testDetection({ changes: [
