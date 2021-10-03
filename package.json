@@ -70,6 +70,14 @@
                 "when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible"
             },
             {
+                "key": "ctrl+end",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorBottom"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
                 "key": "down",
                 "command": "kb-macro.wrap",
                 "args": {
@@ -90,6 +98,14 @@
                 "command": "kb-macro.wrap",
                 "args": {
                     "command": "cursorRight"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "ctrl+home",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorTop"
                 },
                 "when": "kb-macro.recording && textInputFocus"
             },

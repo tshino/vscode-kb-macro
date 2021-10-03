@@ -95,5 +95,27 @@ describe('Cursor Recording and Playback', () => {
                 await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
             });
         });
+        describe('cursorBottom', () => {
+            const seq = [ Cmd.CursorBottom ];
+            it('should move cursor to bottom the end of document', async () => {
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[2, 22]] });
+                await testPlayback({ s: [[0, 4]] }, { s: [[2, 22]] });
+            });
+            it('should be ok if cursor is at the end of the document', async () => {
+                await testRecording(seq, { s: [[2, 22]] }, { s: [[2, 22]] });
+                await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
+            });
+        });
+        describe('cursorTop', () => {
+            const seq = [ Cmd.CursorTop ];
+            it('should move cursor to top the beginning of the document', async () => {
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[0, 0]] });
+                await testPlayback({ s: [[2, 8]] }, { s: [[0, 0]] });
+            });
+            it('should be ok if cursor is at the beginning of the document', async () => {
+                await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
+                await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
+            });
+        });
     });
 });
