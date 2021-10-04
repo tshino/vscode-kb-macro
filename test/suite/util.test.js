@@ -1,0 +1,51 @@
+'use strict';
+const assert = require('assert');
+const vscode = require('vscode');
+const { util } = require('../../src/util.js');
+
+describe('util', () => {
+    describe('isEqualSelections', () => {
+        it('should return true if two selections are equal (1)', async () => {
+            const sel1 = [ new vscode.Selection(0, 1, 2, 3) ];
+            const sel2 = [ new vscode.Selection(0, 1, 2, 3) ];
+
+            assert.strictEqual(util.isEqualSelections(sel1, sel2), true);
+        })
+        it('should return true if two selections are equal (2)', async () => {
+            const sel1 = [ new vscode.Selection(0, 1, 2, 3), new vscode.Selection(1, 2, 3, 4) ];
+            const sel2 = [ new vscode.Selection(0, 1, 2, 3), new vscode.Selection(1, 2, 3, 4) ];
+
+            assert.strictEqual(util.isEqualSelections(sel1, sel2), true);
+        })
+        it('should return false if two selections are different (1)', async () => {
+            const sel1 = [ new vscode.Selection(0, 1, 2, 3) ];
+            const sel2 = [ new vscode.Selection(0, 1, 2, 4) ];
+
+            assert.strictEqual(util.isEqualSelections(sel1, sel2), false);
+        })
+        it('should return false if two selections are different (2)', async () => {
+            const sel1 = [ new vscode.Selection(0, 1, 2, 3), new vscode.Selection(1, 2, 3, 4) ];
+            const sel2 = [ new vscode.Selection(0, 1, 2, 3), new vscode.Selection(1, 2, 3, 5) ];
+
+            assert.strictEqual(util.isEqualSelections(sel1, sel2), false);
+        })
+        it('should return false if two selections are different in length (1)', async () => {
+            const sel1 = [ new vscode.Selection(0, 1, 2, 3) ];
+            const sel2 = [ new vscode.Selection(0, 1, 2, 3), new vscode.Selection(1, 2, 3, 4) ];
+
+            assert.strictEqual(util.isEqualSelections(sel1, sel2), false);
+        })
+        it('should return false if two selections are different in length (2)', async () => {
+            const sel1 = [ new vscode.Selection(0, 1, 2, 3), new vscode.Selection(1, 2, 3, 4) ];
+            const sel2 = [ new vscode.Selection(0, 1, 2, 3) ];
+
+            assert.strictEqual(util.isEqualSelections(sel1, sel2), false);
+        })
+        it('should return false if two selections are different even if they are equal as ranges', async () => {
+            const sel1 = [ new vscode.Selection(0, 1, 2, 3) ];
+            const sel2 = [ new vscode.Selection(2, 3, 0, 1) ];
+
+            assert.strictEqual(util.isEqualSelections(sel1, sel2), false);
+        })
+    });
+});
