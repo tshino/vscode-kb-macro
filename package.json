@@ -86,6 +86,25 @@
                 "when": "kb-macro.recording && textInputFocus"
             },
             {
+                "key": "end",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorEnd",
+                    "args": {
+                        "sticky": false
+                    }
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "home",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorHome"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
                 "key": "left",
                 "command": "kb-macro.wrap",
                 "args": {

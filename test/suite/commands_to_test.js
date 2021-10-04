@@ -8,6 +8,8 @@ const CommandsToTest = {
 
     CursorBottom: { command: 'cursorBottom' },
     CursorTop: { command: 'cursorTop' },
+    CursorEnd: { command: 'cursorEnd', args: { sticky: false } },
+    CursorHome: { command: 'cursorHome' },
 
     Enter: { command: 'type', args: { text: '\n' } },
     Tab: { command: "tab" },

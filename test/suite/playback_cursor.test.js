@@ -117,5 +117,27 @@ describe('Cursor Recording and Playback', () => {
                 await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
             });
         });
+        describe('cursorEnd', () => {
+            const seq = [ Cmd.CursorEnd ];
+            it('should move cursor to the end of a line', async () => {
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 9]] });
+                await testPlayback({ s: [[0, 4]] }, { s: [[0, 5]] });
+            });
+            it('should be ok if cursor is already at the end of a line', async () => {
+                await testRecording(seq, { s: [[1, 9]] }, { s: [[1, 9]] });
+                await testPlayback({ s: [[0, 5]] }, { s: [[0, 5]] });
+            });
+        });
+        describe('cursorHome', () => {
+            const seq = [ Cmd.CursorHome ];
+            it('should move cursor to the front of a line', async () => {
+                await testRecording(seq, { s: [[1, 6]] }, { s: [[1, 4]] });
+                await testPlayback({ s: [[0, 3]] }, { s: [[0, 0]] });
+            });
+            it('should be ok if cursor is already at the front of a line', async () => {
+                await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
+                await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
+            });
+        });
     });
 });
