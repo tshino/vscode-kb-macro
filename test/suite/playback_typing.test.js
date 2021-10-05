@@ -149,6 +149,20 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
             assert.deepStrictEqual(getSelections(), [[13, 5]]);
         });
+        it('should record and playback typing of an closing bracket right after bracket completion', async () => {
+            setSelections([[5, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
+            await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(5).text, '()');
+            assert.deepStrictEqual(getSelections(), [[5, 2]]);
+
+            setSelections([[13, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
+            assert.deepStrictEqual(getSelections(), [[13, 6]]);
+        });
     });
 
     describe('Enter', () => {

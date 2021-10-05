@@ -103,24 +103,28 @@ const TypingDetector = function() {
     };
 
     const cursorEventHandler = (function() {
+        let lastSelections = null;
+        let lastTextEditor = null;
         const predictions = [];
 
-        const reset = function(_textEditor) {
+        const reset = function(textEditor) {
+            lastSelections = textEditor ? textEditor.selections : null;
+            lastTextEditor = textEditor || null;
             predictions.length = 0;
         };
         const setExpectedSelections = function(expected) {
             predictions.push(expected);
         };
-        const processSelectionChangeEvent = function(event) {
-            if (!recording) {
-                return;
-            }
-            if (event.textEditor !== targetTextEditor) {
-                return;
-            }
-            if (0 < predictions.length) {
+        const detectAndRecordImplicitMotion = function(event) {
+            if (0 === predictions.length) {
+                const current = Array.from(event.selections);
+                if (!util.isEqualSelections(lastSelections, current)) {
+                    const characterDelta = current[0].active.character - lastSelections[0].active.character;
+                    notifyDetectedMotion(characterDelta);
+                }
+            } else {
                 const predicted = predictions[0];
-                const current = Array.from(targetTextEditor.selections);
+                const current = Array.from(event.selections);
                 current.sort((a, b) => a.start.compareTo(b.start));
                 if (!util.isEqualSelections(current, predicted)) {
                     const characterDelta = current[0].active.character - predicted[0].active.character;
@@ -131,6 +135,18 @@ const TypingDetector = function() {
                 predictions.splice(0, 1);
             }
         };
+        const processSelectionChangeEvent = function(event) {
+            if (!recording || suspending) {
+                return;
+            }
+            if (lastTextEditor !== event.textEditor) {
+                lastTextEditor = event.textEditor;
+                lastSelections = event.selections;
+            }
+            detectAndRecordImplicitMotion(event);
+            lastSelections = event.selections;
+        };
+
         return {
             reset,
             setExpectedSelections,
