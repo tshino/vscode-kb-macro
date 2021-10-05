@@ -53,13 +53,13 @@ function activate(context) {
     addEventListener(
         keyboardMacro.onBeginWrappedCommand,
         function() {
-            typingDetector.stop();
+            typingDetector.suspend();
         }
     );
     addEventListener(
         keyboardMacro.onEndWrappedCommand,
         function() {
-            typingDetector.start(vscode.window.activeTextEditor);
+            typingDetector.resume(vscode.window.activeTextEditor);
         }
     );
     addEventListener(
@@ -67,7 +67,15 @@ function activate(context) {
         typingDetector.processDocumentChangeEvent
     );
     addEventListener(
+        vscode.window.onDidChangeTextEditorSelection,
+        typingDetector.processSelectionChangeEvent
+    );
+    addEventListener(
         typingDetector.onDetectTyping,
+        keyboardMacro.push
+    );
+    addEventListener(
+        typingDetector.onDetectCursorMotion,
         keyboardMacro.push
     );
 }

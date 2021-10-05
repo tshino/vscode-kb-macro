@@ -1,11 +1,13 @@
 'use strict';
 const vscode = require('vscode');
+const { util } = require('./util.js');
 
 const TypingDetector = function() {
     let onDetectTypingCallback  = null;
+    let onDetectCursorMotionCallback = null;
     let recording = false;
+    let suspending = false;
     let targetTextEditor = null;
-    let expectedSelections = null;
 
     const onDetectTyping = function(callback) {
         onDetectTypingCallback = callback;
@@ -20,14 +22,39 @@ const TypingDetector = function() {
             });
         }
     };
+    const onDetectCursorMotion = function(callback) {
+        onDetectCursorMotionCallback = callback;
+    };
+    const notifyDetectedMotion = function(characterDelta) {
+        if (onDetectCursorMotionCallback) {
+            onDetectCursorMotionCallback({
+                command: 'cursorMove',
+                args: {
+                    to: characterDelta < 0 ? 'left' : 'right',
+                    by: 'character',
+                    value: Math.abs(characterDelta)
+                }
+            });
+        }
+    }
+
     const start = function(textEditor) {
         recording = true;
+        suspending = false;
         targetTextEditor = textEditor;
-        expectedSelections = null;
+        cursorEventHandler.reset(textEditor);
     };
     const stop = function() {
         recording = false;
+        suspending = false;
         targetTextEditor = null;
+    };
+    const suspend = function() {
+        suspending = true;
+    };
+    const resume = function(textEditor) {
+        suspending = false;
+        cursorEventHandler.reset(textEditor);
     };
 
     const predictSelection = function(changes) {
@@ -46,7 +73,7 @@ const TypingDetector = function() {
     };
 
     const processDocumentChangeEvent = function(event) {
-        if (!recording) {
+        if (!recording || suspending) {
             return;
         }
         if (event.document !== targetTextEditor.document) {
@@ -58,7 +85,7 @@ const TypingDetector = function() {
 
         const changes = Array.from(event.contentChanges);
         changes.sort((a, b) => a.rangeOffset - b.rangeOffset);
-        const selections = Array.from(expectedSelections || targetTextEditor.selections);
+        const selections = Array.from(cursorEventHandler.getExpectedSelections() || targetTextEditor.selections);
         selections.sort((a, b) => a.start.compareTo(b.start));
 
         const text0 = changes[0].text;
@@ -68,18 +95,60 @@ const TypingDetector = function() {
             if (rangesOfChangeEqualSelections) {
                 // Pure insertion of a single line of text or,
                 // replacing (possibly multiple) selected range(s) with a text
-                expectedSelections = predictSelection(changes);
+                const expectedSelections = predictSelection(changes);
+                cursorEventHandler.setExpectedSelections(expectedSelections);
                 notifyDetectedTyping(text0);
             }
         }
     };
 
+    const cursorEventHandler = (function() {
+        const predictions = [];
+
+        const reset = function(_textEditor) {
+            predictions.length = 0;
+        };
+        const setExpectedSelections = function(expected) {
+            predictions.push(expected);
+        };
+        const processSelectionChangeEvent = function(event) {
+            if (!recording) {
+                return;
+            }
+            if (event.textEditor !== targetTextEditor) {
+                return;
+            }
+            if (0 < predictions.length) {
+                const predicted = predictions[0];
+                const current = Array.from(targetTextEditor.selections);
+                current.sort((a, b) => a.start.compareTo(b.start));
+                if (!util.isEqualSelections(current, predicted)) {
+                    const characterDelta = current[0].active.character - predicted[0].active.character;
+                    // Here, an implicit cursor motion has been detected.
+                    // We notify it so that it will be recorded to be able to playback.
+                    notifyDetectedMotion(characterDelta);
+                }
+                predictions.splice(0, 1);
+            }
+        };
+        return {
+            reset,
+            setExpectedSelections,
+            getExpectedSelections: function() { return predictions.length === 0 ? null : predictions[predictions.length - 1]; },
+            processSelectionChangeEvent
+        }
+    })();
+
     return {
         onDetectTyping,
+        onDetectCursorMotion,
         start,
         stop,
+        suspend,
+        resume,
         processDocumentChangeEvent,
-        getExpectedSelections: function() { return expectedSelections; } // testing purpose only
+        processSelectionChangeEvent : cursorEventHandler.processSelectionChangeEvent,
+        getExpectedSelections: cursorEventHandler.getExpectedSelections // testing purpose only
     };
 };
 

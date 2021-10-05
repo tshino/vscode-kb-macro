@@ -128,6 +128,29 @@ describe('Typing Recording and Playback', () => {
         });
     });
 
+    describe('bracket completion', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                '\n'.repeat(10) +
+                'abcd\n'.repeat(10) +
+                '    efgh\n'.repeat(10)
+            ));
+        });
+        it('should record and playback typing of an opening bracket which triggers bracket completion', async () => {
+            setSelections([[5, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' });
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(5).text, '()');
+            assert.deepStrictEqual(getSelections(), [[5, 1]]);
+
+            setSelections([[13, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
+            assert.deepStrictEqual(getSelections(), [[13, 5]]);
+        });
+    });
+
     describe('Enter', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
