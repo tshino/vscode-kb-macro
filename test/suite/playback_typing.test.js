@@ -163,6 +163,21 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
             assert.deepStrictEqual(getSelections(), [[13, 6]]);
         });
+        it('should record and playback typing of an opening bracket without bracket completion', async () => {
+            setSelections([[12, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' });
+            keyboardMacro.finishRecording();
+            assert.strictEqual(textEditor.document.lineAt(12).text, '(abcd');
+            assert.deepStrictEqual(getSelections(), [[12, 1]]);
+
+            setSelections([[23, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(23).text, '    (efgh');
+            assert.deepStrictEqual(getSelections(), [[23, 5]]);
+        });
+        // TODO: add tests for cases with multi-cursor.
+        // TODO: add tests for cases with a selection.
     });
 
     describe('Enter', () => {
