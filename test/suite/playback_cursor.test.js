@@ -26,6 +26,7 @@ describe('Cursor Recording and Playback', () => {
     const testRecording = async function(sequence, precond, expected) {
         setSelections(precond.s);
         await record(sequence);
+        assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), sequence);
         if (expected.s) {
             assert.deepStrictEqual(getSelections(), expected.s);
         }

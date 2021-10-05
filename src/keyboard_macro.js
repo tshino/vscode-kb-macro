@@ -86,9 +86,11 @@ const KeyboardMacro = function() {
                 return;
             }
             const info = {
-                command: args.command,
-                args: args.args || {}
+                command: args.command
             };
+            if (args.args) {
+                info.args = args.args;
+            }
             push(info);
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();

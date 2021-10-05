@@ -8,6 +8,9 @@ const { keyboardMacro } = require('../../src/extension.js');
 describe('Typing Recording and Playback', () => {
     let textEditor;
     const Cmd = CommandsToTest;
+    const Type = text => ({ command: 'default:type', args: { text } });
+    const MoveLeft = delta => ({ command: 'cursorMove', args: { to: 'left', by: 'character', value: delta } });
+    const MoveRight = delta => ({ command: 'cursorMove', args: { to: 'right', by: 'character', value: delta } });
 
     const setSelections = function(array) {
         textEditor.selections = TestUtil.arrayToSelections(array);
@@ -15,13 +18,14 @@ describe('Typing Recording and Playback', () => {
     const getSelections = function() {
         return TestUtil.selectionsToArray(textEditor.selections);
     };
+    const getSequence = keyboardMacro.getCurrentSequence;
 
     before(async () => {
         vscode.window.showInformationMessage('Started test for Typing Recording and Playback.');
         textEditor = await TestUtil.setupTextEditor({ content: '' });
     });
 
-    describe('direct typing detection', () => {
+    describe('direct typing', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
                 '\n'.repeat(10) +
@@ -34,6 +38,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'X' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('X') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'X');
             assert.deepStrictEqual(getSelections(), [[0, 1]]);
 
@@ -49,6 +54,7 @@ describe('Typing Recording and Playback', () => {
             await vscode.commands.executeCommand('type', { text: 'Y' });
             await vscode.commands.executeCommand('type', { text: 'Z' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('X'), Type('Y'), Type('Z') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'XYZ');
             assert.deepStrictEqual(getSelections(), [[0, 3]]);
 
@@ -62,6 +68,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'XY' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('X'), Type('Y') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'XY');
             assert.deepStrictEqual(getSelections(), [[0, 2]]);
 
@@ -75,6 +82,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'XYZ' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('X'), Type('Y'), Type('Z') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'XYZ');
             assert.deepStrictEqual(getSelections(), [[0, 3]]);
 
@@ -88,6 +96,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'X' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('X') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'X');
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abcdX');
             assert.deepStrictEqual(getSelections(), [[0, 1], [10, 5]]);
@@ -103,6 +112,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'X' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('X') ]);
             assert.strictEqual(textEditor.document.lineAt(10).text, 'Xcd');
             assert.deepStrictEqual(getSelections(), [[10, 1]]);
 
@@ -116,6 +126,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'X' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('X') ]);
             assert.strictEqual(textEditor.document.lineAt(10).text, 'Xcd');
             assert.strictEqual(textEditor.document.lineAt(11).text, 'Xcd');
             assert.deepStrictEqual(getSelections(), [[10, 1], [11, 1]]);
@@ -141,6 +152,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1) ]);
             assert.strictEqual(textEditor.document.lineAt(5).text, '()');
             assert.deepStrictEqual(getSelections(), [[5, 1]]);
 
@@ -155,6 +167,7 @@ describe('Typing Recording and Playback', () => {
             await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
             await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), MoveRight(1) ]);
             assert.strictEqual(textEditor.document.lineAt(5).text, '()');
             assert.deepStrictEqual(getSelections(), [[5, 2]]);
 
@@ -168,6 +181,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('(') ]);
             assert.strictEqual(textEditor.document.lineAt(12).text, '(abcd');
             assert.deepStrictEqual(getSelections(), [[12, 1]]);
 
@@ -193,6 +207,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await keyboardMacro.wrap(textEditor, {}, Cmd.Enter);
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Cmd.Enter ]);
             assert.strictEqual(textEditor.document.lineAt(10).text, 'ab');
             assert.strictEqual(textEditor.document.lineAt(11).text, 'cd');
             assert.deepStrictEqual(getSelections(), [[11, 0]]);
@@ -208,6 +223,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await keyboardMacro.wrap(textEditor, {}, Cmd.Enter);
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Cmd.Enter ]);
             assert.strictEqual(textEditor.document.lineAt(20).text, '    ');
             assert.strictEqual(textEditor.document.lineAt(21).text, '    efgh');
             assert.deepStrictEqual(getSelections(), [[21, 4]]);
@@ -233,6 +249,7 @@ describe('Typing Recording and Playback', () => {
             keyboardMacro.startRecording();
             await keyboardMacro.wrap(textEditor, {}, Cmd.Tab);
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Cmd.Tab ]);
             assert.strictEqual(textEditor.document.lineAt(14).text, '    abcd');
             assert.deepStrictEqual(getSelections(), [[14, 4]]);
 
@@ -260,6 +277,9 @@ describe('Typing Recording and Playback', () => {
             await vscode.commands.executeCommand('type', { text: 'A' });
             await vscode.commands.executeCommand('type', { text: 'B' });
             keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [
+                Type('C'), Type('D'), Cmd.Enter, Type('A'), Type('B')
+            ]);
             assert.strictEqual(textEditor.document.lineAt(12).text, 'abCD');
             assert.strictEqual(textEditor.document.lineAt(13).text, 'ABcd');
             assert.deepStrictEqual(getSelections(), [[13, 2]]);
