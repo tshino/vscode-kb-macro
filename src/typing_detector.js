@@ -4,7 +4,6 @@ const { util } = require('./util.js');
 
 const TypingDetector = function() {
     let onDetectTypingCallback  = null;
-    let onDetectCursorMotionCallback = null;
     let recording = false;
     let suspending = false;
     let targetTextEditor = null;
@@ -22,39 +21,26 @@ const TypingDetector = function() {
             });
         }
     };
-    const onDetectCursorMotion = function(callback) {
-        onDetectCursorMotionCallback = callback;
-    };
-    const notifyDetectedMotion = function(characterDelta) {
-        if (onDetectCursorMotionCallback) {
-            onDetectCursorMotionCallback({
-                command: 'cursorMove',
-                args: {
-                    to: characterDelta < 0 ? 'left' : 'right',
-                    by: 'character',
-                    value: Math.abs(characterDelta)
-                }
-            });
-        }
-    }
 
     const start = function(textEditor) {
         recording = true;
         suspending = false;
         targetTextEditor = textEditor;
-        cursorEventHandler.reset(textEditor);
+        cursorEventHandler.start(textEditor);
     };
     const stop = function() {
         recording = false;
         suspending = false;
         targetTextEditor = null;
+        cursorEventHandler.stop();
     };
     const suspend = function() {
         suspending = true;
+        cursorEventHandler.stop();
     };
     const resume = function(textEditor) {
         suspending = false;
-        cursorEventHandler.reset(textEditor);
+        cursorEventHandler.start(textEditor);
     };
 
     const predictSelection = function(changes) {
@@ -103,14 +89,36 @@ const TypingDetector = function() {
     };
 
     const cursorEventHandler = (function() {
+        let onDetectCursorMotionCallback = null;
+        let enabled = false;
         let lastSelections = null;
         let lastTextEditor = null;
         const predictions = [];
 
-        const reset = function(textEditor) {
+        const onDetectCursorMotion = function(callback) {
+            onDetectCursorMotionCallback = callback;
+        };
+        const notifyDetectedMotion = function(characterDelta) {
+            if (onDetectCursorMotionCallback) {
+                onDetectCursorMotionCallback({
+                    command: 'cursorMove',
+                    args: {
+                        to: characterDelta < 0 ? 'left' : 'right',
+                        by: 'character',
+                        value: Math.abs(characterDelta)
+                    }
+                });
+            }
+        };
+
+        const start = function(textEditor) {
             lastSelections = textEditor ? textEditor.selections : null;
             lastTextEditor = textEditor || null;
             predictions.length = 0;
+            enabled = true;
+        };
+        const stop = function() {
+            enabled = false;
         };
         const setExpectedSelections = function(expected) {
             predictions.push(expected);
@@ -136,7 +144,7 @@ const TypingDetector = function() {
             }
         };
         const processSelectionChangeEvent = function(event) {
-            if (!recording || suspending) {
+            if (!enabled) {
                 return;
             }
             if (lastTextEditor !== event.textEditor) {
@@ -148,7 +156,9 @@ const TypingDetector = function() {
         };
 
         return {
-            reset,
+            onDetectCursorMotion,
+            start,
+            stop,
             setExpectedSelections,
             getExpectedSelections: function() { return predictions.length === 0 ? null : predictions[predictions.length - 1]; },
             processSelectionChangeEvent
@@ -157,7 +167,7 @@ const TypingDetector = function() {
 
     return {
         onDetectTyping,
-        onDetectCursorMotion,
+        onDetectCursorMotion: cursorEventHandler.onDetectCursorMotion,
         start,
         stop,
         suspend,
