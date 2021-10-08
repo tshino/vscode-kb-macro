@@ -32,7 +32,7 @@ const CursorMotionDetector = function() {
     const stop = function() {
         enabled = false;
     };
-    const setExpectedSelections = function(expected) {
+    const setPrediction = function(expected) {
         predictions.push(expected);
     };
     const detectImplicitMotion = function(expected, actual) {
@@ -92,8 +92,8 @@ const CursorMotionDetector = function() {
         onDetectCursorMotion,
         start,
         stop,
-        setExpectedSelections,
-        getExpectedSelections: function() { return predictions.length === 0 ? null : predictions[predictions.length - 1]; },
+        setPrediction,
+        getPrediction: function() { return predictions.length === 0 ? null : predictions[predictions.length - 1]; },
         processSelectionChangeEvent,
 
         isEnabled: function() { return enabled; } // testing purpose only

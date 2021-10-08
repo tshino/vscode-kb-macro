@@ -34,7 +34,7 @@ describe('TypingDetector', () => {
     const checkResult = function(logs, { expectedLogs, expectedPrediction }) {
         assert.deepStrictEqual(logs, expectedLogs);
         if (expectedPrediction !== undefined) {
-            const prediction = typingDetector.getExpectedSelections();
+            const prediction = typingDetector.getPrediction();
             if (expectedPrediction === null) {
                 assert.strictEqual(prediction, expectedPrediction);
             } else { // array

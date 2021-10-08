@@ -14,7 +14,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should have no prediction', async () => {
             const cursorMotionDetector = CursorMotionDetector();
-            assert.strictEqual(cursorMotionDetector.getExpectedSelections(), null);
+            assert.strictEqual(cursorMotionDetector.getPrediction(), null);
         });
     });
     const testDetection = function({ init, inputs, expectedLogs }) {
@@ -30,7 +30,7 @@ describe('CursorMotionDetector', () => {
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i];
             if ('predicted' in input) {
-                cursorMotionDetector.setExpectedSelections(input.predicted);
+                cursorMotionDetector.setPrediction(input.predicted);
             } else if ('changed' in input) {
                 const event = {
                     textEditor: textEditor,

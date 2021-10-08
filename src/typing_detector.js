@@ -72,7 +72,7 @@ const TypingDetector = function() {
 
         const changes = Array.from(event.contentChanges);
         changes.sort((a, b) => a.rangeOffset - b.rangeOffset);
-        const selections = Array.from(cursorMotionDetector.getExpectedSelections() || targetTextEditor.selections);
+        const selections = Array.from(cursorMotionDetector.getPrediction() || targetTextEditor.selections);
         selections.sort((a, b) => a.start.compareTo(b.start));
 
         const text0 = changes[0].text;
@@ -82,8 +82,8 @@ const TypingDetector = function() {
             if (rangesOfChangeEqualSelections) {
                 // Pure insertion of a single line of text or,
                 // replacing (possibly multiple) selected range(s) with a text
-                const expectedSelections = predictSelection(changes);
-                cursorMotionDetector.setExpectedSelections(expectedSelections);
+                const prediction = predictSelection(changes);
+                cursorMotionDetector.setPrediction(prediction);
                 notifyDetectedTyping(text0);
             }
         }
@@ -98,7 +98,7 @@ const TypingDetector = function() {
         resume,
         processDocumentChangeEvent,
         processSelectionChangeEvent : cursorMotionDetector.processSelectionChangeEvent,
-        getExpectedSelections: cursorMotionDetector.getExpectedSelections // testing purpose only
+        getPrediction: cursorMotionDetector.getPrediction // testing purpose only
     };
 };
 
