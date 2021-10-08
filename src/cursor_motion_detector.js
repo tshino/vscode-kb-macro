@@ -1,5 +1,4 @@
 'use strict';
-const { util } = require('./util.js');
 
 const CursorMotionDetector = function() {
     let onDetectCursorMotionCallback = null;
@@ -36,22 +35,43 @@ const CursorMotionDetector = function() {
     const setExpectedSelections = function(expected) {
         predictions.push(expected);
     };
+    const detectImplicitMotion = function(expected, actual) {
+        const delta = actual[0].active.character - expected[0].active.character;
+        if (delta !== 0) {
+            const isUniformCursorMotion = (
+                actual.length === expected.length &&
+                actual.every((sel,i) => (
+                    sel.isEmpty &&
+                    expected[i].isEmpty &&
+                    sel.active.line === expected[i].active.line &&
+                    sel.active.character - expected[i].active.character === delta
+                ))
+            );
+            if (isUniformCursorMotion) {
+                return { delta };
+            }
+        }
+    };
     const detectAndRecordImplicitMotion = function(event) {
         if (0 === predictions.length) {
             const current = Array.from(event.selections);
-            if (!util.isEqualSelections(lastSelections, current)) {
-                const characterDelta = current[0].active.character - lastSelections[0].active.character;
-                notifyDetectedMotion(characterDelta);
+            const motion = detectImplicitMotion(lastSelections, current);
+            if (motion) {
+                // Here, the occurence of this cursor change event is unexpected.
+                // We consider it an implicit cursor motion.
+                // We notify it so that it will be recorded to be able to playback.
+                notifyDetectedMotion(motion.delta);
             }
         } else {
             const predicted = predictions[0];
             const current = Array.from(event.selections);
             current.sort((a, b) => a.start.compareTo(b.start));
-            if (!util.isEqualSelections(current, predicted)) {
-                const characterDelta = current[0].active.character - predicted[0].active.character;
-                // Here, an implicit cursor motion has been detected.
+            const motion = detectImplicitMotion(predicted, current);
+            if (motion) {
+                // Here, the current cursor position is different from the one predicted.
+                // We consider it an implicit cursor motion.
                 // We notify it so that it will be recorded to be able to playback.
-                notifyDetectedMotion(characterDelta);
+                notifyDetectedMotion(motion.delta);
             }
             predictions.splice(0, 1);
         }

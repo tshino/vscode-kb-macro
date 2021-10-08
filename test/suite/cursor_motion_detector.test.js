@@ -64,6 +64,76 @@ describe('CursorMotionDetector', () => {
                 expectedLogs: [ MoveRight(1) ]
             });
         });
+        it('should ignore any vertical motion', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(4, 7, 4, 7) ] }
+                ],
+                expectedLogs: []
+            });
+        });
+        it('should ignore any motion if selections are not empty (1)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(3, 4, 3, 6) ] }
+                ],
+                expectedLogs: []
+            });
+        });
+        it('should ignore any motion if selections are not empty (2)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 4, 3, 7) ] },
+                    { changed: [ new vscode.Selection(3, 6, 3, 6) ] }
+                ],
+                expectedLogs: []
+            });
+        });
+        it('should detect implicit motion of multi-cursor', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4), new vscode.Selection(4, 4, 4, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] },
+                    { changed: [ new vscode.Selection(3, 8, 3, 8), new vscode.Selection(4, 8, 4, 8) ] }
+                ],
+                expectedLogs: [ MoveRight(1) ]
+            });
+        });
+        it('should ignore non-uniform changes on multi-cursor (1)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4), new vscode.Selection(4, 4, 4, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] },
+                    { changed: [ new vscode.Selection(3, 8, 3, 8), new vscode.Selection(4, 9, 4, 9) ] }
+                ],
+                expectedLogs: []
+            });
+        });
+        it('should ignore non-uniform changes on multi-cursor (2)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4), new vscode.Selection(4, 4, 4, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] },
+                    { changed: [ new vscode.Selection(3, 8, 3, 8), new vscode.Selection(5, 8, 5, 8) ] }
+                ],
+                expectedLogs: []
+            });
+        });
+        it('should ignore non-uniform changes on multi-cursor (3)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4), new vscode.Selection(4, 4, 4, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] },
+                    { changed: [ new vscode.Selection(3, 8, 3, 8) ] }
+                ],
+                expectedLogs: []
+            });
+        });
     });
     describe('implicit motion without prediction', () => {
         it('should detect the unexpected motion of cursor (move to left)', async () => {
@@ -82,6 +152,40 @@ describe('CursorMotionDetector', () => {
                     { changed: [ new vscode.Selection(3, 7, 3, 7) ] }
                 ],
                 expectedLogs: [ MoveRight(1) ]
+            });
+        });
+        it('should ignore any vertical motion', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 6, 3, 6) ],
+                inputs: [
+                    { changed: [ new vscode.Selection(4, 6, 4, 6) ] }
+                ],
+                expectedLogs: []
+            });
+        });
+        it('should detect the unexpected motion of multi-cursor', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 6, 3, 6), new vscode.Selection(4, 6, 4, 6) ],
+                inputs: [
+                    { changed: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] }
+                ],
+                expectedLogs: [ MoveRight(1) ]
+            });
+        });
+    });
+    describe('asynchronous predictions', () => {
+        it('should handle predictions and asynchronous events of selections change correctly', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 5, 3, 5) ] },
+                    { predicted: [ new vscode.Selection(3, 6, 3, 6) ] },
+                    { changed: [ new vscode.Selection(3, 5, 3, 5) ] },
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(3, 6, 3, 6) ] },
+                    { changed: [ new vscode.Selection(3, 7, 3, 7) ] }
+                ],
+                expectedLogs: []
             });
         });
     });
