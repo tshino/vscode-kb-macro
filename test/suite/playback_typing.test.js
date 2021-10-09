@@ -137,6 +137,22 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abX');
             assert.deepStrictEqual(getSelections(), [[12, 3], [13, 3]]);
         });
+        it('should detect and reproduce direct typing with multiple selections which contain line-breaks', async () => {
+            setSelections([[10, 3, 11, 2], [12, 2, 13, 1]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'X' });
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('X') ]);
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'abcXcd');
+            assert.strictEqual(textEditor.document.lineAt(11).text, 'abXbcd');
+            assert.deepStrictEqual(getSelections(), [[10, 4], [11, 3]]);
+
+            setSelections([[12, 2, 13, 0], [14, 4, 15, 2]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(12).text, 'abXabcd');
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'abcdXcd');
+            assert.deepStrictEqual(getSelections(), [[12, 3], [13, 5]]);
+        });
     });
 
     describe('bracket completion', () => {
@@ -175,6 +191,22 @@ describe('Typing Recording and Playback', () => {
             await keyboardMacro.playback();
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
             assert.deepStrictEqual(getSelections(), [[13, 6]]);
+        });
+        it('should record and playback typing of an closing bracket right after typing inside bracket', async () => {
+            setSelections([[5, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
+            await vscode.commands.executeCommand('type', { text: '10' });
+            await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('1'), Type('0'), MoveRight(1) ]);
+            assert.strictEqual(textEditor.document.lineAt(5).text, '(10)');
+            assert.deepStrictEqual(getSelections(), [[5, 4]]);
+
+            setSelections([[13, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd(10)');
+            assert.deepStrictEqual(getSelections(), [[13, 8]]);
         });
         it('should record and playback typing of an opening bracket without bracket completion', async () => {
             setSelections([[12, 0]]);
