@@ -40,7 +40,7 @@ const TestUtil = (function() {
                     ] :
                     [
                         s.anchor.line,
-                        s.ancher.character,
+                        s.anchor.character,
                         s.active.line,
                         s.active.character
                     ]

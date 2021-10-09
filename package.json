@@ -78,6 +78,14 @@
                 "when": "kb-macro.recording && textInputFocus"
             },
             {
+                "key": "ctrl+shift+end",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorBottomSelect"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
                 "key": "down",
                 "command": "kb-macro.wrap",
                 "args": {
@@ -97,10 +105,29 @@
                 "when": "kb-macro.recording && textInputFocus"
             },
             {
+                "key": "shift+end",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorEndSelect",
+                    "args": {
+                        "sticky": false
+                    }
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
                 "key": "home",
                 "command": "kb-macro.wrap",
                 "args": {
                     "command": "cursorHome"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "shift+home",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorHomeSelect"
                 },
                 "when": "kb-macro.recording && textInputFocus"
             },
@@ -125,6 +152,14 @@
                 "command": "kb-macro.wrap",
                 "args": {
                     "command": "cursorTop"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "ctrl+shift+home",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorTopSelect"
                 },
                 "when": "kb-macro.recording && textInputFocus"
             },

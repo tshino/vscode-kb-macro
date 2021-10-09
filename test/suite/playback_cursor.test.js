@@ -96,9 +96,10 @@ describe('Cursor Recording and Playback', () => {
                 await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
             });
         });
+
         describe('cursorBottom', () => {
             const seq = [ Cmd.CursorBottom ];
-            it('should move cursor to bottom the end of document', async () => {
+            it('should move cursor to the end of document', async () => {
                 await testRecording(seq, { s: [[1, 3]] }, { s: [[2, 22]] });
                 await testPlayback({ s: [[0, 4]] }, { s: [[2, 22]] });
             });
@@ -107,11 +108,33 @@ describe('Cursor Recording and Playback', () => {
                 await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
             });
         });
+        describe('cursorBottomSelect', () => {
+            const seq = [ Cmd.CursorBottomSelect ];
+            it('should move cursor to the end of document with selection', async () => {
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 3, 2, 22]] });
+                await testPlayback({ s: [[0, 4]] }, { s: [[0, 4, 2, 22]] });
+            });
+            it('should be ok if cursor is at the end of the document', async () => {
+                await testRecording(seq, { s: [[2, 22]] }, { s: [[2, 22]] });
+                await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
+            });
+        });
         describe('cursorTop', () => {
             const seq = [ Cmd.CursorTop ];
-            it('should move cursor to top the beginning of the document', async () => {
+            it('should move cursor to the beginning of the document', async () => {
                 await testRecording(seq, { s: [[1, 3]] }, { s: [[0, 0]] });
                 await testPlayback({ s: [[2, 8]] }, { s: [[0, 0]] });
+            });
+            it('should be ok if cursor is at the beginning of the document', async () => {
+                await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
+                await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
+            });
+        });
+        describe('cursorTopSelect', () => {
+            const seq = [ Cmd.CursorTopSelect ];
+            it('should move cursor to the beginning of the document with selection', async () => {
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 3, 0, 0]] });
+                await testPlayback({ s: [[2, 8]] }, { s: [[2, 8, 0, 0]] });
             });
             it('should be ok if cursor is at the beginning of the document', async () => {
                 await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
@@ -129,11 +152,33 @@ describe('Cursor Recording and Playback', () => {
                 await testPlayback({ s: [[0, 5]] }, { s: [[0, 5]] });
             });
         });
+        describe('cursorEndSelect', () => {
+            const seq = [ Cmd.CursorEndSelect ];
+            it('should move cursor to the end of a line with selection', async () => {
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 3, 1, 9]] });
+                await testPlayback({ s: [[0, 4]] }, { s: [[0, 4, 0, 5]] });
+            });
+            it('should be ok if cursor is already at the end of a line', async () => {
+                await testRecording(seq, { s: [[1, 9]] }, { s: [[1, 9]] });
+                await testPlayback({ s: [[0, 5]] }, { s: [[0, 5]] });
+            });
+        });
         describe('cursorHome', () => {
             const seq = [ Cmd.CursorHome ];
             it('should move cursor to the front of a line', async () => {
                 await testRecording(seq, { s: [[1, 6]] }, { s: [[1, 4]] });
                 await testPlayback({ s: [[0, 3]] }, { s: [[0, 0]] });
+            });
+            it('should be ok if cursor is already at the front of a line', async () => {
+                await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
+                await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
+            });
+        });
+        describe('cursorHomeSelect', () => {
+            const seq = [ Cmd.CursorHomeSelect ];
+            it('should move cursor to the front of a line with selection', async () => {
+                await testRecording(seq, { s: [[1, 6]] }, { s: [[1, 6, 1, 4]] });
+                await testPlayback({ s: [[0, 3]] }, { s: [[0, 3, 0, 0]] });
             });
             it('should be ok if cursor is already at the front of a line', async () => {
                 await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
