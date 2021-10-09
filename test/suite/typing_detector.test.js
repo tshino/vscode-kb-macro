@@ -31,10 +31,21 @@ describe('TypingDetector', () => {
         });
         typingDetector.stop();
     };
+    const isSorted = function(selections) {
+        for (let i = 1; i < selections.length; i++) {
+            if (!selections[i - 1].start.isBefore(selections[i].start)) {
+                return false;
+            }
+        }
+        return true;
+    };
     const checkResult = function(logs, { expectedLogs, expectedPrediction }) {
         assert.deepStrictEqual(logs, expectedLogs);
         if (expectedPrediction !== undefined) {
             const prediction = typingDetector.getPrediction();
+            if (prediction) {
+                assert.strictEqual(isSorted(prediction), true);
+            }
             if (expectedPrediction === null) {
                 assert.strictEqual(prediction, expectedPrediction);
             } else { // array

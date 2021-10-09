@@ -1,4 +1,5 @@
 'use strict';
+const util = require('./util.js');
 
 const CursorMotionDetector = function() {
     let onDetectCursorMotionCallback = null;
@@ -64,8 +65,7 @@ const CursorMotionDetector = function() {
             }
         } else {
             const predicted = predictions[0];
-            const current = Array.from(event.selections);
-            current.sort((a, b) => a.start.compareTo(b.start));
+            const current = util.sortSelections(event.selections);
             const motion = detectImplicitMotion(predicted, current);
             if (motion) {
                 // Here, the current cursor position is different from the one predicted.

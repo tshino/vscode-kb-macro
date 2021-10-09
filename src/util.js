@@ -13,10 +13,16 @@ const util = (function() {
             )
         );
     };
+    const sortSelections = function(selections) {
+        selections = Array.from(selections);
+        selections.sort((a, b) => a.start.compareTo(b.start));
+        return selections;
+    };
 
     return {
-        isEqualSelections
-    }
+        isEqualSelections,
+        sortSelections
+    };
 })();
 
-module.exports = { util };
+module.exports = util;

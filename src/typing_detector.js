@@ -1,5 +1,6 @@
 'use strict';
 const vscode = require('vscode');
+const util = require('./util.js');
 const { CursorMotionDetector } = require('./cursor_motion_detector.js');
 
 const TypingDetector = function() {
@@ -72,8 +73,10 @@ const TypingDetector = function() {
 
         const changes = Array.from(event.contentChanges);
         changes.sort((a, b) => a.rangeOffset - b.rangeOffset);
-        const selections = Array.from(cursorMotionDetector.getPrediction() || targetTextEditor.selections);
-        selections.sort((a, b) => a.start.compareTo(b.start));
+        const selections = (
+            cursorMotionDetector.getPrediction() ||
+            util.sortSelections(targetTextEditor.selections)
+        );
 
         const text0 = changes[0].text;
         const isUniformText = changes.every((chg) => chg.text === text0);
