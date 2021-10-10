@@ -2,6 +2,7 @@
 const vscode = require('vscode');
 const { KeyboardMacro } = require('./keyboard_macro.js');
 const { TypingDetector } = require('./typing_detector.js');
+const internalCommands = require('./internal_commands.js');
 
 const keyboardMacro = KeyboardMacro();
 const typingDetector = TypingDetector();
@@ -29,7 +30,7 @@ function activate(context) {
     registerCommand('playback', keyboardMacro.playback);
     registerCommand('wrap', keyboardMacro.wrap);
 
-    keyboardMacro.registerInternalCommand('internal:performType', typingDetector.performType);
+    keyboardMacro.registerInternalCommand('internal:performType', internalCommands.performType);
 
     addEventListener(
         keyboardMacro.onChangeRecordingState,
