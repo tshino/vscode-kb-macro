@@ -120,5 +120,6 @@ describe('internalCommands', () => {
             assert.strictEqual(textEditor.document.lineAt(19).text, '00efgh');
             assert.deepStrictEqual(getSelections(), [[1, 2], [10, 2], [19, 2]]);
         });
+        // TODO: add tests with 'deleteLeft' option
     });
 });

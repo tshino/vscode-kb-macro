@@ -9,7 +9,7 @@ describe('Typing Recording and Playback', () => {
     let textEditor;
     const Cmd = CommandsToTest;
     const Type = text => ({ command: 'internal:performType', args: { text } });
-    const DeleteAndType = (delta,text) => ({ command: 'kb-macro.type', args: { deleteCharacter: delta, text } });
+    const DeleteAndType = (del,text) => ({ command: 'internal:performType', args: { deleteLeft: del, text } });
     const MoveLeft = delta => ({ command: 'cursorMove', args: { to: 'left', by: 'character', value: delta } });
     const MoveRight = delta => ({ command: 'cursorMove', args: { to: 'right', by: 'character', value: delta } });
 
@@ -239,7 +239,6 @@ describe('Typing Recording and Playback', () => {
         // TODO: add tests for cases with a selection.
     });
 
-    /*
     describe('code completion', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
@@ -257,17 +256,19 @@ describe('Typing Recording and Playback', () => {
                 edit.replace(new vscode.Selection(1, 0, 1, 2), 'abcde');
             });
             setSelections([[1, 5]]);
+            await vscode.commands.executeCommand('type', { text: '.' });
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('a'), Type('b'), DeleteAndType(2, 'abcde') ]);
-            assert.strictEqual(textEditor.document.lineAt(1).text, 'abcde');
+            assert.deepStrictEqual(getSequence(), [
+                Type('a'), Type('b'), DeleteAndType(2, 'abcde'), Type('.')
+            ]);
+            assert.strictEqual(textEditor.document.lineAt(1).text, 'abcde.');
 
-            setSelections([[10, 4]]);
+            setSelections([[20, 0]]);
             await keyboardMacro.playback();
-            assert.strictEqual(textEditor.document.lineAt(10).text, 'abcdabcde');
-            assert.deepStrictEqual(getSelections(), [[10, 9]]);
+            assert.strictEqual(textEditor.document.lineAt(20).text, 'abcde.    efgh');
+            assert.deepStrictEqual(getSelections(), [[20, 6]]);
         });
     });
-    */
 
     describe('Enter', () => {
         beforeEach(async () => {

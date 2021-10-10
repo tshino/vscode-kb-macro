@@ -10,7 +10,7 @@ const internalCommands = (function() {
     const performType = async function(textEditor, _edit, args) {
         const indices = util.makeIndexOfSortedSelections(textEditor.selections);
         const text = (args && args.text) || '';
-        const numDeleteLeft = 0;
+        const numDeleteLeft = (args && args.deleteLeft) || 0;
         const numLF = Array.from(text).filter(ch => ch === '\n').length;
         const lenLastLine = numLF === 0 ? 0 : text.length - (text.lastIndexOf('\n') + 1);
         let lineOffset = 0;
@@ -20,7 +20,16 @@ const internalCommands = (function() {
                 const selection = textEditor.selections[indices[i]];
                 let pos = selection.active;
                 let removedLineCount = 0;
-                if (!selection.isEmpty) {
+                if (0 < numDeleteLeft) {
+                    let range = new vscode.Range(
+                        new vscode.Position(
+                            pos.line,
+                            Math.max(0, pos.character - numDeleteLeft)
+                        ),
+                        pos
+                    );
+                    edit.delete(range);
+                } else if (!selection.isEmpty) {
                     edit.delete(selection);
                     pos = selection.start;
                     removedLineCount = selection.end.line - selection.start.line;

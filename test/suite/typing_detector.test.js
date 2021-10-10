@@ -197,4 +197,5 @@ describe('TypingDetector', () => {
             expectedLogs: ['x'], expectedPrediction: [[12, 2], [13, 2]] });
         });
     });
+    // TODO: add tests for code completion detection
 });
