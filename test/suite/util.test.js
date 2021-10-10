@@ -69,4 +69,21 @@ describe('util', () => {
             assert.deepStrictEqual(result, expected);
         });
     });
+    describe('makeIndexOfSortedSelections', () => {
+        it('should return an array of indices', async () => {
+            const input = [ new vscode.Selection(1, 2, 3, 4) ];
+            const result = util.makeIndexOfSortedSelections(input);
+            assert.deepStrictEqual(result, [0]);
+        });
+        it('should indices of sorted array', async () => {
+            const input = [
+                new vscode.Selection(1, 1, 1, 1),
+                new vscode.Selection(3, 3, 3, 3),
+                new vscode.Selection(4, 4, 4, 4),
+                new vscode.Selection(2, 2, 2, 2)
+            ];
+            const result = util.makeIndexOfSortedSelections(input);
+            assert.deepStrictEqual(result, [0, 3, 1, 2]);
+        });
+    });
 });

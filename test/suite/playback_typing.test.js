@@ -107,6 +107,13 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(14).text, 'abXcd');
             assert.strictEqual(textEditor.document.lineAt(24).text, '    efXgh');
             assert.deepStrictEqual(getSelections(), [[14, 3], [24, 7]]);
+
+            setSelections([[4, 0], [3, 0], [5, 0]]); // arbitrary order
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(4).text, 'X');
+            assert.strictEqual(textEditor.document.lineAt(3).text, 'X');
+            assert.strictEqual(textEditor.document.lineAt(5).text, 'X');
+            assert.deepStrictEqual(getSelections(), [[4, 1], [3, 1], [5, 1]]); // corresponding order
         });
         it('should detect and reproduce direct typing with a selection', async () => {
             setSelections([[10, 0, 10, 2]]);

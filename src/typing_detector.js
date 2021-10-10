@@ -25,20 +25,22 @@ const TypingDetector = function() {
     // appropriate for the purpose since it triggers some unwanted side-effects
     // like bracket completion.
     const performType = async function(textEditor, _edit, args) {
-        const selections = util.sortSelections(textEditor.selections);
+        const indices = util.makeIndexOfSortedSelections(textEditor.selections);
         const text = (args && args.text) || '';
         const numDeleteLeft = 0;
         const numLF = Array.from(text).filter(ch => ch === '\n').length;
         const lenLastLine = numLF === 0 ? 0 : text.length - (text.lastIndexOf('\n') + 1);
         let lineOffset = 0;
+        const newSelections = [];
         await textEditor.edit(edit => {
-            for (let i = 0; i < selections.length; i++) {
-                let pos = selections[i].active;
+            for (let i = 0; i < indices.length; i++) {
+                const selection = textEditor.selections[indices[i]];
+                let pos = selection.active;
                 let removedLineCount = 0;
-                if (!selections[i].isEmpty) {
-                    edit.delete(selections[i]);
-                    pos = selections[i].start;
-                    removedLineCount = selections[i].end.line - selections[i].start.line;
+                if (!selection.isEmpty) {
+                    edit.delete(selection);
+                    pos = selection.start;
+                    removedLineCount = selection.end.line - selection.start.line;
                 }
                 edit.insert(pos, text);
                 lineOffset += numLF;
@@ -51,11 +53,11 @@ const TypingDetector = function() {
                     pos = new vscode.Position(pos.line + lineOffset, lenLastLine);
                 }
                 lineOffset -= removedLineCount;
-                selections[i] = new vscode.Selection(pos, pos);
+                newSelections[indices[i]] = new vscode.Selection(pos, pos);
             }
         });
-        if (!util.isEqualSelections(textEditor.selections, selections)) {
-            textEditor.selections = selections;
+        if (!util.isEqualSelections(textEditor.selections, newSelections)) {
+            textEditor.selections = newSelections;
         }
     };
 

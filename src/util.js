@@ -18,10 +18,16 @@ const util = (function() {
         selections.sort((a, b) => a.start.compareTo(b.start));
         return selections;
     };
+    const makeIndexOfSortedSelections = function(selections) {
+        const indices = Array.from({ length: selections.length }, (k,v) => v);
+        indices.sort((a, b) => selections[a].start.compareTo(selections[b].start));
+        return indices;
+    };
 
     return {
         isEqualSelections,
-        sortSelections
+        sortSelections,
+        makeIndexOfSortedSelections
     };
 })();
 
