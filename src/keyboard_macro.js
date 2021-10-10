@@ -13,6 +13,7 @@ const KeyboardMacro = function() {
     let onEndWrappedCommandCallback = null;
     let recording = false;
     const sequence = [];
+    const internalCommands = new Map();
 
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
@@ -27,6 +28,10 @@ const KeyboardMacro = function() {
     };
     const onEndWrappedCommand = function(callback) {
         onEndWrappedCommandCallback = callback;
+    };
+
+    const registerInternalCommand = function(name, func) {
+        internalCommands[name] = func;
     };
 
     const startRecording = function() {
@@ -57,10 +62,16 @@ const KeyboardMacro = function() {
     };
 
     const invokeCommand = async function(info) {
-        await vscode.commands.executeCommand(
-            info.command,
-            info.args
-        );
+        const func = internalCommands[info.command];
+        if (func !== undefined) {
+            const textEditor = vscode.window.activeTextEditor;
+            await func(textEditor, null, info.args);
+        } else {
+            await vscode.commands.executeCommand(
+                info.command,
+                info.args
+            );
+        }
     };
 
     const playback = async function() {
@@ -113,6 +124,7 @@ const KeyboardMacro = function() {
         onChangeRecordingState,
         onBeginWrappedCommand,
         onEndWrappedCommand,
+        registerInternalCommand,
         startRecording,
         cancelRecording,
         finishRecording,

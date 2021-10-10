@@ -8,7 +8,7 @@ const { keyboardMacro } = require('../../src/extension.js');
 describe('Typing Recording and Playback', () => {
     let textEditor;
     const Cmd = CommandsToTest;
-    const Type = text => ({ command: 'default:type', args: { text } });
+    const Type = text => ({ command: 'internal:performType', args: { text } });
     const DeleteAndType = (delta,text) => ({ command: 'kb-macro.type', args: { deleteCharacter: delta, text } });
     const MoveLeft = delta => ({ command: 'cursorMove', args: { to: 'left', by: 'character', value: delta } });
     const MoveRight = delta => ({ command: 'cursorMove', args: { to: 'right', by: 'character', value: delta } });
@@ -222,6 +222,11 @@ describe('Typing Recording and Playback', () => {
             await keyboardMacro.playback();
             assert.strictEqual(textEditor.document.lineAt(23).text, '    (efgh');
             assert.deepStrictEqual(getSelections(), [[23, 5]]);
+
+            setSelections([[2, 0]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(2).text, '(');
+            assert.deepStrictEqual(getSelections(), [[2, 1]]);
         });
         // TODO: add tests for cases with multi-cursor.
         // TODO: add tests for cases with a selection.

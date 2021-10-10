@@ -15,12 +15,47 @@ const TypingDetector = function() {
     };
     const notifyDetectedTyping = function(text) {
         if (onDetectTypingCallback) {
-            onDetectTypingCallback({
-                command: 'default:type',
-                args: {
-                    text: text
+            const args = { text: text };
+            onDetectTypingCallback(args);
+        }
+    };
+
+    // Performs typing.
+    // This is needed because the existing built-in 'default:type' command is not
+    // appropriate for the purpose since it triggers some unwanted side-effects
+    // like bracket completion.
+    const performType = async function(textEditor, _edit, args) {
+        const selections = util.sortSelections(textEditor.selections);
+        const text = (args && args.text) || '';
+        const numDeleteLeft = 0;
+        const numLF = Array.from(text).filter(ch => ch === '\n').length;
+        const lenLastLine = numLF === 0 ? 0 : text.length - (text.lastIndexOf('\n') + 1);
+        let lineOffset = 0;
+        await textEditor.edit(edit => {
+            for (let i = 0; i < selections.length; i++) {
+                let pos = selections[i].active;
+                let removedLineCount = 0;
+                if (!selections[i].isEmpty) {
+                    edit.delete(selections[i]);
+                    pos = selections[i].start;
+                    removedLineCount = selections[i].end.line - selections[i].start.line;
                 }
-            });
+                edit.insert(pos, text);
+                lineOffset += numLF;
+                if (numLF === 0) {
+                    pos = new vscode.Position(
+                        pos.line + lineOffset,
+                        Math.max(0, pos.character - numDeleteLeft) + text.length
+                    );
+                } else {
+                    pos = new vscode.Position(pos.line + lineOffset, lenLastLine);
+                }
+                lineOffset -= removedLineCount;
+                selections[i] = new vscode.Selection(pos, pos);
+            }
+        });
+        if (!util.isEqualSelections(textEditor.selections, selections)) {
+            textEditor.selections = selections;
         }
     };
 
@@ -95,6 +130,7 @@ const TypingDetector = function() {
     return {
         onDetectTyping,
         onDetectCursorMotion: cursorMotionDetector.onDetectCursorMotion,
+        performType,
         start,
         stop,
         suspend,

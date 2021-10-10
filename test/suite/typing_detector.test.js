@@ -10,7 +10,7 @@ describe('TypingDetector', () => {
 
     const setupDetectedTypingLog = function() {
         const logs = [];
-        typingDetector.onDetectTyping(function({ args }) {
+        typingDetector.onDetectTyping(function(args) {
             logs.push(args.text);
         });
         return logs;

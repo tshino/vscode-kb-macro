@@ -29,6 +29,8 @@ function activate(context) {
     registerCommand('playback', keyboardMacro.playback);
     registerCommand('wrap', keyboardMacro.wrap);
 
+    keyboardMacro.registerInternalCommand('internal:performType', typingDetector.performType);
+
     addEventListener(
         keyboardMacro.onChangeRecordingState,
         function({ recording, reason }) {
@@ -72,7 +74,12 @@ function activate(context) {
     );
     addEventListener(
         typingDetector.onDetectTyping,
-        keyboardMacro.push
+        function(args) {
+            keyboardMacro.push({
+                command: 'internal:performType',
+                args: args
+            });
+        }
     );
     addEventListener(
         typingDetector.onDetectCursorMotion,
