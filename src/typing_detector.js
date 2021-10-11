@@ -116,6 +116,8 @@ const TypingDetector = function() {
                 //  3. accept the suggestion
                 //  4. then edit event happens, that replaces 'ar' with 'Array'
                 const deleteLeft = changes[0].rangeLength;
+                const prediction = makePrediction(changes);
+                cursorMotionDetector.setPrediction(prediction);
                 notifyDetectedTyping({ deleteLeft, text: changes[0].text });
                 return;
             }

@@ -46,9 +46,9 @@ describe('TypingDetector', () => {
             if (prediction) {
                 assert.strictEqual(isSorted(prediction), true);
             }
-            if (expectedPrediction === null) {
+            if (expectedPrediction === null || prediction === null) {
                 assert.strictEqual(prediction, expectedPrediction);
-            } else { // array
+            } else {
                 assert.deepStrictEqual(
                     TestUtil.selectionsToArray(prediction),
                     expectedPrediction
@@ -216,6 +216,18 @@ describe('TypingDetector', () => {
                 makeContentChange(new vscode.Range(14, 1, 15, 3), 'x\ny')
             ], precond: [[12, 1, 13, 3], [14, 1, 15, 3]],
             expectedLogs: ['x\ny'], expectedPrediction: [[13, 1], [15, 1]] });
+        });
+    });
+    describe('code completion detection', async () => {
+        it('should process events, detect code completion and invoke the callback function (1)', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(10, 0, 10, 4), 'ABCDE')
+            ], precond: [[10, 4]], expectedLogs: ['ABCDE'], expectedPrediction: [[10, 5]] });
+        });
+        it('should process events, detect code completion and invoke the callback function (2)', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(20, 4, 20, 8), 'EFGHI')
+            ], precond: [[20, 8]], expectedLogs: ['EFGHI'], expectedPrediction: [[20, 9]] });
         });
     });
     // TODO: add tests for code completion detection
