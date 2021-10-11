@@ -196,6 +196,27 @@ describe('TypingDetector', () => {
             ], precond: [[13, 3, 13, 1], [12, 3, 12, 1]],
             expectedLogs: ['x'], expectedPrediction: [[12, 2], [13, 2]] });
         });
+        it('should detect typing with multiple selections that contain line-breaks', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(12, 1, 13, 3), 'x'),
+                makeContentChange(new vscode.Range(14, 1, 15, 3), 'x')
+            ], precond: [[12, 1, 13, 3], [14, 1, 15, 3]],
+            expectedLogs: ['x'], expectedPrediction: [[12, 2], [13, 2]] });
+        });
+        it('should detect typing of text contains line-breaks with multiple selections', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(12, 1, 12, 3), 'x\ny'),
+                makeContentChange(new vscode.Range(13, 1, 13, 3), 'x\ny')
+            ], precond: [[12, 1, 12, 3], [13, 1, 13, 3]],
+            expectedLogs: ['x\ny'], expectedPrediction: [[13, 1], [15, 1]] });
+        });
+        it('should detect typing of text contains line-breaks with multiple selections that also contain line-breaks', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(12, 1, 13, 3), 'x\ny'),
+                makeContentChange(new vscode.Range(14, 1, 15, 3), 'x\ny')
+            ], precond: [[12, 1, 13, 3], [14, 1, 15, 3]],
+            expectedLogs: ['x\ny'], expectedPrediction: [[13, 1], [15, 1]] });
+        });
     });
     // TODO: add tests for code completion detection
 });

@@ -48,7 +48,12 @@ const TypingDetector = function() {
                 lineDelta: lineOffset,
                 characterDelta: chg.text.length
             });
-            // lineOffset += Array.from(chg.text).filter(c => c === '\n').length;
+            const numLF = Array.from(chg.text).filter(ch => ch === '\n').length;
+            if (0 < numLF) {
+                const lenLastLine = chg.text.length - (chg.text.lastIndexOf('\n') + 1);
+                pos = new vscode.Position(pos.line + numLF, lenLastLine);
+                lineOffset += numLF;
+            }
             lineOffset -= chg.range.end.line - chg.range.start.line;
             sels[i] = new vscode.Selection(pos, pos);
         }
