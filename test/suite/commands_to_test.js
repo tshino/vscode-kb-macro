@@ -2,9 +2,13 @@
 
 const CommandsToTest = {
     CursorDown: { command: 'cursorDown' },
+    CursorDownSelect: { command: 'cursorDownSelect' },
     CursorLeft: { command: 'cursorLeft' },
+    CursorLeftSelect: { command: 'cursorLeftSelect' },
     CursorRight: { command: 'cursorRight' },
+    CursorRightSelect: { command: 'cursorRightSelect' },
     CursorUp: { command: 'cursorUp' },
+    CursorUpSelect: { command: 'cursorUpSelect' },
 
     CursorBottom: { command: 'cursorBottom' },
     CursorBottomSelect: { command: 'cursorBottomSelect' },

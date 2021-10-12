@@ -63,11 +63,33 @@ describe('Cursor Recording and Playback', () => {
                 await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
             });
         });
+        describe('cursorDownSelect', () => {
+            const seq = [ Cmd.CursorDownSelect ];
+            it('should move cursor down by one line with selection', async () => {
+                await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 3, 1, 3]] });
+                await testPlayback({ s: [[1, 6]] }, { s: [[1, 6, 2, 6]] });
+            });
+            it('should be ok if cursor is at the end of the document', async () => {
+                await testRecording(seq, { s: [[2, 22]] }, { s: [[2, 22]] });
+                await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
+            });
+        });
         describe('cursorLeft', () => {
             const seq = [ Cmd.CursorLeft ];
             it('should move cursor by one character to the left', async () => {
                 await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 2]] });
                 await testPlayback({ s: [[2, 10]] }, { s: [[2, 9]] });
+            });
+            it('should be ok if cursor is at the beginning of the document', async () => {
+                await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
+                await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
+            });
+        });
+        describe('cursorLeftSelect', () => {
+            const seq = [ Cmd.CursorLeftSelect ];
+            it('should move cursor by one character to the left with selection', async () => {
+                await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 3, 0, 2]] });
+                await testPlayback({ s: [[2, 10]] }, { s: [[2, 10, 2, 9]] });
             });
             it('should be ok if cursor is at the beginning of the document', async () => {
                 await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
@@ -85,11 +107,33 @@ describe('Cursor Recording and Playback', () => {
                 await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
             });
         });
+        describe('cursorRightSelect', () => {
+            const seq = [ Cmd.CursorRightSelect ];
+            it('should move cursor by one character to the right with selection', async () => {
+                await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 3, 0, 4]] });
+                await testPlayback({ s: [[2, 10]] }, { s: [[2, 10, 2, 11]] });
+            });
+            it('should be ok if cursor is at the end of the document', async () => {
+                await testRecording(seq, { s: [[2, 22]] }, { s: [[2, 22]] });
+                await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
+            });
+        });
         describe('cursorUp', () => {
             const seq = [ Cmd.CursorUp ];
             it('should move cursor up by one line', async () => {
                 await testRecording(seq, { s: [[1, 3]] }, { s: [[0, 3]] });
                 await testPlayback({ s: [[2, 8]] }, { s: [[1, 8]] });
+            });
+            it('should be ok if cursor is at the beginning of the document', async () => {
+                await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });
+                await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]] });
+            });
+        });
+        describe('cursorUpSelect', () => {
+            const seq = [ Cmd.CursorUpSelect ];
+            it('should move cursor up by one line with selection', async () => {
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 3, 0, 3]] });
+                await testPlayback({ s: [[2, 8]] }, { s: [[2, 8, 1, 8]] });
             });
             it('should be ok if cursor is at the beginning of the document', async () => {
                 await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]] });

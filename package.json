@@ -94,6 +94,22 @@
                 "when": "kb-macro.recording && textInputFocus"
             },
             {
+                "key": "ctrl+shift+down",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorDownSelect"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "shift+down",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorDownSelect"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
                 "key": "end",
                 "command": "kb-macro.wrap",
                 "args": {
@@ -140,10 +156,26 @@
                 "when": "kb-macro.recording && textInputFocus"
             },
             {
+                "key": "shift+left",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorLeftSelect"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
                 "key": "right",
                 "command": "kb-macro.wrap",
                 "args": {
                     "command": "cursorRight"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "shift+right",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorRightSelect"
                 },
                 "when": "kb-macro.recording && textInputFocus"
             },
@@ -168,6 +200,22 @@
                 "command": "kb-macro.wrap",
                 "args": {
                     "command": "cursorUp"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "ctrl+shift+up",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorUpSelect"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "shift+up",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cursorUpSelect"
                 },
                 "when": "kb-macro.recording && textInputFocus"
             },
