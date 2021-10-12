@@ -229,6 +229,11 @@ describe('TypingDetector', () => {
                 makeContentChange(new vscode.Range(20, 4, 20, 8), 'EFGHI')
             ], precond: [[20, 8]], expectedLogs: ['EFGHI'], expectedPrediction: [[20, 9]] });
         });
+        it('should not make prediction if no change is expected', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(10, 0, 10, 4), 'Abcd')
+            ], precond: [[10, 4]], expectedLogs: ['Abcd'], expectedPrediction: null });
+        });
     });
     // TODO: add tests for code completion detection
 });

@@ -102,7 +102,9 @@ const TypingDetector = function() {
                 // Every change is a pure insertion of or replacing the corresponding
                 // selected range with a common text.
                 const prediction = makePrediction(changes);
-                cursorMotionDetector.setPrediction(prediction);
+                if (!util.isEqualSelections(selections, prediction)) {
+                    cursorMotionDetector.setPrediction(prediction);
+                }
                 notifyDetectedTyping({ text: changes[0].text });
                 return;
             }
@@ -117,7 +119,9 @@ const TypingDetector = function() {
                 //  4. then edit event happens, that replaces 'ar' with 'Array'
                 const deleteLeft = changes[0].rangeLength;
                 const prediction = makePrediction(changes);
-                cursorMotionDetector.setPrediction(prediction);
+                if (!util.isEqualSelections(selections, prediction)) {
+                    cursorMotionDetector.setPrediction(prediction);
+                }
                 notifyDetectedTyping({ deleteLeft, text: changes[0].text });
                 return;
             }
