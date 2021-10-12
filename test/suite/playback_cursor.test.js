@@ -230,4 +230,36 @@ describe('Cursor Recording and Playback', () => {
             });
         });
     });
+
+    describe('selection', () => {
+        before(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n' +
+                '    fghij\n' +
+                '    klmno pqrstu vwxyz'
+            ));
+        });
+        describe('cancelSelection', () => {
+            const seq = [ Cmd.CancelSelection ];
+            it('should cancel selection', async () => {
+                await testRecording(seq, { s: [[0, 0, 0, 3]] }, { s: [[0, 3]] });
+                await testPlayback({ s: [[1, 6, 2, 3]] }, { s: [[2, 3]] });
+            });
+            it('should be ok if selection is already empty', async () => {
+                await testRecording(seq, { s: [[1, 7]] }, { s: [[1, 7]] });
+                await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
+            });
+        });
+        describe('removeSecondaryCursors', () => {
+            const seq = [ Cmd.RemoveSecondaryCursors ];
+            it('should remove secondary cursors', async () => {
+                await testRecording(seq, { s: [[0, 3], [1, 3], [2, 3]] }, { s: [[0, 3]] });
+                await testPlayback({ s: [[1, 5], [0, 5]] }, { s: [[1, 5]] });
+            });
+            it('should be ok if cursor is already single', async () => {
+                await testRecording(seq, { s: [[1, 7]] }, { s: [[1, 7]] });
+                await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
+            });
+        });
+    });
 });

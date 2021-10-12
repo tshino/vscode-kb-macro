@@ -19,6 +19,9 @@ const CommandsToTest = {
     CursorHome: { command: 'cursorHome' },
     CursorHomeSelect: { command: 'cursorHomeSelect' },
 
+    CancelSelection: { command: 'cancelSelection' },
+    RemoveSecondaryCursors: { command: 'removeSecondaryCursors' },
+
     Enter: { command: 'type', args: { text: '\n' } },
     Tab: { command: "tab" },
     CommentLine: { command: "editor.action.commentLine" },

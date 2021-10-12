@@ -70,6 +70,22 @@
                 "when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible"
             },
             {
+                "key": "shift+escape",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cancelSelection"
+                },
+                "when": "kb-macro.recording && editorHasSelection && textInputFocus"
+            },
+            {
+                "key": "escape",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "cancelSelection"
+                },
+                "when": "kb-macro.recording && editorHasSelection && textInputFocus"
+            },
+            {
                 "key": "ctrl+end",
                 "command": "kb-macro.wrap",
                 "args": {
@@ -226,6 +242,22 @@
                     "command": "tab"
                 },
                 "when": "kb-macro.recording && editorTextFocus && !editorReadonly && !editorTabMovesFocus"
+            },
+            {
+                "key": "shift+escape",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "removeSecondaryCursors"
+                },
+                "when": "kb-macro.recording && editorHasMultipleSelections && textInputFocus"
+            },
+            {
+                "key": "escape",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "removeSecondaryCursors"
+                },
+                "when": "kb-macro.recording && editorHasMultipleSelections && textInputFocus"
             },
             {
                 "key": "ctrl+oem_2",
