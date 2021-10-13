@@ -1,9 +1,10 @@
 .vscode/**
 .vscode-test/**
-test/**
 .github/**
 .gitignore
 .yarnrc
+test/**
+generator/**
 vsc-extension-quickstart.md
 **/jsconfig.json
 **/*.map
