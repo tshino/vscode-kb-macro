@@ -22,6 +22,8 @@ const CommandsToTest = {
     CancelSelection: { command: 'cancelSelection' },
     RemoveSecondaryCursors: { command: 'removeSecondaryCursors' },
 
+    EditorActionSelectAll: { command: 'editor.action.selectAll' },
+
     Enter: { command: 'type', args: { text: '\n' } },
     Tab: { command: "tab" },
     CommentLine: { command: "editor.action.commentLine" },

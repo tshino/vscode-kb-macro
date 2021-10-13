@@ -236,6 +236,14 @@
                 "when": "kb-macro.recording && textInputFocus"
             },
             {
+                "key": "ctrl+a",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "editor.action.selectAll"
+                },
+                "when": "kb-macro.recording && !listFocus"
+            },
+            {
                 "key": "tab",
                 "command": "kb-macro.wrap",
                 "args": {

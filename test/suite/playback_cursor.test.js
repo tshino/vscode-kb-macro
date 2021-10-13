@@ -261,5 +261,16 @@ describe('Cursor Recording and Playback', () => {
                 await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]] });
             });
         });
+        describe('editor.action.selectAll', () => {
+            const seq = [ Cmd.EditorActionSelectAll ];
+            it('should select entire document', async () => {
+                await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 0, 2, 22]] });
+                await testPlayback({ s: [[1, 5]] }, { s: [[0, 0, 2, 22]] });
+            });
+            it('should be ok if selection is already entire document', async () => {
+                await testRecording(seq, { s: [[0, 0, 2, 22]] }, { s: [[0, 0, 2, 22]] });
+                await testPlayback({ s: [[0, 0, 2, 22]] }, { s: [[0, 0, 2, 22]] });
+            });
+        });
     });
 });
