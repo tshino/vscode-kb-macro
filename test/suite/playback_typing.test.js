@@ -239,6 +239,11 @@ describe('Typing Recording and Playback', () => {
         // TODO: add tests for cases with a selection.
     });
 
+    // Here we make a test case for playback of input with code completion.
+    // Unfortunately, this is not a perfect simulation of actual code completion,
+    // and some details in events that will happen through the test differ from actual ones.
+    // But we consider it's acceptable as a test since it contains most of the same
+    // events as actual and reproduces the same results as actual.
     describe('code completion', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (

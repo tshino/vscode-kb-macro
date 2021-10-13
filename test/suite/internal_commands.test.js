@@ -17,7 +17,7 @@ describe('internalCommands', () => {
         vscode.window.showInformationMessage('Started test for Internal Commands.');
         textEditor = await TestUtil.setupTextEditor({ content: '' });
     });
-    describe('performType', () => {
+    describe('performType (basic)', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
                 '\n'.repeat(10) +
@@ -120,6 +120,31 @@ describe('internalCommands', () => {
             assert.strictEqual(textEditor.document.lineAt(19).text, '00efgh');
             assert.deepStrictEqual(getSelections(), [[1, 2], [10, 2], [19, 2]]);
         });
-        // TODO: add tests with 'deleteLeft' option
+    });
+
+    describe('performType (deleteLeft)', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                '\n'.repeat(10) +
+                'abcd\n'.repeat(10) +
+                '    efgh\n'.repeat(10)
+            ));
+        });
+        it('should delete left-hand side characters and insert a text', async () => {
+            setSelections([[10, 4]]);
+            await internalCommands.performType(textEditor, null, { deleteLeft: 2, text: 'CDEFG' });
+
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'abCDEFG');
+            assert.deepStrictEqual(getSelections(), [[10, 7]]);
+        });
+        it('should delete left-hand side characters and insert a text with multi-cursor', async () => {
+            setSelections([[10, 4], [11, 4]]);
+            await internalCommands.performType(textEditor, null, { deleteLeft: 2, text: 'CDEFG' });
+
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'abCDEFG');
+            assert.strictEqual(textEditor.document.lineAt(11).text, 'abCDEFG');
+            assert.deepStrictEqual(getSelections(), [[10, 7], [11, 7]]);
+        });
+        // TODO: add more tests with 'deleteLeft' option
     });
 });
