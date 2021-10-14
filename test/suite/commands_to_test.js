@@ -25,6 +25,7 @@ const CommandsToTest = {
     EditorActionSelectAll: { command: 'editor.action.selectAll' },
 
     Enter: { command: 'type', args: { text: '\n' } },
+    DeleteLeft: { command: "deleteLeft" },
     Tab: { command: "tab" },
     CommentLine: { command: "editor.action.commentLine" },
 };
