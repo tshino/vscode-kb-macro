@@ -28,8 +28,9 @@ function makeWrapper(keybinding) {
         args: spec
     };
     if ('when' in keybinding) {
-        // FIXME: we must deal with || operators.
-        wrapped.when = 'kb-macro.recording && ' + keybinding.when;
+        const conditions = keybinding.when.split('||');
+        const restricted = conditions.map(cond => 'kb-macro.recording && ' + cond.trim()).join(' || ');
+        wrapped.when = restricted;
     } else {
         wrapped.when = 'kb-macro.recording';
     }
