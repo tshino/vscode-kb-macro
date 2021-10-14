@@ -46,7 +46,7 @@ describe('Edit Recording and Playback', () => {
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abde');
                 assert.deepStrictEqual(getSelections(), [[0, 2]]);
             });
-            it('should connect previous line', async () => {
+            it('should connect the previous line', async () => {
                 setSelections([[1, 0]]);
                 await record(seq);
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
@@ -59,6 +59,30 @@ describe('Edit Recording and Playback', () => {
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde');
                 assert.deepStrictEqual(getSelections(), [[0, 0]]);
+            });
+        });
+        describe('deleteRight', () => {
+            const seq = [ Cmd.DeleteRight ];
+            it('should delete one character to the right', async () => {
+                setSelections([[0, 3]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abce');
+                assert.deepStrictEqual(getSelections(), [[0, 3]]);
+            });
+            it('should connect the next line', async () => {
+                setSelections([[0, 5]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij');
+                assert.deepStrictEqual(getSelections(), [[0, 5]]);
+            });
+            it('should do nothing if cursor is at the top of the document', async () => {
+                setSelections([[2, 22]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(2).text, '    klmno pqrstu vwxyz');
+                assert.deepStrictEqual(getSelections(), [[2, 22]]);
             });
         });
     });

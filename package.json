@@ -236,6 +236,30 @@
                 "when": "kb-macro.recording && textInputFocus"
             },
             {
+                "key": "shift+backspace",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "deleteLeft"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "backspace",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "deleteLeft"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
+                "key": "delete",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "deleteRight"
+                },
+                "when": "kb-macro.recording && textInputFocus"
+            },
+            {
                 "key": "ctrl+a",
                 "command": "kb-macro.wrap",
                 "args": {
