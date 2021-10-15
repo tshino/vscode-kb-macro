@@ -45,6 +45,11 @@ describe('Edit Recording and Playback', () => {
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abde');
                 assert.deepStrictEqual(getSelections(), [[0, 2]]);
+
+                setSelections([[1, 6]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(1).text, '    fhij');
+                assert.deepStrictEqual(getSelections(), [[1, 5]]);
             });
             it('should connect current line and the previous line', async () => {
                 setSelections([[1, 0]]);
@@ -52,11 +57,21 @@ describe('Edit Recording and Playback', () => {
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij');
                 assert.deepStrictEqual(getSelections(), [[0, 5]]);
+
+                setSelections([[1, 0]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij    klmno pqrstu vwxyz');
+                assert.deepStrictEqual(getSelections(), [[0, 14]]);
             });
             it('should do nothing if cursor is at the top of the document', async () => {
                 setSelections([[0, 0]]);
                 await record(seq);
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde');
+                assert.deepStrictEqual(getSelections(), [[0, 0]]);
+
+                setSelections([[0, 0]]);
+                await keyboardMacro.playback();
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde');
                 assert.deepStrictEqual(getSelections(), [[0, 0]]);
             });
@@ -69,6 +84,11 @@ describe('Edit Recording and Playback', () => {
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abce');
                 assert.deepStrictEqual(getSelections(), [[0, 3]]);
+
+                setSelections([[1, 6]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(1).text, '    fgij');
+                assert.deepStrictEqual(getSelections(), [[1, 6]]);
             });
             it('should connect current line and the next line', async () => {
                 setSelections([[0, 5]]);
@@ -76,11 +96,21 @@ describe('Edit Recording and Playback', () => {
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij');
                 assert.deepStrictEqual(getSelections(), [[0, 5]]);
+
+                setSelections([[0, 14]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij    klmno pqrstu vwxyz');
+                assert.deepStrictEqual(getSelections(), [[0, 14]]);
             });
             it('should do nothing if cursor is at the top of the document', async () => {
                 setSelections([[2, 22]]);
                 await record(seq);
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(2).text, '    klmno pqrstu vwxyz');
+                assert.deepStrictEqual(getSelections(), [[2, 22]]);
+
+                setSelections([[2, 22]]);
+                await keyboardMacro.playback();
                 assert.strictEqual(textEditor.document.lineAt(2).text, '    klmno pqrstu vwxyz');
                 assert.deepStrictEqual(getSelections(), [[2, 22]]);
             });
