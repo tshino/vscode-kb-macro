@@ -268,6 +268,14 @@
                 "when": "kb-macro.recording && !listFocus"
             },
             {
+                "key": "shift+tab",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "outdent"
+                },
+                "when": "kb-macro.recording && editorTextFocus && !editorReadonly && !editorTabMovesFocus"
+            },
+            {
                 "key": "tab",
                 "command": "kb-macro.wrap",
                 "args": {
@@ -290,6 +298,22 @@
                     "command": "removeSecondaryCursors"
                 },
                 "when": "kb-macro.recording && editorHasMultipleSelections && textInputFocus"
+            },
+            {
+                "key": "ctrl+oem_6",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "editor.action.indentLines"
+                },
+                "when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+            },
+            {
+                "key": "ctrl+oem_4",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "editor.action.outdentLines"
+                },
+                "when": "kb-macro.recording && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+oem_2",

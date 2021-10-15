@@ -86,4 +86,84 @@ describe('Edit Recording and Playback', () => {
             });
         });
     });
+    describe('indent/outdent', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n'.repeat(10) +
+                '    fghij\n'.repeat(10) +
+                '        klmno\n'.repeat(10)
+            ));
+        });
+        describe('outdent', () => {
+            const seq = [ Cmd.Outdent ];
+            it('should eliminate indent one level', async () => {
+                setSelections([[20, 8]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(20).text, '    klmno');
+                assert.deepStrictEqual(getSelections(), [[20, 4]]);
+            });
+            it('should eliminate indent one level on multiple lines', async () => {
+                setSelections([[19, 4, 21, 4]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(19).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(20).text, '    klmno');
+                assert.strictEqual(textEditor.document.lineAt(21).text, '    klmno');
+                assert.deepStrictEqual(getSelections(), [[19, 0, 21, 4]]);
+            });
+            it('should do nothing if no indent', async () => {
+                setSelections([[0, 0]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde');
+                assert.deepStrictEqual(getSelections(), [[0, 0]]);
+            });
+        });
+        describe('outdentLines', () => {
+            const seq = [ Cmd.OutdentLines ];
+            it('should eliminate indent one level', async () => {
+                setSelections([[20, 8]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(20).text, '    klmno');
+                assert.deepStrictEqual(getSelections(), [[20, 4]]);
+            });
+            it('should eliminate indent one level on multiple lines', async () => {
+                setSelections([[19, 4, 21, 4]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(19).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(20).text, '    klmno');
+                assert.strictEqual(textEditor.document.lineAt(21).text, '    klmno');
+                assert.deepStrictEqual(getSelections(), [[19, 0, 21, 4]]);
+            });
+            it('should do nothing if no indent', async () => {
+                setSelections([[0, 0]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde');
+                assert.deepStrictEqual(getSelections(), [[0, 0]]);
+            });
+        });
+        describe('indentLines', () => {
+            const seq = [ Cmd.IndentLines ];
+            it('should insert indent one level', async () => {
+                setSelections([[10, 4]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(10).text, '        fghij');
+                assert.deepStrictEqual(getSelections(), [[10, 8]]);
+            });
+            it('should insert indent one level on multiple lines', async () => {
+                setSelections([[9, 3, 11, 2]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(9).text, '    abcde');
+                assert.strictEqual(textEditor.document.lineAt(10).text, '        fghij');
+                assert.strictEqual(textEditor.document.lineAt(11).text, '        fghij');
+                assert.deepStrictEqual(getSelections(), [[9, 7, 11, 2]]);
+            });
+        });
+    });
 });
