@@ -27,6 +27,8 @@ const CommandsToTest = {
     Enter: { command: 'type', args: { text: '\n' } },
     DeleteLeft: { command: "deleteLeft" },
     DeleteRight: { command: "deleteRight" },
+    DeleteWordLeft: { command: "deleteWordLeft" },
+    DeleteWordRight: { command: "deleteWordRight" },
     Outdent: { command: 'outdent' },
     OutdentLines: { command: 'editor.action.outdentLines' },
     IndentLines: { command: 'editor.action.indentLines' },

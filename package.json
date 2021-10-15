@@ -300,6 +300,22 @@
                 "when": "kb-macro.recording && editorHasMultipleSelections && textInputFocus"
             },
             {
+                "key": "ctrl+backspace",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "deleteWordLeft"
+                },
+                "when": "kb-macro.recording && textInputFocus && !editorReadonly"
+            },
+            {
+                "key": "ctrl+delete",
+                "command": "kb-macro.wrap",
+                "args": {
+                    "command": "deleteWordRight"
+                },
+                "when": "kb-macro.recording && textInputFocus && !editorReadonly"
+            },
+            {
                 "key": "ctrl+oem_6",
                 "command": "kb-macro.wrap",
                 "args": {

@@ -46,7 +46,7 @@ describe('Edit Recording and Playback', () => {
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abde');
                 assert.deepStrictEqual(getSelections(), [[0, 2]]);
             });
-            it('should connect the previous line', async () => {
+            it('should connect current line and the previous line', async () => {
                 setSelections([[1, 0]]);
                 await record(seq);
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
@@ -70,11 +70,59 @@ describe('Edit Recording and Playback', () => {
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abce');
                 assert.deepStrictEqual(getSelections(), [[0, 3]]);
             });
-            it('should connect the next line', async () => {
+            it('should connect current line and the next line', async () => {
                 setSelections([[0, 5]]);
                 await record(seq);
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
                 assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij');
+                assert.deepStrictEqual(getSelections(), [[0, 5]]);
+            });
+            it('should do nothing if cursor is at the top of the document', async () => {
+                setSelections([[2, 22]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(2).text, '    klmno pqrstu vwxyz');
+                assert.deepStrictEqual(getSelections(), [[2, 22]]);
+            });
+        });
+        describe('deleteWordLeft', () => {
+            const seq = [ Cmd.DeleteWordLeft ];
+            it('should delete one word to the left', async () => {
+                setSelections([[2, 10]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(2).text, '    pqrstu vwxyz');
+                assert.deepStrictEqual(getSelections(), [[2, 4]]);
+            });
+            it('should connect current line and the previous line', async () => {
+                setSelections([[1, 0]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij');
+                assert.deepStrictEqual(getSelections(), [[0, 5]]);
+            });
+            it('should do nothing if cursor is at the top of the document', async () => {
+                setSelections([[0, 0]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde');
+                assert.deepStrictEqual(getSelections(), [[0, 0]]);
+            });
+        });
+        describe('deleteWordRight', () => {
+            const seq = [ Cmd.DeleteWordRight ];
+            it('should delete one word to the right', async () => {
+                setSelections([[2, 10]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(2).text, '    klmno  vwxyz');
+                assert.deepStrictEqual(getSelections(), [[2, 10]]);
+            });
+            it('should connect current line and the next line and remove indent', async () => {
+                setSelections([[0, 5]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcdefghij');
                 assert.deepStrictEqual(getSelections(), [[0, 5]]);
             });
             it('should do nothing if cursor is at the top of the document', async () => {
