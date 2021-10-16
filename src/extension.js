@@ -67,11 +67,17 @@ function activate(context) {
     );
     addEventListener(
         vscode.workspace.onDidChangeTextDocument,
-        typingDetector.processDocumentChangeEvent
+        function(event) {
+            keyboardMacro.processDocumentChangeEvent(event);
+            typingDetector.processDocumentChangeEvent(event);
+        }
     );
     addEventListener(
         vscode.window.onDidChangeTextEditorSelection,
-        typingDetector.processSelectionChangeEvent
+        function(event) {
+            keyboardMacro.processSelectionChangeEvent(event);
+            typingDetector.processSelectionChangeEvent(event);
+        }
     );
     addEventListener(
         typingDetector.onDetectTyping,

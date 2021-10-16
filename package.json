@@ -319,7 +319,8 @@
                 "key": "ctrl+k ctrl+c",
                 "command": "kb-macro.wrap",
                 "args": {
-                    "command": "editor.action.addCommentLine"
+                    "command": "editor.action.addCommentLine",
+                    "effect": [ "edit", "move" ]
                 },
                 "when": "kb-macro.recording && editorTextFocus && !editorReadonly"
             },
@@ -327,7 +328,8 @@
                 "key": "ctrl+oem_2",
                 "command": "kb-macro.wrap",
                 "args": {
-                    "command": "editor.action.commentLine"
+                    "command": "editor.action.commentLine",
+                    "effect": [ "edit", "move" ]
                 },
                 "when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible"
             },
@@ -351,7 +353,8 @@
                 "key": "ctrl+k ctrl+u",
                 "command": "kb-macro.wrap",
                 "args": {
-                    "command": "editor.action.removeCommentLine"
+                    "command": "editor.action.removeCommentLine",
+                    "effect": [ "edit", "move" ]
                 },
                 "when": "kb-macro.recording && editorTextFocus && !editorReadonly"
             }
