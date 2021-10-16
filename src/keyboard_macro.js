@@ -12,8 +12,25 @@ const KeyboardMacro = function() {
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
     let recording = false;
+    let locked = false;
     const sequence = [];
     const internalCommands = new Map();
+
+    const makeGuardedCommand = function(func) {
+        return async function(textEditor, edit, args) {
+            if (locked) {
+                return;
+            }
+            locked = true;
+            try {
+                await func(textEditor, edit, args);
+            } catch (error) {
+                console.error(error);
+                console.info('kb-macro: Exception in guarded command');
+            }
+            locked = false;
+        };
+    };
 
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
@@ -74,7 +91,7 @@ const KeyboardMacro = function() {
         }
     };
 
-    const playback = async function() {
+    const playback = makeGuardedCommand(async function() {
         if (!recording) {
             for (let i = 0; i < sequence.length; i++) {
                 const info = sequence[i];
@@ -89,7 +106,7 @@ const KeyboardMacro = function() {
                 }
             }
         }
-    };
+    });
 
     const wrap = async function(_textEditor, _edit, args) {
         if (recording) {
