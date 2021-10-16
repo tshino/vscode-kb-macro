@@ -244,4 +244,114 @@ describe('Edit Recording and Playback', () => {
             });
         });
     });
+    describe('commentLine', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'function hello(name) {\n' +
+                '    console.log("Hello, " + name);\n' +
+                '}\n' +
+                '// hello("world");\n' +
+                '// hello("vscode");\n' +
+                'hello("Code");'
+            ), { languageId: 'javascript' } );
+        });
+        describe('commentLine', () => {
+            const seq = [ Cmd.CommentLine ];
+            it('should add line comment', async () => {
+                setSelections([[5, 5]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(5).text, '// hello("Code");');
+                assert.deepStrictEqual(getSelections(), [[5, 8]]);
+
+                setSelections([[1, 0]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(1).text, '    // console.log("Hello, " + name);');
+                assert.deepStrictEqual(getSelections(), [[1, 0]]);
+            });
+            it('should remove line comment', async () => {
+                setSelections([[3, 5]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'hello("world");');
+                assert.deepStrictEqual(getSelections(), [[3, 2]]);
+
+                setSelections([[4, 0]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'hello("vscode");');
+                assert.deepStrictEqual(getSelections(), [[4, 0]]);
+            });
+            it('should add/remove line comments on multiple lines', async () => {
+                setSelections([[0, 0, 3, 0]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, '// function hello(name) {');
+                assert.strictEqual(textEditor.document.lineAt(1).text, '//     console.log("Hello, " + name);');
+                assert.strictEqual(textEditor.document.lineAt(2).text, '// }');
+                assert.deepStrictEqual(getSelections(), [[0, 3, 3, 0]]);
+
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'function hello(name) {');
+                assert.strictEqual(textEditor.document.lineAt(1).text, '    console.log("Hello, " + name);');
+                assert.strictEqual(textEditor.document.lineAt(2).text, '}');
+                assert.deepStrictEqual(getSelections(), [[0, 0, 3, 0]]);
+            });
+        });
+        describe('addCommentLine', () => {
+            const seq = [ Cmd.AddCommentLine ];
+            it('should add line comment', async () => {
+                setSelections([[5, 5]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(5).text, '// hello("Code");');
+                assert.deepStrictEqual(getSelections(), [[5, 8]]);
+
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(5).text, '// // hello("Code");');
+                assert.deepStrictEqual(getSelections(), [[5, 11]]);
+            });
+            it('should add line comments on multiple lines', async () => {
+                setSelections([[0, 0, 3, 0]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, '// function hello(name) {');
+                assert.strictEqual(textEditor.document.lineAt(1).text, '//     console.log("Hello, " + name);');
+                assert.strictEqual(textEditor.document.lineAt(2).text, '// }');
+                assert.deepStrictEqual(getSelections(), [[0, 3, 3, 0]]);
+
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(0).text, '// // function hello(name) {');
+                assert.strictEqual(textEditor.document.lineAt(1).text, '// //     console.log("Hello, " + name);');
+                assert.strictEqual(textEditor.document.lineAt(2).text, '// // }');
+                assert.deepStrictEqual(getSelections(), [[0, 6, 3, 0]]);
+            });
+        });
+        describe('removeCommentLine', () => {
+            const seq = [ Cmd.RemoveCommentLine ];
+            it('should remove line comment', async () => {
+                setSelections([[3, 5]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'hello("world");');
+                assert.deepStrictEqual(getSelections(), [[3, 2]]);
+
+                setSelections([[4, 0]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'hello("vscode");');
+                assert.deepStrictEqual(getSelections(), [[4, 0]]);
+            });
+            it('should remove line comments on multiple lines', async () => {
+                setSelections([[3, 0, 5, 0]]);
+                await record(seq);
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'hello("world");');
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'hello("vscode");');
+                assert.deepStrictEqual(getSelections(), [[3, 0, 5, 0]]);
+
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'hello("world");');
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'hello("vscode");');
+                assert.deepStrictEqual(getSelections(), [[3, 0, 5, 0]]);
+            });
+        });
+    });
 });

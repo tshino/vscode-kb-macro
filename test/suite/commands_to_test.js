@@ -25,6 +25,8 @@ const CommandsToTest = {
     EditorActionSelectAll: { command: 'editor.action.selectAll' },
 
     Enter: { command: 'type', args: { text: '\n' } },
+    Tab: { command: "tab" },
+
     DeleteLeft: { command: "deleteLeft" },
     DeleteRight: { command: "deleteRight" },
     DeleteWordLeft: { command: "deleteWordLeft" },
@@ -32,8 +34,9 @@ const CommandsToTest = {
     Outdent: { command: 'outdent' },
     OutdentLines: { command: 'editor.action.outdentLines' },
     IndentLines: { command: 'editor.action.indentLines' },
-    Tab: { command: "tab" },
     CommentLine: { command: "editor.action.commentLine" },
+    AddCommentLine: { command: "editor.action.addCommentLine" },
+    RemoveCommentLine: { command: "editor.action.removeCommentLine" },
 };
 
 module.exports = { CommandsToTest };
