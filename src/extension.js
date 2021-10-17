@@ -32,6 +32,10 @@ function activate(context) {
 
     keyboardMacro.registerInternalCommand('internal:performType', internalCommands.performType);
 
+    const modeIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 110);
+    modeIndicator.text = "REC";
+    context.subscriptions.push(modeIndicator);
+
     addEventListener(
         keyboardMacro.onChangeRecordingState,
         function({ recording, reason }) {
@@ -45,11 +49,15 @@ function activate(context) {
             vscode.commands.executeCommand('setContext', contextName, recording);
 
             if (recording) {
-                vscode.window.showInformationMessage('Recording started!');
-            } else if (reason === keyboardMacro.RecordingStateReason.Cancel) {
-                vscode.window.showInformationMessage('Recording canceled!');
+                modeIndicator.show();
+                vscode.window.setStatusBarMessage('Recording started!', 3000);
             } else {
-                vscode.window.showInformationMessage('Recording finished!');
+                modeIndicator.hide();
+                if (reason === keyboardMacro.RecordingStateReason.Cancel) {
+                    vscode.window.setStatusBarMessage('Recording canceled!', 3000);
+                } else {
+                    vscode.window.setStatusBarMessage('Recording finished!', 3000);
+                }
             }
         }
     );
