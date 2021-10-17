@@ -4,6 +4,7 @@ const vscode = require("vscode");
 
 const TestUtil = (function() {
     const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+    const usedLanguages = new Set();
     const setupTextEditor = async function({ content, language = 'plaintext' }) {
         const doc = await vscode.workspace.openTextDocument({ content, language });
         await vscode.window.showTextDocument(doc);
@@ -30,6 +31,10 @@ const TestUtil = (function() {
             textEditor.document,
             languageId
         );
+        if (!usedLanguages.has(languageId)) {
+            usedLanguages.add(languageId);
+            await sleep(500);
+        }
     };
     const selectionsToArray = function(selections) {
         return Array.from(selections).map(

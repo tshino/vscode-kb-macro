@@ -259,7 +259,6 @@ describe('Edit Recording and Playback', () => {
             const seq = [ Cmd.CommentLine ];
             it('should add line comment', async () => {
                 setSelections([[5, 5]]);
-                await TestUtil.sleep(500);
                 await record(seq);
                 await TestUtil.sleep(500);
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
