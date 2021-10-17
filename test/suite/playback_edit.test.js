@@ -5,7 +5,7 @@ const { TestUtil } = require('./test_util.js');
 const { CommandsToTest } = require('./commands_to_test.js');
 const { keyboardMacro } = require('../../src/extension.js');
 
-describe('Edit Recording and Playback', () => {
+describe('Recording and Playback: Edit', () => {
     let textEditor;
     let edit = null; // dummy
     const Cmd = CommandsToTest;

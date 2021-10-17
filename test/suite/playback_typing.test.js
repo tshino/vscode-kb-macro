@@ -5,7 +5,7 @@ const { TestUtil } = require('./test_util.js');
 const { CommandsToTest } = require('./commands_to_test.js');
 const { keyboardMacro } = require('../../src/extension.js');
 
-describe('Typing Recording and Playback', () => {
+describe('Recording and Playback: Typing', () => {
     let textEditor;
     const Cmd = CommandsToTest;
     const Type = text => ({ command: 'internal:performType', args: { text } });
@@ -78,7 +78,7 @@ describe('Typing Recording and Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abXYcd');
             assert.deepStrictEqual(getSelections(), [[10, 4]]);
         });
-        it('should detect and reproduce direct typing of multiple characters with trhee characters in one command', async () => {
+        it('should detect and reproduce direct typing of multiple characters with three characters in one command', async () => {
             setSelections([[0, 0]]);
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'XYZ' });
