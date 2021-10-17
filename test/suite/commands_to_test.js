@@ -34,9 +34,12 @@ const CommandsToTest = {
     Outdent: { command: 'outdent' },
     OutdentLines: { command: 'editor.action.outdentLines' },
     IndentLines: { command: 'editor.action.indentLines' },
-    CommentLine: { command: "editor.action.commentLine", effect: ['edit', 'move'] },
-    AddCommentLine: { command: "editor.action.addCommentLine", effect: ['edit', 'move'] },
-    RemoveCommentLine: { command: "editor.action.removeCommentLine", effect: ['edit', 'move'] },
+    CommentLine: { command: "editor.action.commentLine" },
+    AddCommentLine: { command: "editor.action.addCommentLine" },
+    RemoveCommentLine: { command: "editor.action.removeCommentLine" },
+    // CommentLine: { command: "editor.action.commentLine", effect: ['edit', 'move'] },
+    // AddCommentLine: { command: "editor.action.addCommentLine", effect: ['edit', 'move'] },
+    // RemoveCommentLine: { command: "editor.action.removeCommentLine", effect: ['edit', 'move'] },
 };
 
 module.exports = { CommandsToTest };
