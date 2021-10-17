@@ -260,7 +260,6 @@ describe('Edit Recording and Playback', () => {
             it('should add line comment', async () => {
                 setSelections([[5, 5]]);
                 await record(seq);
-                await TestUtil.sleep(500);
                 assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
                 assert.strictEqual(textEditor.document.lineAt(5).text, '// hello("Code");');
                 assert.deepStrictEqual(getSelections(), [[5, 8]]);

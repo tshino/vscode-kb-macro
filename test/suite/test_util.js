@@ -33,6 +33,9 @@ const TestUtil = (function() {
         );
         if (!usedLanguages.has(languageId)) {
             usedLanguages.add(languageId);
+            // We need some sleep here since it seems a newly loaded language
+            // triggers process of something asynchronous and some commands
+            // related to the language would not work properly until the process ends.
             await sleep(500);
         }
     };
