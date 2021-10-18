@@ -13,8 +13,8 @@ const KeyboardMacro = function() {
     let onEndWrappedCommandCallback = null;
     let recording = false;
     let locked = false;
-    let documentChanged = 0;
-    let selectionChanged = 0;
+    const documentChanged = [];
+    const selectionChanged = [];
     const sequence = [];
     const internalCommands = new Map();
 
@@ -81,30 +81,37 @@ const KeyboardMacro = function() {
     };
 
     const startEffectObserver = function(info) {
+        const TIMEOUT = 300;
         const effect = info.effect || [];
-        const observerState = {};
-        for (let i = 0; i < effect.length; i++) {
-            const e = effect[i];
-            if (e === 'edit') {
-                observerState.edit = documentChanged + 1;
-            } else if (e === 'move') {
-                observerState.move = selectionChanged + 1;
+        return new Promise((resolve, reject) => {
+            let count = 0;
+            const doneOne = function() {
+                count -= 1;
+                if (count == 0) {
+                    resolve();
+                }
+            };
+            for (let i = 0; i < effect.length; i++) {
+                const e = effect[i];
+                if (e === 'edit') {
+                    count += 1;
+                    documentChanged.push(doneOne);
+                } else if (e === 'move') {
+                    count += 1;
+                    selectionChanged.push(doneOne);
+                }
             }
-        }
-        return observerState;
-    };
-    const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
-    const waitForEffects = async function(observerState) {
-        if ('edit' in observerState) {
-            for (let i = 0; i < 5 && documentChanged < observerState.edit; i++) {
-                await sleep(50);
+            if (count === 0) {
+                resolve();
+            } else {
+                setTimeout(() => {
+                    if (0 < count) {
+                        count = 0;
+                        reject();
+                    }
+                }, TIMEOUT);
             }
-        }
-        if ('move' in observerState) {
-            for (let i = 0; i < 5 && selectionChanged < observerState.move; i++) {
-                await sleep(50);
-            }
-        }
+        });
     };
 
     const invokeCommand = async function(info) {
@@ -120,6 +127,20 @@ const KeyboardMacro = function() {
         }
     };
 
+    const invokeCommandSync = async function(info, context) {
+        let ok = true;
+        const promise = startEffectObserver(info).catch(() => {});
+        try {
+            await invokeCommand(info);
+        } catch(error) {
+            ok = false;
+            console.error(error);
+            console.info('kb-macro: Error in ' + context + ': ' + JSON.stringify(info));
+        }
+        await promise;
+        return ok;
+    };
+
     const playback = makeGuardedCommand(async function() {
         if (!recording) {
             for (let i = 0; i < sequence.length; i++) {
@@ -127,13 +148,9 @@ const KeyboardMacro = function() {
                 if (info.failed) {
                     continue;
                 }
-                try {
-                    const observerState = startEffectObserver(info);
-                    await invokeCommand(info);
-                    await waitForEffects(observerState);
-                } catch(error) {
-                    console.error(error);
-                    console.info('kb-macro: Error in playback: args=', info);
+                const ok = await invokeCommandSync(info, 'playback');
+                if (!ok) {
+                    break;
                 }
             }
         }
@@ -157,14 +174,9 @@ const KeyboardMacro = function() {
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
             }
-            try {
-                const observerState = startEffectObserver(info);
-                await invokeCommand(info);
-                await waitForEffects(observerState);
-            } catch(error) {
+            const ok = await invokeCommandSync(info, 'wrap');
+            if (!ok) {
                 info.failed = true;
-                console.error(error);
-                console.info('kb-macro: Error in wrap: args=', args);
             }
             if (onEndWrappedCommandCallback) {
                 onEndWrappedCommandCallback();
@@ -172,11 +184,19 @@ const KeyboardMacro = function() {
         }
     };
 
-    const processDocumentChangeEvent = function(_event) {
-        documentChanged += 1;
+    const processDocumentChangeEvent = function() {
+        const notifiers = Array.from(documentChanged);
+        documentChanged.length = 0;
+        for (let i = 0; i < notifiers.length; i++) {
+            notifiers[i]();
+        }
     };
-    const processSelectionChangeEvent = function(_event) {
-        selectionChanged += 1;
+    const processSelectionChangeEvent = function() {
+        const notifiers = Array.from(selectionChanged);
+        selectionChanged.length = 0;
+        for (let i = 0; i < notifiers.length; i++) {
+            notifiers[i]();
+        }
     };
 
     return {
