@@ -74,15 +74,15 @@ const KeyboardMacro = function() {
         }
     };
 
-    const push = function(info) {
+    const push = function(spec) {
         if (recording) {
-            sequence.push(info);
+            sequence.push(spec);
         }
     };
 
-    const startEffectObserver = function(info) {
+    const startEffectObserver = function(spec) {
         const TIMEOUT = 300;
-        const effect = info.effect || [];
+        const effect = spec.effect || [];
         return new Promise((resolve, reject) => {
             let count = 0;
             const doneOne = function() {
@@ -114,28 +114,28 @@ const KeyboardMacro = function() {
         });
     };
 
-    const invokeCommand = async function(info) {
-        const func = internalCommands[info.command];
+    const invokeCommand = async function(spec) {
+        const func = internalCommands[spec.command];
         if (func !== undefined) {
             const textEditor = vscode.window.activeTextEditor;
-            await func(textEditor, null, info.args);
+            await func(textEditor, null, spec.args);
         } else {
             await vscode.commands.executeCommand(
-                info.command,
-                info.args
+                spec.command,
+                spec.args
             );
         }
     };
 
-    const invokeCommandSync = async function(info, context) {
+    const invokeCommandSync = async function(spec, context) {
         let ok = true;
-        const promise = startEffectObserver(info).catch(() => {});
+        const promise = startEffectObserver(spec).catch(() => {});
         try {
-            await invokeCommand(info);
+            await invokeCommand(spec);
         } catch(error) {
             ok = false;
             console.error(error);
-            console.info('kb-macro: Error in ' + context + ': ' + JSON.stringify(info));
+            console.info('kb-macro: Error in ' + context + ': ' + JSON.stringify(spec));
         }
         await promise;
         return ok;
@@ -144,11 +144,11 @@ const KeyboardMacro = function() {
     const playback = makeGuardedCommand(async function() {
         if (!recording) {
             for (let i = 0; i < sequence.length; i++) {
-                const info = sequence[i];
-                if (info.failed) {
+                const spec = sequence[i];
+                if (spec.failed) {
                     continue;
                 }
-                const ok = await invokeCommandSync(info, 'playback');
+                const ok = await invokeCommandSync(spec, 'playback');
                 if (!ok) {
                     break;
                 }
@@ -161,22 +161,22 @@ const KeyboardMacro = function() {
             if (!args || !args.command) {
                 return;
             }
-            const info = {
+            const spec = {
                 command: args.command
             };
             if ('args' in args) {
-                info.args = args.args;
+                spec.args = args.args;
             }
             if ('effect' in args) {
-                info.effect = args.effect;
+                spec.effect = args.effect;
             }
-            push(info);
+            push(spec);
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
             }
-            const ok = await invokeCommandSync(info, 'wrap');
+            const ok = await invokeCommandSync(spec, 'wrap');
             if (!ok) {
-                info.failed = true;
+                spec.failed = true;
             }
             if (onEndWrappedCommandCallback) {
                 onEndWrappedCommandCallback();
