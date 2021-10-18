@@ -103,9 +103,65 @@ describe('KeybaordMacro', () => {
                 { recording: false, reason: keyboardMacro.RecordingStateReason.Cancel }
             ]);
         });
-        // TODO: add tests of discarding sequence
+        it('should discard pushed commands', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'example:command' });
+            keyboardMacro.cancelRecording();
+
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
     });
-    // TODO: add tests for finishRecording
+    describe('finishRecording', () => {
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+        });
+        it('should deactivate recording state', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.finishRecording();
+
+            assert.strictEqual(keyboardMacro.isRecording(), false);
+        });
+        it('should invoke callback function', async () => {
+            const logs = [];
+            keyboardMacro.startRecording();
+            keyboardMacro.onChangeRecordingState(({ recording, reason }) => {
+                logs.push({ recording, reason });
+            });
+
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [
+                { recording: false, reason: keyboardMacro.RecordingStateReason.Finish }
+            ]);
+        });
+        it('should ignore multiple calls', async () => {
+            const logs = [];
+            keyboardMacro.startRecording();
+            keyboardMacro.onChangeRecordingState(({ recording, reason }) => {
+                logs.push({ recording, reason });
+            });
+
+            keyboardMacro.finishRecording(); // 1
+            keyboardMacro.finishRecording(); // 2
+
+            assert.strictEqual(keyboardMacro.isRecording(), false);
+            assert.deepStrictEqual(logs, [
+                { recording: false, reason: keyboardMacro.RecordingStateReason.Finish }
+            ]);
+        });
+        it('should record the pushed commands', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'example:command1' });
+            keyboardMacro.push({ command: 'example:command2', args: { opt1: 'opt1' } });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'example:command1' },
+                { command: 'example:command2', args: { opt1: 'opt1' } }
+            ]);
+        });
+    });
     // TODO: add tests for push
     describe('playback', () => {
         beforeEach(async () => {
