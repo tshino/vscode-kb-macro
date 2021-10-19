@@ -19,6 +19,25 @@
     ],
     "main": "./src/extension.js",
     "contributes": {
+        "configuration": {
+            "title": "Keyboard Macro",
+            "properties": {
+                "keyboardMacro.recordingShortcuts": {
+                    "type": "string",
+                    "default": "Option1",
+                    "enum": [
+                        "Option1",
+                        "Option2",
+                        "None"
+                    ],
+                    "markdownEnumDescriptions": [
+                        "**Ctrl+Alt+R** for Start/Cancel Recording and **Ctrl+Alt+P** for Finish Recording/Playback",
+                        "**Ctrl+Shift+Alt+R** for Start/Cancel Recording and **Ctrl+Shift+Alt+P** for Finish Recording/Playback",
+                        "No keybindings. Instead, define your own ones in keybindings.json."
+                    ]
+                }
+            }
+        },
         "commands": [
             {
                 "command": "kb-macro.startRecording",
@@ -39,24 +58,44 @@
         ],
         "keybindings": [
             {
+                "key": "ctrl+alt+r",
+                "command": "kb-macro.startRecording",
+                "when": "!kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option1'"
+            },
+            {
+                "key": "ctrl+alt+r",
+                "command": "kb-macro.cancelRecording",
+                "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option1'"
+            },
+            {
+                "key": "ctrl+alt+p",
+                "command": "kb-macro.finishRecording",
+                "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option1'"
+            },
+            {
+                "key": "ctrl+alt+p",
+                "command": "kb-macro.playback",
+                "when": "!kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option1'"
+            },
+            {
                 "key": "ctrl+shift+alt+r",
                 "command": "kb-macro.startRecording",
-                "when": "!kb-macro.recording && editorFocus"
+                "when": "!kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
             },
             {
                 "key": "ctrl+shift+alt+r",
                 "command": "kb-macro.cancelRecording",
-                "when": "kb-macro.recording && editorFocus"
+                "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
             },
             {
                 "key": "ctrl+shift+alt+p",
                 "command": "kb-macro.finishRecording",
-                "when": "kb-macro.recording && editorFocus"
+                "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
             },
             {
                 "key": "ctrl+shift+alt+p",
                 "command": "kb-macro.playback",
-                "when": "!kb-macro.recording && editorFocus"
+                "when": "!kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
             },
             {
                 "key": "enter",
