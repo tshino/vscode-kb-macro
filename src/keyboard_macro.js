@@ -156,7 +156,7 @@ const KeyboardMacro = function() {
         }
     });
 
-    const wrap = async function(_textEditor, _edit, args) {
+    const wrap = makeGuardedCommand(async function(_textEditor, _edit, args) {
         if (recording) {
             if (!args || !args.command) {
                 return;
@@ -182,7 +182,7 @@ const KeyboardMacro = function() {
                 onEndWrappedCommandCallback();
             }
         }
-    };
+    });
 
     const processDocumentChangeEvent = function() {
         const notifiers = Array.from(documentChanged);

@@ -184,7 +184,7 @@ describe('KeybaordMacro', () => {
             const logs = [];
             keyboardMacro.registerInternalCommand('internal:log', async () => {
                 logs.push('begin');
-                await TestUtil.sleep(100);
+                await TestUtil.sleep(50);
                 logs.push('end');
             });
             keyboardMacro.startRecording();
@@ -204,7 +204,7 @@ describe('KeybaordMacro', () => {
             const logs = [];
             keyboardMacro.registerInternalCommand('internal:log', async () => {
                 logs.push('begin');
-                await TestUtil.sleep(100);
+                await TestUtil.sleep(50);
                 logs.push('end');
             });
             keyboardMacro.startRecording();
@@ -223,7 +223,58 @@ describe('KeybaordMacro', () => {
             ]);
         });
     });
-    // TODO: add tests for wrap
+    describe('wrap', () => {
+        const logs = [];
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+            logs.length = 0;
+            keyboardMacro.registerInternalCommand('internal:log', async () => {
+                logs.push('begin');
+                await TestUtil.sleep(10);
+                logs.push('end');
+            });
+        });
+        it('should invoke and record specified command', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log' },
+            ]);
+        });
+        it('should not invoke specified command if not recording', async () => {
+            await keyboardMacro.wrap(null, null, { command: 'internal:log' });
+
+            assert.deepStrictEqual(logs, []);
+        });
+        it('should invoke and record specified command synchronously', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            await keyboardMacro.wrap(null, null, { command: 'internal:log', args: { test: '1' } });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [ 'begin', 'end', 'begin', 'end' ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log' },
+                { command: 'internal:log', args: { test: '1' } }
+            ]);
+        });
+        it('should prevent reentry', async () => {
+            keyboardMacro.startRecording();
+            const promise1 = keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            const promise2 = keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            await Promise.all([promise1, promise2]);
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log' }
+            ]);
+        });
+    });
     // TODO: add tests for onBeginWrappedCommand
     // TODO: add tests for onEndWrappedCommand
 });
