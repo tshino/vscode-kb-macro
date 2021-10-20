@@ -162,7 +162,28 @@ describe('KeybaordMacro', () => {
             ]);
         });
     });
-    // TODO: add tests for push
+    describe('push', () => {
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+        });
+        it('should add specified command to sequence', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'example:command1' });
+            keyboardMacro.push({ command: 'example:command2', args: { opt1: 'opt1' } });
+
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'example:command1' },
+                { command: 'example:command2', args: { opt1: 'opt1' } }
+            ]);
+        });
+        it('should do nothing if not recording', async () => {
+            keyboardMacro.push({ command: 'example:command1' });
+            keyboardMacro.push({ command: 'example:command2', args: { opt1: 'opt1' } });
+
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
+    });
     describe('playback', () => {
         beforeEach(async () => {
             keyboardMacro.onChangeRecordingState(null);
