@@ -89,11 +89,18 @@ function activate(context) {
     );
     addEventListener(
         typingDetector.onDetectTyping,
-        function(args) {
-            keyboardMacro.push({
-                command: 'internal:performType',
-                args: args
-            });
+        function(type, args) {
+            if (type === typingDetector.TypingType.Direct) {
+                keyboardMacro.push({
+                    command: 'internal:performType',
+                    args: args
+                });
+            } else if (type === typingDetector.TypingType.Default) {
+                keyboardMacro.push({
+                    command: 'default:type',
+                    args: args
+                });
+            }
         }
     );
     addEventListener(

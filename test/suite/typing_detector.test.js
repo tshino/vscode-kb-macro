@@ -10,7 +10,7 @@ describe('TypingDetector', () => {
 
     const setupDetectedTypingLog = function() {
         const logs = [];
-        typingDetector.onDetectTyping(function(args) {
+        typingDetector.onDetectTyping(function(type, args) {
             logs.push(args.text);
         });
         return logs;
@@ -234,6 +234,8 @@ describe('TypingDetector', () => {
                 makeContentChange(new vscode.Range(10, 0, 10, 4), 'Abcd')
             ], precond: [[10, 4]], expectedLogs: ['Abcd'], expectedPrediction: null });
         });
+        // TODO: add more tests for code completion detection
     });
-    // TODO: add tests for code completion detection
+    // TODO: add more tests for inputs with bracket completion
+    // TODO: add more tests for inputs with IME
 });

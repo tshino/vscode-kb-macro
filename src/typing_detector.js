@@ -4,6 +4,10 @@ const util = require('./util.js');
 const { CursorMotionDetector } = require('./cursor_motion_detector.js');
 
 const TypingDetector = function() {
+    const TypingType = {
+        Direct: 0,
+        Default: 1
+    };
     let onDetectTypingCallback  = null;
     let recording = false;
     let suspending = false;
@@ -13,9 +17,9 @@ const TypingDetector = function() {
     const onDetectTyping = function(callback) {
         onDetectTypingCallback = callback;
     };
-    const notifyDetectedTyping = function(args) {
+    const notifyDetectedTyping = function(type, args) {
         if (onDetectTypingCallback) {
-            onDetectTypingCallback(args);
+            onDetectTypingCallback(type, args);
         }
     };
 
@@ -79,6 +83,21 @@ const TypingDetector = function() {
         const cursorAtEndOfRange = selections.every((sel, i) => sel.active.isEqual(changes[i].range.end));
         return emptySelection && uniformRangeLength && cursorAtEndOfRange;
     };
+    const isBracketCompletionWithSelection = function(selections, changes) {
+        let uniformPairedText = changes.every(
+            (chg,i) => chg.text === changes[i % 2].text
+        );
+        return (
+            uniformPairedText &&
+            selections.length * 2 === changes.length &&
+            changes.every(chg => chg.range.isEmpty) &&
+            selections.every((sel,i) => (
+                sel.start.isEqual(changes[i * 2].range.start) &&
+                sel.end.isEqual(changes[i * 2 + 1].range.start)
+            )) &&
+            changes.every(chg => chg.text.length === 1)
+        );
+    };
 
     const processDocumentChangeEvent = function(event) {
         if (!recording || suspending) {
@@ -105,7 +124,7 @@ const TypingDetector = function() {
                 if (!util.isEqualSelections(selections, prediction)) {
                     cursorMotionDetector.setPrediction(prediction);
                 }
-                notifyDetectedTyping({ text: changes[0].text });
+                notifyDetectedTyping(TypingType.Direct, { text: changes[0].text });
                 return;
             }
             if (deletesLeftAndInserts(changes, selections)) {
@@ -122,13 +141,24 @@ const TypingDetector = function() {
                 if (!util.isEqualSelections(selections, prediction)) {
                     cursorMotionDetector.setPrediction(prediction);
                 }
-                notifyDetectedTyping({ deleteLeft, text: changes[0].text });
+                notifyDetectedTyping(TypingType.Direct, { deleteLeft, text: changes[0].text });
                 return;
             }
+        }
+        if (isBracketCompletionWithSelection(selections, changes)) {
+            // It seems like a kind of bracket completion (but not 100% sure).
+            // Supposed senario:
+            //  1. select a text 'hello'
+            //  2. type '('
+            //  3. then a pair of bracket is inserted around 'hello',
+            //     resulting '(hello)'.
+            notifyDetectedTyping(TypingType.Default, { text: changes[0].text });
+            return;
         }
     };
 
     return {
+        TypingType,
         onDetectTyping,
         onDetectCursorMotion: cursorMotionDetector.onDetectCursorMotion,
         start,

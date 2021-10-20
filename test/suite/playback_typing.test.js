@@ -9,6 +9,7 @@ describe('Recording and Playback: Typing', () => {
     let textEditor;
     const Cmd = CommandsToTest;
     const Type = text => ({ command: 'internal:performType', args: { text } });
+    const DefaultType = text => ({ command: 'default:type', args: { text } });
     const DeleteAndType = (del,text) => ({ command: 'internal:performType', args: { deleteLeft: del, text } });
     const MoveLeft = delta => ({ command: 'cursorMove', args: { to: 'left', by: 'character', value: delta } });
     const MoveRight = delta => ({ command: 'cursorMove', args: { to: 'right', by: 'character', value: delta } });
@@ -308,7 +309,36 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(3).text, '(');
             assert.deepStrictEqual(getSelections(), [[2, 1], [3, 1]]);
         });
-        // TODO: add tests for cases with a selection.
+        it('should record and playback a bracket completion with typing an opening bracket with selection (1)', async () => {
+            setSelections([[10, 0, 10, 4]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' });
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ DefaultType('(') ]);
+            assert.strictEqual(textEditor.document.lineAt(10).text, '(abcd)');
+            assert.deepStrictEqual(getSelections(), [[10, 1, 10, 5]]);
+
+            setSelections([[20, 4, 20, 8]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(20).text, '    (efgh)');
+            assert.deepStrictEqual(getSelections(), [[20, 5, 20, 9]]);
+        });
+        it('should record and playback a bracket completion with typing an opening bracket with selection (2: multi-cursor)', async () => {
+            setSelections([[10, 0, 10, 4], [11, 0, 11, 4]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' });
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ DefaultType('(') ]);
+            assert.strictEqual(textEditor.document.lineAt(10).text, '(abcd)');
+            assert.strictEqual(textEditor.document.lineAt(11).text, '(abcd)');
+            assert.deepStrictEqual(getSelections(), [[10, 1, 10, 5], [11, 1, 11, 5]]);
+
+            setSelections([[20, 4, 20, 8], [21, 4, 21, 8]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(20).text, '    (efgh)');
+            assert.strictEqual(textEditor.document.lineAt(21).text, '    (efgh)');
+            assert.deepStrictEqual(getSelections(), [[20, 5, 20, 9], [21, 5, 21, 9]]);
+        });
     });
 
     // Here we make a test case for playback of input with code completion.
