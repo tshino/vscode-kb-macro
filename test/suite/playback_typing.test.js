@@ -171,7 +171,7 @@ describe('Recording and Playback: Typing', () => {
                 '    efgh\n'.repeat(10)
             ));
         });
-        it('should record and playback typing of an opening bracket which triggers bracket completion', async () => {
+        it('should record and playback typing of an opening bracket which triggers bracket completion (1)', async () => {
             setSelections([[5, 0]]);
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' });
@@ -185,7 +185,23 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
             assert.deepStrictEqual(getSelections(), [[13, 5]]);
         });
-        it('should record and playback typing of an closing bracket right after bracket completion', async () => {
+        it('should record and playback typing of an opening bracket which triggers bracket completion (2: multi-cursor)', async () => {
+            setSelections([[5, 0], [6, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' });
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1) ]);
+            assert.strictEqual(textEditor.document.lineAt(5).text, '()');
+            assert.strictEqual(textEditor.document.lineAt(6).text, '()');
+            assert.deepStrictEqual(getSelections(), [[5, 1], [6, 1]]);
+
+            setSelections([[13, 4], [14, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
+            assert.strictEqual(textEditor.document.lineAt(14).text, 'abcd()');
+            assert.deepStrictEqual(getSelections(), [[13, 5], [14, 5]]);
+        });
+        it('should record and playback typing of an closing bracket right after bracket completion (1)', async () => {
             setSelections([[5, 0]]);
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
@@ -200,7 +216,24 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
             assert.deepStrictEqual(getSelections(), [[13, 6]]);
         });
-        it('should record and playback typing of an closing bracket right after typing inside bracket', async () => {
+        it('should record and playback typing of an closing bracket right after bracket completion (2: multi-cursor)', async () => {
+            setSelections([[5, 0], [6, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
+            await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), MoveRight(1) ]);
+            assert.strictEqual(textEditor.document.lineAt(5).text, '()');
+            assert.strictEqual(textEditor.document.lineAt(6).text, '()');
+            assert.deepStrictEqual(getSelections(), [[5, 2], [6, 2]]);
+
+            setSelections([[13, 4], [14, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd()');
+            assert.strictEqual(textEditor.document.lineAt(14).text, 'abcd()');
+            assert.deepStrictEqual(getSelections(), [[13, 6], [14, 6]]);
+        });
+        it('should record and playback typing of an closing bracket right after typing inside bracket (1)', async () => {
             setSelections([[5, 0]]);
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
@@ -216,7 +249,25 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd(10)');
             assert.deepStrictEqual(getSelections(), [[13, 8]]);
         });
-        it('should record and playback typing of an opening bracket without bracket completion', async () => {
+        it('should record and playback typing of an closing bracket right after typing inside bracket (2: multi-cursor)', async () => {
+            setSelections([[5, 0], [6, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
+            await vscode.commands.executeCommand('type', { text: '10' });
+            await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('1'), Type('0'), MoveRight(1) ]);
+            assert.strictEqual(textEditor.document.lineAt(5).text, '(10)');
+            assert.strictEqual(textEditor.document.lineAt(6).text, '(10)');
+            assert.deepStrictEqual(getSelections(), [[5, 4], [6, 4]]);
+
+            setSelections([[13, 4], [14, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd(10)');
+            assert.strictEqual(textEditor.document.lineAt(14).text, 'abcd(10)');
+            assert.deepStrictEqual(getSelections(), [[13, 8], [14, 8]]);
+        });
+        it('should record and playback typing of an opening bracket without bracket completion (1)', async () => {
             setSelections([[12, 0]]);
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' });
@@ -235,7 +286,28 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(2).text, '(');
             assert.deepStrictEqual(getSelections(), [[2, 1]]);
         });
-        // TODO: add tests for cases with multi-cursor.
+        it('should record and playback typing of an opening bracket without bracket completion (2: multi-cursor)', async () => {
+            setSelections([[12, 0], [13, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: '(' });
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [ Type('(') ]);
+            assert.strictEqual(textEditor.document.lineAt(12).text, '(abcd');
+            assert.strictEqual(textEditor.document.lineAt(13).text, '(abcd');
+            assert.deepStrictEqual(getSelections(), [[12, 1], [13, 1]]);
+
+            setSelections([[23, 4], [24, 4]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(23).text, '    (efgh');
+            assert.strictEqual(textEditor.document.lineAt(24).text, '    (efgh');
+            assert.deepStrictEqual(getSelections(), [[23, 5], [24, 5]]);
+
+            setSelections([[2, 0], [3, 0]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(2).text, '(');
+            assert.strictEqual(textEditor.document.lineAt(3).text, '(');
+            assert.deepStrictEqual(getSelections(), [[2, 1], [3, 1]]);
+        });
         // TODO: add tests for cases with a selection.
     });
 
