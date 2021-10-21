@@ -33,6 +33,21 @@ const KeyboardMacro = function() {
             locked = false;
         };
     };
+    const makeGuardedCommandSync = function(func) {
+        return function(textEditor, edit, args) {
+            if (locked) {
+                return;
+            }
+            locked = true;
+            try {
+                func(textEditor, edit, args);
+            } catch (error) {
+                console.error(error);
+                console.info('kb-macro: Exception in guarded command');
+            }
+            locked = false;
+        };
+    };
 
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
@@ -53,13 +68,13 @@ const KeyboardMacro = function() {
         internalCommands[name] = func;
     };
 
-    const startRecording = function() {
+    const startRecording = makeGuardedCommandSync(function() {
         if (!recording) {
             sequence.length = 0;
             recording = true;
             notifyNewState(RecordingStateReason.Start);
         }
-    };
+    });
     const cancelRecording = function() {
         if (recording) {
             sequence.length = 0;
