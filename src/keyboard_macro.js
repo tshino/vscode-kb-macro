@@ -171,20 +171,25 @@ const KeyboardMacro = function() {
         }
     });
 
+    const makeCommandSpec = function(args) {
+        const spec = {
+            command: args.command
+        };
+        if ('args' in args) {
+            spec.args = args.args;
+        }
+        if ('effect' in args) {
+            spec.effect = args.effect;
+        }
+        return spec;
+    };
+
     const wrap = makeGuardedCommand(async function(_textEditor, _edit, args) {
         if (recording) {
             if (!args || !args.command) {
                 return;
             }
-            const spec = {
-                command: args.command
-            };
-            if ('args' in args) {
-                spec.args = args.args;
-            }
-            if ('effect' in args) {
-                spec.effect = args.effect;
-            }
+            const spec = makeCommandSpec(args);
             push(spec);
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
