@@ -75,19 +75,19 @@ const KeyboardMacro = function() {
             notifyNewState(RecordingStateReason.Start);
         }
     });
-    const cancelRecording = function() {
+    const cancelRecording = makeGuardedCommandSync(function() {
         if (recording) {
             sequence.length = 0;
             recording = false;
             notifyNewState(RecordingStateReason.Cancel);
         }
-    };
-    const finishRecording = function() {
+    });
+    const finishRecording = makeGuardedCommandSync(function() {
         if (recording) {
             recording = false;
             notifyNewState(RecordingStateReason.Finish);
         }
-    };
+    });
 
     const push = function(spec) {
         if (recording) {

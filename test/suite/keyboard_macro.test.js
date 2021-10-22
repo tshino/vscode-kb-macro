@@ -302,6 +302,30 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log' }
             ]);
         });
+        it('should prevent other commands to preempt (cancelRecording)', async () => {
+            keyboardMacro.startRecording();
+            const promise1 = keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            keyboardMacro.cancelRecording(); // <--
+            await promise1;
+
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log' }
+            ]);
+            assert.strictEqual(keyboardMacro.isRecording(), true);
+        });
+        it('should prevent other commands to preempt (finishRecording)', async () => {
+            keyboardMacro.startRecording();
+            const promise1 = keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            keyboardMacro.finishRecording(); // <--
+            await promise1;
+
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log' }
+            ]);
+            assert.strictEqual(keyboardMacro.isRecording(), true);
+        });
     });
     // TODO: add tests for onBeginWrappedCommand
     // TODO: add tests for onEndWrappedCommand
