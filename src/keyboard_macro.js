@@ -172,6 +172,9 @@ const KeyboardMacro = function() {
     });
 
     const makeCommandSpec = function(args) {
+        if (!args || !args.command) {
+            return null;
+        }
         const spec = {
             command: args.command
         };
@@ -186,10 +189,10 @@ const KeyboardMacro = function() {
 
     const wrap = makeGuardedCommand(async function(_textEditor, _edit, args) {
         if (recording) {
-            if (!args || !args.command) {
+            const spec = makeCommandSpec(args);
+            if (!spec) {
                 return;
             }
-            const spec = makeCommandSpec(args);
             push(spec);
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
