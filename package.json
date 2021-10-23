@@ -1,10 +1,10 @@
 {
     "name": "kb-macro",
-    "displayName": "Keyboard Macro",
-    "description": "Keyboard macro for Visual Studio Code",
+    "displayName": "Keyboard Macro Beta",
+    "description": "Recordable keyboard macro for Visual Studio Code",
     "version": "0.0.1",
     "engines": {
-        "vscode": "^1.60.0"
+        "vscode": "^1.61.0"
     },
     "categories": [
         "Keymaps"
@@ -33,7 +33,7 @@
                     "markdownEnumDescriptions": [
                         "**Ctrl+Alt+R** for Start/Cancel Recording and **Ctrl+Alt+P** for Finish Recording/Playback",
                         "**Ctrl+Shift+Alt+R** for Start/Cancel Recording and **Ctrl+Shift+Alt+P** for Finish Recording/Playback",
-                        "No keybindings. Instead, define your own ones in keybindings.json."
+                        "No keybindings. In this case, you have to define your own keys in keybindings.json."
                     ]
                 }
             }
