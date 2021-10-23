@@ -56,7 +56,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: 'Y' });
             await vscode.commands.executeCommand('type', { text: 'Z' });
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('X'), Type('Y'), Type('Z') ]);
+            assert.deepStrictEqual(getSequence(), [ Type('XYZ') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'XYZ');
             assert.deepStrictEqual(getSelections(), [[0, 3]]);
 
@@ -70,7 +70,7 @@ describe('Recording and Playback: Typing', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'XY' });
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('X'), Type('Y') ]);
+            assert.deepStrictEqual(getSequence(), [ Type('XY') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'XY');
             assert.deepStrictEqual(getSelections(), [[0, 2]]);
 
@@ -84,7 +84,7 @@ describe('Recording and Playback: Typing', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'XYZ' });
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('X'), Type('Y'), Type('Z') ]);
+            assert.deepStrictEqual(getSequence(), [ Type('XYZ') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'XYZ');
             assert.deepStrictEqual(getSelections(), [[0, 3]]);
 
@@ -241,7 +241,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: '10' });
             await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('1'), Type('0'), MoveRight(1) ]);
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('10'), MoveRight(1) ]);
             assert.strictEqual(textEditor.document.lineAt(5).text, '(10)');
             assert.deepStrictEqual(getSelections(), [[5, 4]]);
 
@@ -257,7 +257,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: '10' });
             await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('1'), Type('0'), MoveRight(1) ]);
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('10'), MoveRight(1) ]);
             assert.strictEqual(textEditor.document.lineAt(5).text, '(10)');
             assert.strictEqual(textEditor.document.lineAt(6).text, '(10)');
             assert.deepStrictEqual(getSelections(), [[5, 4], [6, 4]]);
@@ -366,7 +366,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: '.' });
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
-                Type('a'), Type('b'), DeleteAndType(2, 'abcde'), Type('.')
+                Type('ab'), DeleteAndType(2, 'abcde'), Type('.')
             ]);
             assert.strictEqual(textEditor.document.lineAt(1).text, 'abcde.');
 
@@ -461,7 +461,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: 'B' });
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
-                Type('C'), Type('D'), Cmd.Enter, Type('A'), Type('B')
+                Type('CD'), Cmd.Enter, Type('AB')
             ]);
             assert.strictEqual(textEditor.document.lineAt(12).text, 'abCD');
             assert.strictEqual(textEditor.document.lineAt(13).text, 'ABcd');

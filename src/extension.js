@@ -74,6 +74,23 @@ function activate(context) {
         }
     );
     addEventListener(
+        keyboardMacro.onFinishRecording,
+        function(sequence) {
+            for (let i = 0; i < sequence.length; i++) {
+                if (0 < i &&
+                    sequence[i - 1].command === 'internal:performType' &&
+                    sequence[i].command === 'internal:performType' &&
+                    !(sequence[i - 1].args || {}).deleteLeft &&
+                    !(sequence[i].args || {}).deleteLeft
+                ) {
+                    sequence[i - 1].args.text += sequence[i].args.text;
+                    sequence.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+    );
+    addEventListener(
         vscode.workspace.onDidChangeTextDocument,
         function(event) {
             keyboardMacro.processDocumentChangeEvent(event);

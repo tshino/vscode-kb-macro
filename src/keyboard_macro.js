@@ -11,6 +11,7 @@ const KeyboardMacro = function() {
     let onChangeRecordingStateCallback = null;
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
+    let onFinishRecordingCallback = null;
     let recording = false;
     let locked = false;
     const documentChanged = [];
@@ -63,6 +64,9 @@ const KeyboardMacro = function() {
     const onEndWrappedCommand = function(callback) {
         onEndWrappedCommandCallback = callback;
     };
+    const onFinishRecording = function(callback) {
+        onFinishRecordingCallback = callback;
+    };
 
     const registerInternalCommand = function(name, func) {
         internalCommands[name] = func;
@@ -84,6 +88,9 @@ const KeyboardMacro = function() {
     });
     const finishRecording = makeGuardedCommandSync(function() {
         if (recording) {
+            if (onFinishRecordingCallback) {
+                onFinishRecordingCallback(sequence);
+            }
             recording = false;
             notifyNewState(RecordingStateReason.Finish);
         }
@@ -227,6 +234,7 @@ const KeyboardMacro = function() {
         onChangeRecordingState,
         onBeginWrappedCommand,
         onEndWrappedCommand,
+        onFinishRecording,
         registerInternalCommand,
         startRecording,
         cancelRecording,
