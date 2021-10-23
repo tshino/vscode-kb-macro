@@ -1,5 +1,6 @@
 'use strict';
 const vscode = require('vscode');
+const { CommandSequence } = require('./command_sequence.js');
 
 const KeyboardMacro = function() {
     const RecordingStateReason = {
@@ -11,12 +12,11 @@ const KeyboardMacro = function() {
     let onChangeRecordingStateCallback = null;
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
-    let onFinishRecordingCallback = null;
     let recording = false;
     let locked = false;
     const documentChanged = [];
     const selectionChanged = [];
-    const sequence = [];
+    const sequence = CommandSequence();
     const internalCommands = new Map();
 
     const makeGuardedCommand = function(func) {
@@ -64,9 +64,6 @@ const KeyboardMacro = function() {
     const onEndWrappedCommand = function(callback) {
         onEndWrappedCommandCallback = callback;
     };
-    const onFinishRecording = function(callback) {
-        onFinishRecordingCallback = callback;
-    };
 
     const registerInternalCommand = function(name, func) {
         internalCommands[name] = func;
@@ -74,23 +71,21 @@ const KeyboardMacro = function() {
 
     const startRecording = makeGuardedCommandSync(function() {
         if (!recording) {
-            sequence.length = 0;
+            sequence.clear();
             recording = true;
             notifyNewState(RecordingStateReason.Start);
         }
     });
     const cancelRecording = makeGuardedCommandSync(function() {
         if (recording) {
-            sequence.length = 0;
+            sequence.clear();
             recording = false;
             notifyNewState(RecordingStateReason.Cancel);
         }
     });
     const finishRecording = makeGuardedCommandSync(function() {
         if (recording) {
-            if (onFinishRecordingCallback) {
-                onFinishRecordingCallback(sequence);
-            }
+            sequence.optimize();
             recording = false;
             notifyNewState(RecordingStateReason.Finish);
         }
@@ -165,8 +160,9 @@ const KeyboardMacro = function() {
 
     const playback = makeGuardedCommand(async function() {
         if (!recording) {
-            for (let i = 0; i < sequence.length; i++) {
-                const spec = sequence[i];
+            const commands = sequence.get();
+            for (let i = 0; i < commands.length; i++) {
+                const spec = commands[i];
                 if (spec.failed) {
                     continue;
                 }
@@ -234,7 +230,6 @@ const KeyboardMacro = function() {
         onChangeRecordingState,
         onBeginWrappedCommand,
         onEndWrappedCommand,
-        onFinishRecording,
         registerInternalCommand,
         startRecording,
         cancelRecording,
@@ -247,7 +242,7 @@ const KeyboardMacro = function() {
 
         // testing purpose only
         isRecording: () => { return recording; },
-        getCurrentSequence: () => { return sequence; }
+        getCurrentSequence: () => { return sequence.get(); }
     };
 };
 
