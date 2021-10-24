@@ -1,0 +1,9 @@
+{
+    "exclutionList": [
+        "acceptSelectedSuggestion",
+        "acceptAlternativeSelectedSuggestion"
+    ],
+    "awaitOptions": [
+        [ "editor.action.clipboardCutAction", "document" ]
+    ]
+}

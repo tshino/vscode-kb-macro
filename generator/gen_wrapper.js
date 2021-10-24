@@ -3,6 +3,7 @@ const fsPromises = require('fs/promises');
 
 const PackageJsonPath = './package.json';
 const DefaultKeybindingsPath = 'generator/default-keybindings-win.json';
+const ConfigPath = 'generator/config.json';
 
 const TypingWrappers = [
     {
@@ -16,10 +17,6 @@ const TypingWrappers = [
         },
         when: 'kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible'
     }
-];
-const ExclusionList = [
-    'acceptSelectedSuggestion',
-    'acceptAlternativeSelectedSuggestion'
 ];
 
 async function readJSON(path) {
@@ -67,14 +64,22 @@ function makeWrapper(keybinding) {
 async function main() {
     const packageJson = await readJSON(PackageJsonPath);
     const defaultKeybindings = await readJSON(DefaultKeybindingsPath);
+    const config = await readJSON(ConfigPath);
+
+    const ExclutionList = new Set(config.exclutionList || []);
+    const AwaitOptions = new Map(config.awaitOptions || []);
 
     const defaultWrappers = defaultKeybindings.map(
         keybinding => {
-            if (ExclusionList.includes(keybinding.command)) {
+            if (ExclutionList.has(keybinding.command)) {
                 keybinding.when = makeWhenRecording(keybinding.when);
                 return keybinding;
             } else {
-                return makeWrapper(keybinding);
+                const wrapper = makeWrapper(keybinding);
+                if (AwaitOptions.has(wrapper.args.command)) {
+                    wrapper.args.await = AwaitOptions.get(wrapper.args.command);
+                }
+                return wrapper;
             }
         }
     );
