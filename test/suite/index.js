@@ -9,7 +9,7 @@ function run() {
         ui: 'bdd',
         color: true
     });
-    mocha.timeout(5000);
+    mocha.timeout(10000);
 
     const testsRoot = path.resolve(__dirname, '..');
 
