@@ -1,7 +1,22 @@
 'use strict';
-const process = require('process');
 const fsPromises = require('fs/promises');
 
+const PackageJsonPath = './package.json';
+const DefaultKeybindingsPath = 'generator/default-keybindings-win.json';
+
+const TypingWrappers = [
+    {
+        key: 'enter',
+        command: 'kb-macro.wrap',
+        args: {
+            command: 'type',
+            args: {
+                text: '\n'
+            }
+        },
+        when: 'kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible'
+    }
+];
 
 async function readJSON(path) {
     const file = "" + await fsPromises.readFile(path);
@@ -38,17 +53,23 @@ function makeWrapper(keybinding) {
 }
 
 async function main() {
-    if (process.argv.length < 4) {
-        console.log('Usage: node gen_wrapper.js <input-keybindings.json> <output-keybindings.json>');
-        return;
-    }
+    const packageJson = await readJSON(PackageJsonPath);
+    const defaultKeybindings = await readJSON(DefaultKeybindingsPath);
 
-    const inputPath = process.argv[2];
-    const outputPath = process.argv[3];
+    const defaultWrappers = defaultKeybindings.map(makeWrapper);
 
-    const input = await readJSON(inputPath);
-    const output = Array.from(input).map(makeWrapper);
-    await writeJSON(outputPath, output);
+    const extensionCommands = packageJson.contributes.keybindings.filter(
+        rule => rule.command !== 'kb-macro.wrap'
+    );
+
+    packageJson.contributes.keybindings = (
+        []
+        .concat(extensionCommands)
+        .concat(TypingWrappers)
+        .concat(defaultWrappers)
+    );
+
+    await writeJSON(PackageJsonPath, packageJson);
 }
 
 main();
