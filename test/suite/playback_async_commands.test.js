@@ -13,7 +13,7 @@ describe('Recording and Playback: Asynchronous Commands', () => {
     const PerformType = text => ({
         command: 'kb-macro.performType',
         args: { text },
-        effect: [ 'edit', 'move' ]
+        await: 'selection document'
     });
 
     const setSelections = function(array) {
@@ -36,7 +36,7 @@ describe('Recording and Playback: Asynchronous Commands', () => {
     });
 
     // Here we register the internal command performType to vscode as an external command.
-    // We use it in order to test synchronous execution of asynchronous command using 'effects' option.
+    // We use it in order to test synchronous execution of asynchronous command using 'await' option.
     vscode.commands.registerTextEditorCommand('kb-macro.performType', internalCommands.performType);
 
     describe('performType', () => {

@@ -99,7 +99,7 @@ const KeyboardMacro = function() {
 
     const startEffectObserver = function(spec) {
         const TIMEOUT = 300;
-        const effect = spec.effect || [];
+        const awaitList = (spec.await || '').split(' ');
         return new Promise((resolve, reject) => {
             let count = 0;
             const doneOne = function() {
@@ -108,12 +108,12 @@ const KeyboardMacro = function() {
                     resolve();
                 }
             };
-            for (let i = 0; i < effect.length; i++) {
-                const e = effect[i];
-                if (e === 'edit') {
+            for (let i = 0; i < awaitList.length; i++) {
+                const e = awaitList[i];
+                if (e === 'document') {
                     count += 1;
                     documentChanged.push(doneOne);
-                } else if (e === 'move') {
+                } else if (e === 'selection') {
                     count += 1;
                     selectionChanged.push(doneOne);
                 }
@@ -184,8 +184,8 @@ const KeyboardMacro = function() {
         if ('args' in args) {
             spec.args = args.args;
         }
-        if ('effect' in args) {
-            spec.effect = args.effect;
+        if ('await' in args) {
+            spec.await = args.await;
         }
         return spec;
     };
