@@ -69,13 +69,21 @@ const TestUtil = (function() {
             )
         );
     };
+    const normalizeEOL = function(text) {
+        return text.replace(/\r\n/g, '\n');
+    };
+    const readClipboard = async function() {
+        const text = await vscode.env.clipboard.readText();
+        return normalizeEOL(text);
+    };
 
     return {
         sleep,
         setupTextEditor,
         resetDocument,
         selectionsToArray,
-        arrayToSelections
+        arrayToSelections,
+        readClipboard
     };
 })();
 

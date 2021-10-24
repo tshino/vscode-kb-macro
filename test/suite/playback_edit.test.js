@@ -354,4 +354,63 @@ describe('Recording and Playback: Edit', () => {
             });
         });
     });
+    describe('clipboardXXX', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n' +
+                'fghij\n' +
+                'klmno\n' +
+                'pqrstu\n' +
+                'vwxyz\n'
+            ));
+        });
+        describe('clipboardCutAction', () => {
+            it('should cut one line', async () => {
+                const seq = [ Cmd.ClipboardCut ];
+                setSelections([[0, 0]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'fghij');
+                assert.deepStrictEqual(getSelections(), [[0, 0]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'abcde\n');
+
+                setSelections([[2, 0]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'vwxyz');
+                assert.deepStrictEqual(getSelections(), [[2, 0]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'pqrstu\n');
+            });
+            it('should cut multiple lines', async () => {
+                const seq = [ Cmd.ClipboardCut, Cmd.ClipboardCut ];
+                setSelections([[1, 0]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'pqrstu');
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'vwxyz');
+                assert.deepStrictEqual(getSelections(), [[1, 0]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'klmno\n');
+
+                setSelections([[0, 0]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'vwxyz');
+                assert.deepStrictEqual(getSelections(), [[0, 0]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'pqrstu\n');
+            });
+            it('should cut selected range', async () => {
+                const seq = [ Cmd.ClipboardCut ];
+                setSelections([[0, 3, 1, 2]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'abchij');
+                assert.deepStrictEqual(getSelections(), [[0, 3]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'de\nfg');
+
+                setSelections([[1, 2, 3, 4]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'klz');
+                assert.deepStrictEqual(getSelections(), [[1, 2]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'mno\npqrstu\nvwxy');
+            });
+        });
+    });
 });
