@@ -364,6 +364,34 @@ describe('Recording and Playback: Edit', () => {
                 'vwxyz\n'
             ));
         });
+        describe('clipboardCopyAction', () => {
+            it('should copy one line', async () => {
+                const seq = [ Cmd.ClipboardCopy ];
+                setSelections([[1, 3]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.deepStrictEqual(getSelections(), [[1, 3]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'fghij\n');
+
+                setSelections([[2, 4]]);
+                await keyboardMacro.playback();
+                assert.deepStrictEqual(getSelections(), [[2, 4]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'klmno\n');
+            });
+            it('should copy selected range', async () => {
+                const seq = [ Cmd.ClipboardCopy ];
+                setSelections([[0, 3, 1, 2]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.deepStrictEqual(getSelections(), [[0, 3, 1, 2]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'de\nfg');
+
+                setSelections([[1, 2, 3, 4]]);
+                await keyboardMacro.playback();
+                assert.deepStrictEqual(getSelections(), [[1, 2, 3, 4]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'hij\nklmno\npqrs');
+            });
+        });
         describe('clipboardCutAction', () => {
             it('should cut one line', async () => {
                 const seq = [ Cmd.ClipboardCut ];

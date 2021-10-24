@@ -31,6 +31,7 @@ const CommandsToTest = {
     DeleteRight: { command: "deleteRight" },
     DeleteWordLeft: { command: "deleteWordLeft" },
     DeleteWordRight: { command: "deleteWordRight" },
+    ClipboardCopy: { command: "editor.action.clipboardCopyAction" },
     ClipboardCut: { command: "editor.action.clipboardCutAction", await: 'document' },
     Outdent: { command: 'outdent' },
     OutdentLines: { command: 'editor.action.outdentLines' },
