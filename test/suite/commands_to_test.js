@@ -34,6 +34,8 @@ const CommandsToTest = {
     ClipboardCopy: { command: "editor.action.clipboardCopyAction" },
     ClipboardCut: { command: "editor.action.clipboardCutAction", await: 'document selection' },
     ClipboardPaste: { command: "editor.action.clipboardPasteAction", await: 'document selection' },
+    CopyLinesDown: { command: "editor.action.copyLinesDownAction" },
+    CopyLinesUp: { command: "editor.action.copyLinesUpAction" },
     Outdent: { command: 'outdent' },
     OutdentLines: { command: 'editor.action.outdentLines' },
     IndentLines: { command: 'editor.action.indentLines' },

@@ -281,6 +281,19 @@ describe('Recording and Playback: Edit', () => {
                 assert.strictEqual(textEditor.document.lineAt(4).text, 'hello("vscode");');
                 assert.deepStrictEqual(getSelections(), [[4, 0]]);
             });
+            it('should add and remove line comment', async () => {
+                const seq = [ Cmd.CommentLine, Cmd.CommentLine ];
+                setSelections([[5, 5]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(5).text, 'hello("Code");');
+                assert.deepStrictEqual(getSelections(), [[5, 5]]);
+
+                setSelections([[1, 0]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(1).text, '    console.log("Hello, " + name);');
+                assert.deepStrictEqual(getSelections(), [[1, 0]]);
+            });
             it('should add/remove line comments on multiple lines', async () => {
                 setSelections([[0, 0, 3, 0]]);
                 await record(seq);
@@ -491,6 +504,89 @@ describe('Recording and Playback: Edit', () => {
                 await keyboardMacro.playback();
                 assert.strictEqual(textEditor.document.lineAt(1).text, 'klFGHIJz');
                 assert.deepStrictEqual(getSelections(), [[1, 7]]);
+            });
+        });
+    });
+    describe('copyLinesXXX', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n' +
+                'fghij\n' +
+                'klmno\n' +
+                'pqrstu\n' +
+                'vwxyz\n'
+            ));
+        });
+        describe('copyLinesDownAction', () => {
+            it('should duplicate one line', async () => {
+                const seq = [ Cmd.CopyLinesDown ];
+                setSelections([[1, 3]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'fghij');
+                assert.deepStrictEqual(getSelections(), [[2, 3]]);
+
+                setSelections([[4, 4]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'pqrstu');
+                assert.strictEqual(textEditor.document.lineAt(5).text, 'pqrstu');
+                assert.deepStrictEqual(getSelections(), [[5, 4]]);
+            });
+            it('should duplicate selected lines', async () => {
+                const seq = [ Cmd.CopyLinesDown ];
+                setSelections([[1, 3, 2, 4]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
+                assert.deepStrictEqual(getSelections(), [[3, 3, 4, 4]]);
+
+                setSelections([[4, 3, 5, 2]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(5).text, 'pqrstu');
+                assert.strictEqual(textEditor.document.lineAt(6).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(7).text, 'pqrstu');
+                assert.deepStrictEqual(getSelections(), [[6, 3, 7, 2]]);
+            });
+        });
+        describe('copyLinesUpAction', () => {
+            it('should duplicate one line', async () => {
+                const seq = [ Cmd.CopyLinesUp ];
+                setSelections([[1, 3]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'fghij');
+                assert.deepStrictEqual(getSelections(), [[1, 3]]);
+
+                setSelections([[4, 4]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'pqrstu');
+                assert.strictEqual(textEditor.document.lineAt(5).text, 'pqrstu');
+                assert.deepStrictEqual(getSelections(), [[4, 4]]);
+            });
+            it('should duplicate selected lines', async () => {
+                const seq = [ Cmd.CopyLinesUp ];
+                setSelections([[1, 3, 2, 4]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
+                assert.deepStrictEqual(getSelections(), [[1, 3, 2, 4]]);
+
+                setSelections([[4, 3, 5, 2]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(5).text, 'pqrstu');
+                assert.strictEqual(textEditor.document.lineAt(6).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(7).text, 'pqrstu');
+                assert.deepStrictEqual(getSelections(), [[4, 3, 5, 2]]);
             });
         });
     });
