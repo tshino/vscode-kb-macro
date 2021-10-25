@@ -4,6 +4,7 @@
         "acceptAlternativeSelectedSuggestion"
     ],
     "awaitOptions": [
-        [ "editor.action.clipboardCutAction", "document" ]
+        [ "editor.action.clipboardCutAction", "document selection" ],
+        [ "editor.action.clipboardPasteAction", "document selection" ]
     ]
 }

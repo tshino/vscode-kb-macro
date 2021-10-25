@@ -756,7 +756,7 @@
                 "command": "kb-macro.wrap",
                 "args": {
                     "command": "editor.action.clipboardCutAction",
-                    "await": "document"
+                    "await": "document selection"
                 },
                 "when": "kb-macro.recording"
             },
@@ -765,7 +765,7 @@
                 "command": "kb-macro.wrap",
                 "args": {
                     "command": "editor.action.clipboardCutAction",
-                    "await": "document"
+                    "await": "document selection"
                 },
                 "when": "kb-macro.recording"
             },
@@ -773,7 +773,8 @@
                 "key": "shift+insert",
                 "command": "kb-macro.wrap",
                 "args": {
-                    "command": "editor.action.clipboardPasteAction"
+                    "command": "editor.action.clipboardPasteAction",
+                    "await": "document selection"
                 },
                 "when": "kb-macro.recording"
             },
@@ -781,7 +782,8 @@
                 "key": "ctrl+v",
                 "command": "kb-macro.wrap",
                 "args": {
-                    "command": "editor.action.clipboardPasteAction"
+                    "command": "editor.action.clipboardPasteAction",
+                    "await": "document selection"
                 },
                 "when": "kb-macro.recording"
             },
