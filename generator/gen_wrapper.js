@@ -2,22 +2,7 @@
 const fsPromises = require('fs/promises');
 
 const PackageJsonPath = './package.json';
-const DefaultKeybindingsPath = 'generator/default-keybindings-win.json';
 const ConfigPath = 'generator/config.json';
-
-const TypingWrappers = [
-    {
-        key: 'enter',
-        command: 'kb-macro.wrap',
-        args: {
-            command: 'type',
-            args: {
-                text: '\n'
-            }
-        },
-        when: 'kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible'
-    }
-];
 
 async function readJSON(path) {
     const file = "" + await fsPromises.readFile(path);
@@ -63,15 +48,21 @@ function makeWrapper(keybinding) {
 
 async function main() {
     const packageJson = await readJSON(PackageJsonPath);
-    const defaultKeybindings = await readJSON(DefaultKeybindingsPath);
     const config = await readJSON(ConfigPath);
 
-    const ExclutionList = new Set(config.exclutionList || []);
+    const BaseKeybindingsPaths = config.baseKeybindingsPaths || [];
+    const Exclusion = new Set(config.exclusion || []);
     const AwaitOptions = new Map(config.awaitOptions || []);
 
-    const defaultWrappers = defaultKeybindings.map(
+    let base = [];
+    for (let i = 0; i < BaseKeybindingsPaths.length; i++) {
+        const keybindings = await readJSON(BaseKeybindingsPaths[i]);
+        base = base.concat(keybindings);
+    }
+
+    const wrappers = base.map(
         keybinding => {
-            if (ExclutionList.has(keybinding.command)) {
+            if (Exclusion.has(keybinding.command)) {
                 keybinding.when = makeWhenRecording(keybinding.when);
                 return keybinding;
             } else {
@@ -84,18 +75,11 @@ async function main() {
         }
     );
 
-    const extensionCommands = packageJson.contributes.keybindings.filter(
-        keybinding => (
-            keybinding.command.startsWith('kb-macro.') &&
-            keybinding.command !== 'kb-macro.wrap'
-        )
-    );
-
     packageJson.contributes.keybindings = (
         []
-        .concat(TypingWrappers)
-        .concat(defaultWrappers)
-        .concat(extensionCommands)
+        .concat(config.header || [])
+        .concat(wrappers)
+        .concat(config.footer || [])
     );
 
     await writeJSON(PackageJsonPath, packageJson);
