@@ -360,20 +360,63 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: 'a' });
             await vscode.commands.executeCommand('type', { text: 'b' });
             await textEditor.edit(edit => {
-                edit.replace(new vscode.Selection(1, 0, 1, 2), 'abcde');
+                edit.replace(new vscode.Selection(1, 0, 1, 2), 'Abcde');
             });
             setSelections([[1, 5]]);
             await vscode.commands.executeCommand('type', { text: '.' });
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
-                Type('ab'), DeleteAndType(2, 'abcde'), Type('.')
+                Type('ab'), DeleteAndType(2, 'Abcde'), Type('.')
             ]);
-            assert.strictEqual(textEditor.document.lineAt(1).text, 'abcde.');
+            assert.strictEqual(textEditor.document.lineAt(1).text, 'Abcde.');
 
             setSelections([[20, 0]]);
             await keyboardMacro.playback();
-            assert.strictEqual(textEditor.document.lineAt(20).text, 'abcde.    efgh');
+            assert.strictEqual(textEditor.document.lineAt(20).text, 'Abcde.    efgh');
             assert.deepStrictEqual(getSelections(), [[20, 6]]);
+        });
+    });
+
+    describe('typing with IME', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                '\n'.repeat(10) +
+                'abcd\n'.repeat(10) +
+                '    efgh\n'.repeat(10)
+            ));
+        });
+        it('should record and playback text input via IME', async () => {
+            setSelections([[1, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'ｋ' });
+            await textEditor.edit(edit => edit.replace(new vscode.Selection(1, 0, 1, 1), 'か'));
+            setSelections([[1, 1]]);
+            await textEditor.edit(edit => edit.replace(new vscode.Selection(1, 0, 1, 1), 'かｎ'));
+            setSelections([[1, 2]]);
+            await textEditor.edit(edit => edit.replace(new vscode.Selection(1, 0, 1, 2), 'かんｊ'));
+            setSelections([[1, 3]]);
+            await textEditor.edit(edit => edit.replace(new vscode.Selection(1, 0, 1, 3), 'かんじ'));
+            setSelections([[1, 3]]);
+            await textEditor.edit(edit => edit.replace(new vscode.Selection(1, 0, 1, 3), '感じ'));
+            setSelections([[1, 2]]);
+            await textEditor.edit(edit => edit.replace(new vscode.Selection(1, 0, 1, 2), '漢字'));
+            setSelections([[1, 2]]);
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [
+                Type('ｋ'),
+                DeleteAndType(1, 'か'),
+                DeleteAndType(1, 'かｎ'),
+                DeleteAndType(2, 'かんｊ'),
+                DeleteAndType(3, 'かんじ'),
+                DeleteAndType(3, '感じ'),
+                DeleteAndType(2, '漢字')
+            ]);
+            assert.strictEqual(textEditor.document.lineAt(1).text, '漢字');
+
+            setSelections([[20, 0]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(20).text, '漢字    efgh');
+            assert.deepStrictEqual(getSelections(), [[20, 2]]);
         });
     });
 
