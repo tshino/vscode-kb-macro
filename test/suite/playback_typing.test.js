@@ -10,7 +10,6 @@ describe('Recording and Playback: Typing', () => {
     const Cmd = CommandsToTest;
     const Type = text => ({ command: 'internal:performType', args: { text } });
     const DefaultType = text => ({ command: 'default:type', args: { text } });
-    const DeleteAndType = (del,text) => ({ command: 'internal:performType', args: { deleteLeft: del, text } });
     const MoveLeft = delta => ({ command: 'cursorMove', args: { to: 'left', by: 'character', value: delta } });
     const MoveRight = delta => ({ command: 'cursorMove', args: { to: 'right', by: 'character', value: delta } });
 
@@ -366,7 +365,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: '.' });
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
-                Type('ab'), DeleteAndType(2, 'Abcde'), Type('.')
+                Type('Abcde.')
             ]);
             assert.strictEqual(textEditor.document.lineAt(1).text, 'Abcde.');
 
@@ -403,13 +402,7 @@ describe('Recording and Playback: Typing', () => {
             setSelections([[1, 2]]);
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
-                Type('ｋ'),
-                DeleteAndType(1, 'か'),
-                DeleteAndType(1, 'かｎ'),
-                DeleteAndType(2, 'かんｊ'),
-                DeleteAndType(3, 'かんじ'),
-                DeleteAndType(3, '感じ'),
-                DeleteAndType(2, '漢字')
+                Type('漢字')
             ]);
             assert.strictEqual(textEditor.document.lineAt(1).text, '漢字');
 

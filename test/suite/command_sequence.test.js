@@ -72,26 +72,60 @@ describe('CommandSequence', () => {
         it('should not concatenate direct typing commands with deleting', () => {
             const TYPE1 = {
                 command: 'internal:performType',
-                args: { text: 'A' }
+                args: { text: 'X' }
             };
             const TYPE2 = {
                 command: 'internal:performType',
-                args: { text: 'B' }
+                args: { deleteLeft: 2, text: 'ABC' }
+            };
+            const seq = CommandSequence();
+            seq.push(TYPE1);
+            seq.push(TYPE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ TYPE1, TYPE2 ]);
+        });
+        it('should concatenate direct typing followed by another typing with deleting', () => {
+            const TYPE1 = {
+                command: 'internal:performType',
+                args: { text: 'a' }
+            };
+            const TYPE2 = {
+                command: 'internal:performType',
+                args: { text: 'b' }
             };
             const TYPE3 = {
                 command: 'internal:performType',
                 args: { deleteLeft: 2, text: 'ABC' }
             };
-            const TYPE12 = {
+            const TYPE123 = {
                 command: 'internal:performType',
-                args: { text: 'AB' }
+                args: { text: 'ABC' }
             };
             const seq = CommandSequence();
             seq.push(TYPE1);
             seq.push(TYPE2);
             seq.push(TYPE3);
             seq.optimize();
-            assert.deepStrictEqual(seq.get(), [ TYPE12, TYPE3 ]);
+            assert.deepStrictEqual(seq.get(), [ TYPE123 ]);
+        });
+        it('should concatenate direct typing with deleting followed by another typing without deleting', () => {
+            const TYPE1 = {
+                command: 'internal:performType',
+                args: { deleteLeft: 1, text: 'a' }
+            };
+            const TYPE2 = {
+                command: 'internal:performType',
+                args: { text: 'b' }
+            };
+            const TYPE12 = {
+                command: 'internal:performType',
+                args: { deleteLeft: 1, text: 'ab' }
+            };
+            const seq = CommandSequence();
+            seq.push(TYPE1);
+            seq.push(TYPE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ TYPE12 ]);
         });
     });
 });
