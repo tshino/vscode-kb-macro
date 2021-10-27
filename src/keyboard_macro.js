@@ -2,7 +2,7 @@
 const vscode = require('vscode');
 const { CommandSequence } = require('./command_sequence.js');
 
-const KeyboardMacro = function() {
+const KeyboardMacro = function({ awaitController }) {
     const RecordingStateReason = {
         Start: 0,
         Cancel: 1,
@@ -14,8 +14,6 @@ const KeyboardMacro = function() {
     let onEndWrappedCommandCallback = null;
     let recording = false;
     let locked = false;
-    const documentChanged = [];
-    const selectionChanged = [];
     const sequence = CommandSequence();
     const internalCommands = new Map();
 
@@ -97,40 +95,6 @@ const KeyboardMacro = function() {
         }
     };
 
-    const startEffectObserver = function(spec) {
-        const TIMEOUT = 300;
-        const awaitList = (spec.await || '').split(' ');
-        return new Promise((resolve, reject) => {
-            let count = 0;
-            const doneOne = function() {
-                count -= 1;
-                if (count == 0) {
-                    resolve();
-                }
-            };
-            for (let i = 0; i < awaitList.length; i++) {
-                const e = awaitList[i];
-                if (e === 'document') {
-                    count += 1;
-                    documentChanged.push(doneOne);
-                } else if (e === 'selection') {
-                    count += 1;
-                    selectionChanged.push(doneOne);
-                }
-            }
-            if (count === 0) {
-                resolve();
-            } else {
-                setTimeout(() => {
-                    if (0 < count) {
-                        count = 0;
-                        reject();
-                    }
-                }, TIMEOUT);
-            }
-        });
-    };
-
     const invokeCommand = async function(spec) {
         const func = internalCommands[spec.command];
         if (func !== undefined) {
@@ -146,7 +110,7 @@ const KeyboardMacro = function() {
 
     const invokeCommandSync = async function(spec, context) {
         let ok = true;
-        const promise = startEffectObserver(spec).catch(() => {});
+        const promise = awaitController.waitFor(spec.await || '').catch(() => {});
         try {
             await invokeCommand(spec);
         } catch(error) {
@@ -210,21 +174,6 @@ const KeyboardMacro = function() {
         }
     });
 
-    const processDocumentChangeEvent = function() {
-        const notifiers = Array.from(documentChanged);
-        documentChanged.length = 0;
-        for (let i = 0; i < notifiers.length; i++) {
-            notifiers[i]();
-        }
-    };
-    const processSelectionChangeEvent = function() {
-        const notifiers = Array.from(selectionChanged);
-        selectionChanged.length = 0;
-        for (let i = 0; i < notifiers.length; i++) {
-            notifiers[i]();
-        }
-    };
-
     return {
         RecordingStateReason,
         onChangeRecordingState,
@@ -237,8 +186,6 @@ const KeyboardMacro = function() {
         push,
         playback,
         wrap,
-        processDocumentChangeEvent,
-        processSelectionChangeEvent,
 
         // testing purpose only
         isRecording: () => { return recording; },

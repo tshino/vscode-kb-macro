@@ -1,10 +1,12 @@
 'use strict';
 const vscode = require('vscode');
+const { AwaitController } = require('./await_controller.js');
 const { KeyboardMacro } = require('./keyboard_macro.js');
 const { TypingDetector } = require('./typing_detector.js');
 const internalCommands = require('./internal_commands.js');
 
-const keyboardMacro = KeyboardMacro();
+const awaitController = AwaitController();
+const keyboardMacro = KeyboardMacro({ awaitController });
 const typingDetector = TypingDetector();
 
 function activate(context) {
@@ -76,14 +78,14 @@ function activate(context) {
     addEventListener(
         vscode.workspace.onDidChangeTextDocument,
         function(event) {
-            keyboardMacro.processDocumentChangeEvent(event);
+            awaitController.processDocumentChangeEvent(event);
             typingDetector.processDocumentChangeEvent(event);
         }
     );
     addEventListener(
         vscode.window.onDidChangeTextEditorSelection,
         function(event) {
-            keyboardMacro.processSelectionChangeEvent(event);
+            awaitController.processSelectionChangeEvent(event);
             typingDetector.processSelectionChangeEvent(event);
         }
     );

@@ -2,10 +2,12 @@
 const assert = require('assert');
 const vscode = require('vscode');
 const { TestUtil } = require('./test_util.js');
+const { AwaitController } = require('../../src/await_controller.js');
 const { KeyboardMacro } = require('../../src/keyboard_macro.js');
 
 describe('KeybaordMacro', () => {
-    const keyboardMacro = KeyboardMacro();
+    const awaitController = AwaitController();
+    const keyboardMacro = KeyboardMacro({ awaitController });
 
     before(async () => {
         vscode.window.showInformationMessage('Started test for KeyboardMacro.');
