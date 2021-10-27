@@ -590,4 +590,83 @@ describe('Recording and Playback: Edit', () => {
             });
         });
     });
+    describe('moveLinesXXX', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n' +
+                'fghij\n' +
+                'klmno\n' +
+                'pqrstu\n' +
+                'vwxyz\n'
+            ));
+        });
+        describe('moveLinesDownAction', () => {
+            it('should move one line down', async () => {
+                const seq = [ Cmd.MoveLinesDown ];
+                setSelections([[1, 3]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'fghij');
+                assert.deepStrictEqual(getSelections(), [[2, 3]]);
+
+                setSelections([[3, 4]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'vwxyz');
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'pqrstu');
+                assert.deepStrictEqual(getSelections(), [[4, 4]]);
+            });
+            it('should move selected lines down', async () => {
+                const seq = [ Cmd.MoveLinesDown ];
+                setSelections([[1, 3, 2, 4]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'pqrstu');
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'klmno');
+                assert.deepStrictEqual(getSelections(), [[2, 3, 3, 4]]);
+
+                setSelections([[3, 3, 4, 2]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(3).text, '');
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(5).text, 'vwxyz');
+                assert.deepStrictEqual(getSelections(), [[4, 3, 5, 2]]);
+            });
+        });
+        describe('moveLinesUpAction', () => {
+            it('should move one line up', async () => {
+                const seq = [ Cmd.MoveLinesUp ];
+                setSelections([[1, 3]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'abcde');
+                assert.deepStrictEqual(getSelections(), [[0, 3]]);
+
+                setSelections([[3, 4]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'pqrstu');
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'klmno');
+                assert.deepStrictEqual(getSelections(), [[2, 4]]);
+            });
+            it('should move selected lines down', async () => {
+                const seq = [ Cmd.MoveLinesUp ];
+                setSelections([[1, 3, 2, 4]]);
+                await record(seq);
+                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
+                assert.strictEqual(textEditor.document.lineAt(0).text, 'fghij');
+                assert.strictEqual(textEditor.document.lineAt(1).text, 'klmno');
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'abcde');
+                assert.deepStrictEqual(getSelections(), [[0, 3, 1, 4]]);
+
+                setSelections([[3, 3, 4, 2]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'pqrstu');
+                assert.strictEqual(textEditor.document.lineAt(3).text, 'vwxyz');
+                assert.strictEqual(textEditor.document.lineAt(4).text, 'abcde');
+                assert.deepStrictEqual(getSelections(), [[2, 3, 3, 2]]);
+            });
+        });
+    });
 });

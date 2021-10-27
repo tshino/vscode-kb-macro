@@ -39,6 +39,8 @@ const CommandsToTest = {
     Outdent: { command: 'outdent' },
     OutdentLines: { command: 'editor.action.outdentLines' },
     IndentLines: { command: 'editor.action.indentLines' },
+    MoveLinesDown: { command: "editor.action.moveLinesDownAction" },
+    MoveLinesUp: { command: "editor.action.moveLinesUpAction" },
     CommentLine: { command: "editor.action.commentLine" },
     AddCommentLine: { command: "editor.action.addCommentLine" },
     RemoveCommentLine: { command: "editor.action.removeCommentLine" }
