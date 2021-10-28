@@ -1,6 +1,7 @@
 'use strict';
 
 const AwaitController = function() {
+    const DefaultTimeout = 300;
     const documentChanged = [];
     const selectionChanged = [];
 
@@ -19,8 +20,7 @@ const AwaitController = function() {
         }
     };
 
-    const waitFor = function(awaitOption) {
-        const TIMEOUT = 300;
+    const waitFor = function(awaitOption, timeout = DefaultTimeout) {
         const awaitList = awaitOption.split(' ');
 
         return new Promise((resolve, reject) => {
@@ -49,7 +49,7 @@ const AwaitController = function() {
                         count = 0;
                         reject();
                     }
-                }, TIMEOUT);
+                }, timeout);
             }
         });
     };

@@ -14,7 +14,8 @@ describe('Recording and Playback: Edit', () => {
     const setSelections = async function(array) {
         const newSelections = TestUtil.arrayToSelections(array);
         if (!util.isEqualSelections(textEditor.selections, newSelections)) {
-            const promise = awaitController.waitFor('selection');
+            const timeout = 1000;
+            const promise = awaitController.waitFor('selection', timeout).catch(() => {});
             textEditor.selections = newSelections;
             await promise;
         }
