@@ -443,12 +443,10 @@ describe('Recording and Playback: Edit', () => {
         describe('copyLinesDownAction', () => {
             it('should duplicate one line', async () => {
                 const seq = [ Cmd.CopyLinesDown ];
-                await setSelections([[1, 3]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'fghij');
-                assert.deepStrictEqual(getSelections(), [[2, 3]]);
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[2, 3]], d: [
+                    [1, 'fghij'],
+                    [2, 'fghij']
+                ] });
 
                 await setSelections([[4, 4]]);
                 await keyboardMacro.playback();
@@ -458,14 +456,12 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should duplicate selected lines', async () => {
                 const seq = [ Cmd.CopyLinesDown ];
-                await setSelections([[1, 3, 2, 4]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
-                assert.deepStrictEqual(getSelections(), [[3, 3, 4, 4]]);
+                await testRecording(seq, { s: [[1, 3, 2, 4]] }, { s: [[3, 3, 4, 4]], d: [
+                    [1, 'fghij'],
+                    [2, 'klmno'],
+                    [3, 'fghij'],
+                    [4, 'klmno']
+                ] });
 
                 await setSelections([[4, 3, 5, 2]]);
                 await keyboardMacro.playback();
@@ -479,12 +475,10 @@ describe('Recording and Playback: Edit', () => {
         describe('copyLinesUpAction', () => {
             it('should duplicate one line', async () => {
                 const seq = [ Cmd.CopyLinesUp ];
-                await setSelections([[1, 3]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'fghij');
-                assert.deepStrictEqual(getSelections(), [[1, 3]]);
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 3]], d: [
+                    [1, 'fghij'],
+                    [2, 'fghij']
+                ] });
 
                 await setSelections([[4, 4]]);
                 await keyboardMacro.playback();
@@ -494,14 +488,12 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should duplicate selected lines', async () => {
                 const seq = [ Cmd.CopyLinesUp ];
-                await setSelections([[1, 3, 2, 4]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
-                assert.deepStrictEqual(getSelections(), [[1, 3, 2, 4]]);
+                await testRecording(seq, { s: [[1, 3, 2, 4]] }, { s: [[1, 3, 2, 4]], d: [
+                    [1, 'fghij'],
+                    [2, 'klmno'],
+                    [3, 'fghij'],
+                    [4, 'klmno']
+                ] });
 
                 await setSelections([[4, 3, 5, 2]]);
                 await keyboardMacro.playback();
@@ -526,12 +518,10 @@ describe('Recording and Playback: Edit', () => {
         describe('moveLinesDownAction', () => {
             it('should move one line down', async () => {
                 const seq = [ Cmd.MoveLinesDown ];
-                await setSelections([[1, 3]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'fghij');
-                assert.deepStrictEqual(getSelections(), [[2, 3]]);
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[2, 3]], d: [
+                    [1, 'klmno'],
+                    [2, 'fghij']
+                ] });
 
                 await setSelections([[3, 4]]);
                 await keyboardMacro.playback();
@@ -541,13 +531,11 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should move selected lines down', async () => {
                 const seq = [ Cmd.MoveLinesDown ];
-                await setSelections([[1, 3, 2, 4]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'pqrstu');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'klmno');
-                assert.deepStrictEqual(getSelections(), [[2, 3, 3, 4]]);
+                await testRecording(seq, { s: [[1, 3, 2, 4]] }, { s: [[2, 3, 3, 4]], d: [
+                    [1, 'pqrstu'],
+                    [2, 'fghij'],
+                    [3, 'klmno']
+                ] });
 
                 await setSelections([[3, 3, 4, 2]]);
                 await keyboardMacro.playback();
@@ -560,12 +548,10 @@ describe('Recording and Playback: Edit', () => {
         describe('moveLinesUpAction', () => {
             it('should move one line up', async () => {
                 const seq = [ Cmd.MoveLinesUp ];
-                await setSelections([[1, 3]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'abcde');
-                assert.deepStrictEqual(getSelections(), [[0, 3]]);
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[0, 3]], d: [
+                    [0, 'fghij'],
+                    [1, 'abcde']
+                ] });
 
                 await setSelections([[3, 4]]);
                 await keyboardMacro.playback();
@@ -575,13 +561,11 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should move selected lines down', async () => {
                 const seq = [ Cmd.MoveLinesUp ];
-                await setSelections([[1, 3, 2, 4]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'fghij');
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'abcde');
-                assert.deepStrictEqual(getSelections(), [[0, 3, 1, 4]]);
+                await testRecording(seq, { s: [[1, 3, 2, 4]] }, { s: [[0, 3, 1, 4]], d: [
+                    [0, 'fghij'],
+                    [1, 'klmno'],
+                    [2, 'abcde']
+                ] });
 
                 await setSelections([[3, 3, 4, 2]]);
                 await keyboardMacro.playback();
