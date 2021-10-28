@@ -116,5 +116,6 @@ function deactivate() {}
 module.exports = {
     activate,
     deactivate,
+    awaitController,
     keyboardMacro
 };
