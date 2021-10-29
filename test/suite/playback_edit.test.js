@@ -34,6 +34,7 @@ describe('Recording and Playback: Edit', () => {
         await setSelections(precond.s);
         await record(sequence);
         assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), sequence);
+        // check for text document
         if (expected.d) {
             for (let i = 0; i < expected.d.length; i++) {
                 const line = expected.d[i][0];
@@ -41,8 +42,13 @@ describe('Recording and Playback: Edit', () => {
                 assert.strictEqual(textEditor.document.lineAt(line).text, text);
             }
         }
+        // check for text selections
         if (expected.s) {
             assert.deepStrictEqual(getSelections(), expected.s);
+        }
+        // check for clipboard text
+        if (expected.c) {
+            assert.strictEqual(await TestUtil.readClipboard(), expected.c);
         }
     };
 
@@ -303,11 +309,7 @@ describe('Recording and Playback: Edit', () => {
         describe('clipboardCopyAction', () => {
             it('should copy one line', async () => {
                 const seq = [ Cmd.ClipboardCopy ];
-                await setSelections([[1, 3]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.deepStrictEqual(getSelections(), [[1, 3]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'fghij\n');
+                await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 3]], c: 'fghij\n' });
 
                 await setSelections([[2, 4]]);
                 await keyboardMacro.playback();
@@ -316,11 +318,7 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should copy selected range', async () => {
                 const seq = [ Cmd.ClipboardCopy ];
-                await setSelections([[0, 3, 1, 2]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.deepStrictEqual(getSelections(), [[0, 3, 1, 2]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'de\nfg');
+                await testRecording(seq, { s: [[0, 3, 1, 2]] }, { s: [[0, 3, 1, 2]], c: 'de\nfg' });
 
                 await setSelections([[1, 2, 3, 4]]);
                 await keyboardMacro.playback();
@@ -331,12 +329,9 @@ describe('Recording and Playback: Edit', () => {
         describe('clipboardCutAction', () => {
             it('should cut one line', async () => {
                 const seq = [ Cmd.ClipboardCut ];
-                await setSelections([[0, 0]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'fghij');
-                assert.deepStrictEqual(getSelections(), [[0, 0]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'abcde\n');
+                await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]], d: [
+                    [ 0, 'fghij' ]
+                ], c: 'abcde\n' });
 
                 await setSelections([[2, 0]]);
                 await keyboardMacro.playback();
@@ -346,13 +341,10 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should cut multiple lines', async () => {
                 const seq = [ Cmd.ClipboardCut, Cmd.ClipboardCut ];
-                await setSelections([[1, 0]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'pqrstu');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'vwxyz');
-                assert.deepStrictEqual(getSelections(), [[1, 0]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'klmno\n');
+                await testRecording(seq, { s: [[1, 0]] }, { s: [[1, 0]], d: [
+                    [ 1, 'pqrstu' ],
+                    [ 2, 'vwxyz' ]
+                ], c: 'klmno\n' });
 
                 await setSelections([[0, 0]]);
                 await keyboardMacro.playback();
@@ -362,12 +354,9 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should cut selected range', async () => {
                 const seq = [ Cmd.ClipboardCut ];
-                await setSelections([[0, 3, 1, 2]]);
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'abchij');
-                assert.deepStrictEqual(getSelections(), [[0, 3]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'de\nfg');
+                await testRecording(seq, { s: [[0, 3, 1, 2]] }, { s: [[0, 3]], d: [
+                    [ 0, 'abchij' ],
+                ], c: 'de\nfg' });
 
                 await setSelections([[1, 2, 3, 4]]);
                 await keyboardMacro.playback();
