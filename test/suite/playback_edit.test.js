@@ -32,6 +32,9 @@ describe('Recording and Playback: Edit', () => {
     };
     const testRecording = async function(sequence, precond, expected) {
         await setSelections(precond.s);
+        if ('c' in precond) {
+            await vscode.env.clipboard.writeText(precond.c);
+        }
         await record(sequence);
         assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), sequence);
         // check for text document
@@ -47,7 +50,7 @@ describe('Recording and Playback: Edit', () => {
             assert.deepStrictEqual(getSelections(), expected.s);
         }
         // check for clipboard text
-        if (expected.c) {
+        if ('c' in expected) {
             assert.strictEqual(await TestUtil.readClipboard(), expected.c);
         }
     };
@@ -368,13 +371,10 @@ describe('Recording and Playback: Edit', () => {
         describe('clipboardPasteAction', () => {
             it('should insert one line', async () => {
                 const seq = [ Cmd.ClipboardPaste ];
-                await setSelections([[0, 0]]);
-                await vscode.env.clipboard.writeText('ABCDE\n');
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'ABCDE');
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'abcde');
-                assert.deepStrictEqual(getSelections(), [[1, 0]]);
+                await testRecording(seq, { s: [[0, 0]], c: 'ABCDE\n' }, { s: [[1, 0]], d: [
+                    [ 0, 'ABCDE' ],
+                    [ 1, 'abcde' ],
+                ] });
 
                 await setSelections([[2, 0]]);
                 await vscode.env.clipboard.writeText('FGHIJ\n');
@@ -385,14 +385,11 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should insert one line multiple times', async () => {
                 const seq = [ Cmd.ClipboardPaste, Cmd.ClipboardPaste ];
-                await setSelections([[1, 0]]);
-                await vscode.env.clipboard.writeText('ABCDE\n');
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'ABCDE');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'ABCDE');
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'fghij');
-                assert.deepStrictEqual(getSelections(), [[3, 0]]);
+                await testRecording(seq, { s: [[1, 0]], c: 'ABCDE\n' }, { s: [[3, 0]], d: [
+                    [ 1, 'ABCDE' ],
+                    [ 2, 'ABCDE' ],
+                    [ 3, 'fghij' ]
+                ] });
 
                 await setSelections([[0, 0]]);
                 await vscode.env.clipboard.writeText('FGHIJ\n');
@@ -404,12 +401,9 @@ describe('Recording and Playback: Edit', () => {
             });
             it('should replace selected range', async () => {
                 const seq = [ Cmd.ClipboardPaste ];
-                await setSelections([[0, 3, 1, 2]]);
-                await vscode.env.clipboard.writeText('ABCDE');
-                await record(seq);
-                assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), seq);
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcABCDEhij');
-                assert.deepStrictEqual(getSelections(), [[0, 8]]);
+                await testRecording(seq, { s: [[0, 3, 1, 2]], c: 'ABCDE' }, { s: [[0, 8]], d: [
+                    [ 0, 'abcABCDEhij' ]
+                ] });
 
                 await setSelections([[1, 2, 3, 4]]);
                 await vscode.env.clipboard.writeText('FGHIJ');
