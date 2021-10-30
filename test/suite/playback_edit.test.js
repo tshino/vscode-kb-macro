@@ -301,6 +301,7 @@ describe('Recording and Playback: Edit', () => {
     });
     describe('clipboardXXX', () => {
         beforeEach(async () => {
+            const promise = awaitController.waitFor('document', 500).catch(() => {});
             await TestUtil.resetDocument(textEditor, (
                 'abcde\n' +
                 'fghij\n' +
@@ -308,6 +309,7 @@ describe('Recording and Playback: Edit', () => {
                 'pqrstu\n' +
                 'vwxyz\n'
             ));
+            await promise;
         });
         describe('clipboardCopyAction', () => {
             it('should copy one line', async () => {
