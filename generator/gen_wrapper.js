@@ -4,9 +4,13 @@ const fsPromises = require('fs/promises');
 const PackageJsonPath = './package.json';
 const ConfigPath = 'generator/config.json';
 
-async function readJSON(path) {
+async function readJSON(path, options = {}) {
+    const { allowComments } = options;
     const file = "" + await fsPromises.readFile(path);
-    const json = file.replace(/\/\/.+/g, ''); // skip line comments
+    let json = file;
+    if (allowComments) {
+        json = json.replace(/\/\/.+/g, ''); // skip line comments
+    }
     const result = JSON.parse(json);
     return result;
 }
@@ -56,7 +60,7 @@ async function main() {
 
     let base = [];
     for (let i = 0; i < BaseKeybindingsPaths.length; i++) {
-        const keybindings = await readJSON(BaseKeybindingsPaths[i]);
+        const keybindings = await readJSON(BaseKeybindingsPaths[i], { allowComments: true });
         base = base.concat(keybindings);
     }
 
