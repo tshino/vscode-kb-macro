@@ -3,6 +3,7 @@
     "displayName": "Keyboard Macro Beta",
     "description": "Recordable keyboard macro for Visual Studio Code",
     "version": "0.0.1",
+    "publisher": "tshino",
     "engines": {
         "vscode": "^1.61.0"
     },
@@ -15,6 +16,10 @@
         "macro recording",
         "recordable macro"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tshino/vscode-kb-macro.git"
+    },
     "activationEvents": [
         "*"
     ],
@@ -22,7 +27,8 @@
     "scripts": {
         "lint": "eslint .",
         "pretest": "npm run lint",
-        "test": "node ./test/runTest.js"
+        "test": "node ./test/runTest.js",
+        "gen-wrapper": "node ./generator/gen_wrapper.js"
     },
     "devDependencies": {
         "eslint": "^7.32.0",
