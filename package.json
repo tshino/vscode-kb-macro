@@ -10,6 +10,7 @@
     "categories": [
         "Keymaps"
     ],
+    "icon": "images/kb-macro-icon.png",
     "keywords": [
         "keyboard macro",
         "macro",
