@@ -1,4 +1,5 @@
 'use strict';
+const vscode = require('vscode');
 
 const AwaitController = function() {
     const DefaultTimeout = 300;
@@ -19,41 +20,61 @@ const AwaitController = function() {
             notifiers[i]();
         }
     };
+    const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+    const waitForClipboardChange = async function(timeout) {
+        const last = await vscode.env.clipboard.readText();
+        let quit = false;
+        setTimeout(() => { quit = true; }, timeout);
+        while (!quit) {
+            await sleep(5);
+            const current = await vscode.env.clipboard.readText();
+            if (current !== last) {
+                return;
+            }
+        }
+        throw 'timeout';
+    };
 
     const waitFor = function(awaitOption, timeout = DefaultTimeout) {
         const awaitList = awaitOption.split(' ');
+        const promises = [];
         let resolveFunc = null;
-        let count = 0;
+        let expectedEventCount = 0;
         const doneOne = function() {
-            count -= 1;
-            if (count == 0) {
+            expectedEventCount -= 1;
+            if (expectedEventCount == 0) {
                 resolveFunc();
             }
         };
         for (let i = 0; i < awaitList.length; i++) {
             const e = awaitList[i];
             if (e === 'document') {
-                count += 1;
+                expectedEventCount += 1;
                 documentChanged.push(doneOne);
             } else if (e === 'selection') {
-                count += 1;
+                expectedEventCount += 1;
                 selectionChanged.push(doneOne);
+            } else if (e === 'clipboard') {
+                promises.push(waitForClipboardChange(timeout));
             } else if (e !== '') {
                 console.error('Error (kb-macro): Unknown args.await parameter "' + e + '"');
             }
         }
-        if (count === 0) {
-            return Promise.resolve(null);
-        } else {
-            return new Promise((resolve, reject) => {
+        if (expectedEventCount !== 0) {
+            promises.push(new Promise((resolve, reject) => {
                 resolveFunc = resolve;
                 setTimeout(() => {
-                    if (0 < count) {
-                        count = 0;
+                    if (0 < expectedEventCount) {
+                        expectedEventCount = 0;
                         reject();
                     }
                 }, timeout);
-            });
+            }));
+        }
+        if (promises.length === 0) {
+            return Promise.resolve(null);
+        } else {
+            return Promise.all(promises);
         }
     };
 
