@@ -49,6 +49,24 @@ describe('AwaitController', () => {
             await promise;
             assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'resolved', 'check it out' ]);
         });
+        it('should fullfill after both document and selection changed', async () => {
+            const logs = [];
+            const promise = awaitController.waitFor('document selection').then(
+                () => logs.push('resolved'),
+                () => logs.push('rejected')
+            );
+            logs.push('begin');
+            await TestUtil.sleep(30);
+            logs.push('waiting');
+            awaitController.processSelectionChangeEvent({});
+            await TestUtil.sleep(30);
+            logs.push('waiting');
+            awaitController.processDocumentChangeEvent({});
+            await TestUtil.sleep(30);
+            logs.push('check it out');
+            await promise;
+            assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'waiting', 'resolved', 'check it out' ]);
+        });
         // TODO: add tests for failure cases (timeout)
         // TODO: add tests for combination of await option
     });

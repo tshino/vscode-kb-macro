@@ -22,36 +22,39 @@ const AwaitController = function() {
 
     const waitFor = function(awaitOption, timeout = DefaultTimeout) {
         const awaitList = awaitOption.split(' ');
-
-        return new Promise((resolve, reject) => {
-            let count = 0;
-            const doneOne = function() {
-                count -= 1;
-                if (count == 0) {
-                    resolve();
-                }
-            };
-            for (let i = 0; i < awaitList.length; i++) {
-                const e = awaitList[i];
-                if (e === 'document') {
-                    count += 1;
-                    documentChanged.push(doneOne);
-                } else if (e === 'selection') {
-                    count += 1;
-                    selectionChanged.push(doneOne);
-                }
+        let resolveFunc = null;
+        let count = 0;
+        const doneOne = function() {
+            count -= 1;
+            if (count == 0) {
+                resolveFunc();
             }
-            if (count === 0) {
-                resolve();
-            } else {
+        };
+        for (let i = 0; i < awaitList.length; i++) {
+            const e = awaitList[i];
+            if (e === 'document') {
+                count += 1;
+                documentChanged.push(doneOne);
+            } else if (e === 'selection') {
+                count += 1;
+                selectionChanged.push(doneOne);
+            } else if (e !== '') {
+                console.error('Error (kb-macro): Unknown args.await parameter "' + e + '"');
+            }
+        }
+        if (count === 0) {
+            return Promise.resolve(null);
+        } else {
+            return new Promise((resolve, reject) => {
+                resolveFunc = resolve;
                 setTimeout(() => {
                     if (0 < count) {
                         count = 0;
                         reject();
                     }
                 }, timeout);
-            }
-        });
+            });
+        }
     };
 
     return {
