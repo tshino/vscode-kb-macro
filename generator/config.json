@@ -31,11 +31,6 @@
         },
         {
             "key": "ctrl+alt+r",
-            "command": "kb-macro.cancelRecording",
-            "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option1'"
-        },
-        {
-            "key": "ctrl+alt+p",
             "command": "kb-macro.finishRecording",
             "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option1'"
         },
@@ -45,17 +40,17 @@
             "when": "!kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option1'"
         },
         {
+            "key": "ctrl+alt+p",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option1'"
+        },
+        {
             "key": "ctrl+shift+alt+r",
             "command": "kb-macro.startRecording",
             "when": "!kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
         },
         {
             "key": "ctrl+shift+alt+r",
-            "command": "kb-macro.cancelRecording",
-            "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
-        },
-        {
-            "key": "ctrl+shift+alt+p",
             "command": "kb-macro.finishRecording",
             "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
         },
@@ -63,6 +58,11 @@
             "key": "ctrl+shift+alt+p",
             "command": "kb-macro.playback",
             "when": "!kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
+        },
+        {
+            "key": "ctrl+shift+alt+p",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording && editorFocus && config.keyboardMacro.recordingShortcuts == 'Option2'"
         }
     ]
 }
