@@ -301,7 +301,9 @@ describe('Recording and Playback: Edit', () => {
     });
     describe('clipboardXXX', () => {
         beforeEach(async () => {
-            const promise = awaitController.waitFor('document', 500).catch(() => {});
+            const promise = awaitController.waitFor('document', 500).catch(
+                () => { console.log('Warning: timeout at resetDocument!'); }
+            );
             await TestUtil.resetDocument(textEditor, (
                 'abcde\n' +
                 'fghij\n' +
