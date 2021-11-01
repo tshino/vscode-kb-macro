@@ -12,10 +12,13 @@ describe('Recording and Playback: Edit', () => {
     const Cmd = CommandsToTest;
 
     const setSelections = async function(array) {
+        await awaitController.waitFor('selection', 1).catch(() => {});
         const newSelections = TestUtil.arrayToSelections(array);
         if (!util.isEqualSelections(textEditor.selections, newSelections)) {
             const timeout = 1000;
-            const promise = awaitController.waitFor('selection', timeout).catch(() => {});
+            const promise = awaitController.waitFor('selection', timeout).catch(
+                () => { console.log('Warning: timeout in setSelections!'); }
+            );
             textEditor.selections = newSelections;
             await promise;
         }
