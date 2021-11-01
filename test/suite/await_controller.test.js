@@ -61,7 +61,7 @@ describe('AwaitController', () => {
             await TestUtil.sleep(30);
             logs.push('waiting');
             await vscode.env.clipboard.writeText('WORLD');
-            await TestUtil.sleep(100);
+            await TestUtil.sleep(300);
             logs.push('check it out');
             await promise;
             assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'resolved', 'check it out' ]);
@@ -101,10 +101,8 @@ describe('AwaitController', () => {
             await TestUtil.sleep(30);
             logs.push('waiting');
             await vscode.env.clipboard.writeText('WORLD');
-            await TestUtil.sleep(100);
-            logs.push('check it out');
             await promise;
-            assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'waiting', 'waiting', 'resolved', 'check it out' ]);
+            assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'waiting', 'waiting', 'resolved' ]);
         });
         it('should fail if timeout (document)', async () => {
             const logs = [];
