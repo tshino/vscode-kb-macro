@@ -122,7 +122,7 @@ describe('internalCommands', () => {
         });
     });
 
-    describe('performType (deleteLeft)', () => {
+    describe('performType (with deleteLeft)', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
                 '\n'.repeat(10) +
