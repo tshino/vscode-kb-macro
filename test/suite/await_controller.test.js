@@ -66,6 +66,17 @@ describe('AwaitController', () => {
             await promise;
             assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'resolved', 'check it out' ]);
         });
+        it('should fullfill after clipboard text changed (sleep removed)', async () => {
+            const logs = [];
+            await vscode.env.clipboard.writeText('HELLO');
+            const promise = awaitController.waitFor('clipboard').then(
+                () => logs.push('resolved'),
+                () => logs.push('rejected')
+            );
+            await vscode.env.clipboard.writeText('WORLD');
+            await promise;
+            assert.deepStrictEqual(logs, [ 'resolved' ]);
+        });
         it('should fullfill after both document and selection changed', async () => {
             const logs = [];
             const promise = awaitController.waitFor('document selection').then(
