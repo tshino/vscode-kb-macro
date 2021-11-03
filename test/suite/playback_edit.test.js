@@ -206,7 +206,6 @@ describe('Recording and Playback: Edit', () => {
     });
     describe('commentLine', () => {
         beforeEach(async () => {
-            console.log('before resetDocument');
             const promise = awaitController.waitFor('document', 500).catch(
                 () => { console.log('Warning: timeout at resetDocument!'); }
             );
@@ -219,22 +218,16 @@ describe('Recording and Playback: Edit', () => {
                 'hello("Code");'
             ), { languageId: 'javascript' } );
             await promise;
-            console.log('after resetDocument');
         });
         describe('commentLine', () => {
             const seq = [ Cmd.CommentLine ];
             it('should add line comment', async () => {
-                console.log('before testRecording');
                 await testRecording(seq, { s: [[5, 5]] }, { s: [[5, 8]], d: [[5, '// hello("Code");']]  });
-                console.log('after testRecording');
 
                 await setSelections([[1, 0]]);
-                console.log('after setSelections');
                 await keyboardMacro.playback();
-                console.log('after playback');
                 assert.strictEqual(textEditor.document.lineAt(1).text, '    // console.log("Hello, " + name);');
                 assert.deepStrictEqual(getSelections(), [[1, 0]]);
-                console.log('after check for getSelections');
             });
             it('should remove line comment', async () => {
                 await testRecording(seq, { s: [[3, 5]] }, { s: [[3, 2]], d: [[3, 'hello("world");']]  });
