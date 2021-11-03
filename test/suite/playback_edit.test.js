@@ -206,6 +206,7 @@ describe('Recording and Playback: Edit', () => {
     });
     describe('commentLine', () => {
         beforeEach(async () => {
+            console.log('before resetDocument');
             await TestUtil.resetDocument(textEditor, (
                 'function hello(name) {\n' +
                 '    console.log("Hello, " + name);\n' +
@@ -214,6 +215,7 @@ describe('Recording and Playback: Edit', () => {
                 '// hello("vscode");\n' +
                 'hello("Code");'
             ), { languageId: 'javascript' } );
+            console.log('after resetDocument');
         });
         describe('commentLine', () => {
             const seq = [ Cmd.CommentLine ];
