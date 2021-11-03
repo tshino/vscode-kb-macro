@@ -30,14 +30,29 @@ function makeCommandSpec(keybinding) {
     return spec;
 }
 
-function makeWhenRecording(when) {
+function addWhenContext(when, context) {
     if (when) {
         const conditions = when.split('||');
-        const restricted = conditions.map(cond => 'kb-macro.recording && ' + cond.trim()).join(' || ');
+        const restricted = conditions.map(cond => context + ' && ' + cond.trim()).join(' || ');
         return restricted;
     } else {
-        return 'kb-macro.recording';
+        return context;
     }
+}
+
+async function loadBaseKeybindings(baseKeybindings) {
+    let base = [];
+    for (const item of baseKeybindings) {
+        let keybindings = await readJSON(item['path'], { allowComments: true });
+        if (item['when']) {
+            keybindings = keybindings.map(keybinding => {
+                keybinding.when = addWhenContext(keybinding.when, item['when']);
+                return keybinding;
+            });
+        }
+        base = base.concat(keybindings);
+    }
+    return base;
 }
 
 function makeWrapper(keybinding) {
@@ -45,7 +60,7 @@ function makeWrapper(keybinding) {
         key: keybinding.key,
         command: 'kb-macro.wrap',
         args: makeCommandSpec(keybinding),
-        when: makeWhenRecording(keybinding.when)
+        when: addWhenContext(keybinding.when, 'kb-macro.recording')
     };
     return wrapped;
 }
@@ -54,36 +69,32 @@ async function main() {
     const packageJson = await readJSON(PackageJsonPath);
     const config = await readJSON(ConfigPath);
 
-    const BaseKeybindingsPaths = config.baseKeybindingsPaths || [];
-    const Exclusion = new Set(config.exclusion || []);
-    const AwaitOptions = new Map(config.awaitOptions || []);
+    const baseKeybindings = config['baseKeybindings'] || [];
+    const exclusion = new Set(config['exclusion'] || []);
+    const awaitOptions = new Map(config['awaitOptions'] || []);
 
-    let base = [];
-    for (let i = 0; i < BaseKeybindingsPaths.length; i++) {
-        const keybindings = await readJSON(BaseKeybindingsPaths[i], { allowComments: true });
-        base = base.concat(keybindings);
-    }
+    const base = await loadBaseKeybindings(baseKeybindings);
 
     const wrappers = base.map(
         keybinding => {
-            if (Exclusion.has(keybinding.command)) {
-                keybinding.when = makeWhenRecording(keybinding.when);
+            if (exclusion.has(keybinding.command)) {
+                keybinding.when = addWhenContext(keybinding.when, 'kb-macro.recording');
                 return keybinding;
             } else {
                 const wrapper = makeWrapper(keybinding);
-                if (AwaitOptions.has(wrapper.args.command)) {
-                    wrapper.args.await = AwaitOptions.get(wrapper.args.command);
+                if (awaitOptions.has(wrapper.args.command)) {
+                    wrapper.args.await = awaitOptions.get(wrapper.args.command);
                 }
                 return wrapper;
             }
         }
     );
 
-    packageJson.contributes.keybindings = (
+    packageJson['contributes']['keybindings'] = (
         []
-        .concat(config.header || [])
+        .concat(config['header'] || [])
         .concat(wrappers)
-        .concat(config.footer || [])
+        .concat(config['footer'] || [])
     );
 
     await writeJSON(PackageJsonPath, packageJson);

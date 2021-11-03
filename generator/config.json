@@ -1,6 +1,13 @@
 {
-    "baseKeybindingsPaths": [
-        "generator/default-keybindings-win.json"
+    "baseKeybindings": [
+        {
+            "path": "generator/default-keybindings-win.json",
+            "when": "isWindows"
+        },
+        {
+            "path": "generator/default-keybindings-linux.json",
+            "when": "isLinux"
+        }
     ],
     "exclusion": [
         "acceptSelectedSuggestion",
