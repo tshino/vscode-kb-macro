@@ -7,6 +7,10 @@
         {
             "path": "generator/default-keybindings-linux.json",
             "when": "isLinux"
+        },
+        {
+            "path": "generator/default-keybindings-mac.json",
+            "when": "isMac"
         }
     ],
     "exclusion": [
