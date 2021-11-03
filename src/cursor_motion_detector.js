@@ -54,6 +54,7 @@ const CursorMotionDetector = function() {
         }
     };
     const detectAndRecordImplicitMotion = function(event) {
+        // console.log('cursor', lastSelections[0].active.character, event.selections[0].active.character);
         if (0 === predictions.length) {
             const current = Array.from(event.selections);
             const motion = detectImplicitMotion(lastSelections, current);
@@ -62,6 +63,9 @@ const CursorMotionDetector = function() {
                 // We consider it an implicit cursor motion.
                 // We notify it so that it will be recorded to be able to playback.
                 notifyDetectedMotion(motion.delta);
+                // console.log('motion without prediction');
+            } else {
+                // console.log('skip');
             }
         } else {
             const predicted = predictions[0];
@@ -72,6 +76,13 @@ const CursorMotionDetector = function() {
                 // We consider it an implicit cursor motion.
                 // We notify it so that it will be recorded to be able to playback.
                 notifyDetectedMotion(motion.delta);
+                // console.log('motion with prediction');
+            } else {
+                // if (util.isEqualSelections(predicted, current)) {
+                //     console.log('match');
+                // } else {
+                //     console.log('differ');
+                // }
             }
             predictions.splice(0, 1);
         }
