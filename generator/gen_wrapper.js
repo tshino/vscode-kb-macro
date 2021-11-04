@@ -1,5 +1,6 @@
 'use strict';
 const fsPromises = require('fs/promises');
+const { addWhenContext, combineBaseKeybingings } = require('./gen_wrapper_util');
 
 const PackageJsonPath = './package.json';
 const ConfigPath = 'generator/config.json';
@@ -30,27 +31,16 @@ function makeCommandSpec(keybinding) {
     return spec;
 }
 
-function addWhenContext(when, context) {
-    if (when) {
-        const conditions = when.split('||');
-        const restricted = conditions.map(cond => context + ' && ' + cond.trim()).join(' || ');
-        return restricted;
-    } else {
-        return context;
-    }
-}
-
 async function loadBaseKeybindings(baseKeybindings) {
-    let base = [];
+    const base = [];
     for (const item of baseKeybindings) {
-        let keybindings = await readJSON(item['path'], { allowComments: true });
-        if (item['when']) {
-            keybindings = keybindings.map(keybinding => {
-                keybinding.when = addWhenContext(keybinding.when, item['when']);
-                return keybinding;
-            });
+        const loaded = {
+            keybindings: await readJSON(item['path'], { allowComments: true })
+        };
+        if ('when' in item) {
+            loaded.when = item['when'];
         }
-        base = base.concat(keybindings);
+        base.push(loaded);
     }
     return base;
 }
@@ -69,13 +59,13 @@ async function main() {
     const packageJson = await readJSON(PackageJsonPath);
     const config = await readJSON(ConfigPath);
 
-    const baseKeybindings = config['baseKeybindings'] || [];
     const exclusion = new Set(config['exclusion'] || []);
     const awaitOptions = new Map(config['awaitOptions'] || []);
 
-    const base = await loadBaseKeybindings(baseKeybindings);
+    const baseKeybindings = await loadBaseKeybindings(config['baseKeybindings'] || []);
+    const combined = combineBaseKeybingings(baseKeybindings);
 
-    const wrappers = base.map(
+    const wrappers = combined.map(
         keybinding => {
             if (exclusion.has(keybinding.command)) {
                 keybinding.when = addWhenContext(keybinding.when, 'kb-macro.recording');
