@@ -206,6 +206,9 @@ describe('Recording and Playback: Edit', () => {
     });
     describe('commentLine', () => {
         beforeEach(async () => {
+            const promise = awaitController.waitFor('document', 500).catch(
+                () => { console.log('Warning: timeout at resetDocument!'); }
+            );
             await TestUtil.resetDocument(textEditor, (
                 'function hello(name) {\n' +
                 '    console.log("Hello, " + name);\n' +
@@ -214,6 +217,7 @@ describe('Recording and Playback: Edit', () => {
                 '// hello("vscode");\n' +
                 'hello("Code");'
             ), { languageId: 'javascript' } );
+            await promise;
         });
         describe('commentLine', () => {
             const seq = [ Cmd.CommentLine ];
