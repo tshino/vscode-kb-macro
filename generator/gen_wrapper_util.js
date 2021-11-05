@@ -10,10 +10,11 @@ function addWhenContext(when, context) {
     }
 }
 
+// Makes combined keybindings of different default keybindings of windows, macos and linux.
 function combineBaseKeybingings(baseKeybindings) {
     let combined = [];
     for (const item of baseKeybindings) {
-        let keybindings = item.keybindings;
+        let keybindings = item['keybindings'];
         if (item['when']) {
             keybindings = keybindings.map(keybinding => {
                 keybinding.when = addWhenContext(keybinding.when, item['when']);
