@@ -881,18 +881,7 @@
                         "sticky": false
                     }
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus"
-            },
-            {
-                "key": "end",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "cursorEnd",
-                    "args": {
-                        "sticky": false
-                    }
-                },
-                "when": "kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && textInputFocus"
             },
             {
                 "key": "end",
@@ -935,18 +924,7 @@
                         "sticky": false
                     }
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus"
-            },
-            {
-                "key": "shift+end",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "cursorEndSelect",
-                    "args": {
-                        "sticky": false
-                    }
-                },
-                "when": "kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && textInputFocus"
             },
             {
                 "key": "shift+end",
@@ -2489,7 +2467,7 @@
                         "text": "\u0017"
                     }
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus"
+                "when": "kb-macro.recording && terminalFocus"
             },
             {
                 "key": "ctrl+backspace",
@@ -2501,17 +2479,6 @@
                     }
                 },
                 "when": "kb-macro.recording && isWindows && terminalFocus && terminalShellType == 'cmd'"
-            },
-            {
-                "key": "ctrl+backspace",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                        "text": "\u0017"
-                    }
-                },
-                "when": "kb-macro.recording && isLinux && terminalFocus"
             },
             {
                 "key": "ctrl+delete",
@@ -2530,18 +2497,7 @@
                         "text": "\u001bd"
                     }
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus"
-            },
-            {
-                "key": "ctrl+delete",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                        "text": "\u001bd"
-                    }
-                },
-                "when": "kb-macro.recording && isLinux && terminalFocus"
+                "when": "kb-macro.recording && terminalFocus"
             },
             {
                 "key": "ctrl+k ctrl+c",

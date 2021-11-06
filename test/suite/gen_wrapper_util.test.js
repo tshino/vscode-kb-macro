@@ -1,9 +1,10 @@
 'use strict';
 const assert = require('assert');
-const { addWhenContext, combineBaseKeybingings } = require('../../generator/gen_wrapper_util.js');
+const genWrapperUtil = require('../../generator/gen_wrapper_util.js');
 
 describe('gen_wrapper_util', () => {
     describe('addWhenContext', () => {
+        const addWhenContext = genWrapperUtil.addWhenContext;
         it('should return given context if when clause is empty', () => {
             assert.strictEqual(addWhenContext('', 'context'), 'context');
         });
@@ -20,7 +21,38 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(addWhenContext('cond1 || cond2', 'context'), 'context && cond1 || context && cond2');
         });
     });
+    describe('keybindingsContains', () => {
+        const keybindingsContains = genWrapperUtil.keybindingsContains;
+        it('should detect specified keybinding in given keybindings and return the index', () => {
+            const keybindings = [
+                { key: 'ctrl+a', command: 'command1' },
+                { key: 'ctrl+a', command: 'command2' },
+                { key: 'ctrl+b', command: 'command2' },
+                { key: 'ctrl+b', command: 'command2', when: 'context1' },
+                { key: 'ctrl+b', command: 'command2', when: 'context2' },
+                { key: 'ctrl+b', command: 'command2', args: { opt1: 1 } },
+                { key: 'ctrl+b', command: 'command2', args: { opt1: 2 } }
+            ];
+            assert.strictEqual(
+                keybindingsContains(keybindings, { key: 'ctrl+a', command: 'command2' }),
+                1
+            );
+            assert.strictEqual(
+                keybindingsContains(keybindings, { key: 'ctrl+b', command: 'command2', when: 'context1' }),
+                3
+            );
+            assert.strictEqual(
+                keybindingsContains(keybindings, { key: 'ctrl+b', command: 'command2', args: { opt1: 2 } }),
+                6
+            );
+            assert.strictEqual(
+                keybindingsContains(keybindings, { key: 'ctrl+c', command: 'command2' }),
+                -1
+            );
+        });
+    });
     describe('combineBaseKeybingings', () => {
+        const combineBaseKeybingings = genWrapperUtil.combineBaseKeybingings;
         it('should create a combined keybindings which consists of given set of keybindings with added context', () => {
             const input = [
                 {

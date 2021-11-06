@@ -1,4 +1,5 @@
 'use strict';
+const util = require('util');
 
 function addWhenContext(when, context) {
     if (when) {
@@ -23,11 +24,7 @@ function addKeybindingsContext(keybindings, context) {
 
 function keybindingsContains(keybindings, keybinding) {
     for (let i = 0; i < keybindings.length; i++) {
-        const k = keybindings[i];
-        if (k['key'] === keybinding['key'] &&
-            k['command'] === keybinding['command'] &&
-            k['args'] === keybinding['args'] &&
-            k['when'] === keybinding['when']) {
+        if (util.isDeepStrictEqual(keybindings[i], keybinding)) {
             return i;
         }
     }
@@ -104,4 +101,8 @@ function combineBaseKeybingings(baseKeybindings) {
     return combined;
 }
 
-module.exports = { addWhenContext, combineBaseKeybingings };
+module.exports = {
+    addWhenContext,
+    keybindingsContains,
+    combineBaseKeybingings
+};
