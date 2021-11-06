@@ -8,7 +8,6 @@ const internalCommands = require('../../src/internal_commands.js');
 
 describe('Recording and Playback: Asynchronous Commands', () => {
     let textEditor;
-    let edit = null; // dummy
     const Cmd = CommandsToTest;
     const PerformType = text => ({
         command: 'kb-macro.performType',
@@ -25,7 +24,7 @@ describe('Recording and Playback: Asynchronous Commands', () => {
     const record = async function(sequence) {
         keyboardMacro.startRecording();
         for (let i = 0; i < sequence.length; i++) {
-            await keyboardMacro.wrap(textEditor, edit, sequence[i]);
+            await keyboardMacro.wrap(sequence[i]);
         }
         keyboardMacro.finishRecording();
     };
@@ -37,7 +36,7 @@ describe('Recording and Playback: Asynchronous Commands', () => {
 
     // Here we register the internal command performType to vscode as an external command.
     // We use it in order to test synchronous execution of asynchronous command using 'await' option.
-    vscode.commands.registerTextEditorCommand('kb-macro.performType', internalCommands.performType);
+    vscode.commands.registerCommand('kb-macro.performType', internalCommands.performType);
 
     describe('performType', () => {
         beforeEach(async () => {

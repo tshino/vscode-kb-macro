@@ -27,21 +27,21 @@ describe('internalCommands', () => {
         });
         it('should insert a text (1)', async () => {
             setSelections([[3, 0]]);
-            await internalCommands.performType(textEditor, null, { text: 'C' });
+            await internalCommands.performType({ text: 'C' });
 
             assert.strictEqual(textEditor.document.lineAt(3).text, 'C');
             assert.deepStrictEqual(getSelections(), [[3, 1]]);
         });
         it('should insert a text (2)', async () => {
             setSelections([[12, 3]]);
-            await internalCommands.performType(textEditor, null, { text: 'XYZ' });
+            await internalCommands.performType({ text: 'XYZ' });
 
             assert.strictEqual(textEditor.document.lineAt(12).text, 'abcXYZd');
             assert.deepStrictEqual(getSelections(), [[12, 6]]);
         });
         it('should insert a text (3)', async () => {
             setSelections([[12, 3]]);
-            await internalCommands.performType(textEditor, null, { text: '123\n456' });
+            await internalCommands.performType({ text: '123\n456' });
 
             assert.strictEqual(textEditor.document.lineAt(12).text, 'abc123');
             assert.strictEqual(textEditor.document.lineAt(13).text, '456d');
@@ -50,21 +50,21 @@ describe('internalCommands', () => {
         });
         it('should not trigger bracket completion', async () => {
             setSelections([[3, 0]]);
-            await internalCommands.performType(textEditor, null, { text: '(' });
+            await internalCommands.performType({ text: '(' });
 
             assert.strictEqual(textEditor.document.lineAt(3).text, '(');
             assert.deepStrictEqual(getSelections(), [[3, 1]]);
         });
         it('should replace selected range with a text (1)', async () => {
             setSelections([[12, 1, 12, 3]]);
-            await internalCommands.performType(textEditor, null, { text: 'X' });
+            await internalCommands.performType({ text: 'X' });
 
             assert.strictEqual(textEditor.document.lineAt(12).text, 'aXd');
             assert.deepStrictEqual(getSelections(), [[12, 2]]);
         });
         it('should replace selected range with a text (2)', async () => {
             setSelections([[2, 0, 3, 0]]);
-            await internalCommands.performType(textEditor, null, { text: 'X' });
+            await internalCommands.performType({ text: 'X' });
 
             assert.strictEqual(textEditor.document.lineAt(2).text, 'X');
             assert.strictEqual(textEditor.document.lineAt(9).text, 'abcd');
@@ -72,7 +72,7 @@ describe('internalCommands', () => {
         });
         it('should replace selected range with a text (3)', async () => {
             setSelections([[10, 2, 12, 3]]);
-            await internalCommands.performType(textEditor, null, { text: 'X' });
+            await internalCommands.performType({ text: 'X' });
 
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abXd');
             assert.strictEqual(textEditor.document.lineAt(18).text, '    efgh');
@@ -80,7 +80,7 @@ describe('internalCommands', () => {
         });
         it('should insert a text into each location of multi-cursor (1)', async () => {
             setSelections([[5, 0], [15, 1], [25, 2]]);
-            await internalCommands.performType(textEditor, null, { text: 'X' });
+            await internalCommands.performType({ text: 'X' });
 
             assert.strictEqual(textEditor.document.lineAt(5).text, 'X');
             assert.strictEqual(textEditor.document.lineAt(15).text, 'aXbcd');
@@ -89,7 +89,7 @@ describe('internalCommands', () => {
         });
         it('should insert a text into each location of multi-cursor (2)', async () => {
             setSelections([[15, 1], [25, 2], [5, 0]]);
-            await internalCommands.performType(textEditor, null, { text: 'X' });
+            await internalCommands.performType({ text: 'X' });
 
             assert.strictEqual(textEditor.document.lineAt(5).text, 'X');
             assert.strictEqual(textEditor.document.lineAt(15).text, 'aXbcd');
@@ -98,7 +98,7 @@ describe('internalCommands', () => {
         });
         it('should insert a text into each location of multi-cursor (3)', async () => {
             setSelections([[0, 0], [10, 4], [20, 8]]);
-            await internalCommands.performType(textEditor, null, { text: 'hello\nbye' });
+            await internalCommands.performType({ text: 'hello\nbye' });
 
             assert.strictEqual(textEditor.document.lineAt(0).text, 'hello');
             assert.strictEqual(textEditor.document.lineAt(1).text, 'bye');
@@ -110,7 +110,7 @@ describe('internalCommands', () => {
         });
         it('should replace every selected range with a text', async () => {
             setSelections([[0, 0, 2, 0], [10, 4, 12, 0], [20, 8, 22, 4]]);
-            await internalCommands.performType(textEditor, null, { text: '99\n00' });
+            await internalCommands.performType({ text: '99\n00' });
 
             assert.strictEqual(textEditor.document.lineAt(0).text, '99');
             assert.strictEqual(textEditor.document.lineAt(1).text, '00');
@@ -132,14 +132,14 @@ describe('internalCommands', () => {
         });
         it('should delete left-hand side characters and insert a text', async () => {
             setSelections([[10, 4]]);
-            await internalCommands.performType(textEditor, null, { deleteLeft: 2, text: 'CDEFG' });
+            await internalCommands.performType({ deleteLeft: 2, text: 'CDEFG' });
 
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abCDEFG');
             assert.deepStrictEqual(getSelections(), [[10, 7]]);
         });
         it('should delete left-hand side characters and insert a text with multi-cursor', async () => {
             setSelections([[10, 4], [11, 4]]);
-            await internalCommands.performType(textEditor, null, { deleteLeft: 2, text: 'CDEFG' });
+            await internalCommands.performType({ deleteLeft: 2, text: 'CDEFG' });
 
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abCDEFG');
             assert.strictEqual(textEditor.document.lineAt(11).text, 'abCDEFG');

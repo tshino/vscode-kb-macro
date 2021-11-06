@@ -16,7 +16,7 @@ function activate(context) {
     const registerCommand = function(name, func) {
         const commandName = CommandPrefix + name;
         context.subscriptions.push(
-            vscode.commands.registerTextEditorCommand(commandName, func)
+            vscode.commands.registerCommand(commandName, func)
         );
     };
     const addEventListener = function(event, func) {

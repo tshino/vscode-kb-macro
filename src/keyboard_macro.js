@@ -18,13 +18,13 @@ const KeyboardMacro = function({ awaitController }) {
     const internalCommands = new Map();
 
     const makeGuardedCommand = function(func) {
-        return async function(textEditor, edit, args) {
+        return async function(args) {
             if (locked) {
                 return;
             }
             locked = true;
             try {
-                await func(textEditor, edit, args);
+                await func(args);
             } catch (error) {
                 console.error(error);
                 console.info('kb-macro: Exception in guarded command');
@@ -33,13 +33,13 @@ const KeyboardMacro = function({ awaitController }) {
         };
     };
     const makeGuardedCommandSync = function(func) {
-        return function(textEditor, edit, args) {
+        return function(args) {
             if (locked) {
                 return;
             }
             locked = true;
             try {
-                func(textEditor, edit, args);
+                func(args);
             } catch (error) {
                 console.error(error);
                 console.info('kb-macro: Exception in guarded command');
@@ -98,8 +98,7 @@ const KeyboardMacro = function({ awaitController }) {
     const invokeCommand = async function(spec) {
         const func = internalCommands[spec.command];
         if (func !== undefined) {
-            const textEditor = vscode.window.activeTextEditor;
-            await func(textEditor, null, spec.args);
+            await func(spec.args);
         } else {
             await vscode.commands.executeCommand(
                 spec.command,
@@ -154,7 +153,7 @@ const KeyboardMacro = function({ awaitController }) {
         return spec;
     };
 
-    const wrap = makeGuardedCommand(async function(_textEditor, _edit, args) {
+    const wrap = makeGuardedCommand(async function(args) {
         if (recording) {
             const spec = makeCommandSpec(args);
             if (!spec) {

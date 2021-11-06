@@ -7,7 +7,8 @@ const internalCommands = (function() {
     // This is needed because the existing built-in 'default:type' command is not
     // appropriate for the purpose since it triggers some unwanted side-effects
     // like bracket completion.
-    const performType = async function(textEditor, _edit, args) {
+    const performType = async function(args) {
+        const textEditor = vscode.window.activeTextEditor;
         const indices = util.makeIndexOfSortedSelections(textEditor.selections);
         const text = (args && args.text) || '';
         const numDeleteLeft = (args && args.deleteLeft) || 0;

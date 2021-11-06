@@ -424,7 +424,7 @@ describe('Recording and Playback: Typing', () => {
         it('should record and playback pressing Enter key', async () => {
             setSelections([[10, 2]]);
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap(textEditor, {}, Cmd.Enter);
+            await keyboardMacro.wrap(Cmd.Enter);
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [ Cmd.Enter ]);
             assert.strictEqual(textEditor.document.lineAt(10).text, 'ab');
@@ -440,7 +440,7 @@ describe('Recording and Playback: Typing', () => {
         it('should record and playback inserting a line break that results auto-indent', async () => {
             setSelections([[20, 4]]);
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap(textEditor, {}, Cmd.Enter);
+            await keyboardMacro.wrap(Cmd.Enter);
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [ Cmd.Enter ]);
             assert.strictEqual(textEditor.document.lineAt(20).text, '    ');
@@ -466,7 +466,7 @@ describe('Recording and Playback: Typing', () => {
         it('should record and playback pressing Tab key', async () => {
             setSelections([[14, 0]]);
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap(textEditor, {}, Cmd.Tab);
+            await keyboardMacro.wrap(Cmd.Tab);
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [ Cmd.Tab ]);
             assert.strictEqual(textEditor.document.lineAt(14).text, '    abcd');
@@ -492,7 +492,7 @@ describe('Recording and Playback: Typing', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'C' });
             await vscode.commands.executeCommand('type', { text: 'D' });
-            await keyboardMacro.wrap(textEditor, {}, Cmd.Enter);
+            await keyboardMacro.wrap(Cmd.Enter);
             await vscode.commands.executeCommand('type', { text: 'A' });
             await vscode.commands.executeCommand('type', { text: 'B' });
             keyboardMacro.finishRecording();

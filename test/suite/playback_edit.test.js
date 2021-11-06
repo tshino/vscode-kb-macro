@@ -8,7 +8,6 @@ const { keyboardMacro, awaitController } = require('../../src/extension.js');
 
 describe('Recording and Playback: Edit', () => {
     let textEditor;
-    let edit = null; // dummy
     const Cmd = CommandsToTest;
 
     const setSelections = async function(array) {
@@ -29,7 +28,7 @@ describe('Recording and Playback: Edit', () => {
     const record = async function(sequence) {
         keyboardMacro.startRecording();
         for (let i = 0; i < sequence.length; i++) {
-            await keyboardMacro.wrap(textEditor, edit, sequence[i]);
+            await keyboardMacro.wrap(sequence[i]);
         }
         keyboardMacro.finishRecording();
     };

@@ -267,7 +267,7 @@ describe('KeybaordMacro', () => {
         });
         it('should invoke and record specified command', async () => {
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            await keyboardMacro.wrap({ command: 'internal:log' });
             keyboardMacro.finishRecording();
 
             assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
@@ -276,14 +276,14 @@ describe('KeybaordMacro', () => {
             ]);
         });
         it('should not invoke specified command if not recording', async () => {
-            await keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            await keyboardMacro.wrap({ command: 'internal:log' });
 
             assert.deepStrictEqual(logs, []);
         });
         it('should invoke and record specified command synchronously', async () => {
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap(null, null, { command: 'internal:log' });
-            await keyboardMacro.wrap(null, null, { command: 'internal:log', args: { test: '1' } });
+            await keyboardMacro.wrap({ command: 'internal:log' });
+            await keyboardMacro.wrap({ command: 'internal:log', args: { test: '1' } });
             keyboardMacro.finishRecording();
 
             assert.deepStrictEqual(logs, [ 'begin', 'end', 'begin', 'end' ]);
@@ -294,8 +294,8 @@ describe('KeybaordMacro', () => {
         });
         it('should prevent reentry', async () => {
             keyboardMacro.startRecording();
-            const promise1 = keyboardMacro.wrap(null, null, { command: 'internal:log' });
-            const promise2 = keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            const promise1 = keyboardMacro.wrap({ command: 'internal:log' });
+            const promise2 = keyboardMacro.wrap({ command: 'internal:log' });
             await Promise.all([promise1, promise2]);
             keyboardMacro.finishRecording();
 
@@ -306,7 +306,7 @@ describe('KeybaordMacro', () => {
         });
         it('should prevent other commands to preempt (cancelRecording)', async () => {
             keyboardMacro.startRecording();
-            const promise1 = keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            const promise1 = keyboardMacro.wrap({ command: 'internal:log' });
             keyboardMacro.cancelRecording(); // <--
             await promise1;
 
@@ -318,7 +318,7 @@ describe('KeybaordMacro', () => {
         });
         it('should prevent other commands to preempt (finishRecording)', async () => {
             keyboardMacro.startRecording();
-            const promise1 = keyboardMacro.wrap(null, null, { command: 'internal:log' });
+            const promise1 = keyboardMacro.wrap({ command: 'internal:log' });
             keyboardMacro.finishRecording(); // <--
             await promise1;
 
