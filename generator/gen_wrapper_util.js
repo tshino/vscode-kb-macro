@@ -18,7 +18,11 @@ function addWhenContext(when, context) {
 function addKeybindingsContext(keybindings, context) {
     if (context) {
         return keybindings.map(keybinding => {
-            keybinding.when = addWhenContext(keybinding.when, context);
+            if (context === 'isMac' && /\bcmd\b/.test(keybinding.key)) {
+                // skip redundant context
+            } else {
+                keybinding.when = addWhenContext(keybinding.when, context);
+            }
             return keybinding;
         });
     } else {

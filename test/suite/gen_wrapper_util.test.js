@@ -109,7 +109,7 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
-        it('should unify keybindings that share a common definition among all sources', () => {
+        it('should unify keybindings that share a common definition among all sources [compaction]', () => {
             const input = [
                 {
                     keybindings: [
@@ -133,18 +133,18 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
-        it('should ratain original order of keybindings for each source', () => {
+        it('should retain the original order of keybindings in each source', () => {
             const input = [
                 {
                     keybindings: [
                         { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common
-                        { key: 'ctrl+a', command: 'command2', when: 'cond2' }
+                        { key: 'ctrl+a', command: 'command2', when: 'cond2' } // should come after common one
                     ],
                     context: 'isWindows'
                 },
                 {
                     keybindings: [
-                        { key: 'ctrl+a', command: 'command3', when: 'cond3' },
+                        { key: 'ctrl+a', command: 'command3', when: 'cond3' }, // should come before common one
                         { key: 'ctrl+a', command: 'command1', when: 'cond1' } // <= common
                     ],
                     context: 'isLinux'
@@ -157,7 +157,7 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
-        it('should unify keybindings that share a common definition among a part of sources', () => {
+        it('should unify keybindings that share a common definition among a subset of sources [compaction]', () => {
             const input = [
                 {
                     keybindings: [
@@ -175,7 +175,7 @@ describe('gen_wrapper_util', () => {
                 },
                 {
                     keybindings: [
-                        { key: 'cmd+a', command: 'command1', when: 'context1' }
+                        { key: 'ctrl+b', command: 'command1', when: 'context1' }
                     ],
                     context: 'isMac'
                 }
@@ -184,7 +184,28 @@ describe('gen_wrapper_util', () => {
                 { key: 'ctrl+a', command: 'command1', when: 'isWindows || isLinux' }, // <= partially common
                 { key: 'ctrl+a', command: 'command2', when: 'isWindows' },
                 { key: 'ctrl+a', command: 'command1', when: 'isLinux && context1' },
-                { key: 'cmd+a', command: 'command1', when: 'isMac && context1' }
+                { key: 'ctrl+b', command: 'command1', when: 'isMac && context1' }
+            ];
+            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
+        });
+        it('should drop reduntant "isMac" if the keystroke contains Command key [compaction]', () => {
+            const input = [
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command1', when: 'context1' }
+                    ],
+                    context: 'isWindows'
+                },
+                {
+                    keybindings: [
+                        { key: 'cmd+a', command: 'command2', when: 'context2' }
+                    ],
+                    context: 'isMac'
+                }
+            ];
+            const expected = [
+                { key: 'ctrl+a', command: 'command1', when: 'isWindows && context1' },
+                { key: 'cmd+a', command: 'command2', when: 'context2' }
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
