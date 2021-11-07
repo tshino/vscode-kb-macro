@@ -2,15 +2,15 @@
     "baseKeybindings": [
         {
             "path": "generator/default-keybindings-win.json",
-            "when": "isWindows"
+            "context": "isWindows"
         },
         {
             "path": "generator/default-keybindings-linux.json",
-            "when": "isLinux"
+            "context": "isLinux"
         },
         {
             "path": "generator/default-keybindings-mac.json",
-            "when": "isMac"
+            "context": "isMac"
         }
     ],
     "exclusion": [

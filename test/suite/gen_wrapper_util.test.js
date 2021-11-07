@@ -66,14 +66,14 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+a', command: 'command1' },
                         { key: 'ctrl+b', command: 'command2', when: 'context1' }
                     ],
-                    when: 'isWindows'
+                    context: 'isWindows'
                 },
                 {
                     keybindings: [
                         { key: 'ctrl+c', command: 'command3' },
                         { key: 'ctrl+d', command: 'command4', when: 'context2 || context3' }
                     ],
-                    when: 'isLinux'
+                    context: 'isLinux'
                 }
             ];
             const expected = [
@@ -91,14 +91,14 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+a', command: 'command1' },
                         { key: 'ctrl+a', command: 'command2' },
                     ],
-                    when: 'isWindows'
+                    context: 'isWindows'
                 },
                 {
                     keybindings: [
                         { key: 'ctrl+a', command: 'command3' },
                         { key: 'ctrl+a', command: 'command3', when: 'context1' }
                     ],
-                    when: 'isLinux'
+                    context: 'isLinux'
                 }
             ];
             const expected = [
@@ -116,14 +116,14 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+a', command: 'command1' }, // <= common
                         { key: 'ctrl+a', command: 'command2' }
                     ],
-                    when: 'isWindows'
+                    context: 'isWindows'
                 },
                 {
                     keybindings: [
                         { key: 'ctrl+a', command: 'command1' }, // <= common
                         { key: 'ctrl+a', command: 'command1', when: 'context1' }
                     ],
-                    when: 'isLinux'
+                    context: 'isLinux'
                 }
             ];
             const expected = [
@@ -140,14 +140,14 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common
                         { key: 'ctrl+a', command: 'command2', when: 'cond2' }
                     ],
-                    when: 'isWindows'
+                    context: 'isWindows'
                 },
                 {
                     keybindings: [
                         { key: 'ctrl+a', command: 'command3', when: 'cond3' },
                         { key: 'ctrl+a', command: 'command1', when: 'cond1' } // <= common
                     ],
-                    when: 'isLinux'
+                    context: 'isLinux'
                 }
             ];
             const expected = [
@@ -164,20 +164,20 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+a', command: 'command1' }, // <= partially common
                         { key: 'ctrl+a', command: 'command2' }
                     ],
-                    when: 'isWindows'
+                    context: 'isWindows'
                 },
                 {
                     keybindings: [
                         { key: 'ctrl+a', command: 'command1' }, // <= partially common
                         { key: 'ctrl+a', command: 'command1', when: 'context1' }
                     ],
-                    when: 'isLinux'
+                    context: 'isLinux'
                 },
                 {
                     keybindings: [
                         { key: 'cmd+a', command: 'command1', when: 'context1' }
                     ],
-                    when: 'isMac'
+                    context: 'isMac'
                 }
             ];
             const expected = [

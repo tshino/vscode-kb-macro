@@ -39,20 +39,20 @@ function keybindingsContains(keybindings, keybinding) {
 function combineBaseKeybingings(baseKeybindings) {
     // Make a map that associates each keystroke to a set of keybindings.
     const keyDict = new Map();
-    for (const { keybindings, when = '' } of baseKeybindings) {
+    for (const { keybindings, context } of baseKeybindings) {
         for (const keybinding of keybindings) {
             const key = keybinding['key'];
             if (!keyDict.has(key)) {
                 keyDict.set(key, new Map());
             }
             const dict = keyDict.get(key);
-            if (!dict.has(when)) {
-                dict.set(when, []);
+            if (!dict.has(context)) {
+                dict.set(context, []);
             }
-            dict.get(when).push(keybinding);
+            dict.get(context).push(keybinding);
         }
     }
-    const contextList = baseKeybindings.map(item => (item['when'] || ''));
+    const contextList = baseKeybindings.map(item => item.context);
     let combined = [];
     for (const dict of keyDict.values()) {
         // Find common keybindings that are shared among all sources.

@@ -34,13 +34,10 @@ function makeCommandSpec(keybinding) {
 async function loadBaseKeybindings(baseKeybindings) {
     const base = [];
     for (const item of baseKeybindings) {
-        const loaded = {
-            keybindings: await readJSON(item['path'], { allowComments: true })
-        };
-        if ('when' in item) {
-            loaded.when = item['when'];
-        }
-        base.push(loaded);
+        base.push({
+            keybindings: await readJSON(item['path'], { allowComments: true }),
+            context: item['context']
+        });
     }
     return base;
 }
