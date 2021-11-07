@@ -4,7 +4,11 @@ const util = require('util');
 function addWhenContext(when, context) {
     if (when) {
         const conditions = when.split('||');
-        const restricted = conditions.map(cond => context + ' && ' + cond.trim()).join(' || ');
+        const restricted = context.split('||').map(
+            context => conditions.map(
+                cond => context.trim() + ' && ' + cond.trim()
+            ).join(' || ')
+        ).join(' || ');
         return restricted;
     } else {
         return context;
@@ -57,43 +61,57 @@ function combineBaseKeybingings(baseKeybindings) {
         for (let pos0 = 0; pos0 < firstSet.length; pos0++) {
             const positions = [ pos0 ];
             const keybinding = firstSet[pos0];
-            let missing = false;
             for (let j = 1; j < contextList.length; j++) {
                 const keybindings = dict.get(contextList[j]) || [];
                 const pos = keybindingsContains(keybindings, keybinding);
-                if (pos < 0) {
-                    missing = true;
-                    break;
-                }
                 positions[j] = pos;
             }
-            if (!missing) { // found a common keybinding among all contexts
+            if (2 <= positions.filter(pos => 0 <= pos).length) {
+                // found a (fully or partially) common keybinding among all contexts
                 commonKeybindings.push(positions);
             }
         }
         // Drop common keybindings that are not placed in order.
-        for (let i = 0; i + 1 < commonKeybindings.length; i++) {
-            if (!commonKeybindings[i].every((pos, j) => pos < commonKeybindings[i + 1][j])) {
+        let indices = Array(contextList.length).fill(0);
+        for (let i = 0; i < commonKeybindings.length; i++) {
+            if (!commonKeybindings[i].every((pos, j) => (pos < 0 || indices[j] <= pos))) {
                 // out of order
-                commonKeybindings.splice(i + 1, 1);
+                commonKeybindings.splice(i, 1);
                 i--;
+                continue;
+            }
+            for (let j = 0; j < contextList.length; j++) {
+                if (0 <= commonKeybindings[i][j]) {
+                    indices[j] = commonKeybindings[i][j] + 1;
+                }
             }
         }
         // Reorder and unify keybindings.
         commonKeybindings.push(contextList.map(context => (dict.get(context) || []).length));
+        indices = indices.fill(0);
         for (let i = 0; i < commonKeybindings.length; i++) {
             for (let j = 0; j < contextList.length; j++) {
+                const pos = commonKeybindings[i][j];
+                if (pos < 0) {
+                    continue;
+                }
                 const context = contextList[j];
                 const keybindings = dict.get(context) || [];
-                const from = 0 < i ? commonKeybindings[i - 1][j] + 1 : 0;
-                const to = commonKeybindings[i][j];
-                const sliced = keybindings.slice(from, to);
+                const sliced = keybindings.slice(indices[j], pos);
                 const converted = addKeybindingsContext(sliced, context);
                 combined = combined.concat(converted);
+                indices[j] = pos + 1;
             }
             if (i + 1 < commonKeybindings.length) {
                 // unified keybinding
                 const keybinding = dict.get(contextList[0])[commonKeybindings[i][0]];
+                if (!commonKeybindings[i].every(pos => 0 <= pos)) {
+                    // partial common keybindings (e.g. 'isWindows || isLinux')
+                    const subset = commonKeybindings[i].map((pos, j) => (
+                        0 <= pos ? contextList[j] : ''
+                    )).filter(context => context !== '').join(' || ');
+                    keybinding.when = addWhenContext(keybinding.when, subset);
+                }
                 combined.push(keybinding);
             }
         }

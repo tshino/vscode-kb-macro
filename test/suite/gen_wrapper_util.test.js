@@ -20,6 +20,12 @@ describe('gen_wrapper_util', () => {
         it('should append AND condition in front of given when clause (3)', () => {
             assert.strictEqual(addWhenContext('cond1 || cond2', 'context'), 'context && cond1 || context && cond2');
         });
+        it('should combine two when clauses with AND operator (1)', () => {
+            assert.strictEqual(addWhenContext('cond1', 'cond2 || cond3'), 'cond2 && cond1 || cond3 && cond1');
+        });
+        it('should combine two when clauses with AND operator (2)', () => {
+            assert.strictEqual(addWhenContext('c1 || c2', 'c3 || c4'), 'c3 && c1 || c3 && c2 || c4 && c1 || c4 && c2');
+        });
     });
     describe('keybindingsContains', () => {
         const keybindingsContains = genWrapperUtil.keybindingsContains;
@@ -68,7 +74,7 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+d', command: 'command4', when: 'context2 || context3' }
                     ],
                     when: 'isLinux'
-                },
+                }
             ];
             const expected = [
                 { key: 'ctrl+a', command: 'command1', when: 'isWindows' },
@@ -93,7 +99,7 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+a', command: 'command3', when: 'context1' }
                     ],
                     when: 'isLinux'
-                },
+                }
             ];
             const expected = [
                 { key: 'ctrl+a', command: 'command1', when: 'isWindows' },
@@ -118,7 +124,7 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+a', command: 'command1', when: 'context1' }
                     ],
                     when: 'isLinux'
-                },
+                }
             ];
             const expected = [
                 { key: 'ctrl+a', command: 'command1' }, // <= common
@@ -142,12 +148,43 @@ describe('gen_wrapper_util', () => {
                         { key: 'ctrl+a', command: 'command1', when: 'cond1' } // <= common
                     ],
                     when: 'isLinux'
-                },
+                }
             ];
             const expected = [
                 { key: 'ctrl+a', command: 'command3', when: 'isLinux && cond3' },
                 { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common
                 { key: 'ctrl+a', command: 'command2', when: 'isWindows && cond2' }
+            ];
+            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
+        });
+        it('should unify keybindings that share a common definition among a part of sources', () => {
+            const input = [
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command1' }, // <= partially common
+                        { key: 'ctrl+a', command: 'command2' }
+                    ],
+                    when: 'isWindows'
+                },
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command1' }, // <= partially common
+                        { key: 'ctrl+a', command: 'command1', when: 'context1' }
+                    ],
+                    when: 'isLinux'
+                },
+                {
+                    keybindings: [
+                        { key: 'cmd+a', command: 'command1', when: 'context1' }
+                    ],
+                    when: 'isMac'
+                }
+            ];
+            const expected = [
+                { key: 'ctrl+a', command: 'command1', when: 'isWindows || isLinux' }, // <= partially common
+                { key: 'ctrl+a', command: 'command2', when: 'isWindows' },
+                { key: 'ctrl+a', command: 'command1', when: 'isLinux && context1' },
+                { key: 'cmd+a', command: 'command1', when: 'isMac && context1' }
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
