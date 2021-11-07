@@ -14,7 +14,29 @@ describe('CursorMotionDetector', () => {
         });
         it('should have no prediction', async () => {
             const cursorMotionDetector = CursorMotionDetector();
-            assert.strictEqual(cursorMotionDetector.getPrediction(), null);
+            assert.strictEqual(cursorMotionDetector.getPrediction({}), null);
+            assert.strictEqual(cursorMotionDetector.getPrediction(null), null);
+        });
+    });
+    describe('setPrediction', () => {
+        it('should hold given selections associated with a text editor', () => {
+            const cursorMotionDetector = CursorMotionDetector();
+            const textEditor = { dummy: 'dummy' };
+            const selections = [ new vscode.Selection(1, 2, 3, 4), new vscode.Selection(5, 6, 7, 8) ];
+            cursorMotionDetector.setPrediction(textEditor, selections);
+            assert.ok(cursorMotionDetector.getPrediction(textEditor));
+            assert.strictEqual(cursorMotionDetector.getPrediction(textEditor).length, 2);
+            assert.ok(cursorMotionDetector.getPrediction(textEditor)[0].isEqual(new vscode.Selection(1, 2, 3, 4)));
+            assert.ok(cursorMotionDetector.getPrediction(textEditor)[1].isEqual(new vscode.Selection(5, 6, 7, 8)));
+        });
+        it('should report the holding selections only when queried for the associated text editor', () => {
+            const cursorMotionDetector = CursorMotionDetector();
+            const textEditor1 = { dummy: 'dummy' };
+            const textEditor2 = { dummy: 'dummy' };
+            const selections = [ new vscode.Selection(1, 2, 3, 4) ];
+            cursorMotionDetector.setPrediction(textEditor1, selections);
+            assert.strictEqual(cursorMotionDetector.getPrediction(textEditor2), null);
+            assert.ok(cursorMotionDetector.getPrediction(textEditor1));
         });
     });
     const testDetection = function({ init, inputs, expectedLogs }) {
@@ -30,7 +52,7 @@ describe('CursorMotionDetector', () => {
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i];
             if ('predicted' in input) {
-                cursorMotionDetector.setPrediction(input.predicted);
+                cursorMotionDetector.setPrediction(textEditor, input.predicted);
             } else if ('changed' in input) {
                 const event = {
                     textEditor: textEditor,

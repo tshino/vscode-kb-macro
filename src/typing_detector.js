@@ -74,7 +74,7 @@ const TypingDetector = function() {
         return isUniformText && text0 !== '';
     };
     const replacesCorrespondingSelection = function(changes, selections) {
-        // every change replaces the corresponding selection
+        // every change replaces the text of the respective selection
         return changes.every((chg, i) => selections[i].isEqual(chg.range));
     };
     const deletesLeftAndInserts = function(changes, selections) {
@@ -112,7 +112,7 @@ const TypingDetector = function() {
 
         const changes = sortContentChanges(event.contentChanges);
         const selections = (
-            cursorMotionDetector.getPrediction() ||
+            cursorMotionDetector.getPrediction(targetTextEditor) ||
             util.sortSelections(targetTextEditor.selections)
         );
 
@@ -122,7 +122,7 @@ const TypingDetector = function() {
                 // selected range with a common text.
                 const prediction = makePrediction(changes);
                 if (!util.isEqualSelections(selections, prediction)) {
-                    cursorMotionDetector.setPrediction(prediction);
+                    cursorMotionDetector.setPrediction(targetTextEditor, prediction);
                 }
                 notifyDetectedTyping(TypingType.Direct, { text: changes[0].text });
                 return;
@@ -139,7 +139,7 @@ const TypingDetector = function() {
                 const deleteLeft = changes[0].rangeLength;
                 const prediction = makePrediction(changes);
                 if (!util.isEqualSelections(selections, prediction)) {
-                    cursorMotionDetector.setPrediction(prediction);
+                    cursorMotionDetector.setPrediction(targetTextEditor, prediction);
                 }
                 notifyDetectedTyping(TypingType.Direct, { deleteLeft, text: changes[0].text });
                 return;

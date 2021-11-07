@@ -7,6 +7,7 @@ const CursorMotionDetector = function() {
     let lastSelections = null;
     let lastTextEditor = null;
     const predictions = [];
+    let textEditorForPredictions = null;
 
     const onDetectCursorMotion = function(callback) {
         onDetectCursorMotionCallback = callback;
@@ -28,13 +29,25 @@ const CursorMotionDetector = function() {
         lastSelections = textEditor ? textEditor.selections : null;
         lastTextEditor = textEditor || null;
         predictions.length = 0;
+        textEditorForPredictions = lastTextEditor;
         enabled = true;
     };
     const stop = function() {
         enabled = false;
     };
-    const setPrediction = function(expected) {
+    const setPrediction = function(textEditor, expected) {
+        if (textEditorForPredictions !== textEditor) {
+            predictions.length = 0;
+            textEditorForPredictions = textEditor;
+        }
         predictions.push(expected);
+    };
+    const getPrediction = function(textEditor) {
+        if (textEditorForPredictions === textEditor) {
+            return predictions.length === 0 ? null : predictions[predictions.length - 1];
+        } else {
+            return null;
+        }
     };
     const detectImplicitMotion = function(expected, actual) {
         const delta = actual[0].active.character - expected[0].active.character;
@@ -55,7 +68,7 @@ const CursorMotionDetector = function() {
     };
     const detectAndRecordImplicitMotion = function(event) {
         // console.log('cursor', lastSelections[0].active.character, event.selections[0].active.character);
-        if (0 === predictions.length) {
+        if (textEditorForPredictions !== event.textEditor || 0 === predictions.length) {
             const current = Array.from(event.selections);
             const motion = detectImplicitMotion(lastSelections, current);
             if (motion) {
@@ -104,7 +117,7 @@ const CursorMotionDetector = function() {
         start,
         stop,
         setPrediction,
-        getPrediction: function() { return predictions.length === 0 ? null : predictions[predictions.length - 1]; },
+        getPrediction,
         processSelectionChangeEvent,
 
         isEnabled: function() { return enabled; } // testing purpose only
