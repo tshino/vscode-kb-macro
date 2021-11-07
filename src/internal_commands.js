@@ -9,6 +9,9 @@ const internalCommands = (function() {
     // like bracket completion.
     const performType = async function(args) {
         const textEditor = vscode.window.activeTextEditor;
+        if (!textEditor) {
+            return;
+        }
         const indices = util.makeIndexOfSortedSelections(textEditor.selections);
         const text = (args && args.text) || '';
         const numDeleteLeft = (args && args.deleteLeft) || 0;
