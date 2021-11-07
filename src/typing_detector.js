@@ -11,7 +11,6 @@ const TypingDetector = function() {
     let onDetectTypingCallback  = null;
     let recording = false;
     let suspending = false;
-    let targetTextEditor = null;
     const cursorMotionDetector = CursorMotionDetector();
 
     const onDetectTyping = function(callback) {
@@ -23,25 +22,23 @@ const TypingDetector = function() {
         }
     };
 
-    const start = function(textEditor) {
+    const start = function() {
         recording = true;
         suspending = false;
-        targetTextEditor = textEditor;
-        cursorMotionDetector.start(textEditor);
+        cursorMotionDetector.start(vscode.window.activeTextEditor);
     };
     const stop = function() {
         recording = false;
         suspending = false;
-        targetTextEditor = null;
         cursorMotionDetector.stop();
     };
     const suspend = function() {
         suspending = true;
         cursorMotionDetector.stop();
     };
-    const resume = function(textEditor) {
+    const resume = function() {
         suspending = false;
-        cursorMotionDetector.start(textEditor);
+        cursorMotionDetector.start(vscode.window.activeTextEditor);
     };
 
     const makePrediction = function(changes) {
@@ -103,7 +100,8 @@ const TypingDetector = function() {
         if (!recording || suspending) {
             return;
         }
-        if (event.document !== targetTextEditor.document) {
+        const textEditor = vscode.window.activeTextEditor;
+        if (!textEditor || event.document !== textEditor.document) {
             return;
         }
         if (event.contentChanges.length === 0) {
@@ -112,8 +110,8 @@ const TypingDetector = function() {
 
         const changes = sortContentChanges(event.contentChanges);
         const selections = (
-            cursorMotionDetector.getPrediction(targetTextEditor) ||
-            util.sortSelections(targetTextEditor.selections)
+            cursorMotionDetector.getPrediction(textEditor) ||
+            util.sortSelections(textEditor.selections)
         );
 
         if (changes.length === selections.length && isUniformTextInsert(changes)) {
@@ -122,7 +120,7 @@ const TypingDetector = function() {
                 // selected range with a common text.
                 const prediction = makePrediction(changes);
                 if (!util.isEqualSelections(selections, prediction)) {
-                    cursorMotionDetector.setPrediction(targetTextEditor, prediction);
+                    cursorMotionDetector.setPrediction(textEditor, prediction);
                 }
                 notifyDetectedTyping(TypingType.Direct, { text: changes[0].text });
                 return;
@@ -139,7 +137,7 @@ const TypingDetector = function() {
                 const deleteLeft = changes[0].rangeLength;
                 const prediction = makePrediction(changes);
                 if (!util.isEqualSelections(selections, prediction)) {
-                    cursorMotionDetector.setPrediction(targetTextEditor, prediction);
+                    cursorMotionDetector.setPrediction(textEditor, prediction);
                 }
                 notifyDetectedTyping(TypingType.Direct, { deleteLeft, text: changes[0].text });
                 return;

@@ -42,7 +42,7 @@ function activate(context) {
         keyboardMacro.onChangeRecordingState,
         function({ recording, reason }) {
             if (recording) {
-                typingDetector.start(vscode.window.activeTextEditor);
+                typingDetector.start();
             } else {
                 typingDetector.stop();
             }
@@ -72,7 +72,7 @@ function activate(context) {
     addEventListener(
         keyboardMacro.onEndWrappedCommand,
         function() {
-            typingDetector.resume(vscode.window.activeTextEditor);
+            typingDetector.resume();
         }
     );
     addEventListener(

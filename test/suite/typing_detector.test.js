@@ -24,7 +24,7 @@ describe('TypingDetector', () => {
         return { range, rangeOffset, rangeLength, text };
     };
     const processEvents = function(contentChanges) {
-        typingDetector.start(textEditor);
+        typingDetector.start();
         typingDetector.processDocumentChangeEvent({
             document: textEditor.document,
             contentChanges: contentChanges
@@ -74,6 +74,7 @@ describe('TypingDetector', () => {
                 '    efgh\n'.repeat(10)
             )
         });
+        assert.strictEqual(textEditor, vscode.window.activeTextEditor);
     });
 
     describe('direct typing detection', async () => {
@@ -96,12 +97,12 @@ describe('TypingDetector', () => {
 
             checkResult(logs, { expectedLogs: [] });
         });
-        it('should not perform detection if the event is from a different editor', async () => {
+        it('should not perform detection if the event is for a document other than the one for current active editor', async () => {
             const logs = setupDetectedTypingLog();
             const differentDocument = {};
 
             setSelections([[3, 0]]);
-            typingDetector.start(textEditor);
+            typingDetector.start();
             typingDetector.processDocumentChangeEvent({
                 document: differentDocument, // <-- !!
                 contentChanges: [
