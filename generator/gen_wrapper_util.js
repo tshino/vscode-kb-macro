@@ -61,21 +61,28 @@ function makeKeyDict(baseKeybindings) {
 // Find common keybindings that are shared among all sources.
 function findCommonKeybinding(contextList, dict) {
     const commonKeybindings = [];
-    const firstSet = dict.get(contextList[0]) || [];
-    for (let pos0 = 0; pos0 < firstSet.length; pos0++) {
-        const positions = [ pos0 ];
-        const keybinding = firstSet[pos0];
-        for (let j = 1; j < contextList.length; j++) {
-            const keybindings = dict.get(contextList[j]) || [];
-            const pos = keybindingsContains(keybindings, keybinding);
-            positions[j] = pos;
-        }
-        if (2 <= positions.filter(pos => 0 <= pos).length) {
-            // found a (fully or partially) common keybinding among contexts
-            commonKeybindings.push({
-                keybinding,
-                positions
-            });
+    for (let k = 0; k + 1 < contextList.length; k++) {
+        const reference = dict.get(contextList[k]) || [];
+        for (let pos0 = 0; pos0 < reference.length; pos0++) {
+            if (commonKeybindings.some(commonKeys => (
+                commonKeys.positions[k] === pos0
+            ))) {
+                continue;
+            }
+            const positions = Array(k).fill(-1).concat([ pos0 ]);
+            const keybinding = reference[pos0];
+            for (let j = k + 1; j < contextList.length; j++) {
+                const keybindings = dict.get(contextList[j]) || [];
+                const pos = keybindingsContains(keybindings, keybinding);
+                positions[j] = pos;
+            }
+            if (2 <= positions.filter(pos => 0 <= pos).length) {
+                // found a (fully or partially) common keybinding among contexts
+                commonKeybindings.push({
+                    keybinding,
+                    positions
+                });
+            }
         }
     }
     return commonKeybindings;

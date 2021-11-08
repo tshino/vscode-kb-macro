@@ -214,6 +214,35 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
+        it('should unify keybindings that share a common definition among 2nd and 3rd source [compaction]', () => {
+            const input = [
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command1' }
+                    ],
+                    context: 'isWindows'
+                },
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command2' } // <= partially common
+                    ],
+                    context: 'isLinux'
+                },
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command3' },
+                        { key: 'ctrl+a', command: 'command2' } // <= partially common
+                    ],
+                    context: 'isMac'
+                }
+            ];
+            const expected = [
+                { key: 'ctrl+a', command: 'command3', when: 'isMac' },
+                { key: 'ctrl+a', command: 'command2', when: 'isLinux || isMac' }, // <= partially common
+                { key: 'ctrl+a', command: 'command1', when: 'isWindows' }
+            ];
+            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
+        });
         it('should drop reduntant "isMac" if the keystroke contains Command key [compaction]', () => {
             const input = [
                 {
