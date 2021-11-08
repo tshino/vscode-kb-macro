@@ -6520,15 +6520,7 @@
                 "args": {
                     "command": "editor.action.inlineSuggest.showNext"
                 },
-                "when": "kb-macro.recording && isLinux && inlineSuggestionVisible && !editorReadonly"
-            },
-            {
-                "key": "alt+]",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "editor.action.inlineSuggest.showNext"
-                },
-                "when": "kb-macro.recording && isMac && inlineSuggestionVisible && !editorReadonly"
+                "when": "kb-macro.recording && isLinux && inlineSuggestionVisible && !editorReadonly || kb-macro.recording && isMac && inlineSuggestionVisible && !editorReadonly"
             },
             {
                 "key": "alt+[",
@@ -6536,15 +6528,7 @@
                 "args": {
                     "command": "editor.action.inlineSuggest.showPrevious"
                 },
-                "when": "kb-macro.recording && isLinux && inlineSuggestionVisible && !editorReadonly"
-            },
-            {
-                "key": "alt+[",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "editor.action.inlineSuggest.showPrevious"
-                },
-                "when": "kb-macro.recording && isMac && inlineSuggestionVisible && !editorReadonly"
+                "when": "kb-macro.recording && isLinux && inlineSuggestionVisible && !editorReadonly || kb-macro.recording && isMac && inlineSuggestionVisible && !editorReadonly"
             },
             {
                 "key": "ctrl+shift+\\",
@@ -6712,15 +6696,7 @@
                 "args": {
                     "command": "decreaseSearchEditorContextLines"
                 },
-                "when": "kb-macro.recording && isLinux && inSearchEditor"
-            },
-            {
-                "key": "alt+[Minus]",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "decreaseSearchEditorContextLines"
-                },
-                "when": "kb-macro.recording && isMac && inSearchEditor"
+                "when": "kb-macro.recording && isLinux && inSearchEditor || kb-macro.recording && isMac && inSearchEditor"
             },
             {
                 "key": "shift+alt+[Minus]",
@@ -6728,15 +6704,7 @@
                 "args": {
                     "command": "increaseSearchEditorContextLines"
                 },
-                "when": "kb-macro.recording && isLinux && inSearchEditor"
-            },
-            {
-                "key": "shift+alt+[Minus]",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "increaseSearchEditorContextLines"
-                },
-                "when": "kb-macro.recording && isMac && inSearchEditor"
+                "when": "kb-macro.recording && isLinux && inSearchEditor || kb-macro.recording && isMac && inSearchEditor"
             },
             {
                 "key": "shift+alt+meta+j",
@@ -6992,15 +6960,7 @@
                 "args": {
                     "command": "workbench.action.terminal.new"
                 },
-                "when": "kb-macro.recording && isLinux && terminalProcessSupported"
-            },
-            {
-                "key": "ctrl+shift+[Equal]",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "workbench.action.terminal.new"
-                },
-                "when": "kb-macro.recording && isMac && terminalProcessSupported"
+                "when": "kb-macro.recording && isLinux && terminalProcessSupported || kb-macro.recording && isMac && terminalProcessSupported"
             },
             {
                 "key": "ctrl+shift+0",
@@ -7016,15 +6976,7 @@
                 "args": {
                     "command": "workbench.action.terminal.toggleTerminal"
                 },
-                "when": "kb-macro.recording && isLinux && terminal.active"
-            },
-            {
-                "key": "ctrl+shift+[BracketLeft]",
-                "command": "kb-macro.wrap",
-                "args": {
-                    "command": "workbench.action.terminal.toggleTerminal"
-                },
-                "when": "kb-macro.recording && isMac && terminal.active"
+                "when": "kb-macro.recording && isLinux && terminal.active || kb-macro.recording && isMac && terminal.active"
             },
             {
                 "key": "ctrl+meta+w",
