@@ -157,6 +157,32 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
+        it('should not unify keybindings that cause conflicts that prevent retaining the proper order', () => {
+            const input = [
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common I
+                        { key: 'ctrl+a', command: 'command2', when: 'cond2' },
+                        { key: 'ctrl+a', command: 'command3', when: 'cond3' } // <= common II
+                    ],
+                    context: 'isWindows'
+                },
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command3', when: 'cond3' }, // <= common II
+                        { key: 'ctrl+a', command: 'command1', when: 'cond1' } // <= common I
+                    ],
+                    context: 'isLinux'
+                }
+            ];
+            const expected = [
+                { key: 'ctrl+a', command: 'command3', when: 'isLinux && cond3' },
+                { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common I
+                { key: 'ctrl+a', command: 'command2', when: 'isWindows && cond2' },
+                { key: 'ctrl+a', command: 'command3', when: 'isWindows && cond3' }
+            ];
+            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
+        });
         it('should unify keybindings that share a common definition among a subset of sources [compaction]', () => {
             const input = [
                 {

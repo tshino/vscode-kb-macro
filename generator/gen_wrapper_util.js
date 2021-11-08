@@ -39,9 +39,8 @@ function keybindingsContains(keybindings, keybinding) {
     return -1;
 }
 
-// Makes combined keybindings of different default keybindings of windows, macos and linux.
-function combineBaseKeybingings(baseKeybindings) {
-    // Make a map that associates each keystroke to a set of keybindings.
+// Make a map that associates each keystroke to a set of keybindings.
+function makeKeyDict(baseKeybindings) {
     const keyDict = new Map();
     for (const { keybindings, context } of baseKeybindings) {
         for (const keybinding of keybindings) {
@@ -56,10 +55,13 @@ function combineBaseKeybingings(baseKeybindings) {
             dict.get(context).push(keybinding);
         }
     }
-    const contextList = baseKeybindings.map(item => item.context);
-    let combined = [];
-    for (const dict of keyDict.values()) {
-        // Find common keybindings that are shared among all sources.
+    return keyDict;
+}
+
+// Find common keybindings that are shared among all sources.
+function makeCommonKeybindingsDict(contextList, keyDict) {
+    const commonKeyDict = new Map();
+    for (const [ key, dict ] of keyDict) {
         const commonKeybindings = [];
         const firstSet = dict.get(contextList[0]) || [];
         for (let pos0 = 0; pos0 < firstSet.length; pos0++) {
@@ -76,7 +78,7 @@ function combineBaseKeybingings(baseKeybindings) {
             }
         }
         // Drop common keybindings that are not placed in order.
-        let indices = Array(contextList.length).fill(0);
+        const indices = Array(contextList.length).fill(0);
         for (let i = 0; i < commonKeybindings.length; i++) {
             if (!commonKeybindings[i].every((pos, j) => (pos < 0 || indices[j] <= pos))) {
                 // out of order
@@ -90,9 +92,26 @@ function combineBaseKeybingings(baseKeybindings) {
                 }
             }
         }
-        // Reorder and unify keybindings.
+
+        if (0 < commonKeybindings.length) {
+            commonKeyDict.set(key, commonKeybindings);
+        }
+    }
+    return commonKeyDict;
+}
+
+// Make combined keybindings of different default keybindings of windows, macos and linux.
+function combineBaseKeybingings(baseKeybindings) {
+    const contextList = baseKeybindings.map(item => item.context);
+    const keyDict = makeKeyDict(baseKeybindings);
+    const commonKeyDict = makeCommonKeybindingsDict(contextList, keyDict);
+    let combined = [];
+    for (const [ key, dict ] of keyDict) {
+        const commonKeybindings = commonKeyDict.get(key) || [];
         commonKeybindings.push(contextList.map(context => (dict.get(context) || []).length));
-        indices = indices.fill(0);
+
+        // Reorder and unify keybindings.
+        const indices = Array(contextList.length).fill(0);
         for (let i = 0; i < commonKeybindings.length; i++) {
             for (let j = 0; j < contextList.length; j++) {
                 const pos = commonKeybindings[i][j];
