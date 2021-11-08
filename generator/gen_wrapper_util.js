@@ -59,39 +59,50 @@ function makeKeyDict(baseKeybindings) {
 }
 
 // Find common keybindings that are shared among all sources.
+function findCommonKeybinding(contextList, dict) {
+    const commonKeybindings = [];
+    const firstSet = dict.get(contextList[0]) || [];
+    for (let pos0 = 0; pos0 < firstSet.length; pos0++) {
+        const positions = [ pos0 ];
+        const keybinding = firstSet[pos0];
+        for (let j = 1; j < contextList.length; j++) {
+            const keybindings = dict.get(contextList[j]) || [];
+            const pos = keybindingsContains(keybindings, keybinding);
+            positions[j] = pos;
+        }
+        if (2 <= positions.filter(pos => 0 <= pos).length) {
+            // found a (fully or partially) common keybinding among all contexts
+            commonKeybindings.push(positions);
+        }
+    }
+    return commonKeybindings;
+}
+
+// Drop common keybindings that are not placed in order.
+function removeInconsistentlyOrderedKeybindings(contextList, commonKeybindings) {
+    const indices = Array(contextList.length).fill(0);
+    for (let i = 0; i < commonKeybindings.length; i++) {
+        if (!commonKeybindings[i].every((pos, j) => (pos < 0 || indices[j] <= pos))) {
+            // out of order
+            commonKeybindings.splice(i, 1);
+            i--;
+            continue;
+        }
+        for (let j = 0; j < contextList.length; j++) {
+            if (0 <= commonKeybindings[i][j]) {
+                indices[j] = commonKeybindings[i][j] + 1;
+            }
+        }
+    }
+}
+
+// Make common keybindings list for every keystrokes.
 function makeCommonKeybindingsDict(contextList, keyDict) {
     const commonKeyDict = new Map();
     for (const [ key, dict ] of keyDict) {
-        const commonKeybindings = [];
-        const firstSet = dict.get(contextList[0]) || [];
-        for (let pos0 = 0; pos0 < firstSet.length; pos0++) {
-            const positions = [ pos0 ];
-            const keybinding = firstSet[pos0];
-            for (let j = 1; j < contextList.length; j++) {
-                const keybindings = dict.get(contextList[j]) || [];
-                const pos = keybindingsContains(keybindings, keybinding);
-                positions[j] = pos;
-            }
-            if (2 <= positions.filter(pos => 0 <= pos).length) {
-                // found a (fully or partially) common keybinding among all contexts
-                commonKeybindings.push(positions);
-            }
-        }
-        // Drop common keybindings that are not placed in order.
-        const indices = Array(contextList.length).fill(0);
-        for (let i = 0; i < commonKeybindings.length; i++) {
-            if (!commonKeybindings[i].every((pos, j) => (pos < 0 || indices[j] <= pos))) {
-                // out of order
-                commonKeybindings.splice(i, 1);
-                i--;
-                continue;
-            }
-            for (let j = 0; j < contextList.length; j++) {
-                if (0 <= commonKeybindings[i][j]) {
-                    indices[j] = commonKeybindings[i][j] + 1;
-                }
-            }
-        }
+        const commonKeybindings = findCommonKeybinding(contextList, dict);
+
+        removeInconsistentlyOrderedKeybindings(contextList, commonKeybindings);
 
         if (0 < commonKeybindings.length) {
             commonKeyDict.set(key, commonKeybindings);
