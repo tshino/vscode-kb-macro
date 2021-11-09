@@ -617,7 +617,7 @@
                 "args": {
                     "command": "cursorBottom"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "ctrl+end",
@@ -625,7 +625,7 @@
                 "args": {
                     "command": "notebook.focusBottom"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditorFocused && !inputFocus || kb-macro.recording && isLinux && notebookEditorFocused && !inputFocus"
+                "when": "kb-macro.recording && !isMac && notebookEditorFocused && !inputFocus"
             },
             {
                 "key": "ctrl+end",
@@ -641,7 +641,7 @@
                 "args": {
                     "command": "cursorBottomSelect"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "ctrl+shift+alt+down",
@@ -1167,7 +1167,7 @@
                 "args": {
                     "command": "workbench.action.terminal.scrollDownPage"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
             },
             {
                 "key": "pageup",
@@ -1239,7 +1239,7 @@
                 "args": {
                     "command": "workbench.action.terminal.scrollUpPage"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
             },
             {
                 "key": "right",
@@ -1327,7 +1327,7 @@
                 "args": {
                     "command": "cursorTop"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "ctrl+home",
@@ -1335,7 +1335,7 @@
                 "args": {
                     "command": "notebook.focusTop"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditorFocused && !inputFocus || kb-macro.recording && isLinux && notebookEditorFocused && !inputFocus"
+                "when": "kb-macro.recording && !isMac && notebookEditorFocused && !inputFocus"
             },
             {
                 "key": "ctrl+home",
@@ -1351,7 +1351,7 @@
                 "args": {
                     "command": "cursorTopSelect"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "up",
@@ -1527,7 +1527,7 @@
                 "args": {
                     "command": "debug.removeBreakpoint"
                 },
-                "when": "kb-macro.recording && isWindows && breakpointsFocused && !breakpointInputFocused || kb-macro.recording && isLinux && breakpointsFocused && !breakpointInputFocused"
+                "when": "kb-macro.recording && !isMac && breakpointsFocused && !breakpointInputFocused"
             },
             {
                 "key": "delete",
@@ -1535,7 +1535,7 @@
                 "args": {
                     "command": "debug.removeWatchExpression"
                 },
-                "when": "kb-macro.recording && isWindows && watchExpressionsFocused && !expressionSelected || kb-macro.recording && isLinux && watchExpressionsFocused && !expressionSelected"
+                "when": "kb-macro.recording && !isMac && watchExpressionsFocused && !expressionSelected"
             },
             {
                 "key": "delete",
@@ -1543,7 +1543,7 @@
                 "args": {
                     "command": "keybindings.editor.removeKeybinding"
                 },
-                "when": "kb-macro.recording && isWindows && inKeybindings && keybindingFocus && !inputFocus || kb-macro.recording && isLinux && inKeybindings && keybindingFocus && !inputFocus"
+                "when": "kb-macro.recording && !isMac && inKeybindings && keybindingFocus && !inputFocus"
             },
             {
                 "key": "delete",
@@ -1551,7 +1551,7 @@
                 "args": {
                     "command": "notebook.cell.delete"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditable && notebookEditorFocused && !inputFocus || kb-macro.recording && isLinux && notebookEditable && notebookEditorFocused && !inputFocus"
+                "when": "kb-macro.recording && !isMac && notebookEditable && notebookEditorFocused && !inputFocus"
             },
             {
                 "key": "delete",
@@ -1559,7 +1559,7 @@
                 "args": {
                     "command": "notification.clear"
                 },
-                "when": "kb-macro.recording && isWindows && notificationFocus || kb-macro.recording && isLinux && notificationFocus"
+                "when": "kb-macro.recording && !isMac && notificationFocus"
             },
             {
                 "key": "delete",
@@ -1567,7 +1567,7 @@
                 "args": {
                     "command": "search.action.remove"
                 },
-                "when": "kb-macro.recording && isWindows && fileMatchOrMatchFocus && searchViewletVisible || kb-macro.recording && isLinux && fileMatchOrMatchFocus && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && fileMatchOrMatchFocus && searchViewletVisible"
             },
             {
                 "key": "delete",
@@ -1583,7 +1583,7 @@
                 "args": {
                     "command": "deleteFile"
                 },
-                "when": "kb-macro.recording && isWindows && explorerViewletVisible && filesExplorerFocus && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus || kb-macro.recording && isLinux && explorerViewletVisible && filesExplorerFocus && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus"
+                "when": "kb-macro.recording && !isMac && explorerViewletVisible && filesExplorerFocus && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus"
             },
             {
                 "key": "delete",
@@ -1607,7 +1607,7 @@
                 "args": {
                     "command": "editor.action.selectAll"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+a",
@@ -1615,7 +1615,7 @@
                 "args": {
                     "command": "list.selectAll"
                 },
-                "when": "kb-macro.recording && isWindows && listFocus && listSupportsMultiselect && !inputFocus || kb-macro.recording && isLinux && listFocus && listSupportsMultiselect && !inputFocus"
+                "when": "kb-macro.recording && !isMac && listFocus && listSupportsMultiselect && !inputFocus"
             },
             {
                 "key": "ctrl+a",
@@ -1631,7 +1631,7 @@
                 "args": {
                     "command": "expandLineSelection"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "ctrl+l",
@@ -1676,7 +1676,7 @@
                 "args": {
                     "command": "redo"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+y",
@@ -1684,7 +1684,7 @@
                 "args": {
                     "command": "redo"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+down",
@@ -1692,7 +1692,7 @@
                 "args": {
                     "command": "scrollLineDown"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "ctrl+down",
@@ -1700,7 +1700,7 @@
                 "args": {
                     "command": "selectNextSuggestion"
                 },
-                "when": "kb-macro.recording && isWindows && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || kb-macro.recording && isLinux && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+                "when": "kb-macro.recording && !isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
             },
             {
                 "key": "ctrl+down",
@@ -1708,7 +1708,7 @@
                 "args": {
                     "command": "keybindings.editor.focusKeybindings"
                 },
-                "when": "kb-macro.recording && isWindows && inKeybindings && inKeybindingsSearch || kb-macro.recording && isLinux && inKeybindings && inKeybindingsSearch"
+                "when": "kb-macro.recording && !isMac && inKeybindings && inKeybindingsSearch"
             },
             {
                 "key": "ctrl+down",
@@ -1716,7 +1716,7 @@
                 "args": {
                     "command": "list.scrollDown"
                 },
-                "when": "kb-macro.recording && isWindows && listFocus && !inputFocus || kb-macro.recording && isLinux && listFocus && !inputFocus"
+                "when": "kb-macro.recording && !isMac && listFocus && !inputFocus"
             },
             {
                 "key": "ctrl+down",
@@ -1724,7 +1724,7 @@
                 "args": {
                     "command": "notebook.cell.focusInOutput"
                 },
-                "when": "kb-macro.recording && isWindows && notebookCellHasOutputs && notebookEditorFocused || kb-macro.recording && isLinux && notebookCellHasOutputs && notebookEditorFocused"
+                "when": "kb-macro.recording && !isMac && notebookCellHasOutputs && notebookEditorFocused"
             },
             {
                 "key": "ctrl+down",
@@ -1732,7 +1732,7 @@
                 "args": {
                     "command": "notebook.focusNextEditor"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditorFocused && notebookOutputFocused || kb-macro.recording && isLinux && notebookEditorFocused && notebookOutputFocused"
+                "when": "kb-macro.recording && !isMac && notebookEditorFocused && notebookOutputFocused"
             },
             {
                 "key": "ctrl+down",
@@ -1740,7 +1740,7 @@
                 "args": {
                     "command": "problems.action.focusProblemsFromFilter"
                 },
-                "when": "kb-macro.recording && isWindows && problemsFilterFocus || kb-macro.recording && isLinux && problemsFilterFocus"
+                "when": "kb-macro.recording && !isMac && problemsFilterFocus"
             },
             {
                 "key": "ctrl+down",
@@ -1748,7 +1748,7 @@
                 "args": {
                     "command": "search.focus.nextInputBox"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor && inputBoxFocus || kb-macro.recording && isWindows && inputBoxFocus && searchViewletVisible || kb-macro.recording && isLinux && inSearchEditor && inputBoxFocus || kb-macro.recording && isLinux && inputBoxFocus && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && inSearchEditor && inputBoxFocus || kb-macro.recording && !isMac && inputBoxFocus && searchViewletVisible"
             },
             {
                 "key": "ctrl+down",
@@ -1756,7 +1756,7 @@
                 "args": {
                     "command": "workbench.action.terminal.navigationModeFocusNext"
                 },
-                "when": "kb-macro.recording && isWindows && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && isWindows && accessibilityModeEnabled && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && isLinux && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && !isMac && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "ctrl+up",
@@ -1764,7 +1764,7 @@
                 "args": {
                     "command": "scrollLineUp"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "ctrl+up",
@@ -1772,7 +1772,7 @@
                 "args": {
                     "command": "selectPrevSuggestion"
                 },
-                "when": "kb-macro.recording && isWindows && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || kb-macro.recording && isLinux && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+                "when": "kb-macro.recording && !isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
             },
             {
                 "key": "ctrl+up",
@@ -1780,7 +1780,7 @@
                 "args": {
                     "command": "list.scrollUp"
                 },
-                "when": "kb-macro.recording && isWindows && listFocus && !inputFocus || kb-macro.recording && isLinux && listFocus && !inputFocus"
+                "when": "kb-macro.recording && !isMac && listFocus && !inputFocus"
             },
             {
                 "key": "ctrl+up",
@@ -1788,7 +1788,7 @@
                 "args": {
                     "command": "notebook.cell.focusOutOutput"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditorFocused || kb-macro.recording && isLinux && notebookEditorFocused"
+                "when": "kb-macro.recording && !isMac && notebookEditorFocused"
             },
             {
                 "key": "ctrl+up",
@@ -1796,7 +1796,7 @@
                 "args": {
                     "command": "search.action.focusSearchFromResults"
                 },
-                "when": "kb-macro.recording && isWindows && firstMatchFocus && searchViewletVisible || kb-macro.recording && isLinux && firstMatchFocus && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && firstMatchFocus && searchViewletVisible"
             },
             {
                 "key": "ctrl+up",
@@ -1804,7 +1804,7 @@
                 "args": {
                     "command": "search.focus.previousInputBox"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor && inputBoxFocus || kb-macro.recording && isWindows && inputBoxFocus && searchViewletVisible && !searchInputBoxFocus || kb-macro.recording && isLinux && inSearchEditor && inputBoxFocus || kb-macro.recording && isLinux && inputBoxFocus && searchViewletVisible && !searchInputBoxFocus"
+                "when": "kb-macro.recording && !isMac && inSearchEditor && inputBoxFocus || kb-macro.recording && !isMac && inputBoxFocus && searchViewletVisible && !searchInputBoxFocus"
             },
             {
                 "key": "ctrl+up",
@@ -1812,7 +1812,7 @@
                 "args": {
                     "command": "workbench.action.terminal.navigationModeFocusPrevious"
                 },
-                "when": "kb-macro.recording && isWindows && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && isWindows && accessibilityModeEnabled && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && isLinux && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && !isMac && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "alt+pagedown",
@@ -1820,7 +1820,7 @@
                 "args": {
                     "command": "scrollPageDown"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "alt+pageup",
@@ -1828,7 +1828,7 @@
                 "args": {
                     "command": "scrollPageUp"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "tab",
@@ -1897,7 +1897,7 @@
                 "args": {
                     "command": "undo"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "f12",
@@ -2102,7 +2102,7 @@
                 "args": {
                     "command": "search.action.openInEditor"
                 },
-                "when": "kb-macro.recording && isWindows && hasSearchResult && searchViewletFocus || kb-macro.recording && isLinux && hasSearchResult && searchViewletFocus"
+                "when": "kb-macro.recording && !isMac && hasSearchResult && searchViewletFocus"
             },
             {
                 "key": "ctrl+alt+enter",
@@ -2126,7 +2126,7 @@
                 "args": {
                     "command": "editor.action.replaceAll"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus && findWidgetVisible || kb-macro.recording && isLinux && editorFocus && findWidgetVisible"
+                "when": "kb-macro.recording && !isMac && editorFocus && findWidgetVisible"
             },
             {
                 "key": "ctrl+alt+enter",
@@ -2134,7 +2134,7 @@
                 "args": {
                     "command": "search.action.replaceAll"
                 },
-                "when": "kb-macro.recording && isWindows && replaceActive && searchViewletVisible && !findWidgetVisible || kb-macro.recording && isLinux && replaceActive && searchViewletVisible && !findWidgetVisible"
+                "when": "kb-macro.recording && !isMac && replaceActive && searchViewletVisible && !findWidgetVisible"
             },
             {
                 "key": "ctrl+f",
@@ -2142,7 +2142,7 @@
                 "args": {
                     "command": "actions.find"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isWindows && editorIsOpen || kb-macro.recording && isLinux && editorFocus || kb-macro.recording && isLinux && editorIsOpen"
+                "when": "kb-macro.recording && !isMac && editorFocus || kb-macro.recording && !isMac && editorIsOpen"
             },
             {
                 "key": "ctrl+f",
@@ -2150,7 +2150,7 @@
                 "args": {
                     "command": "editor.action.extensioneditor.showfind"
                 },
-                "when": "kb-macro.recording && isWindows && !editorFocus && activeEditor == 'workbench.editor.extension' || kb-macro.recording && isLinux && !editorFocus && activeEditor == 'workbench.editor.extension'"
+                "when": "kb-macro.recording && !isMac && !editorFocus && activeEditor == 'workbench.editor.extension'"
             },
             {
                 "key": "ctrl+f",
@@ -2158,7 +2158,7 @@
                 "args": {
                     "command": "editor.action.webvieweditor.showFind"
                 },
-                "when": "kb-macro.recording && isWindows && webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor' || kb-macro.recording && isLinux && webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor'"
+                "when": "kb-macro.recording && !isMac && webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor'"
             },
             {
                 "key": "ctrl+f",
@@ -2166,7 +2166,7 @@
                 "args": {
                     "command": "repl.action.filter"
                 },
-                "when": "kb-macro.recording && isWindows && inDebugRepl && textInputFocus || kb-macro.recording && isLinux && inDebugRepl && textInputFocus"
+                "when": "kb-macro.recording && !isMac && inDebugRepl && textInputFocus"
             },
             {
                 "key": "ctrl+f",
@@ -2174,7 +2174,7 @@
                 "args": {
                     "command": "settings.action.search"
                 },
-                "when": "kb-macro.recording && isWindows && inSettingsEditor || kb-macro.recording && isLinux && inSettingsEditor"
+                "when": "kb-macro.recording && !isMac && inSettingsEditor"
             },
             {
                 "key": "ctrl+f",
@@ -2182,7 +2182,7 @@
                 "args": {
                     "command": "keybindings.editor.searchKeybindings"
                 },
-                "when": "kb-macro.recording && isWindows && inKeybindings || kb-macro.recording && isLinux && inKeybindings"
+                "when": "kb-macro.recording && !isMac && inKeybindings"
             },
             {
                 "key": "ctrl+f",
@@ -2190,7 +2190,7 @@
                 "args": {
                     "command": "notebook.find"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook' || kb-macro.recording && isLinux && notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'"
+                "when": "kb-macro.recording && !isMac && notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'"
             },
             {
                 "key": "ctrl+f",
@@ -2198,7 +2198,7 @@
                 "args": {
                     "command": "problems.action.focusFilter"
                 },
-                "when": "kb-macro.recording && isWindows && focusedView == 'workbench.panel.markers.view' || kb-macro.recording && isLinux && focusedView == 'workbench.panel.markers.view'"
+                "when": "kb-macro.recording && !isMac && focusedView == 'workbench.panel.markers.view'"
             },
             {
                 "key": "ctrl+f",
@@ -2206,7 +2206,7 @@
                 "args": {
                     "command": "workbench.action.terminal.focusFind"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "ctrl+f",
@@ -2371,7 +2371,7 @@
                 "args": {
                     "command": "explorer.openAndPassFocus"
                 },
-                "when": "kb-macro.recording && isWindows && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus || kb-macro.recording && isLinux && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
+                "when": "kb-macro.recording && !isMac && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
             },
             {
                 "key": "enter",
@@ -2419,7 +2419,7 @@
                 "args": {
                     "command": "cursorUndo"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus || kb-macro.recording && isLinux && textInputFocus"
+                "when": "kb-macro.recording && !isMac && textInputFocus"
             },
             {
                 "key": "ctrl+right",
@@ -2443,7 +2443,7 @@
                 "args": {
                     "command": "breadcrumbs.focusNext"
                 },
-                "when": "kb-macro.recording && isWindows && breadcrumbsActive && breadcrumbsVisible || kb-macro.recording && isLinux && breadcrumbsActive && breadcrumbsVisible"
+                "when": "kb-macro.recording && !isMac && breadcrumbsActive && breadcrumbsVisible"
             },
             {
                 "key": "ctrl+right",
@@ -2451,7 +2451,7 @@
                 "args": {
                     "command": "breadcrumbs.focusNextWithPicker"
                 },
-                "when": "kb-macro.recording && isWindows && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus || kb-macro.recording && isLinux && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus"
+                "when": "kb-macro.recording && !isMac && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus"
             },
             {
                 "key": "ctrl+shift+right",
@@ -2507,7 +2507,7 @@
                 "args": {
                     "command": "breadcrumbs.focusPrevious"
                 },
-                "when": "kb-macro.recording && isWindows && breadcrumbsActive && breadcrumbsVisible || kb-macro.recording && isLinux && breadcrumbsActive && breadcrumbsVisible"
+                "when": "kb-macro.recording && !isMac && breadcrumbsActive && breadcrumbsVisible"
             },
             {
                 "key": "ctrl+left",
@@ -2515,7 +2515,7 @@
                 "args": {
                     "command": "list.collapseAll"
                 },
-                "when": "kb-macro.recording && isWindows && listFocus && !inputFocus || kb-macro.recording && isLinux && listFocus && !inputFocus"
+                "when": "kb-macro.recording && !isMac && listFocus && !inputFocus"
             },
             {
                 "key": "ctrl+left",
@@ -2523,7 +2523,7 @@
                 "args": {
                     "command": "breadcrumbs.focusPreviousWithPicker"
                 },
-                "when": "kb-macro.recording && isWindows && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus || kb-macro.recording && isLinux && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus"
+                "when": "kb-macro.recording && !isMac && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus"
             },
             {
                 "key": "ctrl+shift+left",
@@ -2563,7 +2563,7 @@
                 "args": {
                     "command": "deleteWordLeft"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus && !editorReadonly || kb-macro.recording && isLinux && textInputFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && textInputFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+backspace",
@@ -2574,7 +2574,7 @@
                         "text": "\u0017"
                     }
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus || kb-macro.recording && isLinux && terminalFocus"
+                "when": "kb-macro.recording && !isMac && terminalFocus"
             },
             {
                 "key": "ctrl+backspace",
@@ -2601,7 +2601,7 @@
                 "args": {
                     "command": "deleteWordRight"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus && !editorReadonly || kb-macro.recording && isLinux && textInputFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && textInputFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+delete",
@@ -2612,7 +2612,7 @@
                         "text": "\u001bd"
                     }
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus || kb-macro.recording && isLinux && terminalFocus"
+                "when": "kb-macro.recording && !isMac && terminalFocus"
             },
             {
                 "key": "ctrl+delete",
@@ -2628,7 +2628,7 @@
                 "args": {
                     "command": "editor.action.addCommentLine"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isLinux && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+k ctrl+c",
@@ -2636,7 +2636,7 @@
                 "args": {
                     "command": "notebook.cell.collapseCellInput"
                 },
-                "when": "kb-macro.recording && isWindows && notebookCellListFocused && !inputFocus && !notebookCellInputIsCollapsed || kb-macro.recording && isLinux && notebookCellListFocused && !inputFocus && !notebookCellInputIsCollapsed"
+                "when": "kb-macro.recording && !isMac && notebookCellListFocused && !inputFocus && !notebookCellInputIsCollapsed"
             },
             {
                 "key": "ctrl+k ctrl+c",
@@ -2644,7 +2644,7 @@
                 "args": {
                     "command": "notebook.cell.expandCellInput"
                 },
-                "when": "kb-macro.recording && isWindows && notebookCellInputIsCollapsed && notebookCellListFocused || kb-macro.recording && isLinux && notebookCellInputIsCollapsed && notebookCellListFocused"
+                "when": "kb-macro.recording && !isMac && notebookCellInputIsCollapsed && notebookCellListFocused"
             },
             {
                 "key": "ctrl+d",
@@ -2652,7 +2652,7 @@
                 "args": {
                     "command": "editor.action.addSelectionToNextFindMatch"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "ctrl+d",
@@ -2676,7 +2676,7 @@
                 "args": {
                     "command": "editor.action.blockComment"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isMac && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isLinux && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+f2",
@@ -2684,7 +2684,7 @@
                 "args": {
                     "command": "editor.action.changeAll"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isLinux && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+insert",
@@ -2702,7 +2702,7 @@
                     "command": "editor.action.clipboardCopyAction",
                     "await": "clipboard"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+c",
@@ -2710,7 +2710,7 @@
                 "args": {
                     "command": "keybindings.editor.copyKeybindingEntry"
                 },
-                "when": "kb-macro.recording && isWindows && inKeybindings && keybindingFocus || kb-macro.recording && isLinux && inKeybindings && keybindingFocus"
+                "when": "kb-macro.recording && !isMac && inKeybindings && keybindingFocus"
             },
             {
                 "key": "ctrl+c",
@@ -2718,7 +2718,7 @@
                 "args": {
                     "command": "problems.action.copy"
                 },
-                "when": "kb-macro.recording && isWindows && problemFocus || kb-macro.recording && isLinux && problemFocus"
+                "when": "kb-macro.recording && !isMac && problemFocus"
             },
             {
                 "key": "ctrl+c",
@@ -2726,7 +2726,7 @@
                 "args": {
                     "command": "search.action.copyMatch"
                 },
-                "when": "kb-macro.recording && isWindows && fileMatchOrMatchFocus || kb-macro.recording && isLinux && fileMatchOrMatchFocus"
+                "when": "kb-macro.recording && !isMac && fileMatchOrMatchFocus"
             },
             {
                 "key": "ctrl+c",
@@ -2742,7 +2742,7 @@
                 "args": {
                     "command": "filesExplorer.copy"
                 },
-                "when": "kb-macro.recording && isWindows && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus || kb-macro.recording && isLinux && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+                "when": "kb-macro.recording && !isMac && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
             },
             {
                 "key": "ctrl+c",
@@ -2750,7 +2750,7 @@
                 "args": {
                     "command": "remote.tunnel.copyAddressInline"
                 },
-                "when": "kb-macro.recording && isWindows && tunnelViewFocus && tunnelType == 'Detected' && tunnelViewMultiSelection == 'undefined' || kb-macro.recording && isWindows && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined' || kb-macro.recording && isLinux && tunnelViewFocus && tunnelType == 'Detected' && tunnelViewMultiSelection == 'undefined' || kb-macro.recording && isLinux && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined'"
+                "when": "kb-macro.recording && !isMac && tunnelViewFocus && tunnelType == 'Detected' && tunnelViewMultiSelection == 'undefined' || kb-macro.recording && !isMac && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined'"
             },
             {
                 "key": "shift+delete",
@@ -2767,7 +2767,7 @@
                 "args": {
                     "command": "deleteFile"
                 },
-                "when": "kb-macro.recording && isWindows && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus || kb-macro.recording && isLinux && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
+                "when": "kb-macro.recording && !isMac && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
             },
             {
                 "key": "ctrl+x",
@@ -2776,7 +2776,7 @@
                     "command": "editor.action.clipboardCutAction",
                     "await": "document selection clipboard"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+x",
@@ -2784,7 +2784,7 @@
                 "args": {
                     "command": "filesExplorer.cut"
                 },
-                "when": "kb-macro.recording && isWindows && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus || kb-macro.recording && isLinux && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+                "when": "kb-macro.recording && !isMac && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
             },
             {
                 "key": "shift+insert",
@@ -2793,7 +2793,7 @@
                     "command": "editor.action.clipboardPasteAction",
                     "await": "document selection"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "shift+insert",
@@ -2810,7 +2810,7 @@
                     "command": "editor.action.clipboardPasteAction",
                     "await": "document selection"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+v",
@@ -2837,7 +2837,7 @@
                 "args": {
                     "command": "filesExplorer.paste"
                 },
-                "when": "kb-macro.recording && isWindows && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus || kb-macro.recording && isLinux && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
+                "when": "kb-macro.recording && !isMac && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
             },
             {
                 "key": "ctrl+oem_2",
@@ -2861,7 +2861,7 @@
                 "args": {
                     "command": "editor.action.copyLinesDownAction"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isMac && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isLinux && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "shift+alt+down",
@@ -2885,7 +2885,7 @@
                 "args": {
                     "command": "editor.action.copyLinesUpAction"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isMac && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isLinux && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "shift+alt+up",
@@ -2909,7 +2909,7 @@
                 "args": {
                     "command": "editor.action.defineKeybinding"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly && editorLangId == 'jsonc' || kb-macro.recording && isLinux && editorTextFocus && !editorReadonly && editorLangId == 'jsonc'"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && !editorReadonly && editorLangId == 'jsonc'"
             },
             {
                 "key": "ctrl+k ctrl+k",
@@ -2917,7 +2917,7 @@
                 "args": {
                     "command": "editor.action.selectFromAnchorToCursor"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && selectionAnchorSet || kb-macro.recording && isLinux && editorTextFocus && selectionAnchorSet"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && selectionAnchorSet"
             },
             {
                 "key": "ctrl+shift+k",
@@ -2925,7 +2925,7 @@
                 "args": {
                     "command": "editor.action.deleteLines"
                 },
-                "when": "kb-macro.recording && isWindows && textInputFocus && !editorReadonly || kb-macro.recording && isLinux && textInputFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && textInputFocus && !editorReadonly"
             },
             {
                 "key": "f7",
@@ -2981,7 +2981,7 @@
                 "args": {
                     "command": "editor.action.formatDocument"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor || kb-macro.recording && isMac && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
+                "when": "kb-macro.recording && !isLinux && editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
             },
             {
                 "key": "shift+alt+f",
@@ -2989,7 +2989,7 @@
                 "args": {
                     "command": "editor.action.formatDocument.none"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly || kb-macro.recording && isMac && editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly"
+                "when": "kb-macro.recording && !isLinux && editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly"
             },
             {
                 "key": "shift+alt+f",
@@ -2997,7 +2997,7 @@
                 "args": {
                     "command": "notebook.formatCell"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasDocumentFormattingProvider && editorTextFocus && inCompositeEditor && notebookEditable && !editorReadonly && activeEditor == 'workbench.editor.notebook' || kb-macro.recording && isMac && editorHasDocumentFormattingProvider && editorTextFocus && inCompositeEditor && notebookEditable && !editorReadonly && activeEditor == 'workbench.editor.notebook'"
+                "when": "kb-macro.recording && !isLinux && editorHasDocumentFormattingProvider && editorTextFocus && inCompositeEditor && notebookEditable && !editorReadonly && activeEditor == 'workbench.editor.notebook'"
             },
             {
                 "key": "shift+alt+f",
@@ -3013,7 +3013,7 @@
                 "args": {
                     "command": "notebook.format"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditable && !editorTextFocus && activeEditor == 'workbench.editor.notebook' || kb-macro.recording && isMac && notebookEditable && !editorTextFocus && activeEditor == 'workbench.editor.notebook'"
+                "when": "kb-macro.recording && !isLinux && notebookEditable && !editorTextFocus && activeEditor == 'workbench.editor.notebook'"
             },
             {
                 "key": "ctrl+k ctrl+f",
@@ -3021,7 +3021,7 @@
                 "args": {
                     "command": "editor.action.formatSelection"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly || kb-macro.recording && isLinux && editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+f12",
@@ -3029,7 +3029,7 @@
                 "args": {
                     "command": "editor.action.goToImplementation"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor || kb-macro.recording && isLinux && editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
+                "when": "kb-macro.recording && !isMac && editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
             },
             {
                 "key": "ctrl+shift+oem_period",
@@ -3117,7 +3117,7 @@
                 "args": {
                     "command": "editor.action.insertLineAfter"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isLinux && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+enter",
@@ -3133,7 +3133,7 @@
                 "args": {
                     "command": "interactive.execute"
                 },
-                "when": "kb-macro.recording && isWindows && resourceScheme == 'vscode-interactive' || kb-macro.recording && isMac && resourceScheme == 'vscode-interactive'"
+                "when": "kb-macro.recording && !isLinux && resourceScheme == 'vscode-interactive'"
             },
             {
                 "key": "ctrl+enter",
@@ -3157,7 +3157,7 @@
                 "args": {
                     "command": "workbench.action.submitComment"
                 },
-                "when": "kb-macro.recording && isWindows && commentEditorFocused || kb-macro.recording && isLinux && commentEditorFocused"
+                "when": "kb-macro.recording && !isMac && commentEditorFocused"
             },
             {
                 "key": "ctrl+enter",
@@ -3165,7 +3165,7 @@
                 "args": {
                     "command": "breadcrumbs.revealFocused"
                 },
-                "when": "kb-macro.recording && isWindows && breadcrumbsActive && breadcrumbsVisible || kb-macro.recording && isLinux && breadcrumbsActive && breadcrumbsVisible"
+                "when": "kb-macro.recording && !isMac && breadcrumbsActive && breadcrumbsVisible"
             },
             {
                 "key": "ctrl+enter",
@@ -3173,7 +3173,7 @@
                 "args": {
                     "command": "breadcrumbs.revealFocusedFromTreeAside"
                 },
-                "when": "kb-macro.recording && isWindows && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus || kb-macro.recording && isLinux && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus"
+                "when": "kb-macro.recording && !isMac && breadcrumbsActive && breadcrumbsVisible && listFocus && !inputFocus"
             },
             {
                 "key": "ctrl+enter",
@@ -3181,7 +3181,7 @@
                 "args": {
                     "command": "debug.openBreakpointToSide"
                 },
-                "when": "kb-macro.recording && isWindows && breakpointsFocused || kb-macro.recording && isLinux && breakpointsFocused"
+                "when": "kb-macro.recording && !isMac && breakpointsFocused"
             },
             {
                 "key": "ctrl+enter",
@@ -3197,7 +3197,7 @@
                 "args": {
                     "command": "notebook.cell.insertCodeCellBelow"
                 },
-                "when": "kb-macro.recording && isWindows && notebookCellListFocused && !inputFocus || kb-macro.recording && isLinux && notebookCellListFocused && !inputFocus"
+                "when": "kb-macro.recording && !isMac && notebookCellListFocused && !inputFocus"
             },
             {
                 "key": "ctrl+enter",
@@ -3213,7 +3213,7 @@
                 "args": {
                     "command": "scm.acceptInput"
                 },
-                "when": "kb-macro.recording && isWindows && scmRepository || kb-macro.recording && isLinux && scmRepository"
+                "when": "kb-macro.recording && !isMac && scmRepository"
             },
             {
                 "key": "ctrl+enter",
@@ -3229,7 +3229,7 @@
                 "args": {
                     "command": "editor.action.insertLineBefore"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isLinux && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+shift+enter",
@@ -3237,7 +3237,7 @@
                 "args": {
                     "command": "list.toggleSelection"
                 },
-                "when": "kb-macro.recording && isWindows && listFocus && !inputFocus || kb-macro.recording && isLinux && listFocus && !inputFocus"
+                "when": "kb-macro.recording && !isMac && listFocus && !inputFocus"
             },
             {
                 "key": "ctrl+shift+enter",
@@ -3245,7 +3245,7 @@
                 "args": {
                     "command": "notebook.cell.insertCodeCellAbove"
                 },
-                "when": "kb-macro.recording && isWindows && notebookCellListFocused && !inputFocus || kb-macro.recording && isLinux && notebookCellListFocused && !inputFocus"
+                "when": "kb-macro.recording && !isMac && notebookCellListFocused && !inputFocus"
             },
             {
                 "key": "ctrl+shift+enter",
@@ -3253,7 +3253,7 @@
                 "args": {
                     "command": "search.action.replaceAllInFile"
                 },
-                "when": "kb-macro.recording && isWindows && fileMatchFocus && replaceActive && searchViewletVisible || kb-macro.recording && isLinux && fileMatchFocus && replaceActive && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && fileMatchFocus && replaceActive && searchViewletVisible"
             },
             {
                 "key": "ctrl+shift+enter",
@@ -3261,7 +3261,7 @@
                 "args": {
                     "command": "search.action.replaceAllInFolder"
                 },
-                "when": "kb-macro.recording && isWindows && folderMatchFocus && replaceActive && searchViewletVisible || kb-macro.recording && isLinux && folderMatchFocus && replaceActive && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && folderMatchFocus && replaceActive && searchViewletVisible"
             },
             {
                 "key": "ctrl+shift+oem_5",
@@ -3285,7 +3285,7 @@
                 "args": {
                     "command": "editor.action.linkedEditing"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasRenameProvider && editorTextFocus && !editorReadonly || kb-macro.recording && isLinux && editorHasRenameProvider && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorHasRenameProvider && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "alt+f8",
@@ -3381,7 +3381,7 @@
                 "args": {
                     "command": "workbench.action.terminal.focusNextPane"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "alt+up",
@@ -3429,7 +3429,7 @@
                 "args": {
                     "command": "workbench.action.terminal.focusPreviousPane"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "ctrl+k ctrl+d",
@@ -3437,7 +3437,7 @@
                 "args": {
                     "command": "editor.action.moveSelectionToNextFindMatch"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "f3",
@@ -3461,7 +3461,7 @@
                 "args": {
                     "command": "editor.action.nextSelectionMatchFindAction"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "shift+alt+o",
@@ -3485,7 +3485,7 @@
                 "args": {
                     "command": "editor.action.peekDefinition"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor || kb-macro.recording && isMac && editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+                "when": "kb-macro.recording && !isLinux && editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
             },
             {
                 "key": "ctrl+shift+f12",
@@ -3493,7 +3493,7 @@
                 "args": {
                     "command": "editor.action.peekImplementation"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor || kb-macro.recording && isLinux && editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+                "when": "kb-macro.recording && !isMac && editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
             },
             {
                 "key": "shift+f3",
@@ -3517,7 +3517,7 @@
                 "args": {
                     "command": "editor.action.previousSelectionMatchFindAction"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "ctrl+oem_period",
@@ -3549,7 +3549,7 @@
                 "args": {
                     "command": "rerunSearchEditorSearch"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor || kb-macro.recording && isLinux && inSearchEditor"
+                "when": "kb-macro.recording && !isMac && inSearchEditor"
             },
             {
                 "key": "ctrl+shift+r",
@@ -3565,7 +3565,7 @@
                 "args": {
                     "command": "editor.action.removeCommentLine"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isLinux && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "f2",
@@ -3581,7 +3581,7 @@
                 "args": {
                     "command": "workbench.action.terminal.renameInstance"
                 },
-                "when": "kb-macro.recording && isWindows && terminalProcessSupported && terminalTabsFocus && terminalTabsSingularSelection || kb-macro.recording && isLinux && terminalProcessSupported && terminalTabsFocus && terminalTabsSingularSelection"
+                "when": "kb-macro.recording && !isMac && terminalProcessSupported && terminalTabsFocus && terminalTabsSingularSelection"
             },
             {
                 "key": "f2",
@@ -3589,7 +3589,7 @@
                 "args": {
                     "command": "debug.renameWatchExpression"
                 },
-                "when": "kb-macro.recording && isWindows && watchExpressionsFocused || kb-macro.recording && isLinux && watchExpressionsFocused"
+                "when": "kb-macro.recording && !isMac && watchExpressionsFocused"
             },
             {
                 "key": "f2",
@@ -3597,7 +3597,7 @@
                 "args": {
                     "command": "debug.setVariable"
                 },
-                "when": "kb-macro.recording && isWindows && variablesFocused || kb-macro.recording && isLinux && variablesFocused"
+                "when": "kb-macro.recording && !isMac && variablesFocused"
             },
             {
                 "key": "f2",
@@ -3605,7 +3605,7 @@
                 "args": {
                     "command": "remote.tunnel.label"
                 },
-                "when": "kb-macro.recording && isWindows && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined' || kb-macro.recording && isLinux && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined'"
+                "when": "kb-macro.recording && !isMac && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined'"
             },
             {
                 "key": "f2",
@@ -3613,7 +3613,7 @@
                 "args": {
                     "command": "renameFile"
                 },
-                "when": "kb-macro.recording && isWindows && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus || kb-macro.recording && isLinux && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+                "when": "kb-macro.recording && !isMac && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
             },
             {
                 "key": "ctrl+k f12",
@@ -3621,7 +3621,7 @@
                 "args": {
                     "command": "editor.action.revealDefinitionAside"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor || kb-macro.recording && isLinux && editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+                "when": "kb-macro.recording && !isMac && editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
             },
             {
                 "key": "ctrl+shift+l",
@@ -3629,7 +3629,7 @@
                 "args": {
                     "command": "editor.action.selectHighlights"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "ctrl+shift+l",
@@ -3637,7 +3637,7 @@
                 "args": {
                     "command": "addCursorsAtSearchResults"
                 },
-                "when": "kb-macro.recording && isWindows && fileMatchOrMatchFocus && searchViewletVisible || kb-macro.recording && isLinux && fileMatchOrMatchFocus && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && fileMatchOrMatchFocus && searchViewletVisible"
             },
             {
                 "key": "ctrl+shift+l",
@@ -3645,7 +3645,7 @@
                 "args": {
                     "command": "selectAllSearchEditorMatches"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor || kb-macro.recording && isLinux && inSearchEditor"
+                "when": "kb-macro.recording && !isMac && inSearchEditor"
             },
             {
                 "key": "ctrl+k ctrl+b",
@@ -3653,7 +3653,7 @@
                 "args": {
                     "command": "editor.action.setSelectionAnchor"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus || kb-macro.recording && isLinux && editorTextFocus"
+                "when": "kb-macro.recording && !isMac && editorTextFocus"
             },
             {
                 "key": "alt+f1",
@@ -3677,7 +3677,7 @@
                 "args": {
                     "command": "editor.action.showHover"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus || kb-macro.recording && isLinux && editorTextFocus"
+                "when": "kb-macro.recording && !isMac && editorTextFocus"
             },
             {
                 "key": "ctrl+k ctrl+i",
@@ -3685,7 +3685,7 @@
                 "args": {
                     "command": "editor.debug.action.showDebugHover"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && inDebugMode || kb-macro.recording && isLinux && editorTextFocus && inDebugMode"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && inDebugMode"
             },
             {
                 "key": "shift+alt+right",
@@ -3693,7 +3693,7 @@
                 "args": {
                     "command": "editor.action.smartSelect.expand"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus || kb-macro.recording && isLinux && editorTextFocus"
+                "when": "kb-macro.recording && !isMac && editorTextFocus"
             },
             {
                 "key": "shift+alt+right",
@@ -3709,7 +3709,7 @@
                 "args": {
                     "command": "editor.action.smartSelect.shrink"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus || kb-macro.recording && isLinux && editorTextFocus"
+                "when": "kb-macro.recording && !isMac && editorTextFocus"
             },
             {
                 "key": "shift+alt+left",
@@ -3725,7 +3725,7 @@
                 "args": {
                     "command": "editor.action.startFindReplaceAction"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isWindows && editorIsOpen || kb-macro.recording && isLinux && editorFocus || kb-macro.recording && isLinux && editorIsOpen"
+                "when": "kb-macro.recording && !isMac && editorFocus || kb-macro.recording && !isMac && editorIsOpen"
             },
             {
                 "key": "ctrl+h",
@@ -3733,7 +3733,7 @@
                 "args": {
                     "command": "testing.toggleTestingPeekHistory"
                 },
-                "when": "kb-macro.recording && isWindows && testing.isPeekVisible || kb-macro.recording && isLinux && testing.isPeekVisible"
+                "when": "kb-macro.recording && !isMac && testing.isPeekVisible"
             },
             {
                 "key": "ctrl+h",
@@ -3749,7 +3749,7 @@
                 "args": {
                     "command": "editor.action.toggleTabFocusMode"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+z",
@@ -3773,7 +3773,7 @@
                 "args": {
                     "command": "editor.action.triggerParameterHints"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasSignatureHelpProvider && editorTextFocus || kb-macro.recording && isLinux && editorHasSignatureHelpProvider && editorTextFocus"
+                "when": "kb-macro.recording && !isMac && editorHasSignatureHelpProvider && editorTextFocus"
             },
             {
                 "key": "ctrl+i",
@@ -3781,7 +3781,7 @@
                 "args": {
                     "command": "editor.action.triggerSuggest"
                 },
-                "when": "kb-macro.recording && isWindows && editorHasCompletionItemProvider && textInputFocus && !editorReadonly || kb-macro.recording && isLinux && editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
             },
             {
                 "key": "ctrl+i",
@@ -3789,7 +3789,7 @@
                 "args": {
                     "command": "toggleSuggestionDetails"
                 },
-                "when": "kb-macro.recording && isWindows && suggestWidgetVisible && textInputFocus || kb-macro.recording && isLinux && suggestWidgetVisible && textInputFocus"
+                "when": "kb-macro.recording && !isMac && suggestWidgetVisible && textInputFocus"
             },
             {
                 "key": "ctrl+space",
@@ -3813,7 +3813,7 @@
                 "args": {
                     "command": "editor.action.trimTrailingWhitespace"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly || kb-macro.recording && isLinux && editorTextFocus && !editorReadonly"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && !editorReadonly"
             },
             {
                 "key": "f9",
@@ -3845,7 +3845,7 @@
                 "args": {
                     "command": "editor.foldAll"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+oem_2",
@@ -3869,7 +3869,7 @@
                 "args": {
                     "command": "editor.foldAllMarkerRegions"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+1",
@@ -3877,7 +3877,7 @@
                 "args": {
                     "command": "editor.foldLevel1"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+2",
@@ -3885,7 +3885,7 @@
                 "args": {
                     "command": "editor.foldLevel2"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+3",
@@ -3893,7 +3893,7 @@
                 "args": {
                     "command": "editor.foldLevel3"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+4",
@@ -3901,7 +3901,7 @@
                 "args": {
                     "command": "editor.foldLevel4"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+5",
@@ -3909,7 +3909,7 @@
                 "args": {
                     "command": "editor.foldLevel5"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+6",
@@ -3917,7 +3917,7 @@
                 "args": {
                     "command": "editor.foldLevel6"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+7",
@@ -3925,7 +3925,7 @@
                 "args": {
                     "command": "editor.foldLevel7"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+oem_4",
@@ -3941,7 +3941,7 @@
                 "args": {
                     "command": "editor.toggleFold"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+shift+oem_6",
@@ -3965,7 +3965,7 @@
                 "args": {
                     "command": "editor.unfoldAll"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+oem_plus",
@@ -3981,7 +3981,7 @@
                 "args": {
                     "command": "editor.unfoldAllMarkerRegions"
                 },
-                "when": "kb-macro.recording && isWindows && editorTextFocus && foldingEnabled || kb-macro.recording && isLinux && editorTextFocus && foldingEnabled"
+                "when": "kb-macro.recording && !isMac && editorTextFocus && foldingEnabled"
             },
             {
                 "key": "ctrl+k ctrl+oem_6",
@@ -3997,7 +3997,7 @@
                 "args": {
                     "command": "notebook.cell.pasteAbove"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditorFocused && !inputFocus || kb-macro.recording && isLinux && notebookEditorFocused && !inputFocus"
+                "when": "kb-macro.recording && !isMac && notebookEditorFocused && !inputFocus"
             },
             {
                 "key": "ctrl+shift+v",
@@ -4005,7 +4005,7 @@
                 "args": {
                     "command": "workbench.action.terminal.paste"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "ctrl+shift+v",
@@ -4013,7 +4013,7 @@
                 "args": {
                     "command": "markdown.showPreview"
                 },
-                "when": "kb-macro.recording && isWindows && !notebookEditorFocused && editorLangId == 'markdown' || kb-macro.recording && isLinux && !notebookEditorFocused && editorLangId == 'markdown'"
+                "when": "kb-macro.recording && !isMac && !notebookEditorFocused && editorLangId == 'markdown'"
             },
             {
                 "key": "ctrl+shift+backspace",
@@ -4021,7 +4021,7 @@
                 "args": {
                     "command": "search.searchEditor.action.deleteFileResults"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor || kb-macro.recording && isLinux && inSearchEditor"
+                "when": "kb-macro.recording && !isMac && inSearchEditor"
             },
             {
                 "key": "ctrl+k f2",
@@ -4029,7 +4029,7 @@
                 "args": {
                     "command": "togglePeekWidgetFocus"
                 },
-                "when": "kb-macro.recording && isWindows && inReferenceSearchEditor || kb-macro.recording && isWindows && referenceSearchVisible || kb-macro.recording && isLinux && inReferenceSearchEditor || kb-macro.recording && isLinux && referenceSearchVisible"
+                "when": "kb-macro.recording && !isMac && inReferenceSearchEditor || kb-macro.recording && !isMac && referenceSearchVisible"
             },
             {
                 "key": "alt+f5",
@@ -4069,7 +4069,7 @@
                 "args": {
                     "command": "editor.action.replaceOne"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus && findWidgetVisible || kb-macro.recording && isLinux && editorFocus && findWidgetVisible"
+                "when": "kb-macro.recording && !isMac && editorFocus && findWidgetVisible"
             },
             {
                 "key": "ctrl+shift+1",
@@ -4077,7 +4077,7 @@
                 "args": {
                     "command": "search.action.replace"
                 },
-                "when": "kb-macro.recording && isWindows && matchFocus && replaceActive && searchViewletVisible || kb-macro.recording && isLinux && matchFocus && replaceActive && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && matchFocus && replaceActive && searchViewletVisible"
             },
             {
                 "key": "ctrl+shift+1",
@@ -4085,7 +4085,7 @@
                 "args": {
                     "command": "search.action.replaceAllInFile"
                 },
-                "when": "kb-macro.recording && isWindows && fileMatchFocus && replaceActive && searchViewletVisible || kb-macro.recording && isLinux && fileMatchFocus && replaceActive && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && fileMatchFocus && replaceActive && searchViewletVisible"
             },
             {
                 "key": "ctrl+shift+1",
@@ -4093,7 +4093,7 @@
                 "args": {
                     "command": "search.action.replaceAllInFolder"
                 },
-                "when": "kb-macro.recording && isWindows && folderMatchFocus && replaceActive && searchViewletVisible || kb-macro.recording && isLinux && folderMatchFocus && replaceActive && searchViewletVisible"
+                "when": "kb-macro.recording && !isMac && folderMatchFocus && replaceActive && searchViewletVisible"
             },
             {
                 "key": "alt+c",
@@ -4101,7 +4101,7 @@
                 "args": {
                     "command": "toggleFindCaseSensitive"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "alt+c",
@@ -4109,7 +4109,7 @@
                 "args": {
                     "command": "toggleSearchCaseSensitive"
                 },
-                "when": "kb-macro.recording && isWindows && searchViewletFocus || kb-macro.recording && isLinux && searchViewletFocus"
+                "when": "kb-macro.recording && !isMac && searchViewletFocus"
             },
             {
                 "key": "alt+c",
@@ -4117,7 +4117,7 @@
                 "args": {
                     "command": "toggleSearchEditorCaseSensitive"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor && searchInputBoxFocus || kb-macro.recording && isLinux && inSearchEditor && searchInputBoxFocus"
+                "when": "kb-macro.recording && !isMac && inSearchEditor && searchInputBoxFocus"
             },
             {
                 "key": "alt+c",
@@ -4125,7 +4125,7 @@
                 "args": {
                     "command": "workbench.action.terminal.toggleFindCaseSensitive"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "alt+l",
@@ -4133,7 +4133,7 @@
                 "args": {
                     "command": "toggleFindInSelection"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "alt+l",
@@ -4141,7 +4141,7 @@
                 "args": {
                     "command": "toggleSearchEditorContextLines"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor || kb-macro.recording && isLinux && inSearchEditor"
+                "when": "kb-macro.recording && !isMac && inSearchEditor"
             },
             {
                 "key": "alt+r",
@@ -4149,7 +4149,7 @@
                 "args": {
                     "command": "toggleFindRegex"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "alt+r",
@@ -4157,7 +4157,7 @@
                 "args": {
                     "command": "toggleSearchEditorRegex"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor && searchInputBoxFocus || kb-macro.recording && isLinux && inSearchEditor && searchInputBoxFocus"
+                "when": "kb-macro.recording && !isMac && inSearchEditor && searchInputBoxFocus"
             },
             {
                 "key": "alt+r",
@@ -4165,7 +4165,7 @@
                 "args": {
                     "command": "toggleSearchRegex"
                 },
-                "when": "kb-macro.recording && isWindows && searchViewletFocus || kb-macro.recording && isLinux && searchViewletFocus"
+                "when": "kb-macro.recording && !isMac && searchViewletFocus"
             },
             {
                 "key": "alt+r",
@@ -4173,7 +4173,7 @@
                 "args": {
                     "command": "workbench.action.terminal.toggleFindRegex"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "alt+w",
@@ -4181,7 +4181,7 @@
                 "args": {
                     "command": "toggleFindWholeWord"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "alt+w",
@@ -4189,7 +4189,7 @@
                 "args": {
                     "command": "toggleSearchEditorWholeWord"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor && searchInputBoxFocus || kb-macro.recording && isLinux && inSearchEditor && searchInputBoxFocus"
+                "when": "kb-macro.recording && !isMac && inSearchEditor && searchInputBoxFocus"
             },
             {
                 "key": "alt+w",
@@ -4197,7 +4197,7 @@
                 "args": {
                     "command": "toggleSearchWholeWord"
                 },
-                "when": "kb-macro.recording && isWindows && searchViewletFocus || kb-macro.recording && isLinux && searchViewletFocus"
+                "when": "kb-macro.recording && !isMac && searchViewletFocus"
             },
             {
                 "key": "alt+w",
@@ -4205,7 +4205,7 @@
                 "args": {
                     "command": "workbench.action.terminal.toggleFindWholeWord"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "alt+p",
@@ -4213,7 +4213,7 @@
                 "args": {
                     "command": "togglePreserveCase"
                 },
-                "when": "kb-macro.recording && isWindows && editorFocus || kb-macro.recording && isLinux && editorFocus"
+                "when": "kb-macro.recording && !isMac && editorFocus"
             },
             {
                 "key": "alt+p",
@@ -4221,7 +4221,7 @@
                 "args": {
                     "command": "keybindings.editor.toggleSortByPrecedence"
                 },
-                "when": "kb-macro.recording && isWindows && inKeybindings || kb-macro.recording && isLinux && inKeybindings"
+                "when": "kb-macro.recording && !isMac && inKeybindings"
             },
             {
                 "key": "alt+p",
@@ -4229,7 +4229,7 @@
                 "args": {
                     "command": "toggleSearchPreserveCase"
                 },
-                "when": "kb-macro.recording && isWindows && searchViewletFocus || kb-macro.recording && isLinux && searchViewletFocus"
+                "when": "kb-macro.recording && !isMac && searchViewletFocus"
             },
             {
                 "key": "ctrl+pagedown",
@@ -4237,7 +4237,7 @@
                 "args": {
                     "command": "selectNextPageSuggestion"
                 },
-                "when": "kb-macro.recording && isWindows && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || kb-macro.recording && isLinux && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+                "when": "kb-macro.recording && !isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
             },
             {
                 "key": "ctrl+pagedown",
@@ -4245,7 +4245,7 @@
                 "args": {
                     "command": "workbench.action.nextEditor"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+pagedown",
@@ -4253,7 +4253,7 @@
                 "args": {
                     "command": "workbench.action.terminal.focusNext"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalEditorFocus || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
             },
             {
                 "key": "ctrl+pagedown",
@@ -4269,7 +4269,7 @@
                 "args": {
                     "command": "selectPrevPageSuggestion"
                 },
-                "when": "kb-macro.recording && isWindows && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || kb-macro.recording && isLinux && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+                "when": "kb-macro.recording && !isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
             },
             {
                 "key": "ctrl+pageup",
@@ -4277,7 +4277,7 @@
                 "args": {
                     "command": "workbench.action.previousEditor"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+pageup",
@@ -4285,7 +4285,7 @@
                 "args": {
                     "command": "workbench.action.terminal.focusPrevious"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalEditorFocus || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
             },
             {
                 "key": "ctrl+pageup",
@@ -4389,7 +4389,7 @@
                 "args": {
                     "command": "debug.openView"
                 },
-                "when": "kb-macro.recording && isWindows && !debuggersAvailable || kb-macro.recording && isLinux && !debuggersAvailable"
+                "when": "kb-macro.recording && !isMac && !debuggersAvailable"
             },
             {
                 "key": "ctrl+f5",
@@ -4509,7 +4509,7 @@
                 "args": {
                     "command": "keybindings.editor.addKeybinding"
                 },
-                "when": "kb-macro.recording && isWindows && inKeybindings && keybindingFocus || kb-macro.recording && isLinux && inKeybindings && keybindingFocus"
+                "when": "kb-macro.recording && !isMac && inKeybindings && keybindingFocus"
             },
             {
                 "key": "ctrl+k ctrl+e",
@@ -4517,7 +4517,7 @@
                 "args": {
                     "command": "keybindings.editor.defineWhenExpression"
                 },
-                "when": "kb-macro.recording && isWindows && inKeybindings && keybindingFocus || kb-macro.recording && isLinux && inKeybindings && keybindingFocus"
+                "when": "kb-macro.recording && !isMac && inKeybindings && keybindingFocus"
             },
             {
                 "key": "alt+k",
@@ -4525,7 +4525,7 @@
                 "args": {
                     "command": "keybindings.editor.recordSearchKeys"
                 },
-                "when": "kb-macro.recording && isWindows && inKeybindings && inKeybindingsSearch || kb-macro.recording && isLinux && inKeybindings && inKeybindingsSearch"
+                "when": "kb-macro.recording && !isMac && inKeybindings && inKeybindingsSearch"
             },
             {
                 "key": "y",
@@ -4576,7 +4576,7 @@
                 "args": {
                     "command": "notebook.cell.collapseCellOutput"
                 },
-                "when": "kb-macro.recording && isWindows && notebookCellHasOutputs && notebookCellListFocused && !inputFocus && !notebookCellOutputIsCollapsed || kb-macro.recording && isLinux && notebookCellHasOutputs && notebookCellListFocused && !inputFocus && !notebookCellOutputIsCollapsed"
+                "when": "kb-macro.recording && !isMac && notebookCellHasOutputs && notebookCellListFocused && !inputFocus && !notebookCellOutputIsCollapsed"
             },
             {
                 "key": "ctrl+k t",
@@ -4584,7 +4584,7 @@
                 "args": {
                     "command": "notebook.cell.expandCellOutput"
                 },
-                "when": "kb-macro.recording && isWindows && notebookCellListFocused && notebookCellOutputIsCollapsed || kb-macro.recording && isLinux && notebookCellListFocused && notebookCellOutputIsCollapsed"
+                "when": "kb-macro.recording && !isMac && notebookCellListFocused && notebookCellOutputIsCollapsed"
             },
             {
                 "key": "shift+alt+win+j",
@@ -4776,7 +4776,7 @@
                 "args": {
                     "command": "workbench.action.closeActiveEditor"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+w",
@@ -4784,7 +4784,7 @@
                 "args": {
                     "command": "workbench.action.closeGroup"
                 },
-                "when": "kb-macro.recording && isWindows && activeEditorGroupEmpty && multipleEditorGroups || kb-macro.recording && isLinux && activeEditorGroupEmpty && multipleEditorGroups"
+                "when": "kb-macro.recording && !isMac && activeEditorGroupEmpty && multipleEditorGroups"
             },
             {
                 "key": "ctrl+w",
@@ -4792,7 +4792,7 @@
                 "args": {
                     "command": "workbench.action.terminal.killEditor"
                 },
-                "when": "kb-macro.recording && isWindows && terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal' || kb-macro.recording && isLinux && terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal'"
+                "when": "kb-macro.recording && !isMac && terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal'"
             },
             {
                 "key": "ctrl+w",
@@ -4832,7 +4832,7 @@
                 "args": {
                     "command": "workbench.action.closeAllEditors"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k ctrl+shift+w",
@@ -4840,7 +4840,7 @@
                 "args": {
                     "command": "workbench.action.closeAllGroups"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k w",
@@ -4848,7 +4848,7 @@
                 "args": {
                     "command": "workbench.action.closeEditorsInGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k f",
@@ -4856,7 +4856,7 @@
                 "args": {
                     "command": "workbench.action.closeFolder"
                 },
-                "when": "kb-macro.recording && isWindows && emptyWorkspaceSupport && workbenchState != 'empty' || kb-macro.recording && isLinux && emptyWorkspaceSupport && workbenchState != 'empty'"
+                "when": "kb-macro.recording && !isMac && emptyWorkspaceSupport && workbenchState != 'empty'"
             },
             {
                 "key": "ctrl+k u",
@@ -4864,7 +4864,7 @@
                 "args": {
                     "command": "workbench.action.closeUnmodifiedEditors"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+w",
@@ -4872,7 +4872,7 @@
                 "args": {
                     "command": "workbench.action.closeWindow"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+f4",
@@ -4880,7 +4880,7 @@
                 "args": {
                     "command": "workbench.action.closeWindow"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "shift+f5",
@@ -4904,7 +4904,7 @@
                 "args": {
                     "command": "workbench.action.debug.restart"
                 },
-                "when": "kb-macro.recording && isWindows && inDebugMode || kb-macro.recording && isLinux && inDebugMode"
+                "when": "kb-macro.recording && !isMac && inDebugMode"
             },
             {
                 "key": "shift+f11",
@@ -4936,7 +4936,7 @@
                 "args": {
                     "command": "workbench.action.editor.changeLanguageMode"
                 },
-                "when": "kb-macro.recording && isWindows && !notebookEditorFocused || kb-macro.recording && isLinux && !notebookEditorFocused"
+                "when": "kb-macro.recording && !isMac && !notebookEditorFocused"
             },
             {
                 "key": "ctrl+k p",
@@ -4944,7 +4944,7 @@
                 "args": {
                     "command": "workbench.action.files.copyPathOfActiveFile"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+n",
@@ -4952,7 +4952,7 @@
                 "args": {
                     "command": "workbench.action.files.newUntitledFile"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+n",
@@ -5000,7 +5000,7 @@
                 "args": {
                     "command": "workbench.action.files.openFile"
                 },
-                "when": "kb-macro.recording && isWindows && true || kb-macro.recording && isLinux && true"
+                "when": "kb-macro.recording && !isMac && true"
             },
             {
                 "key": "ctrl+o",
@@ -5008,7 +5008,7 @@
                 "args": {
                     "command": "workbench.action.files.openFileFolder"
                 },
-                "when": "kb-macro.recording && isWindows && isMacNative && openFolderWorkspaceSupport || kb-macro.recording && isLinux && isMacNative && openFolderWorkspaceSupport"
+                "when": "kb-macro.recording && !isMac && isMacNative && openFolderWorkspaceSupport"
             },
             {
                 "key": "ctrl+o",
@@ -5016,7 +5016,7 @@
                 "args": {
                     "command": "workbench.action.files.openLocalFile"
                 },
-                "when": "kb-macro.recording && isWindows && remoteFileDialogVisible || kb-macro.recording && isLinux && remoteFileDialogVisible"
+                "when": "kb-macro.recording && !isMac && remoteFileDialogVisible"
             },
             {
                 "key": "ctrl+o",
@@ -5032,7 +5032,7 @@
                 "args": {
                     "command": "workbench.action.files.openFolder"
                 },
-                "when": "kb-macro.recording && isWindows && openFolderWorkspaceSupport || kb-macro.recording && isLinux && openFolderWorkspaceSupport"
+                "when": "kb-macro.recording && !isMac && openFolderWorkspaceSupport"
             },
             {
                 "key": "ctrl+k ctrl+o",
@@ -5040,7 +5040,7 @@
                 "args": {
                     "command": "workbench.action.files.openLocalFolder"
                 },
-                "when": "kb-macro.recording && isWindows && remoteFileDialogVisible || kb-macro.recording && isLinux && remoteFileDialogVisible"
+                "when": "kb-macro.recording && !isMac && remoteFileDialogVisible"
             },
             {
                 "key": "ctrl+k r",
@@ -5048,7 +5048,7 @@
                 "args": {
                     "command": "workbench.action.files.revealActiveFileInWindows"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+s",
@@ -5056,7 +5056,7 @@
                 "args": {
                     "command": "workbench.action.files.save"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+s",
@@ -5064,7 +5064,7 @@
                 "args": {
                     "command": "workbench.action.files.saveAs"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+s",
@@ -5072,7 +5072,7 @@
                 "args": {
                     "command": "workbench.action.files.saveLocalFile"
                 },
-                "when": "kb-macro.recording && isWindows && remoteFileDialogVisible || kb-macro.recording && isLinux && remoteFileDialogVisible"
+                "when": "kb-macro.recording && !isMac && remoteFileDialogVisible"
             },
             {
                 "key": "ctrl+k ctrl+shift+s",
@@ -5088,7 +5088,7 @@
                 "args": {
                     "command": "workbench.action.files.showOpenedFileInNewWindow"
                 },
-                "when": "kb-macro.recording && isWindows && emptyWorkspaceSupport || kb-macro.recording && isLinux && emptyWorkspaceSupport"
+                "when": "kb-macro.recording && !isMac && emptyWorkspaceSupport"
             },
             {
                 "key": "ctrl+shift+f",
@@ -5096,7 +5096,7 @@
                 "args": {
                     "command": "workbench.action.findInFiles"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+f",
@@ -5104,7 +5104,7 @@
                 "args": {
                     "command": "workbench.view.search"
                 },
-                "when": "kb-macro.recording && isWindows && workbench.view.search.active && neverMatch =~ /doesNotMatch/ || kb-macro.recording && isLinux && workbench.view.search.active && neverMatch =~ /doesNotMatch/"
+                "when": "kb-macro.recording && !isMac && workbench.view.search.active && neverMatch =~ /doesNotMatch/"
             },
             {
                 "key": "ctrl+shift+f",
@@ -5112,7 +5112,7 @@
                 "args": {
                     "command": "workbench.action.terminal.searchWorkspace"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && terminalTextSelected || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && terminalTextSelected"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && terminalTextSelected"
             },
             {
                 "key": "ctrl+k ctrl+up",
@@ -5120,7 +5120,7 @@
                 "args": {
                     "command": "workbench.action.focusAboveGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k ctrl+down",
@@ -5128,7 +5128,7 @@
                 "args": {
                     "command": "workbench.action.focusBelowGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+8",
@@ -5136,7 +5136,7 @@
                 "args": {
                     "command": "workbench.action.focusEighthEditorGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+8",
@@ -5152,7 +5152,7 @@
                 "args": {
                     "command": "workbench.action.focusFifthEditorGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+5",
@@ -5168,7 +5168,7 @@
                 "args": {
                     "command": "workbench.action.focusFirstEditorGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+1",
@@ -5184,7 +5184,7 @@
                 "args": {
                     "command": "workbench.action.focusFourthEditorGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+4",
@@ -5200,7 +5200,7 @@
                 "args": {
                     "command": "workbench.action.focusLeftGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "f6",
@@ -5232,7 +5232,7 @@
                 "args": {
                     "command": "workbench.action.focusRightGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+2",
@@ -5240,7 +5240,7 @@
                 "args": {
                     "command": "workbench.action.focusSecondEditorGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+2",
@@ -5256,7 +5256,7 @@
                 "args": {
                     "command": "workbench.action.focusSeventhEditorGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+7",
@@ -5272,7 +5272,7 @@
                 "args": {
                     "command": "workbench.action.focusSideBar"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+0",
@@ -5288,7 +5288,7 @@
                 "args": {
                     "command": "workbench.action.focusSixthEditorGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+6",
@@ -5304,7 +5304,7 @@
                 "args": {
                     "command": "workbench.action.focusThirdEditorGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+3",
@@ -5328,7 +5328,7 @@
                 "args": {
                     "command": "workbench.action.gotoSymbol"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k enter",
@@ -5336,7 +5336,7 @@
                 "args": {
                     "command": "workbench.action.keepEditor"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k ctrl+r",
@@ -5344,7 +5344,7 @@
                 "args": {
                     "command": "workbench.action.keybindingsReference"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k ctrl+r",
@@ -5352,7 +5352,7 @@
                 "args": {
                     "command": "git.revertSelectedRanges"
                 },
-                "when": "kb-macro.recording && isWindows && isInDiffEditor || kb-macro.recording && isLinux && isInDiffEditor"
+                "when": "kb-macro.recording && !isMac && isInDiffEditor"
             },
             {
                 "key": "ctrl+9",
@@ -5360,7 +5360,7 @@
                 "args": {
                     "command": "workbench.action.lastEditorInGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+9",
@@ -5376,7 +5376,7 @@
                 "args": {
                     "command": "workbench.action.lastEditorInGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k down",
@@ -5384,7 +5384,7 @@
                 "args": {
                     "command": "workbench.action.moveActiveEditorGroupDown"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k down",
@@ -5392,7 +5392,7 @@
                 "args": {
                     "command": "views.moveViewDown"
                 },
-                "when": "kb-macro.recording && isWindows && focusedView != '' || kb-macro.recording && isLinux && focusedView != ''"
+                "when": "kb-macro.recording && !isMac && focusedView != ''"
             },
             {
                 "key": "ctrl+k left",
@@ -5400,7 +5400,7 @@
                 "args": {
                     "command": "workbench.action.moveActiveEditorGroupLeft"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k left",
@@ -5408,7 +5408,7 @@
                 "args": {
                     "command": "views.moveViewLeft"
                 },
-                "when": "kb-macro.recording && isWindows && focusedView != '' || kb-macro.recording && isLinux && focusedView != ''"
+                "when": "kb-macro.recording && !isMac && focusedView != ''"
             },
             {
                 "key": "ctrl+k right",
@@ -5416,7 +5416,7 @@
                 "args": {
                     "command": "workbench.action.moveActiveEditorGroupRight"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k right",
@@ -5424,7 +5424,7 @@
                 "args": {
                     "command": "views.moveViewRight"
                 },
-                "when": "kb-macro.recording && isWindows && focusedView != '' || kb-macro.recording && isLinux && focusedView != ''"
+                "when": "kb-macro.recording && !isMac && focusedView != ''"
             },
             {
                 "key": "ctrl+k up",
@@ -5432,7 +5432,7 @@
                 "args": {
                     "command": "workbench.action.moveActiveEditorGroupUp"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k up",
@@ -5440,7 +5440,7 @@
                 "args": {
                     "command": "views.moveViewUp"
                 },
-                "when": "kb-macro.recording && isWindows && focusedView != '' || kb-macro.recording && isLinux && focusedView != ''"
+                "when": "kb-macro.recording && !isMac && focusedView != ''"
             },
             {
                 "key": "ctrl+shift+pageup",
@@ -5448,7 +5448,7 @@
                 "args": {
                     "command": "workbench.action.moveEditorLeftInGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+pagedown",
@@ -5456,7 +5456,7 @@
                 "args": {
                     "command": "workbench.action.moveEditorRightInGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "shift+alt+1",
@@ -5464,7 +5464,7 @@
                 "args": {
                     "command": "workbench.action.moveEditorToFirstGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "shift+alt+9",
@@ -5472,7 +5472,7 @@
                 "args": {
                     "command": "workbench.action.moveEditorToLastGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+alt+right",
@@ -5480,7 +5480,7 @@
                 "args": {
                     "command": "workbench.action.moveEditorToNextGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+alt+right",
@@ -5496,7 +5496,7 @@
                 "args": {
                     "command": "workbench.action.moveEditorToPreviousGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+alt+left",
@@ -5520,7 +5520,7 @@
                 "args": {
                     "command": "workbench.action.terminal.focusPreviousPane"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "alt+left",
@@ -5568,7 +5568,7 @@
                 "args": {
                     "command": "workbench.action.terminal.focusNextPane"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
             },
             {
                 "key": "alt+right",
@@ -5600,7 +5600,7 @@
                 "args": {
                     "command": "workbench.action.navigateToLastEditLocation"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+n",
@@ -5608,7 +5608,7 @@
                 "args": {
                     "command": "workbench.action.newWindow"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k ctrl+pagedown",
@@ -5616,7 +5616,7 @@
                 "args": {
                     "command": "workbench.action.nextEditorInGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+1",
@@ -5624,7 +5624,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex1"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+2",
@@ -5632,7 +5632,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex2"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+3",
@@ -5640,7 +5640,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex3"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+4",
@@ -5648,7 +5648,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex4"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+5",
@@ -5656,7 +5656,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex5"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+6",
@@ -5664,7 +5664,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex6"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+7",
@@ -5672,7 +5672,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex7"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+8",
@@ -5680,7 +5680,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex8"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "alt+9",
@@ -5688,7 +5688,7 @@
                 "args": {
                     "command": "workbench.action.openEditorAtIndex9"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k ctrl+s",
@@ -5696,7 +5696,7 @@
                 "args": {
                     "command": "workbench.action.openGlobalKeybindings"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+r",
@@ -5720,7 +5720,7 @@
                 "args": {
                     "command": "workbench.action.reloadWindow"
                 },
-                "when": "kb-macro.recording && isWindows && isDevelopment || kb-macro.recording && isLinux && isDevelopment"
+                "when": "kb-macro.recording && !isMac && isDevelopment"
             },
             {
                 "key": "ctrl+oem_comma",
@@ -5744,7 +5744,7 @@
                 "args": {
                     "command": "workbench.action.pinEditor"
                 },
-                "when": "kb-macro.recording && isWindows && !activeEditorIsPinned || kb-macro.recording && isLinux && !activeEditorIsPinned"
+                "when": "kb-macro.recording && !isMac && !activeEditorIsPinned"
             },
             {
                 "key": "ctrl+k shift+enter",
@@ -5752,7 +5752,7 @@
                 "args": {
                     "command": "workbench.action.unpinEditor"
                 },
-                "when": "kb-macro.recording && isWindows && activeEditorIsPinned || kb-macro.recording && isLinux && activeEditorIsPinned"
+                "when": "kb-macro.recording && !isMac && activeEditorIsPinned"
             },
             {
                 "key": "ctrl+k ctrl+pageup",
@@ -5760,7 +5760,7 @@
                 "args": {
                     "command": "workbench.action.previousEditorInGroup"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+e",
@@ -5768,7 +5768,7 @@
                 "args": {
                     "command": "workbench.action.quickOpen"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+e",
@@ -5776,7 +5776,7 @@
                 "args": {
                     "command": "workbench.action.quickOpenNavigateNextInFilePicker"
                 },
-                "when": "kb-macro.recording && isWindows && inFilesPicker && inQuickOpen || kb-macro.recording && isLinux && inFilesPicker && inQuickOpen"
+                "when": "kb-macro.recording && !isMac && inFilesPicker && inQuickOpen"
             },
             {
                 "key": "ctrl+e",
@@ -5792,7 +5792,7 @@
                 "args": {
                     "command": "workbench.action.quickOpen"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+p",
@@ -5800,7 +5800,7 @@
                 "args": {
                     "command": "workbench.action.quickOpenNavigateNextInFilePicker"
                 },
-                "when": "kb-macro.recording && isWindows && inFilesPicker && inQuickOpen || kb-macro.recording && isLinux && inFilesPicker && inQuickOpen"
+                "when": "kb-macro.recording && !isMac && inFilesPicker && inQuickOpen"
             },
             {
                 "key": "ctrl+p",
@@ -5880,7 +5880,7 @@
                 "args": {
                     "command": "workbench.action.quickOpenView"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isMac"
+                "when": "kb-macro.recording && !isLinux"
             },
             {
                 "key": "ctrl+q",
@@ -5888,7 +5888,7 @@
                 "args": {
                     "command": "workbench.action.quickOpenNavigateNextInViewPicker"
                 },
-                "when": "kb-macro.recording && isWindows && inQuickOpen && inViewsPicker || kb-macro.recording && isMac && inQuickOpen && inViewsPicker"
+                "when": "kb-macro.recording && !isLinux && inQuickOpen && inViewsPicker"
             },
             {
                 "key": "ctrl+q",
@@ -5904,7 +5904,7 @@
                 "args": {
                     "command": "workbench.action.reopenClosedEditor"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+h",
@@ -5912,7 +5912,7 @@
                 "args": {
                     "command": "workbench.action.replaceInFiles"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+j",
@@ -5920,7 +5920,7 @@
                 "args": {
                     "command": "workbench.action.search.toggleQueryDetails"
                 },
-                "when": "kb-macro.recording && isWindows && inSearchEditor || kb-macro.recording && isWindows && searchViewletFocus || kb-macro.recording && isLinux && inSearchEditor || kb-macro.recording && isLinux && searchViewletFocus"
+                "when": "kb-macro.recording && !isMac && inSearchEditor || kb-macro.recording && !isMac && searchViewletFocus"
             },
             {
                 "key": "ctrl+k ctrl+t",
@@ -5928,7 +5928,7 @@
                 "args": {
                     "command": "workbench.action.selectTheme"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k ctrl+p",
@@ -5936,7 +5936,7 @@
                 "args": {
                     "command": "workbench.action.showAllEditors"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+t",
@@ -5944,7 +5944,7 @@
                 "args": {
                     "command": "workbench.action.showAllSymbols"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+t",
@@ -5968,7 +5968,7 @@
                 "args": {
                     "command": "workbench.action.showCommands"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+p",
@@ -5976,7 +5976,7 @@
                 "args": {
                     "command": "workbench.action.quickOpenNavigatePreviousInFilePicker"
                 },
-                "when": "kb-macro.recording && isWindows && inFilesPicker && inQuickOpen || kb-macro.recording && isLinux && inFilesPicker && inQuickOpen"
+                "when": "kb-macro.recording && !isMac && inFilesPicker && inQuickOpen"
             },
             {
                 "key": "ctrl+oem_5",
@@ -6000,7 +6000,7 @@
                 "args": {
                     "command": "workbench.action.tasks.build"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+c",
@@ -6008,7 +6008,7 @@
                 "args": {
                     "command": "workbench.action.terminal.copySelection"
                 },
-                "when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && terminalTextSelected || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && terminalTextSelected"
+                "when": "kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && terminalTextSelected"
             },
             {
                 "key": "ctrl+shift+c",
@@ -6016,7 +6016,7 @@
                 "args": {
                     "command": "workbench.action.terminal.openNativeConsole"
                 },
-                "when": "kb-macro.recording && isWindows && !terminalFocus || kb-macro.recording && isLinux && !terminalFocus"
+                "when": "kb-macro.recording && !isMac && !terminalFocus"
             },
             {
                 "key": "ctrl+shift+oem_3",
@@ -6072,7 +6072,7 @@
                 "args": {
                     "command": "workbench.action.toggleEditorGroupLayout"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "f11",
@@ -6080,7 +6080,7 @@
                 "args": {
                     "command": "workbench.action.toggleFullScreen"
                 },
-                "when": "kb-macro.recording && isWindows && !isIOS || kb-macro.recording && isLinux && !isIOS"
+                "when": "kb-macro.recording && !isMac && !isIOS"
             },
             {
                 "key": "f11",
@@ -6104,7 +6104,7 @@
                 "args": {
                     "command": "workbench.action.togglePanel"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+j",
@@ -6120,7 +6120,7 @@
                 "args": {
                     "command": "workbench.action.toggleSidebarVisibility"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+b",
@@ -6136,7 +6136,7 @@
                 "args": {
                     "command": "workbench.action.toggleZenMode"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+numpad_add",
@@ -6144,7 +6144,7 @@
                 "args": {
                     "command": "workbench.action.zoomIn"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+oem_plus",
@@ -6168,7 +6168,7 @@
                 "args": {
                     "command": "workbench.action.zoomOut"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+oem_minus",
@@ -6192,7 +6192,7 @@
                 "args": {
                     "command": "workbench.action.zoomReset"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+shift+m",
@@ -6200,7 +6200,7 @@
                 "args": {
                     "command": "workbench.actions.view.problems"
                 },
-                "when": "kb-macro.recording && isWindows && workbench.panel.markers.view.active || kb-macro.recording && isLinux && workbench.panel.markers.view.active"
+                "when": "kb-macro.recording && !isMac && workbench.panel.markers.view.active"
             },
             {
                 "key": "ctrl+shift+m",
@@ -6216,7 +6216,7 @@
                 "args": {
                     "command": "workbench.debug.action.toggleRepl"
                 },
-                "when": "kb-macro.recording && isWindows && workbench.panel.repl.view.active || kb-macro.recording && isLinux && workbench.panel.repl.view.active"
+                "when": "kb-macro.recording && !isMac && workbench.panel.repl.view.active"
             },
             {
                 "key": "ctrl+k c",
@@ -6224,7 +6224,7 @@
                 "args": {
                     "command": "workbench.files.action.compareWithClipboard"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k d",
@@ -6232,7 +6232,7 @@
                 "args": {
                     "command": "workbench.files.action.compareWithSaved"
                 },
-                "when": "kb-macro.recording && isWindows || kb-macro.recording && isLinux"
+                "when": "kb-macro.recording && !isMac"
             },
             {
                 "key": "ctrl+k e",
@@ -6240,7 +6240,7 @@
                 "args": {
                     "command": "workbench.files.action.focusOpenEditorsView"
                 },
-                "when": "kb-macro.recording && isWindows && workbench.explorer.openEditorsView.active || kb-macro.recording && isLinux && workbench.explorer.openEditorsView.active"
+                "when": "kb-macro.recording && !isMac && workbench.explorer.openEditorsView.active"
             },
             {
                 "key": "ctrl+shift+d",
@@ -6248,7 +6248,7 @@
                 "args": {
                     "command": "workbench.view.debug"
                 },
-                "when": "kb-macro.recording && isWindows && viewContainer.workbench.view.debug.enabled || kb-macro.recording && isLinux && viewContainer.workbench.view.debug.enabled"
+                "when": "kb-macro.recording && !isMac && viewContainer.workbench.view.debug.enabled"
             },
             {
                 "key": "ctrl+shift+e",
@@ -6256,7 +6256,7 @@
                 "args": {
                     "command": "workbench.view.explorer"
                 },
-                "when": "kb-macro.recording && isWindows && viewContainer.workbench.view.explorer.enabled || kb-macro.recording && isLinux && viewContainer.workbench.view.explorer.enabled"
+                "when": "kb-macro.recording && !isMac && viewContainer.workbench.view.explorer.enabled"
             },
             {
                 "key": "ctrl+shift+e",
@@ -6264,7 +6264,7 @@
                 "args": {
                     "command": "workbench.action.quickOpenNavigatePreviousInFilePicker"
                 },
-                "when": "kb-macro.recording && isWindows && inFilesPicker && inQuickOpen || kb-macro.recording && isLinux && inFilesPicker && inQuickOpen"
+                "when": "kb-macro.recording && !isMac && inFilesPicker && inQuickOpen"
             },
             {
                 "key": "ctrl+shift+e",
@@ -6280,7 +6280,7 @@
                 "args": {
                     "command": "workbench.view.extensions"
                 },
-                "when": "kb-macro.recording && isWindows && viewContainer.workbench.view.extensions.enabled || kb-macro.recording && isLinux && viewContainer.workbench.view.extensions.enabled"
+                "when": "kb-macro.recording && !isMac && viewContainer.workbench.view.extensions.enabled"
             },
             {
                 "key": "ctrl+shift+g",
@@ -6296,7 +6296,7 @@
                 "args": {
                     "command": "workbench.action.quickOpenNavigatePreviousInViewPicker"
                 },
-                "when": "kb-macro.recording && isWindows && inQuickOpen && inViewsPicker || kb-macro.recording && isMac && inQuickOpen && inViewsPicker"
+                "when": "kb-macro.recording && !isLinux && inQuickOpen && inViewsPicker"
             },
             {
                 "key": "ctrl+shift+i",
@@ -6336,7 +6336,7 @@
                 "args": {
                     "command": "workbench.action.toggleDevTools"
                 },
-                "when": "kb-macro.recording && isWindows && isDevelopment || kb-macro.recording && isLinux && isDevelopment"
+                "when": "kb-macro.recording && !isMac && isDevelopment"
             },
             {
                 "key": "ctrl+k ctrl+alt+s",
@@ -6344,7 +6344,7 @@
                 "args": {
                     "command": "git.stageSelectedRanges"
                 },
-                "when": "kb-macro.recording && isWindows && isInDiffEditor || kb-macro.recording && isLinux && isInDiffEditor"
+                "when": "kb-macro.recording && !isMac && isInDiffEditor"
             },
             {
                 "key": "shift+alt+f12",
@@ -6360,7 +6360,7 @@
                 "args": {
                     "command": "git.unstageSelectedRanges"
                 },
-                "when": "kb-macro.recording && isWindows && isInDiffEditor || kb-macro.recording && isLinux && isInDiffEditor"
+                "when": "kb-macro.recording && !isMac && isInDiffEditor"
             },
             {
                 "key": "ctrl+k v",
@@ -6368,7 +6368,7 @@
                 "args": {
                     "command": "markdown.showPreviewToSide"
                 },
-                "when": "kb-macro.recording && isWindows && !notebookEditorFocused && editorLangId == 'markdown' || kb-macro.recording && isLinux && !notebookEditorFocused && editorLangId == 'markdown'"
+                "when": "kb-macro.recording && !isMac && !notebookEditorFocused && editorLangId == 'markdown'"
             },
             {
                 "key": "meta+enter",
@@ -6520,7 +6520,7 @@
                 "args": {
                     "command": "editor.action.inlineSuggest.showNext"
                 },
-                "when": "kb-macro.recording && isLinux && inlineSuggestionVisible && !editorReadonly || kb-macro.recording && isMac && inlineSuggestionVisible && !editorReadonly"
+                "when": "kb-macro.recording && !isWindows && inlineSuggestionVisible && !editorReadonly"
             },
             {
                 "key": "alt+[",
@@ -6528,7 +6528,7 @@
                 "args": {
                     "command": "editor.action.inlineSuggest.showPrevious"
                 },
-                "when": "kb-macro.recording && isLinux && inlineSuggestionVisible && !editorReadonly || kb-macro.recording && isMac && inlineSuggestionVisible && !editorReadonly"
+                "when": "kb-macro.recording && !isWindows && inlineSuggestionVisible && !editorReadonly"
             },
             {
                 "key": "ctrl+shift+\\",
@@ -6696,7 +6696,7 @@
                 "args": {
                     "command": "decreaseSearchEditorContextLines"
                 },
-                "when": "kb-macro.recording && isLinux && inSearchEditor || kb-macro.recording && isMac && inSearchEditor"
+                "when": "kb-macro.recording && !isWindows && inSearchEditor"
             },
             {
                 "key": "shift+alt+[Minus]",
@@ -6704,7 +6704,7 @@
                 "args": {
                     "command": "increaseSearchEditorContextLines"
                 },
-                "when": "kb-macro.recording && isLinux && inSearchEditor || kb-macro.recording && isMac && inSearchEditor"
+                "when": "kb-macro.recording && !isWindows && inSearchEditor"
             },
             {
                 "key": "shift+alt+meta+j",
@@ -6960,7 +6960,7 @@
                 "args": {
                     "command": "workbench.action.terminal.new"
                 },
-                "when": "kb-macro.recording && isLinux && terminalProcessSupported || kb-macro.recording && isMac && terminalProcessSupported"
+                "when": "kb-macro.recording && !isWindows && terminalProcessSupported"
             },
             {
                 "key": "ctrl+shift+0",
@@ -6976,7 +6976,7 @@
                 "args": {
                     "command": "workbench.action.terminal.toggleTerminal"
                 },
-                "when": "kb-macro.recording && isLinux && terminal.active || kb-macro.recording && isMac && terminal.active"
+                "when": "kb-macro.recording && !isWindows && terminal.active"
             },
             {
                 "key": "ctrl+meta+w",
