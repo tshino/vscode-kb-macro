@@ -121,6 +121,23 @@ function makeCommonKeybindingsDict(contextList, keyDict) {
     return commonKeyDict;
 }
 
+function makeWhenSubsetContext(contextList, bitmap) {
+    const count = bitmap.filter(enable => enable).length;
+    if (2 <= count) {
+        // negative form (A || B => !C)
+        const subset = bitmap.map((enable, j) => (
+            !enable ? '!' + contextList[j] : ''
+        )).filter(context => context !== '').join(' && ');
+        return subset;
+    } else {
+        // positive form (A || B)
+        const subset = bitmap.map((enable, j) => (
+            enable ? contextList[j] : ''
+        )).filter(context => context !== '').join(' || ');
+        return subset;
+    }
+}
+
 // Make combined keybindings of different default keybindings of windows, macos and linux.
 function combineBaseKeybingings(baseKeybindings) {
     const contextList = baseKeybindings.map(item => item.context);
@@ -152,11 +169,10 @@ function combineBaseKeybingings(baseKeybindings) {
             if (i < commonKeybindings.length) {
                 // unified keybinding
                 const keybinding = commonKeybindings[i].keybinding;
-                if (!commonKeybindings[i].positions.every(pos => 0 <= pos)) {
+                const bitmap = commonKeybindings[i].positions.map(pos => 0 <= pos);
+                if (!bitmap.every(enable => enable)) {
                     // partial common keybindings (e.g. 'isWindows || isLinux')
-                    const subset = commonKeybindings[i].positions.map((pos, j) => (
-                        0 <= pos ? contextList[j] : ''
-                    )).filter(context => context !== '').join(' || ');
+                    const subset = makeWhenSubsetContext(contextList, bitmap);
                     keybinding.when = addWhenContext(keybinding.when, subset);
                 }
                 combined.push(keybinding);

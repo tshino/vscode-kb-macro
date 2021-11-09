@@ -206,8 +206,10 @@ describe('gen_wrapper_util', () => {
                     context: 'isMac'
                 }
             ];
+            // We use negative form of '!isMac' rather than OR form 'isWindows || isLinux'
+            // for compaction of package.json.
             const expected = [
-                { key: 'ctrl+a', command: 'command1', when: 'isWindows || isLinux' }, // <= partially common
+                { key: 'ctrl+a', command: 'command1', when: '!isMac' }, // <= partially common
                 { key: 'ctrl+a', command: 'command2', when: 'isWindows' },
                 { key: 'ctrl+a', command: 'command1', when: 'isLinux && context1' },
                 { key: 'ctrl+b', command: 'command1', when: 'isMac && context1' }
@@ -238,7 +240,7 @@ describe('gen_wrapper_util', () => {
             ];
             const expected = [
                 { key: 'ctrl+a', command: 'command3', when: 'isMac' },
-                { key: 'ctrl+a', command: 'command2', when: 'isLinux || isMac' }, // <= partially common
+                { key: 'ctrl+a', command: 'command2', when: '!isWindows' }, // <= partially common
                 { key: 'ctrl+a', command: 'command1', when: 'isWindows' }
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
