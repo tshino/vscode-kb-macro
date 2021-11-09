@@ -4592,7 +4592,7 @@
                 "args": {
                     "command": "notebook.cell.joinAbove"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditorFocused"
+                "when": "kb-macro.recording && notebookEditorFocused"
             },
             {
                 "key": "alt+win+j",
@@ -4600,7 +4600,7 @@
                 "args": {
                     "command": "notebook.cell.joinBelow"
                 },
-                "when": "kb-macro.recording && isWindows && notebookEditorFocused"
+                "when": "kb-macro.recording && notebookEditorFocused"
             },
             {
                 "key": "ctrl+k ctrl+shift+oem_5",
@@ -4768,7 +4768,7 @@
                 "args": {
                     "command": "welcome.showNewFileEntries"
                 },
-                "when": "kb-macro.recording && isWindows"
+                "when": "kb-macro.recording"
             },
             {
                 "key": "ctrl+w",
@@ -6376,7 +6376,7 @@
                 "args": {
                     "command": "notebook.cell.quitEdit"
                 },
-                "when": "kb-macro.recording && isLinux && inputFocus && notebookEditorFocused && notebookCellType == 'markup'"
+                "when": "kb-macro.recording && inputFocus && notebookEditorFocused && notebookCellType == 'markup'"
             },
             {
                 "key": "meta+enter",
@@ -6384,7 +6384,7 @@
                 "args": {
                     "command": "interactive.execute"
                 },
-                "when": "kb-macro.recording && isLinux && resourceScheme == 'vscode-interactive'"
+                "when": "kb-macro.recording && resourceScheme == 'vscode-interactive'"
             },
             {
                 "key": "meta+enter",
@@ -6392,7 +6392,7 @@
                 "args": {
                     "command": "notebook.cell.execute"
                 },
-                "when": "kb-macro.recording && isLinux && notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || kb-macro.recording && isLinux && notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0"
+                "when": "kb-macro.recording && notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || kb-macro.recording && notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0"
             },
             {
                 "key": "shift+alt+[IntlBackslash]",
@@ -6712,7 +6712,7 @@
                 "args": {
                     "command": "notebook.cell.joinAbove"
                 },
-                "when": "kb-macro.recording && isLinux && notebookEditorFocused"
+                "when": "kb-macro.recording && notebookEditorFocused"
             },
             {
                 "key": "alt+meta+j",
@@ -6720,7 +6720,7 @@
                 "args": {
                     "command": "notebook.cell.joinBelow"
                 },
-                "when": "kb-macro.recording && isLinux && notebookEditorFocused"
+                "when": "kb-macro.recording && notebookEditorFocused"
             },
             {
                 "key": "ctrl+k ctrl+shift+\\",
@@ -6872,7 +6872,7 @@
                 "args": {
                     "command": "welcome.showNewFileEntries"
                 },
-                "when": "kb-macro.recording && isLinux"
+                "when": "kb-macro.recording"
             },
             {
                 "key": "ctrl+alt+[Minus]",
@@ -6984,7 +6984,7 @@
                 "args": {
                     "command": "workbench.action.toggleTabsVisibility"
                 },
-                "when": "kb-macro.recording && isLinux"
+                "when": "kb-macro.recording"
             },
             {
                 "key": "ctrl+shift+[Semicolon]",
