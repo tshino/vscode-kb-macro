@@ -30,7 +30,7 @@
 	"main": "./src/extension.js",
 	"scripts": {
 		"lint": "eslint .",
-		"pretest": "npm run lint",
+		"-pretest": "npm run lint",
 		"test": "node ./test/runTest.js",
 		"gen-wrapper": "node ./generator/gen_wrapper.js",
 		"postgen-wrapper": "npm run verify-wrapper",
