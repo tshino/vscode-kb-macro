@@ -245,6 +245,48 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
+        it('should drop reduntant "isWindows" if the keystroke contains Win key [compaction]', () => {
+            const input = [
+                {
+                    keybindings: [
+                        { key: 'ctrl+win+a', command: 'command1', when: 'context1' }
+                    ],
+                    context: 'isWindows'
+                },
+                {
+                    keybindings: [
+                        { key: 'ctrl+alt+a', command: 'command2', when: 'context2' }
+                    ],
+                    context: 'isLinux'
+                }
+            ];
+            const expected = [
+                { key: 'ctrl+win+a', command: 'command1', when: 'context1' },
+                { key: 'ctrl+alt+a', command: 'command2', when: 'isLinux && context2' }
+            ];
+            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
+        });
+        it('should drop reduntant "isLinux" if the keystroke contains Meta key [compaction]', () => {
+            const input = [
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command1', when: 'context1' }
+                    ],
+                    context: 'isWindows'
+                },
+                {
+                    keybindings: [
+                        { key: 'meta+a', command: 'command2', when: 'context2' }
+                    ],
+                    context: 'isLinux'
+                }
+            ];
+            const expected = [
+                { key: 'ctrl+a', command: 'command1', when: 'isWindows && context1' },
+                { key: 'meta+a', command: 'command2', when: 'context2' }
+            ];
+            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
+        });
         it('should drop reduntant "isMac" if the keystroke contains Command key [compaction]', () => {
             const input = [
                 {

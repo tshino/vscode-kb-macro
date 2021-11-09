@@ -20,6 +20,10 @@ function addKeybindingsContext(keybindings, context) {
         return keybindings.map(keybinding => {
             if (context === 'isMac' && /\bcmd\b/.test(keybinding.key)) {
                 // skip redundant context
+            } else if (context === 'isLinux' && /\bmeta\b/.test(keybinding.key)) {
+                // skip redundant context
+            } else if (context === 'isWindows' && /\bwin\b/.test(keybinding.key)) {
+                // skip redundant context
             } else {
                 keybinding.when = addWhenContext(keybinding.when, context);
             }
