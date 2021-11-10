@@ -11,15 +11,14 @@ describe('Recording and Playback: Edit', () => {
     const Cmd = CommandsToTest;
 
     const setSelections = async function(array) {
-        await awaitController.waitFor('selection', 1).catch(() => {});
+        await awaitController.waitFor('selection', 10).catch(() => {});
         const newSelections = TestUtil.arrayToSelections(array);
         if (!util.isEqualSelections(textEditor.selections, newSelections)) {
             const timeout = 1000;
-            const promise = awaitController.waitFor('selection', timeout).catch(
+            textEditor.selections = newSelections;
+            await awaitController.waitFor('selection', timeout).catch(
                 () => { console.log('Warning: timeout in setSelections!'); }
             );
-            textEditor.selections = newSelections;
-            await promise;
         }
     };
     const getSelections = function() {
@@ -318,6 +317,8 @@ describe('Recording and Playback: Edit', () => {
                 'vwxyz\n'
             ));
             await promise;
+            textEditor.selections = [ new vscode.Selection(1, 0, 1, 0) ];
+            await awaitController.waitFor('selection', 50).catch(() => {});
         });
         describe('clipboardCopyAction', () => {
             it('should copy one line', async () => {
