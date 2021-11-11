@@ -142,29 +142,42 @@ function makeWhenSubsetContext(contextList, bitmap) {
     }
 }
 
+function makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, contextIndex) {
+    const combinedKeybindingsList = [];
+    let index = 0;
+    for (let i = 0; i <= commonKeybindings.length; i++) {
+        const pos = (
+            i < commonKeybindings.length
+                ? commonKeybindings[i].positions[contextIndex]
+                : (dict.get(contextList[contextIndex]) || []).length
+        );
+        if (pos < 0) {
+            combinedKeybindingsList.push([]);
+        } else {
+            const context = contextList[contextIndex];
+            const keybindings = dict.get(context) || [];
+            const sliced = keybindings.slice(index, pos);
+            const converted = addKeybindingsContext(sliced, context);
+            combinedKeybindingsList.push(converted);
+            index = pos + 1;
+        }
+    }
+    return combinedKeybindingsList;
+}
+
 function makeCombinedKeybindingsForKey(contextList, keyDict, commonKeyDict, key) {
     let combined = [];
     const commonKeybindings = commonKeyDict.get(key) || [];
     const dict = keyDict.get(key);
 
     // Reorder and unify keybindings.
-    const indices = Array(contextList.length).fill(0);
+    const combinedKeybindingsList = [];
+    for (let j = 0; j < contextList.length; j++) {
+        combinedKeybindingsList[j] = makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, j);
+    }
     for (let i = 0; i <= commonKeybindings.length; i++) {
         for (let j = 0; j < contextList.length; j++) {
-            const pos = (
-                i < commonKeybindings.length
-                    ? commonKeybindings[i].positions[j]
-                    : (dict.get(contextList[j]) || []).length
-            );
-            if (pos < 0) {
-                continue;
-            }
-            const context = contextList[j];
-            const keybindings = dict.get(context) || [];
-            const sliced = keybindings.slice(indices[j], pos);
-            const converted = addKeybindingsContext(sliced, context);
-            combined = combined.concat(converted);
-            indices[j] = pos + 1;
+            combined = combined.concat(combinedKeybindingsList[j][i]);
         }
         if (i < commonKeybindings.length) {
             // unified keybinding
