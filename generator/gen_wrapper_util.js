@@ -143,26 +143,26 @@ function makeWhenSubsetContext(contextList, bitmap) {
 }
 
 function makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, contextIndex) {
-    const combinedKeybindingsList = [];
+    const keybindingsList = [];
     let index = 0;
     for (let i = 0; i <= commonKeybindings.length; i++) {
+        const context = contextList[contextIndex];
         const pos = (
             i < commonKeybindings.length
                 ? commonKeybindings[i].positions[contextIndex]
-                : (dict.get(contextList[contextIndex]) || []).length
+                : (dict.get(context) || []).length
         );
         if (pos < 0) {
-            combinedKeybindingsList.push([]);
+            keybindingsList.push([]);
         } else {
-            const context = contextList[contextIndex];
             const keybindings = dict.get(context) || [];
             const sliced = keybindings.slice(index, pos);
             const converted = addKeybindingsContext(sliced, context);
-            combinedKeybindingsList.push(converted);
+            keybindingsList.push(converted);
             index = pos + 1;
         }
     }
-    return combinedKeybindingsList;
+    return keybindingsList;
 }
 
 function makeCombinedKeybindingsForKey(contextList, keyDict, commonKeyDict, key) {
@@ -171,13 +171,13 @@ function makeCombinedKeybindingsForKey(contextList, keyDict, commonKeyDict, key)
     const dict = keyDict.get(key);
 
     // Reorder and unify keybindings.
-    const combinedKeybindingsList = [];
+    const nonUnified = [];
     for (let j = 0; j < contextList.length; j++) {
-        combinedKeybindingsList[j] = makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, j);
+        nonUnified[j] = makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, j);
     }
     for (let i = 0; i <= commonKeybindings.length; i++) {
         for (let j = 0; j < contextList.length; j++) {
-            combined = combined.concat(combinedKeybindingsList[j][i]);
+            combined = combined.concat(nonUnified[j][i]);
         }
         if (i < commonKeybindings.length) {
             // unified keybinding
