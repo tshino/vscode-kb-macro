@@ -142,6 +142,21 @@ function makeWhenSubsetContext(contextList, bitmap) {
     }
 }
 
+function makeUnifiedKeybindingsList(contextList, commonKeybindings) {
+    const keybindingsList = [];
+    for (let i = 0; i < commonKeybindings.length; i++) {
+        const keybinding = commonKeybindings[i].keybinding;
+        const bitmap = commonKeybindings[i].positions.map(pos => 0 <= pos);
+        if (!bitmap.every(enable => enable)) {
+            // partial common keybindings (e.g. 'isWindows || isLinux')
+            const subset = makeWhenSubsetContext(contextList, bitmap);
+            keybinding.when = addWhenContext(keybinding.when, subset);
+        }
+        keybindingsList.push([ keybinding ]);
+    }
+    return keybindingsList;
+}
+
 function makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, contextIndex) {
     const keybindingsList = [];
     let index = 0;
@@ -165,32 +180,21 @@ function makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, con
     return keybindingsList;
 }
 
-function makeCombinedKeybindingsForKey(contextList, keyDict, commonKeyDict, key) {
-    let combined = [];
+function makeCombinedKeybindingsForKey(contextList, commonKeyDict, dict, key) {
     const commonKeybindings = commonKeyDict.get(key) || [];
-    const dict = keyDict.get(key);
+    const unified = makeUnifiedKeybindingsList(contextList, commonKeybindings);
+    const nonUnified = contextList.map((context_, j) => (
+        makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, j)
+    ));
 
     // Reorder and unify keybindings.
-    const nonUnified = [];
-    for (let j = 0; j < contextList.length; j++) {
-        nonUnified[j] = makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, j);
+    let combined = [];
+    for (let i = 0; i < unified.length; i++) {
+        combined = combined.concat(nonUnified.flatMap(x => x[i]));
+        combined = combined.concat(unified[i]);
     }
-    for (let i = 0; i <= commonKeybindings.length; i++) {
-        for (let j = 0; j < contextList.length; j++) {
-            combined = combined.concat(nonUnified[j][i]);
-        }
-        if (i < commonKeybindings.length) {
-            // unified keybinding
-            const keybinding = commonKeybindings[i].keybinding;
-            const bitmap = commonKeybindings[i].positions.map(pos => 0 <= pos);
-            if (!bitmap.every(enable => enable)) {
-                // partial common keybindings (e.g. 'isWindows || isLinux')
-                const subset = makeWhenSubsetContext(contextList, bitmap);
-                keybinding.when = addWhenContext(keybinding.when, subset);
-            }
-            combined.push(keybinding);
-        }
-    }
+    combined = combined.concat(nonUnified.flatMap(x => x[unified.length]));
+
     return combined;
 }
 
@@ -199,9 +203,10 @@ function combineBaseKeybingings(baseKeybindings) {
     const contextList = baseKeybindings.map(item => item.context);
     const keyDict = makeKeyDict(baseKeybindings);
     const commonKeyDict = makeCommonKeybindingsDict(contextList, keyDict);
+
     let keybindings = [];
-    for (const key of keyDict.keys()) {
-        const combined = makeCombinedKeybindingsForKey(contextList, keyDict, commonKeyDict, key);
+    for (const [key, dict] of keyDict) {
+        const combined = makeCombinedKeybindingsForKey(contextList, commonKeyDict, dict, key);
         keybindings = keybindings.concat(combined);
     }
     return keybindings;
