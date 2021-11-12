@@ -143,18 +143,16 @@ function makeWhenSubsetContext(contextList, bitmap) {
 }
 
 function makeUnifiedKeybindingsList(contextList, commonKeybindings) {
-    const keybindingsList = [];
-    for (let i = 0; i < commonKeybindings.length; i++) {
-        const keybinding = commonKeybindings[i].keybinding;
-        const bitmap = commonKeybindings[i].positions.map(pos => 0 <= pos);
+    return commonKeybindings.map(x => {
+        const keybinding = x.keybinding;
+        const bitmap = x.positions.map(pos => 0 <= pos);
         if (!bitmap.every(enable => enable)) {
             // partial common keybindings (e.g. 'isWindows || isLinux')
             const subset = makeWhenSubsetContext(contextList, bitmap);
             keybinding.when = addWhenContext(keybinding.when, subset);
         }
-        keybindingsList.push([ keybinding ]);
-    }
-    return keybindingsList;
+        return keybinding;
+    });
 }
 
 function makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, contextIndex) {
@@ -180,8 +178,7 @@ function makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, con
     return keybindingsList;
 }
 
-function makeCombinedKeybindingsForKey(contextList, commonKeyDict, dict, key) {
-    const commonKeybindings = commonKeyDict.get(key) || [];
+function makeCombinedKeybindingsForKey(contextList, dict, commonKeybindings) {
     const unified = makeUnifiedKeybindingsList(contextList, commonKeybindings);
     const nonUnified = contextList.map((context_, j) => (
         makeNonUnifiedKeybindingsList(contextList, commonKeybindings, dict, j)
@@ -191,7 +188,7 @@ function makeCombinedKeybindingsForKey(contextList, commonKeyDict, dict, key) {
     let combined = [];
     for (let i = 0; i < unified.length; i++) {
         combined = combined.concat(nonUnified.flatMap(x => x[i]));
-        combined = combined.concat(unified[i]);
+        combined.push(unified[i]);
     }
     combined = combined.concat(nonUnified.flatMap(x => x[unified.length]));
 
@@ -206,7 +203,8 @@ function combineBaseKeybingings(baseKeybindings) {
 
     let keybindings = [];
     for (const [key, dict] of keyDict) {
-        const combined = makeCombinedKeybindingsForKey(contextList, commonKeyDict, dict, key);
+        const commonKeybindings = commonKeyDict.get(key) || [];
+        const combined = makeCombinedKeybindingsForKey(contextList, dict, commonKeybindings);
         keybindings = keybindings.concat(combined);
     }
     return keybindings;
