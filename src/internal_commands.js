@@ -57,8 +57,40 @@ const internalCommands = (function() {
         }
     };
 
+    const translateHorizontally = function(document, position, delta) {
+        if (delta < 0) {
+            return new vscode.Position(
+                position.line,
+                Math.max(0, position.character + delta)
+            );
+        } else {
+            const lineLength = document.lineAt(position.line).text.length;
+            return new vscode.Position(
+                position.line,
+                Math.min(lineLength, position.character + delta)
+            );
+        }
+    };
+
+    const performCursorMotion = async function(args) {
+        const textEditor = vscode.window.activeTextEditor;
+        if (!textEditor) {
+            return;
+        }
+
+        const character = args.characterDelta || 0;
+        const newSelections = Array.from(textEditor.selections).map(sel => (
+            new vscode.Selection(
+                translateHorizontally(textEditor.document, sel.anchor, character),
+                translateHorizontally(textEditor.document, sel.active, character)
+            )
+        ));
+        textEditor.selections = newSelections;
+    };
+
     return {
-        performType
+        performType,
+        performCursorMotion
     };
 })();
 

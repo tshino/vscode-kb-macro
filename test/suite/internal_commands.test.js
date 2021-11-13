@@ -147,4 +147,44 @@ describe('internalCommands', () => {
         });
         // TODO: add more tests with 'deleteLeft' option
     });
+
+    describe('performCursorMotion (horizontal)', () => {
+        before(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n'.repeat(10) +
+                'fghij klmno\n'.repeat(10) +
+                'pqrstu vwxyz\n'.repeat(10)
+            ));
+        });
+        it('should move the cursor to left horizontally', async () => {
+            setSelections([[3, 3]]);
+            await internalCommands.performCursorMotion({ characterDelta: -2 });
+            assert.deepStrictEqual(getSelections(), [[3, 1]]);
+        });
+        it('should move cursors to left horizontally', async () => {
+            setSelections([[3, 3], [4, 4]]);
+            await internalCommands.performCursorMotion({ characterDelta: -2 });
+            assert.deepStrictEqual(getSelections(), [[3, 1], [4, 2]]);
+        });
+        it('should move the cursor to right horizontally', async () => {
+            setSelections([[3, 2]]);
+            await internalCommands.performCursorMotion({ characterDelta: 2 });
+            assert.deepStrictEqual(getSelections(), [[3, 4]]);
+        });
+        it('should move cursors to right horizontally', async () => {
+            setSelections([[3, 2], [4, 3]]);
+            await internalCommands.performCursorMotion({ characterDelta: 2 });
+            assert.deepStrictEqual(getSelections(), [[3, 4], [4, 5]]);
+        });
+        it('should stop at beginning of a line', async () => {
+            setSelections([[3, 2]]);
+            await internalCommands.performCursorMotion({ characterDelta: -4 });
+            assert.deepStrictEqual(getSelections(), [[3, 0]]);
+        });
+        it('should stop at end of a line', async () => {
+            setSelections([[3, 2]]);
+            await internalCommands.performCursorMotion({ characterDelta: 4 });
+            assert.deepStrictEqual(getSelections(), [[3, 5]]);
+        });
+    });
 });

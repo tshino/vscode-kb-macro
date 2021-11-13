@@ -10,8 +10,8 @@ describe('Recording and Playback: Typing', () => {
     const Cmd = CommandsToTest;
     const Type = text => ({ command: 'internal:performType', args: { text } });
     const DefaultType = text => ({ command: 'default:type', args: { text } });
-    const MoveLeft = delta => ({ command: 'cursorMove', args: { to: 'left', by: 'character', value: delta } });
-    const MoveRight = delta => ({ command: 'cursorMove', args: { to: 'right', by: 'character', value: delta } });
+    const MoveLeft = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: -delta } });
+    const MoveRight = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: delta } });
 
     const setSelections = function(array) {
         textEditor.selections = TestUtil.arrayToSelections(array);

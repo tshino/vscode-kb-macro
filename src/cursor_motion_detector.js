@@ -20,9 +20,7 @@ const CursorMotionDetector = function() {
             onDetectCursorMotionCallback(
                 CursorMotionType.Direct,
                 {
-                    to: characterDelta < 0 ? 'left' : 'right',
-                    by: 'character',
-                    value: Math.abs(characterDelta)
+                    characterDelta: characterDelta
                 }
             );
         }
