@@ -11,7 +11,7 @@ describe('TypingDetector', () => {
     const setupDetectedTypingLog = function() {
         const logs = [];
         typingDetector.onDetectTyping(function(type, args) {
-            logs.push(args.text);
+            logs.push([ type, args.text ]);
         });
         return logs;
     };
@@ -81,7 +81,7 @@ describe('TypingDetector', () => {
         it('should process events, detect typing and invoke the callback function', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
-            ], precond: [[3, 0]], expectedLogs: ['a'], expectedPrediction: [[3, 1]] });
+            ], precond: [[3, 0]], expectedLogs: [[0, 'a']], expectedPrediction: [[3, 1]] });
         });
         it('should not perform detection without start() called', async () => {
             const logs = setupDetectedTypingLog();
@@ -134,26 +134,26 @@ describe('TypingDetector', () => {
         it('should detect typing with multiple characters', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'abc')
-            ], precond: [[3, 0]], expectedLogs: ['abc'], expectedPrediction: [[3, 3]] });
+            ], precond: [[3, 0]], expectedLogs: [[0, 'abc']], expectedPrediction: [[3, 3]] });
         });
         it('should detect typing with multi-cursor (uniform text insertion)', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
                 makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
-            ], precond: [[3, 0], [4, 0]], expectedLogs: ['a'], expectedPrediction: [[3, 1], [4, 1]] });
+            ], precond: [[3, 0], [4, 0]], expectedLogs: [[0, 'a']], expectedPrediction: [[3, 1], [4, 1]] });
         });
         it('should detect typing with multi-cursor that extends backward', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
                 makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
-            ], precond: [[4, 0], [3, 0]], expectedLogs: ['a'], expectedPrediction: [[3, 1], [4, 1]] });
+            ], precond: [[4, 0], [3, 0]], expectedLogs: [[0, 'a']], expectedPrediction: [[3, 1], [4, 1]] });
             // Note, the prediction is always expected to be sorted.
         });
         it('should detect typing with multi-cursor even if the document changes are reported in reverse order', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(4, 0, 4, 0), 'a'),
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
-            ], precond: [[3, 0], [4, 0]], expectedLogs: ['a'], expectedPrediction: [[3, 1], [4, 1]] });
+            ], precond: [[3, 0], [4, 0]], expectedLogs: [[0, 'a']], expectedPrediction: [[3, 1], [4, 1]] });
         });
         it('should ignore an event of multiple insertions with non-uniform texts', async () => {
             testDetection({ changes: [
@@ -164,79 +164,107 @@ describe('TypingDetector', () => {
         it('should detect typing with a selection', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 12, 3), 'x')
-            ], precond: [[12, 1, 12, 3]], expectedLogs: ['x'], expectedPrediction: [[12, 2]] });
+            ], precond: [[12, 1, 12, 3]], expectedLogs: [[0, 'x']], expectedPrediction: [[12, 2]] });
         });
         it('should detect typing with a selection that is reversed', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 12, 3), 'x')
-            ], precond: [[12, 3, 12, 1]], expectedLogs: ['x'], expectedPrediction: [[12, 2]] });
+            ], precond: [[12, 3, 12, 1]], expectedLogs: [[0, 'x']], expectedPrediction: [[12, 2]] });
         });
         it('should detect typing with a selection that contains a line-break', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 2, 13, 1), 'x')
-            ], precond: [[12, 2, 13, 1]], expectedLogs: ['x'], expectedPrediction: [[12, 3]] });
+            ], precond: [[12, 2, 13, 1]], expectedLogs: [[0, 'x']], expectedPrediction: [[12, 3]] });
         });
         it('should detect typing with multiple selections', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 12, 3), 'x'),
                 makeContentChange(new vscode.Range(13, 1, 13, 3), 'x')
             ], precond: [[12, 1, 12, 3], [13, 1, 13, 3]],
-            expectedLogs: ['x'], expectedPrediction: [[12, 2], [13, 2]] });
+            expectedLogs: [[0, 'x']], expectedPrediction: [[12, 2], [13, 2]] });
         });
         it('should detect typing with multiple selections that are reversed', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 12, 3), 'x'),
                 makeContentChange(new vscode.Range(13, 1, 13, 3), 'x')
             ], precond: [[12, 3, 12, 1], [13, 3, 13, 1]],
-            expectedLogs: ['x'], expectedPrediction: [[12, 2], [13, 2]] });
+            expectedLogs: [[0, 'x']], expectedPrediction: [[12, 2], [13, 2]] });
         });
         it('should detect typing with multiple selections that extends backward', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 12, 3), 'x'),
                 makeContentChange(new vscode.Range(13, 1, 13, 3), 'x')
             ], precond: [[13, 3, 13, 1], [12, 3, 12, 1]],
-            expectedLogs: ['x'], expectedPrediction: [[12, 2], [13, 2]] });
+            expectedLogs: [[0, 'x']], expectedPrediction: [[12, 2], [13, 2]] });
         });
         it('should detect typing with multiple selections that contain line-breaks', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 13, 3), 'x'),
                 makeContentChange(new vscode.Range(14, 1, 15, 3), 'x')
             ], precond: [[12, 1, 13, 3], [14, 1, 15, 3]],
-            expectedLogs: ['x'], expectedPrediction: [[12, 2], [13, 2]] });
+            expectedLogs: [[0, 'x']], expectedPrediction: [[12, 2], [13, 2]] });
         });
         it('should detect typing of text contains line-breaks with multiple selections', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 12, 3), 'x\ny'),
                 makeContentChange(new vscode.Range(13, 1, 13, 3), 'x\ny')
             ], precond: [[12, 1, 12, 3], [13, 1, 13, 3]],
-            expectedLogs: ['x\ny'], expectedPrediction: [[13, 1], [15, 1]] });
+            expectedLogs: [[0, 'x\ny']], expectedPrediction: [[13, 1], [15, 1]] });
         });
         it('should detect typing of text contains line-breaks with multiple selections that also contain line-breaks', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(12, 1, 13, 3), 'x\ny'),
                 makeContentChange(new vscode.Range(14, 1, 15, 3), 'x\ny')
             ], precond: [[12, 1, 13, 3], [14, 1, 15, 3]],
-            expectedLogs: ['x\ny'], expectedPrediction: [[13, 1], [15, 1]] });
+            expectedLogs: [[0, 'x\ny']], expectedPrediction: [[13, 1], [15, 1]] });
         });
     });
     describe('code completion detection', async () => {
         it('should process events, detect code completion and invoke the callback function (1)', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(10, 0, 10, 4), 'ABCDE')
-            ], precond: [[10, 4]], expectedLogs: ['ABCDE'], expectedPrediction: [[10, 5]] });
+            ], precond: [[10, 4]], expectedLogs: [[0, 'ABCDE']], expectedPrediction: [[10, 5]] });
         });
         it('should process events, detect code completion and invoke the callback function (2)', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(20, 4, 20, 8), 'EFGHI')
-            ], precond: [[20, 8]], expectedLogs: ['EFGHI'], expectedPrediction: [[20, 9]] });
+            ], precond: [[20, 8]], expectedLogs: [[0, 'EFGHI']], expectedPrediction: [[20, 9]] });
         });
         it('should not make prediction if no change is expected', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(10, 0, 10, 4), 'Abcd')
-            ], precond: [[10, 4]], expectedLogs: ['Abcd'], expectedPrediction: null });
+            ], precond: [[10, 4]], expectedLogs: [[0, 'Abcd']], expectedPrediction: null });
         });
         // TODO: add more tests for code completion detection
     });
-    // TODO: add more tests for inputs with bracket completion
+    describe('bracket completion detection', async () => {
+        it('should process events, detect bracket completion and invoke the callback function (1)', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(3, 0, 3, 0), '()')
+            ], precond: [[3, 0]], expectedLogs: [[0, '()']], expectedPrediction: [[3, 2]] });
+        });
+        it('should process events, detect bracket completion and invoke the callback function (2)', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(4, 0, 4, 0), '{}'),
+                makeContentChange(new vscode.Range(5, 0, 5, 0), '{}')
+            ], precond: [[4, 0], [5, 0]], expectedLogs: [[0, '{}']], expectedPrediction: [[4, 2], [5, 2]] });
+        });
+        it('should process events, detect bracket completion and invoke the callback function (3)', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(12, 0, 12, 0), '['),
+                makeContentChange(new vscode.Range(12, 4, 12, 4), ']')
+            ], precond: [[12, 0, 12, 4]],
+            expectedLogs: [[1, '[']], expectedPrediction: [[12, 1, 12, 5]] });
+        });
+        it('should process events, detect bracket completion and invoke the callback function (4)', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(12, 0, 12, 0), '['),
+                makeContentChange(new vscode.Range(12, 4, 12, 4), ']'),
+                makeContentChange(new vscode.Range(22, 4, 22, 4), '['),
+                makeContentChange(new vscode.Range(22, 8, 22, 8), ']')
+            ], precond: [[12, 0, 12, 4], [22, 4, 22, 8]],
+            expectedLogs: [[1, '[']], expectedPrediction: [[12, 1, 12, 5], [22, 5, 22, 9]] });
+        });
+    });
     // TODO: add more tests for inputs with IME
 });

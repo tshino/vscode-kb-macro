@@ -60,6 +60,17 @@ const TypingDetector = function() {
         }
         return sels;
     };
+    const makePredictionOnBracketCompletion = function(changes) {
+        const sels = [];
+        const offset = changes[0].text.length;
+        for (let i = 0; i + 1 < changes.length; i += 2) {
+            const start = changes[i].range.start.translate(0, offset);
+            const end = changes[i + 1].range.start.translate(0, offset);
+            sels.push(new vscode.Selection(start, end));
+        }
+        return sels;
+    };
+
     const sortContentChanges = function(changes) {
         changes = Array.from(changes);
         changes.sort((a, b) => a.rangeOffset - b.rangeOffset);
@@ -150,6 +161,8 @@ const TypingDetector = function() {
             //  2. type '('
             //  3. then a pair of bracket is inserted around 'hello',
             //     resulting '(hello)'.
+            const prediction = makePredictionOnBracketCompletion(changes);
+            cursorMotionDetector.setPrediction(textEditor, prediction);
             notifyDetectedTyping(TypingType.Default, { text: changes[0].text });
             return;
         }
