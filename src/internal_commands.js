@@ -57,18 +57,28 @@ const internalCommands = (function() {
         }
     };
 
-    const translateHorizontally = function(document, position, delta) {
-        if (delta < 0) {
-            return new vscode.Position(
-                position.line,
-                Math.max(0, position.character + delta)
-            );
-        } else {
-            const lineLength = document.lineAt(position.line).text.length;
-            return new vscode.Position(
-                position.line,
-                Math.min(lineLength, position.character + delta)
-            );
+    const translate = function(document, position, lineDelta, characterDelta) {
+        if (lineDelta < 0 && characterDelta <= 0) {
+            const line = Math.max(0, position.line + lineDelta);
+            const lineLength = document.lineAt(line).text.length;
+            return new vscode.Position(line, Math.max(0, lineLength + characterDelta));
+        } else if (0 < lineDelta && 0 <= characterDelta) {
+            const line = Math.min(position.line + lineDelta, document.lineCount);
+            const lineLength = document.lineAt(line).text.length;
+            return new vscode.Position(line, Math.min(characterDelta, lineLength));
+        } else if (lineDelta === 0) {
+            if (characterDelta < 0) {
+                return new vscode.Position(
+                    position.line,
+                    Math.max(0, position.character + characterDelta)
+                );
+            } else {
+                const lineLength = document.lineAt(position.line).text.length;
+                return new vscode.Position(
+                    position.line,
+                    Math.min(lineLength, position.character + characterDelta)
+                );
+            }
         }
     };
 
@@ -78,11 +88,13 @@ const internalCommands = (function() {
             return;
         }
 
-        const character = args.characterDelta || 0;
+        const document = textEditor.document;
+        const characterDelta = args.characterDelta || 0;
+        const lineDelta = args.lineDelta || 0;
         const newSelections = Array.from(textEditor.selections).map(sel => (
             new vscode.Selection(
-                translateHorizontally(textEditor.document, sel.anchor, character),
-                translateHorizontally(textEditor.document, sel.active, character)
+                translate(document, sel.anchor, lineDelta, characterDelta),
+                translate(document, sel.active, lineDelta, characterDelta)
             )
         ));
         textEditor.selections = newSelections;

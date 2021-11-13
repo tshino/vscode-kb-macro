@@ -148,7 +148,7 @@ describe('internalCommands', () => {
         // TODO: add more tests with 'deleteLeft' option
     });
 
-    describe('performCursorMotion (horizontal)', () => {
+    describe('performCursorMotion', () => {
         before(async () => {
             await TestUtil.resetDocument(textEditor, (
                 'abcde\n'.repeat(10) +
@@ -185,6 +185,27 @@ describe('internalCommands', () => {
             setSelections([[3, 2]]);
             await internalCommands.performCursorMotion({ characterDelta: 4 });
             assert.deepStrictEqual(getSelections(), [[3, 5]]);
+        });
+
+        it('should move the cursor up and locate relative to the end of the line', async () => {
+            setSelections([[11, 3]]);
+            await internalCommands.performCursorMotion({ lineDelta: -3, characterDelta: -3 });
+            assert.deepStrictEqual(getSelections(), [[8, 2]]);
+        });
+        it('should move cursors up and locate relative to the end of the line', async () => {
+            setSelections([[11, 3], [12, 4]]);
+            await internalCommands.performCursorMotion({ lineDelta: -3, characterDelta: -3 });
+            assert.deepStrictEqual(getSelections(), [[8, 2], [9, 2]]);
+        });
+        it('should move the cursor down and locate relative to the beginning of the line', async () => {
+            setSelections([[8, 3]]);
+            await internalCommands.performCursorMotion({ lineDelta: 4, characterDelta: 4 });
+            assert.deepStrictEqual(getSelections(), [[12, 4]]);
+        });
+        it('should move cursors down and locate relative to the beginning of the line', async () => {
+            setSelections([[8, 3], [9, 4]]);
+            await internalCommands.performCursorMotion({ lineDelta: 4, characterDelta: 4 });
+            assert.deepStrictEqual(getSelections(), [[12, 4], [13, 4]]);
         });
     });
 });
