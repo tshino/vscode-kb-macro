@@ -170,6 +170,7 @@ const TypingDetector = function() {
 
     return {
         TypingType,
+        CursorMotionType: cursorMotionDetector.CursorMotionType,
         onDetectTyping,
         onDetectCursorMotion: cursorMotionDetector.onDetectCursorMotion,
         start,

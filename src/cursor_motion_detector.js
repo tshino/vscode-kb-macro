@@ -2,6 +2,9 @@
 const util = require('./util.js');
 
 const CursorMotionDetector = function() {
+    const CursorMotionType = {
+        Direct: 0
+    };
     let onDetectCursorMotionCallback = null;
     let enabled = false;
     let lastSelections = null;
@@ -14,14 +17,14 @@ const CursorMotionDetector = function() {
     };
     const notifyDetectedMotion = function(characterDelta) {
         if (onDetectCursorMotionCallback) {
-            onDetectCursorMotionCallback({
-                command: 'cursorMove',
-                args: {
+            onDetectCursorMotionCallback(
+                CursorMotionType.Direct,
+                {
                     to: characterDelta < 0 ? 'left' : 'right',
                     by: 'character',
                     value: Math.abs(characterDelta)
                 }
-            });
+            );
         }
     };
 
@@ -49,20 +52,31 @@ const CursorMotionDetector = function() {
             return null;
         }
     };
-    const detectImplicitMotion = function(expected, actual) {
-        const delta = actual[0].active.character - expected[0].active.character;
-        if (delta !== 0) {
+    const calculateDeltaPosition = function(target, base) {
+        if (target.line === base.line &&
+            target.character !== base.character) {
+            return { delta: target.character - base.character };
+        }
+    };
+    const equalsDeltaPosition = function(a, b) {
+        return a && b && a.delta === b.delta;
+    };
+    const detectImplicitMotion = function(actual, expected) {
+        const motion = calculateDeltaPosition(actual[0].active, expected[0].active);
+        if (motion) {
             const isUniformCursorMotion = (
                 actual.length === expected.length &&
                 actual.every((sel,i) => (
                     sel.isEmpty &&
                     expected[i].isEmpty &&
-                    sel.active.line === expected[i].active.line &&
-                    sel.active.character - expected[i].active.character === delta
+                    equalsDeltaPosition(
+                        calculateDeltaPosition(sel.active, expected[i].active),
+                        motion
+                    )
                 ))
             );
             if (isUniformCursorMotion) {
-                return { delta };
+                return motion;
             }
         }
     };
@@ -70,7 +84,7 @@ const CursorMotionDetector = function() {
         // console.log('cursor', lastSelections[0].active.character, event.selections[0].active.character);
         if (textEditorForPredictions !== event.textEditor || 0 === predictions.length) {
             const current = Array.from(event.selections);
-            const motion = detectImplicitMotion(lastSelections, current);
+            const motion = detectImplicitMotion(current, lastSelections);
             if (motion) {
                 // Here, the occurence of this cursor change event is unexpected.
                 // We consider it an implicit cursor motion.
@@ -83,7 +97,7 @@ const CursorMotionDetector = function() {
         } else {
             const predicted = predictions[0];
             const current = util.sortSelections(event.selections);
-            const motion = detectImplicitMotion(predicted, current);
+            const motion = detectImplicitMotion(current, predicted);
             if (motion) {
                 // Here, the current cursor position is different from the one predicted.
                 // We consider it an implicit cursor motion.
@@ -113,6 +127,7 @@ const CursorMotionDetector = function() {
     };
 
     return {
+        CursorMotionType,
         onDetectCursorMotion,
         start,
         stop,

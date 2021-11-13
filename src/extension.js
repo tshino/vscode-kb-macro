@@ -107,7 +107,14 @@ function activate(context) {
     );
     addEventListener(
         typingDetector.onDetectCursorMotion,
-        keyboardMacro.push
+        function(type, args) {
+            if (type === typingDetector.CursorMotionType.Direct) {
+                keyboardMacro.push({
+                    command: 'cursorMove',
+                    args: args
+                });
+            }
+        }
     );
 }
 

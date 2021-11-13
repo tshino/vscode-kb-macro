@@ -4,8 +4,8 @@ const vscode = require('vscode');
 const { CursorMotionDetector } = require('../../src/cursor_motion_detector.js');
 
 describe('CursorMotionDetector', () => {
-    const MoveLeft = delta => ({ command: 'cursorMove', args: { to: 'left', by: 'character', value: delta } });
-    const MoveRight = delta => ({ command: 'cursorMove', args: { to: 'right', by: 'character', value: delta } });
+    const MoveLeft = delta => [ 0, { to: 'left', by: 'character', value: delta } ];
+    const MoveRight = delta => [ 0, { to: 'right', by: 'character', value: delta } ];
 
     describe('initial state', () => {
         it('should not be enabled to do detection', async () => {
@@ -42,8 +42,8 @@ describe('CursorMotionDetector', () => {
     const testDetection = function({ init, inputs, expectedLogs }) {
         const logs = [];
         const cursorMotionDetector = CursorMotionDetector();
-        cursorMotionDetector.onDetectCursorMotion(info => {
-            logs.push(info);
+        cursorMotionDetector.onDetectCursorMotion((type, args) => {
+            logs.push([ type, args ]);
         });
         const textEditor = {
             selections: init
