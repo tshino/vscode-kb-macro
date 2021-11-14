@@ -45,7 +45,7 @@ const CursorMotionDetector = function() {
             return null;
         }
     };
-    const calculateMotion = function(target, base) {
+    const calculateMotion = function(document, target, base) {
         const basePos = base.start;
         if (target.start.line === basePos.line &&
             target.start.line === target.end.line &&
@@ -57,23 +57,45 @@ const CursorMotionDetector = function() {
             } else {
                 return { characterDelta, selectionLength };
             }
+        } else if (target.start.line !== basePos.line &&
+            target.start.line === target.end.line) {
+            const lineDelta = target.start.line - basePos.line;
+            if (lineDelta < 0) {
+                const lineLength = document.lineAt(target.start.line).text.length;
+                const characterDelta = target.start.character - lineLength;
+                const selectionLength = target.end.character - target.start.character;
+                if (selectionLength === 0) {
+                    return { lineDelta, characterDelta };
+                } else {
+                    return { lineDelta, characterDelta, selectionLength };
+                }
+            } else {
+                const characterDelta = target.start.character;
+                const selectionLength = target.end.character - target.start.character;
+                if (selectionLength === 0) {
+                    return { lineDelta, characterDelta };
+                } else {
+                    return { lineDelta, characterDelta, selectionLength };
+                }
+            }
         }
     };
     const equalsMotion = function(a, b) {
         return (
             a && b &&
+            a.lineDelta === b.lineDelta &&
             a.characterDelta === b.characterDelta &&
             a.selectionLength === b.selectionLength
         );
     };
-    const detectImplicitMotion = function(actual, expected) {
-        const motion = calculateMotion(actual[0], expected[0]);
+    const detectImplicitMotion = function(document, actual, expected) {
+        const motion = calculateMotion(document, actual[0], expected[0]);
         if (motion) {
             const isUniformCursorMotion = (
                 actual.length === expected.length &&
                 actual.every((sel,i) => (
                     equalsMotion(
-                        calculateMotion(sel, expected[i]),
+                        calculateMotion(document, sel, expected[i]),
                         motion
                     )
                 ))
@@ -85,9 +107,10 @@ const CursorMotionDetector = function() {
     };
     const detectAndRecordImplicitMotion = function(event) {
         // console.log('cursor', lastSelections[0].active.character, event.selections[0].active.character);
+        const document = event.textEditor.document;
         if (textEditorForPredictions !== event.textEditor || 0 === predictions.length) {
             const current = Array.from(event.selections);
-            const motion = detectImplicitMotion(current, lastSelections);
+            const motion = detectImplicitMotion(document, current, lastSelections);
             if (motion) {
                 // Here, the occurence of this cursor change event is unexpected.
                 // We consider it an implicit cursor motion.
@@ -100,7 +123,7 @@ const CursorMotionDetector = function() {
         } else {
             const predicted = predictions[0];
             const current = util.sortSelections(event.selections);
-            const motion = detectImplicitMotion(current, predicted);
+            const motion = detectImplicitMotion(document, current, predicted);
             if (motion) {
                 // Here, the current cursor position is different from the one predicted.
                 // We consider it an implicit cursor motion.

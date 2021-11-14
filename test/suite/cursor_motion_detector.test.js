@@ -8,6 +8,10 @@ describe('CursorMotionDetector', () => {
     const MoveRight = delta => [ 0, { characterDelta: delta } ];
     const MoveLeftSelect = (delta, select) => [ 0, { characterDelta: -delta, selectionLength: select } ];
     const MoveRightSelect = (delta, select) => [ 0, { characterDelta: delta, selectionLength: select } ];
+    const MoveUp = (up, delta) => [ 0, { lineDelta: -up, characterDelta: delta } ];
+    const MoveDown = (down, delta) => [ 0, { lineDelta: down, characterDelta: delta } ];
+    const MoveUpSelect = (up, delta, select) => [ 0, { lineDelta: -up, characterDelta: delta, selectionLength: select } ];
+    const MoveDownSelect = (down, delta, select) => [ 0, { lineDelta: down, characterDelta: delta, selectionLength: select } ];
 
     describe('initial state', () => {
         it('should not be enabled to do detection', async () => {
@@ -41,7 +45,7 @@ describe('CursorMotionDetector', () => {
             assert.ok(cursorMotionDetector.getPrediction(textEditor1));
         });
     });
-    const testDetection = function({ init, inputs, expectedLogs }) {
+    const testDetection = function({ init, lineLength = null, inputs, expectedLogs }) {
         const logs = [];
         const cursorMotionDetector = CursorMotionDetector();
         cursorMotionDetector.onDetectCursorMotion((type, args) => {
@@ -50,6 +54,15 @@ describe('CursorMotionDetector', () => {
         const textEditor = {
             selections: init
         };
+        if (lineLength) {
+            const lineLengthMap = new Map(lineLength);
+            textEditor.document = {
+                lineAt: function(line) {
+                    const length = lineLengthMap.get(line) || 0;
+                    return { text: 'x'.repeat(length) };
+                }
+            };
+        }
         cursorMotionDetector.start(textEditor);
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i];
@@ -88,14 +101,26 @@ describe('CursorMotionDetector', () => {
                 expectedLogs: [ MoveRight(1) ]
             });
         });
-        it('should ignore any vertical motion', async () => {
+        it('should detect implicit motion (move up)', async () => {
             testDetection({
                 init: [ new vscode.Selection(3, 4, 3, 4) ],
+                lineLength: [[2, 10]],
                 inputs: [
                     { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
-                    { changed: [ new vscode.Selection(4, 7, 4, 7) ] }
+                    { changed: [ new vscode.Selection(2, 7, 2, 7) ] }
                 ],
-                expectedLogs: []
+                expectedLogs: [ MoveUp(1, -3) ]
+            });
+        });
+        it('should detect implicit motion (move down)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                lineLength: [[5, 10]],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(5, 5, 5, 5) ] }
+                ],
+                expectedLogs: [ MoveDown(2, 5) ]
             });
         });
         it('should detect implicit motion (move to left and make selection)', async () => {
@@ -116,6 +141,28 @@ describe('CursorMotionDetector', () => {
                     { changed: [ new vscode.Selection(3, 10, 3, 12) ] }
                 ],
                 expectedLogs: [ MoveRightSelect(3, 2) ]
+            });
+        });
+        it('should detect implicit motion (move up and make selection)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                lineLength: [[2, 10]],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(2, 7, 2, 9) ] }
+                ],
+                expectedLogs: [ MoveUpSelect(1, -3, 2) ]
+            });
+        });
+        it('should detect implicit motion (move down and make selection)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                lineLength: [[5, 10]],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(5, 5, 5, 8) ] }
+                ],
+                expectedLogs: [ MoveDownSelect(2, 5, 3) ]
             });
         });
         it('should detect implicit motion (cancel selection and move to right)', async () => {
@@ -168,6 +215,16 @@ describe('CursorMotionDetector', () => {
                 expectedLogs: []
             });
         });
+        it('should ignore non-uniform changes on multi-cursor (4)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4), new vscode.Selection(4, 4, 4, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] },
+                    { changed: [ new vscode.Selection(4, 3, 4, 3), new vscode.Selection(6, 3, 6, 3) ] }
+                ],
+                expectedLogs: []
+            });
+        });
     });
     describe('implicit motion without prediction', () => {
         it('should detect the unexpected motion of cursor (move to left)', async () => {
@@ -186,15 +243,6 @@ describe('CursorMotionDetector', () => {
                     { changed: [ new vscode.Selection(3, 7, 3, 7) ] }
                 ],
                 expectedLogs: [ MoveRight(1) ]
-            });
-        });
-        it('should ignore any vertical motion', async () => {
-            testDetection({
-                init: [ new vscode.Selection(3, 6, 3, 6) ],
-                inputs: [
-                    { changed: [ new vscode.Selection(4, 6, 4, 6) ] }
-                ],
-                expectedLogs: []
             });
         });
         it('should detect the unexpected motion of multi-cursor', async () => {

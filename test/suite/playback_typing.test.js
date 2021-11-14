@@ -462,6 +462,8 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(8).text, 'const a = new Array(5);');
             assert.deepStrictEqual(getSelections(), [[8, 23]]);
         });
+        // TODO: add tests for multi-line snippet insertion
+        // TODO: add tests for snippet insertion with multiple occurences of a placeholder
     });
 
     describe('typing with IME', () => {
