@@ -148,12 +148,11 @@ describe('internalCommands', () => {
         // TODO: add more tests with 'deleteLeft' option
     });
 
-    describe('performCursorMotion', () => {
+    describe('performCursorMotion (horizontal motion)', () => {
         before(async () => {
             await TestUtil.resetDocument(textEditor, (
                 'abcde\n'.repeat(10) +
-                'fghij klmno\n'.repeat(10) +
-                'pqrstu vwxyz\n'.repeat(10)
+                'fghij klmno\n'.repeat(10)
             ));
         });
         it('should move the cursor to left horizontally', async () => {
@@ -187,6 +186,25 @@ describe('internalCommands', () => {
             assert.deepStrictEqual(getSelections(), [[3, 5]]);
         });
 
+        it('should move the cursor to left based on start position of current selection', async () => {
+            setSelections([[12, 6, 12, 11]]);
+            await internalCommands.performCursorMotion({ characterDelta: -4 });
+            assert.deepStrictEqual(getSelections(), [[12, 2]]);
+        });
+        it('should move the cursor to right based on start position of current selection', async () => {
+            setSelections([[12, 2, 12, 5]]);
+            await internalCommands.performCursorMotion({ characterDelta: 4 });
+            assert.deepStrictEqual(getSelections(), [[12, 6]]);
+        });
+    });
+
+    describe('performCursorMotion (with lineDelta)', () => {
+        before(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n'.repeat(10) +
+                'fghij klmno\n'.repeat(10)
+            ));
+        });
         it('should move the cursor up and locate relative to the end of the line', async () => {
             setSelections([[11, 3]]);
             await internalCommands.performCursorMotion({ lineDelta: -3, characterDelta: -3 });
@@ -226,6 +244,25 @@ describe('internalCommands', () => {
             setSelections([[8, 3]]);
             await internalCommands.performCursorMotion({ lineDelta: 4, characterDelta: 15 });
             assert.deepStrictEqual(getSelections(), [[12, 11]]);
+        });
+    });
+
+    describe('performCursorMotion (with selectionLength)', () => {
+        before(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n'.repeat(10) +
+                'fghij klmno\n'.repeat(10)
+            ));
+        });
+        it('should move the cursor horizontally and make a selection', async () => {
+            setSelections([[3, 5]]);
+            await internalCommands.performCursorMotion({ characterDelta: -4, selectionLength: 3 });
+            assert.deepStrictEqual(getSelections(), [[3, 1, 3, 4]]);
+        });
+        it('should move cursors horizontally and make selections', async () => {
+            setSelections([[3, 5], [4, 5]]);
+            await internalCommands.performCursorMotion({ characterDelta: -4, selectionLength: 3 });
+            assert.deepStrictEqual(getSelections(), [[3, 1, 3, 4], [4, 1, 4, 4]]);
         });
     });
 });

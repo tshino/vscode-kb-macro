@@ -89,12 +89,13 @@ const internalCommands = (function() {
         const document = textEditor.document;
         const characterDelta = args.characterDelta || 0;
         const lineDelta = args.lineDelta || 0;
-        const newSelections = Array.from(textEditor.selections).map(sel => (
-            new vscode.Selection(
-                translate(document, sel.anchor, lineDelta, characterDelta),
-                translate(document, sel.active, lineDelta, characterDelta)
-            )
-        ));
+        const selectionLength = args.selectionLength || 0;
+
+        const newSelections = Array.from(textEditor.selections).map(sel => {
+            const start = translate(document, sel.start, lineDelta, characterDelta);
+            const end = translate(document, start, 0, selectionLength);
+            return new vscode.Selection(start, end);
+        });
         textEditor.selections = newSelections;
     };
 
