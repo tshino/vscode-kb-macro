@@ -6,6 +6,8 @@ const { CursorMotionDetector } = require('../../src/cursor_motion_detector.js');
 describe('CursorMotionDetector', () => {
     const MoveLeft = delta => [ 0, { characterDelta: -delta } ];
     const MoveRight = delta => [ 0, { characterDelta: delta } ];
+    const MoveLeftSelect = (delta, select) => [ 0, { characterDelta: -delta, selectionLength: select } ];
+    const MoveRightSelect = (delta, select) => [ 0, { characterDelta: delta, selectionLength: select } ];
 
     describe('initial state', () => {
         it('should not be enabled to do detection', async () => {
@@ -96,24 +98,34 @@ describe('CursorMotionDetector', () => {
                 expectedLogs: []
             });
         });
-        it('should ignore any motion if selections are not empty (1)', async () => {
+        it('should detect implicit motion (move to left and make selection)', async () => {
             testDetection({
                 init: [ new vscode.Selection(3, 4, 3, 4) ],
                 inputs: [
                     { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
                     { changed: [ new vscode.Selection(3, 4, 3, 6) ] }
                 ],
-                expectedLogs: []
+                expectedLogs: [ MoveLeftSelect(3, 2) ]
             });
         });
-        it('should ignore any motion if selections are not empty (2)', async () => {
+        it('should detect implicit motion (move to right and make selection)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(3, 10, 3, 12) ] }
+                ],
+                expectedLogs: [ MoveRightSelect(3, 2) ]
+            });
+        });
+        it('should detect implicit motion (cancel selection and move to right)', async () => {
             testDetection({
                 init: [ new vscode.Selection(3, 4, 3, 4) ],
                 inputs: [
                     { predicted: [ new vscode.Selection(3, 4, 3, 7) ] },
                     { changed: [ new vscode.Selection(3, 6, 3, 6) ] }
                 ],
-                expectedLogs: []
+                expectedLogs: [ MoveRight(2) ]
             });
         });
         it('should detect implicit motion of multi-cursor', async () => {

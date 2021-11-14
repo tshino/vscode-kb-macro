@@ -127,5 +127,50 @@ describe('CommandSequence', () => {
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ TYPE12 ]);
         });
+        it('should remove a pair of cursor motion that results no effect', () => {
+            const MOVE1 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: -3 }
+            };
+            const MOVE2 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: 3 }
+            };
+            const seq = CommandSequence();
+            seq.push(MOVE1);
+            seq.push(MOVE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), []);
+        });
+        it('should retain consecutive cursor motions that have vertical motion', () => {
+            const MOVE1 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: -3, lineDelta: -1 }
+            };
+            const MOVE2 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: 3, lineDelta: 1 }
+            };
+            const seq = CommandSequence();
+            seq.push(MOVE1);
+            seq.push(MOVE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ MOVE1, MOVE2 ]);
+        });
+        it('should retain consecutive cursor motions that have selectionLength', () => {
+            const MOVE1 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: -3 }
+            };
+            const MOVE2 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: 3, selectionLength: 5 }
+            };
+            const seq = CommandSequence();
+            seq.push(MOVE1);
+            seq.push(MOVE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ MOVE1, MOVE2 ]);
+        });
     });
 });

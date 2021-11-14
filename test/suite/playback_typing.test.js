@@ -13,6 +13,14 @@ describe('Recording and Playback: Typing', () => {
     const DefaultType = text => ({ command: 'default:type', args: { text } });
     const MoveLeft = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: -delta } });
     const MoveRight = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: delta } });
+    const MoveLeftSelect = (delta, select) => ({
+        command: 'internal:performCursorMotion',
+        args: { characterDelta: -delta, selectionLength: select }
+    });
+    const MoveRightSelect = (delta, select) => ({
+        command: 'internal:performCursorMotion',
+        args: { characterDelta: delta, selectionLength: select }
+    });
 
     const setSelections = async function(array) {
         await awaitController.waitFor('selection', 1).catch(() => {});
@@ -216,7 +224,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
             await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), MoveRight(1) ]);
+            assert.deepStrictEqual(getSequence(), [ Type('()') ]);
             assert.strictEqual(textEditor.document.lineAt(5).text, '()');
             assert.deepStrictEqual(getSelections(), [[5, 2]]);
 
@@ -231,7 +239,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
             await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), MoveRight(1) ]);
+            assert.deepStrictEqual(getSequence(), [ Type('()') ]);
             assert.strictEqual(textEditor.document.lineAt(5).text, '()');
             assert.strictEqual(textEditor.document.lineAt(6).text, '()');
             assert.deepStrictEqual(getSelections(), [[5, 2], [6, 2]]);
@@ -242,7 +250,7 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(14).text, 'abcd()');
             assert.deepStrictEqual(getSelections(), [[13, 6], [14, 6]]);
         });
-        it('should record and playback typing of an closing bracket right after typing inside bracket (1)', async () => {
+        it('should record and playback typing of an closing bracket right after typing inside brackets (1)', async () => {
             await setSelections([[5, 0]]);
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
@@ -258,7 +266,7 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(13).text, 'abcd(10)');
             assert.deepStrictEqual(getSelections(), [[13, 8]]);
         });
-        it('should record and playback typing of an closing bracket right after typing inside bracket (2: multi-cursor)', async () => {
+        it('should record and playback typing of an closing bracket right after typing inside brackets (2: multi-cursor)', async () => {
             await setSelections([[5, 0], [6, 0]]);
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' }); // This inserts a closing bracket too.
@@ -393,20 +401,16 @@ describe('Recording and Playback: Typing', () => {
                 '    efgh\n'.repeat(10)
             ));
         });
-        it('should record and playback of snippet insertion (single line case)', async () => {
+        it('should record and playback of snippet insertion (single line, no placeholder)', async () => {
             await setSelections([[2, 0]]);
             keyboardMacro.startRecording();
-            await vscode.commands.executeCommand('type', { text: 'l' });
-            await vscode.commands.executeCommand('type', { text: 'o' });
-            await vscode.commands.executeCommand('type', { text: 'g' });
+            await vscode.commands.executeCommand('type', { text: 'log' });
             await textEditor.edit(edit => {
                 edit.replace(new vscode.Selection(2, 0, 2, 3), 'console.log();');
             });
             await setSelections([[2, 14]]); // end of the line
             await setSelections([[2, 12]]); // in the parentheses
-            await vscode.commands.executeCommand('type', { text: 'm' });
-            await vscode.commands.executeCommand('type', { text: 's' });
-            await vscode.commands.executeCommand('type', { text: 'g' });
+            await vscode.commands.executeCommand('type', { text: 'msg' });
             await setSelections([[2, 17]]); // end of the line (moved by hitting TAB key)
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
@@ -421,6 +425,42 @@ describe('Recording and Playback: Typing', () => {
             await keyboardMacro.playback();
             assert.strictEqual(textEditor.document.lineAt(5).text, 'console.log(msg);');
             assert.deepStrictEqual(getSelections(), [[5, 17]]);
+        });
+        it('should record and playback of snippet insertion (single line with placeholders)', async () => {
+            await setSelections([[5, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'new' });
+            await textEditor.edit(edit => {
+                edit.replace(new vscode.Selection(5, 0, 5, 3), 'const name = new type(arguments);');
+            });
+            await setSelections([[5, 33]]); // end of the line
+            await setSelections([[5, 6, 5, 10]]); // placeholder 'name'
+            await vscode.commands.executeCommand('type', { text: 'a' });
+            await setSelections([[5, 7]]);
+            await setSelections([[5, 14, 5, 18]]); // placeholder 'type'
+            await vscode.commands.executeCommand('type', { text: 'Array' });
+            await setSelections([[5, 19]]);
+            await setSelections([[5, 20, 5, 29]]); // placeholder 'arguments'
+            await vscode.commands.executeCommand('type', { text: '5' });
+            await setSelections([[5, 21]]);
+            await setSelections([[5, 23]]);
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [
+                Type('const name = new type(arguments);'),
+                MoveLeftSelect(27, 4),
+                Type('a'),
+                MoveRightSelect(7, 4),
+                Type('Array'),
+                MoveRightSelect(1, 9),
+                Type('5'),
+                MoveRight(2)
+            ]);
+            assert.strictEqual(textEditor.document.lineAt(5).text, 'const a = new Array(5);');
+
+            await setSelections([[8, 0]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(8).text, 'const a = new Array(5);');
+            assert.deepStrictEqual(getSelections(), [[8, 23]]);
         });
     });
 
