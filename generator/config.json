@@ -14,11 +14,23 @@
         }
     ],
     "exclusion": [
+        "editor.action.triggerSuggest",
+        "hideSuggestWidget",
+        "selectNextSuggestion",
+        "selectPrevSuggestion",
+        "selectNextPageSuggestion",
+        "selectPrevPageSuggestion",
+        "toggleExplainMode",
+        "toggleSuggestionDetails",
+        "toggleSuggestionFocus",
         "acceptSelectedSuggestion",
         "acceptAlternativeSelectedSuggestion",
-        "editor.action.triggerSuggest",
+        "insertSnippet",
+        "leaveSnippet",
+        "editor.action.insertSnippet",
         "jumpToNextSnippetPlaceholder",
-        "jumpToPrevSnippetPlaceholder"
+        "jumpToPrevSnippetPlaceholder",
+        "workbench.action.showCommands"
     ],
     "awaitOptions": [
         [ "editor.action.clipboardCopyAction", "clipboard" ],
