@@ -207,5 +207,25 @@ describe('internalCommands', () => {
             await internalCommands.performCursorMotion({ lineDelta: 4, characterDelta: 4 });
             assert.deepStrictEqual(getSelections(), [[12, 4], [13, 4]]);
         });
+        it('should stop at beginning of a line (move up)', async () => {
+            setSelections([[11, 3]]);
+            await internalCommands.performCursorMotion({ lineDelta: -3, characterDelta: -15 });
+            assert.deepStrictEqual(getSelections(), [[8, 0]]);
+        });
+        it('should stop at beginning of a line (move down)', async () => {
+            setSelections([[8, 3]]);
+            await internalCommands.performCursorMotion({ lineDelta: 4, characterDelta: -15 });
+            assert.deepStrictEqual(getSelections(), [[12, 0]]);
+        });
+        it('should stop at end of a line (move up)', async () => {
+            setSelections([[11, 3]]);
+            await internalCommands.performCursorMotion({ lineDelta: -3, characterDelta: 15 });
+            assert.deepStrictEqual(getSelections(), [[8, 5]]);
+        });
+        it('should stop at end of a line (move down)', async () => {
+            setSelections([[8, 3]]);
+            await internalCommands.performCursorMotion({ lineDelta: 4, characterDelta: 15 });
+            assert.deepStrictEqual(getSelections(), [[12, 11]]);
+        });
     });
 });

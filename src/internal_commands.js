@@ -58,26 +58,24 @@ const internalCommands = (function() {
     };
 
     const translate = function(document, position, lineDelta, characterDelta) {
-        if (lineDelta < 0 && characterDelta <= 0) {
+        if (lineDelta < 0) {
             const line = Math.max(0, position.line + lineDelta);
             const lineLength = document.lineAt(line).text.length;
-            return new vscode.Position(line, Math.max(0, lineLength + characterDelta));
-        } else if (0 < lineDelta && 0 <= characterDelta) {
+            const character = Math.max(0, lineLength + Math.min(characterDelta, 0));
+            return new vscode.Position(line, character);
+        } else if (0 < lineDelta) {
             const line = Math.min(position.line + lineDelta, document.lineCount);
             const lineLength = document.lineAt(line).text.length;
-            return new vscode.Position(line, Math.min(characterDelta, lineLength));
+            const character = Math.min(Math.max(0, characterDelta), lineLength);
+            return new vscode.Position(line, character);
         } else if (lineDelta === 0) {
             if (characterDelta < 0) {
-                return new vscode.Position(
-                    position.line,
-                    Math.max(0, position.character + characterDelta)
-                );
+                const character = Math.max(0, position.character + characterDelta);
+                return new vscode.Position(position.line, character);
             } else {
                 const lineLength = document.lineAt(position.line).text.length;
-                return new vscode.Position(
-                    position.line,
-                    Math.min(lineLength, position.character + characterDelta)
-                );
+                const character = Math.min(position.character + characterDelta, lineLength);
+                return new vscode.Position(position.line, character);
             }
         }
     };
