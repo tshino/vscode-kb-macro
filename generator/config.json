@@ -15,7 +15,10 @@
     ],
     "exclusion": [
         "acceptSelectedSuggestion",
-        "acceptAlternativeSelectedSuggestion"
+        "acceptAlternativeSelectedSuggestion",
+        "editor.action.triggerSuggest",
+        "jumpToNextSnippetPlaceholder",
+        "jumpToPrevSnippetPlaceholder"
     ],
     "awaitOptions": [
         [ "editor.action.clipboardCopyAction", "clipboard" ],
