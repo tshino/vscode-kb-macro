@@ -245,6 +245,12 @@ describe('internalCommands', () => {
             await internalCommands.performCursorMotion({ lineDelta: 4, characterDelta: 15 });
             assert.deepStrictEqual(getSelections(), [[12, 11]]);
         });
+
+        it('should move the cursor up and locate relative to the end of the line and make a selection', async () => {
+            setSelections([[11, 3]]);
+            await internalCommands.performCursorMotion({ lineDelta: -3, characterDelta: -3, selectionLength: 2 });
+            assert.deepStrictEqual(getSelections(), [[8, 2, 8, 4]]);
+        });
     });
 
     describe('performCursorMotion (with selectionLength)', () => {
