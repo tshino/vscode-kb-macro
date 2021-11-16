@@ -22,7 +22,10 @@
         "url": "https://github.com/tshino/vscode-kb-macro.git"
     },
     "activationEvents": [
-        "*"
+        "onCommand:kb-macro.startRecording",
+        "onCommand:kb-macro.cancelRecording",
+        "onCommand:kb-macro.playback",
+        "onCommand:kb-macro.wrap"
     ],
     "main": "./src/extension.js",
     "scripts": {

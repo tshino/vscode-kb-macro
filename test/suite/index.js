@@ -2,6 +2,7 @@
 const path = require('path');
 const Mocha = require('mocha');
 const glob = require('glob');
+const vscode = require('vscode');
 
 function run() {
     // Create the mocha test
@@ -12,6 +13,9 @@ function run() {
     mocha.timeout(10000);
 
     const testsRoot = path.resolve(__dirname, '..');
+
+    // Activate the extension explicitly
+    vscode.commands.executeCommand('kb-macro.cancelRecording');
 
     return new Promise((c, e) => {
         glob('**/**.test.js', { cwd: testsRoot }, (err, files) => {
