@@ -21,6 +21,19 @@ const CursorMotionDetector = function() {
         }
     };
 
+    // const selectionsToString = function(selections) {
+    //     return JSON.stringify(Array.from(selections).map(sel => {
+    //         const { anchor, active } = sel;
+    //         const { line: l1, character: c1 } = anchor;
+    //         const { line: l2, character: c2 } = active;
+    //         if (l1 === l2 && c1 === c2) {
+    //             return [ l1, c1 ];
+    //         } else {
+    //             return [ l1, c1, l2, c2 ];
+    //         }
+    //     }));
+    // };
+
     const start = function(textEditor) {
         lastSelections = textEditor ? textEditor.selections : null;
         lastTextEditor = textEditor || null;
@@ -37,6 +50,7 @@ const CursorMotionDetector = function() {
             textEditorForPredictions = textEditor;
         }
         predictions.push(expected);
+        // console.log('pred', selectionsToString(expected));
     };
     const getPrediction = function(textEditor) {
         if (textEditorForPredictions === textEditor) {
@@ -106,7 +120,7 @@ const CursorMotionDetector = function() {
         }
     };
     const detectAndRecordImplicitMotion = function(event) {
-        // console.log('cursor', lastSelections[0].active.character, event.selections[0].active.character);
+        // console.log('cursor', selectionsToString(lastSelections), selectionsToString(event.selections));
         const document = event.textEditor.document;
         if (textEditorForPredictions !== event.textEditor || 0 === predictions.length) {
             const current = Array.from(event.selections);
@@ -121,23 +135,27 @@ const CursorMotionDetector = function() {
                 // console.log('skip');
             }
         } else {
-            const predicted = predictions[0];
             const current = util.sortSelections(event.selections);
-            const motion = detectImplicitMotion(document, current, predicted);
-            if (motion) {
-                // Here, the current cursor position is different from the one predicted.
-                // We consider it an implicit cursor motion.
-                // We notify it so that it will be recorded to be able to playback.
-                notifyDetectedMotion(motion);
-                // console.log('motion with prediction');
+            const match = predictions.findIndex(
+                predicted => util.isEqualSelections(predicted, current)
+            );
+            if (0 <= match) {
+                predictions.splice(0, match + 1);
+                // console.log('match');
             } else {
-                // if (util.isEqualSelections(predicted, current)) {
-                //     console.log('match');
-                // } else {
-                //     console.log('differ');
-                // }
+                const predicted = predictions[0];
+                const motion = detectImplicitMotion(document, current, predicted);
+                if (motion) {
+                    // Here, the current cursor position is different from the one predicted.
+                    // We consider it an implicit cursor motion.
+                    // We notify it so that it will be recorded to be able to playback.
+                    notifyDetectedMotion(motion);
+                    predictions.splice(0, 1);
+                    // console.log('motion with prediction');
+                } else {
+                    // console.log('differ');
+                }
             }
-            predictions.splice(0, 1);
         }
     };
     const processSelectionChangeEvent = function(event) {

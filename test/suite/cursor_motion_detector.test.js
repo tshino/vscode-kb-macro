@@ -270,6 +270,19 @@ describe('CursorMotionDetector', () => {
                 expectedLogs: []
             });
         });
+        it('should handle events correctly even if some predictions are skipped', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 5, 3, 5) ] },
+                    { predicted: [ new vscode.Selection(3, 6, 3, 6) ] },
+                    { changed: [ new vscode.Selection(3, 6, 3, 6) ] },
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(3, 7, 3, 7) ] }
+                ],
+                expectedLogs: []
+            });
+        });
     });
     // TODO: add more tests for CursorMotionDetector
 });

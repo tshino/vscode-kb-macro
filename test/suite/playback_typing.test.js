@@ -21,6 +21,14 @@ describe('Recording and Playback: Typing', () => {
         command: 'internal:performCursorMotion',
         args: { characterDelta: delta, selectionLength: select }
     });
+    const MoveUpSelect = (up, delta, select) => ({
+        command: 'internal:performCursorMotion',
+        args: { lineDelta: -up, characterDelta: delta, selectionLength: select }
+    });
+    const MoveDown = (down, delta) => ({
+        command: 'internal:performCursorMotion',
+        args: { lineDelta: down, characterDelta: delta }
+    });
 
     const setSelections = async function(array) {
         await awaitController.waitFor('selection', 1).catch(() => {});
@@ -462,7 +470,51 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(8).text, 'const a = new Array(5);');
             assert.deepStrictEqual(getSelections(), [[8, 23]]);
         });
-        // TODO: add tests for multi-line snippet insertion
+        it('should record and playback of snippet insertion (multi-line with placeholders)', async () => {
+            await setSelections([[4, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'fun' });
+            await textEditor.edit(edit => {
+                edit.replace(new vscode.Selection(4, 0, 4, 3), 'function name(params) {\n    \n}');
+            });
+            await setSelections([[6, 1]]); // end of the snippet
+            await setSelections([[4, 9, 4, 13]]); // placeholder 'name'
+            await vscode.commands.executeCommand('type', { text: 'say' });
+            await setSelections([[4, 12]]);
+            await setSelections([[4, 13, 4, 19]]); // placeholder 'params'
+            await vscode.commands.executeCommand('type', { text: 'name' });
+            await setSelections([[4, 17]]);
+            await setSelections([[5, 4]]); // inside the function block
+            await vscode.commands.executeCommand('type', { text: 'console.log(' });
+            await setSelections([[5, 16]]);
+            await vscode.commands.executeCommand('type', { text: 'name' });
+            await setSelections([[5, 21]]);
+            await vscode.commands.executeCommand('type', { text: ';' });
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [
+                Type('function name(params) {\n    \n}'),
+                MoveUpSelect(2, -14, 4),
+                Type('say'),
+                MoveRightSelect(1, 6),
+                Type('name'),
+                MoveDown(1, 4),
+                Type('console.log()'),
+                MoveLeft(1),
+                Type('name'),
+                MoveRight(1),
+                Type(';')
+            ]);
+            assert.strictEqual(textEditor.document.lineAt(4).text, 'function say(name) {');
+            assert.strictEqual(textEditor.document.lineAt(5).text, '    console.log(name);');
+            assert.strictEqual(textEditor.document.lineAt(6).text, '}');
+
+            await setSelections([[7, 0]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(7).text, 'function say(name) {');
+            assert.strictEqual(textEditor.document.lineAt(8).text, '    console.log(name);');
+            assert.strictEqual(textEditor.document.lineAt(9).text, '}');
+            assert.deepStrictEqual(getSelections(), [[8, 22]]);
+        });
         // TODO: add tests for snippet insertion with multiple occurences of a placeholder
     });
 
