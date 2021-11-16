@@ -34,6 +34,23 @@ function addKeybindingsContext(keybindings, context) {
     }
 }
 
+function copyKeybinding(keybinding) {
+    const copy = {
+        key: keybinding.key,
+        command: keybinding.command
+    };
+    if ('mac' in keybinding) {
+        copy.mac = keybinding.mac;
+    }
+    if ('args' in keybinding) {
+        copy.args = keybinding.args;
+    }
+    if ('when' in keybinding) {
+        copy.when = keybinding.when;
+    }
+    return copy;
+}
+
 function keybindingsContains(keybindings, keybinding) {
     for (let i = 0; i < keybindings.length; i++) {
         if (util.isDeepStrictEqual(keybindings[i], keybinding)) {
@@ -60,6 +77,22 @@ function makeKeyDict(baseKeybindings) {
         }
     }
     return keyDict;
+}
+
+function makeCommandLookup(baseKeybindings) {
+    const commandLookup = new Map();
+    for (const { keybindings, context } of baseKeybindings) {
+        for (const keybinding of keybindings) {
+            const command = keybinding['command'];
+            if (!commandLookup.has(command)) {
+                commandLookup.set(command, []);
+            }
+            const list = commandLookup.get(command);
+            const key = keybinding['key'];
+            list.push({ key, context });
+        }
+    }
+    return commandLookup;
 }
 
 // Find common keybindings that are shared among all sources.
@@ -142,16 +175,24 @@ function makeWhenSubsetContext(contextList, bitmap) {
     }
 }
 
-function makeUnifiedKeybindingsList(contextList, commonKeybindings) {
+function makeUnifiedKeybindings(contextList, commonKeybindings) {
     return commonKeybindings.map(x => {
-        const keybinding = x.keybinding;
+        const originalKeybinding = x.keybinding;
+        const keybinding = copyKeybinding(originalKeybinding);
         const bitmap = x.positions.map(pos => 0 <= pos);
         if (!bitmap.every(enable => enable)) {
             // partial common keybindings (e.g. 'isWindows || isLinux')
             const subset = makeWhenSubsetContext(contextList, bitmap);
             keybinding.when = addWhenContext(keybinding.when, subset);
         }
-        return keybinding;
+        const contexts = bitmap.map(
+            (enable, i) => enable ? contextList[i] : ''
+        ).filter(c => c !== '');
+        return {
+            originalKeybinding,
+            keybinding,
+            contexts
+        };
     });
 }
 
@@ -169,35 +210,65 @@ function makeNonUnifiedKeybindingsList(context, commonKeybindings, dict, context
         } else {
             const keybindings = dict.get(context) || [];
             const sliced = keybindings.slice(index, pos);
-            const converted = addKeybindingsContext(sliced, context);
-            keybindingsList.push(converted);
+            keybindingsList.push(sliced);
             index = pos + 1;
         }
     }
     return keybindingsList;
 }
 
-function makeCombinedKeybindingsForKey(unified, nonUnified) {
-    // Reorder and unify keybindings.
+function makeCombinedKeybindingsForKeyPart1(contextList, unified, nonUnified) {
     let combined = [];
     for (let i = 0; i < unified.length; i++) {
-        combined = combined.concat(nonUnified.flatMap(x => x[i]));
-        combined.push(unified[i]);
-    }
-    combined = combined.concat(nonUnified.flatMap(x => x[unified.length]));
+        combined = combined.concat(nonUnified.flatMap(
+            (x, j) => addKeybindingsContext(x[i], contextList[j])
+        ));
+        const u = unified[i];
+        if (!u.macKey) {
+            combined.push(u.keybinding);
+        } else {
+            const [ nonUnifiedMac, pos ] = u.macKeybinding;
+            const nu = nonUnifiedMac[nonUnifiedMac.length - 1];
+            if (pos >= nu.length || nu[pos].done) {
+                continue;
+            }
+            // flush keybindings that must be written before the unified keybinding.
+            const putBefore = nu.slice(0, pos).filter(keybinding => !keybinding.done);
+            combined = combined.concat(addKeybindingsContext(putBefore, 'isMac'));
+            for (let k = 0; k < pos + 1; k++) {
+                nu[k] = { done: true };
+            }
 
+            const keybinding = copyKeybinding(u.originalKeybinding);
+            keybinding['mac'] = u.macKey;
+            combined.push(keybinding);
+        }
+    }
     return combined;
+}
+
+function makeCombinedKeybindingsForKeyPart2(contextList, nonUnified) {
+    const leftover = nonUnified.flatMap(
+        (x, j) => {
+            const nu = x[x.length - 1].filter(keybinding => !keybinding.done);
+            return addKeybindingsContext(nu, contextList[j])
+        }
+    );
+    return leftover;
 }
 
 // Make combined keybindings of different default keybindings of windows, macos and linux.
 function combineBaseKeybingings(baseKeybindings) {
     const contextList = baseKeybindings.map(item => item.context);
     const keyDict = makeKeyDict(baseKeybindings);
+    const commandLookup = makeCommandLookup(baseKeybindings);
 
+    // Find out any chance to reduce the number of keybindings by unifying redundant ones.
     const commonKeyDict = makeCommonKeybindingsDict(contextList, keyDict);
-    const unifiedKeybindings = new Map(Array.from(commonKeyDict.keys()).map(key => (
-        [ key, makeUnifiedKeybindingsList(contextList, commonKeyDict.get(key)) ]
-    )));
+    const unifiedKeybindings = new Map(Array.from(commonKeyDict.keys()).map(key => {
+        const unified = makeUnifiedKeybindings(contextList, commonKeyDict.get(key));
+        return [ key, unified ];
+    }));
     const nonUnifiedKeybindings = new Map(Array.from(keyDict.keys()).map(key => ([
         key,
         contextList.map((context, j) => (
@@ -205,11 +276,46 @@ function combineBaseKeybingings(baseKeybindings) {
         ))
     ])));
 
+    // Find out special patterns where 'mac' key can be used to unify keybindings.
+    const otherThanMac = contextList.filter(c => c !== 'isMac');
+    const macIndex = contextList.findIndex(c => c === 'isMac');
+    for (const key of keyDict.keys()) {
+        const unified = unifiedKeybindings.get(key) || [];
+        for (const u of unified) {
+            if (!util.isDeepStrictEqual(u.contexts, otherThanMac)) {
+                continue;
+            }
+            for (const lookup of commandLookup.get(u.keybinding.command)) {
+                if (lookup.context !== 'isMac') {
+                    continue;
+                }
+                const target = copyKeybinding(u.originalKeybinding);
+                target.key = lookup.key;
+                const nonUnifiedMac = nonUnifiedKeybindings.get(lookup.key)[macIndex];
+                const i = nonUnifiedMac.length - 1;
+                for (let k = 0; k < nonUnifiedMac[i].length; k++) {
+                    const keybinding = nonUnifiedMac[i][k];
+                    if (util.isDeepStrictEqual(target, keybinding)) {
+                        // found candidate!
+                        u.macKey = lookup.key;
+                        u.macKeybinding = [ nonUnifiedMac, k ];
+                    }
+                }
+            }
+        }
+    }
+
+    // Reorder and unify keybindings.
     let keybindings = [];
     for (const key of keyDict.keys()) {
         const unified = unifiedKeybindings.get(key) || [];
         const nonUnified = nonUnifiedKeybindings.get(key);
-        const combined = makeCombinedKeybindingsForKey(unified, nonUnified);
+        const combined = makeCombinedKeybindingsForKeyPart1(contextList, unified, nonUnified);
+        keybindings = keybindings.concat(combined);
+    }
+    for (const key of keyDict.keys()) {
+        const nonUnified = nonUnifiedKeybindings.get(key);
+        const combined = makeCombinedKeybindingsForKeyPart2(contextList, nonUnified);
         keybindings = keybindings.concat(combined);
     }
     return keybindings;

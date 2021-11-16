@@ -49,6 +49,9 @@ function makeWrapper(keybinding) {
         args: makeCommandSpec(keybinding),
         when: addWhenContext(keybinding.when, 'kb-macro.recording')
     };
+    if ('mac' in keybinding) {
+        wrapped.mac = keybinding.mac;
+    }
     return wrapped;
 }
 
