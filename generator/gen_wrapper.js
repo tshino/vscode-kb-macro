@@ -17,7 +17,7 @@ async function readJSON(path, options = {}) {
 }
 
 async function writeJSON(path, value) {
-    const json = JSON.stringify(value, null, 4);
+    const json = JSON.stringify(value, null, '\t');
     await fsPromises.writeFile(path, json);
 }
 
