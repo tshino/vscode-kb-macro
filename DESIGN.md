@@ -28,7 +28,7 @@ On VS Code, typed characters in text editors are treated differently than other 
 
 As far as I know, an extension is allowed to override the `type` built-in command using `vscode.commands.registerCommand` API. Actually, the VSCodeVim extension seems to do that to customize the behavior for typed characters.
 
-It was not clear whether overriding the `type` command to capture typed characters is a good way for this extension. Especially if we use this extension combined with another extension that is overriding the `type` command, there will be a conflict, and probably they will not work correctly.
+It was not clear whether overriding the `type` command to capture typed characters is a good way for this extension. Especially if you use this extension combined with another extension that is overriding the `type` command too, there would be a conflict, and likely they will not work correctly.
 
 So this extension took another way to capture typed characters. That is to listen to the events on changes on the text document. Basically this is possible through the `vscode.workspace.onDidChangeTextDocument` event.
 
