@@ -22,11 +22,11 @@ However, we can't associate every possible keystroke by defining a single keybin
 
 So we end up defining a bunch of wrapper keybindings to capture the whole set of the default keybindings of VS Code.
 
-# Wrapper keybindings
+## Wrapper keybindings
 
 A wrapper keybinding associates a particular combination of `key` and `when` with the `kb-macro.wrap` command with `args` parameter that specifies the target command to be invoked. The `kb-macro.wrap` command executes the target command. This indirect execution makes it possible to capture the command that has been triggered by user's keystrokes.
 
-We use the wrapper command only when the macro recording is ongoing. So we add the `kb-macro.recording` context to the original `when` value.
+We use the wrapper command only when the macro recording is ongoing. So we add the `kb-macro.recording` context to the wrapper keybindings.
 
 Why don't we use the wrapper keybindings always to simplify things? Because we want to keep the original behavior of each command for the keybindings as much as possible. It is not clear but the indirect execution may not be perfectly transparent.
 
