@@ -280,6 +280,17 @@ describe('KeybaordMacro', () => {
 
             assert.deepStrictEqual(logs, []);
         });
+        it('should not crash even if the argument is invalid', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap({ command: '' });
+            await keyboardMacro.wrap({ command: 'INVALID' });
+            await keyboardMacro.wrap({ });
+            await keyboardMacro.wrap();
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, []);
+            assert.strictEqual(keyboardMacro.isRecording(), false);
+        });
         it('should invoke and record specified command synchronously', async () => {
             keyboardMacro.startRecording();
             await keyboardMacro.wrap({ command: 'internal:log' });
