@@ -1,6 +1,7 @@
 # Keyboard Macro Beta
 
 [![Node.js CI](https://github.com/tshino/vscode-kb-macro/actions/workflows/node.js.yml/badge.svg)](https://github.com/tshino/vscode-kb-macro/actions/workflows/node.js.yml)
+[![CodeQL](https://github.com/tshino/vscode-kb-macro/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tshino/vscode-kb-macro/actions/workflows/codeql-analysis.yml)
 
 This extension is still at an early stage of development. Contributions are appreciated.
 
