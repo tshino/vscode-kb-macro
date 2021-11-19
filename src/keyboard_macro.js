@@ -109,7 +109,7 @@ const KeyboardMacro = function({ awaitController }) {
 
     const invokeCommandSync = async function(spec, context) {
         let ok = true;
-        const promise = awaitController.waitFor(spec.await || '').catch(() => {});
+        const promise = awaitController.waitFor(spec['await'] || '').catch(() => {});
         try {
             await invokeCommand(spec);
         } catch(error) {
@@ -148,7 +148,7 @@ const KeyboardMacro = function({ awaitController }) {
             spec.args = args.args;
         }
         if ('await' in args) {
-            spec.await = args.await;
+            spec['await'] = args['await'];
         }
         return spec;
     };
