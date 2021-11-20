@@ -12,6 +12,9 @@ describe('CursorMotionDetector', () => {
     const MoveDown = (down, delta) => [ 0, { lineDelta: down, characterDelta: delta } ];
     const MoveUpSelect = (up, delta, select) => [ 0, { lineDelta: -up, characterDelta: delta, selectionLength: select } ];
     const MoveDownSelect = (down, delta, select) => [ 0, { lineDelta: down, characterDelta: delta, selectionLength: select } ];
+    const Split = (delta) => [ 0, { characterDelta: delta } ];
+    const Split2 = (delta, deltaV) => [ 0, { characterDelta: delta, lineDelta: deltaV } ];
+    const SplitSelect = (delta, select) => [ 0, { characterDelta: delta, selectionLength: select } ];
 
     describe('initial state', () => {
         it('should not be enabled to do detection', async () => {
@@ -221,6 +224,85 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { predicted: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] },
                     { changed: [ new vscode.Selection(4, 3, 4, 3), new vscode.Selection(6, 3, 6, 3) ] }
+                ],
+                expectedLogs: []
+            });
+        });
+
+        it('should detect implicit motion (split into multi-cursor)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(3, 10, 3, 10), new vscode.Selection(3, 12, 3, 12) ] }
+                ],
+                expectedLogs: [ Split([ 3, 5 ]) ]
+            });
+        });
+        it('should detect implicit motion (split multi to multi)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4), new vscode.Selection(6, 4, 6, 4) ],
+                inputs: [
+                    { predicted: [
+                        new vscode.Selection(3, 7, 3, 7),
+                        new vscode.Selection(6, 7, 6, 7)
+                    ] },
+                    { changed: [
+                        new vscode.Selection(3, 10, 3, 10), new vscode.Selection(3, 12, 3, 12),
+                        new vscode.Selection(6, 10, 6, 10), new vscode.Selection(6, 12, 6, 12)
+                    ] }
+                ],
+                expectedLogs: [ Split([ 3, 5 ]) ]
+            });
+        });
+        it('should ignore non-uniform implicit motion (split multi to multi)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4), new vscode.Selection(6, 4, 6, 4) ],
+                inputs: [
+                    { predicted: [
+                        new vscode.Selection(3, 7, 3, 7),
+                        new vscode.Selection(6, 7, 6, 7)
+                    ] },
+                    { changed: [
+                        new vscode.Selection(3, 10, 3, 10), new vscode.Selection(3, 12, 3, 12),
+                        new vscode.Selection(6, 10, 6, 10), new vscode.Selection(6, 11, 6, 11)  // <= not match
+                    ] }
+                ],
+                expectedLogs: []
+            });
+        });
+        it('should detect implicit motion (split into multi-cursor on different lines)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [
+                        new vscode.Selection(3, 7, 3, 7),
+                        new vscode.Selection(6, 7, 6, 7)
+                    ] },
+                    { changed: [
+                        new vscode.Selection(4, 2, 4, 2), new vscode.Selection(5, 7, 5, 7),
+                        new vscode.Selection(7, 2, 7, 2), new vscode.Selection(8, 7, 8, 7),
+                    ] }
+                ],
+                expectedLogs: [ Split2([ 2, 7 ], [ 1, 2 ]) ]
+            });
+        });
+        it('should detect implicit motion (split into multi-cursor with selection)', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(3, 10, 3, 13), new vscode.Selection(3, 12, 3, 15) ] }
+                ],
+                expectedLogs: [ SplitSelect([ 3, 5 ], 3) ]
+            });
+        });
+        it('should ignore implicit motion with splitting to non-uniform selection length', async () => {
+            testDetection({
+                init: [ new vscode.Selection(3, 4, 3, 4) ],
+                inputs: [
+                    { predicted: [ new vscode.Selection(3, 7, 3, 7) ] },
+                    { changed: [ new vscode.Selection(3, 10, 3, 13), new vscode.Selection(3, 12, 3, 16) ] }
                 ],
                 expectedLogs: []
             });
