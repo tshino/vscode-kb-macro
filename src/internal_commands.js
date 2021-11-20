@@ -88,15 +88,30 @@ const internalCommands = (function() {
 
         const document = textEditor.document;
         const characterDelta = args.characterDelta || 0;
-        const lineDelta = args.lineDelta || 0;
+        let lineDelta = args.lineDelta || 0;
         const selectionLength = args.selectionLength || 0;
 
-        const newSelections = Array.from(textEditor.selections).map(sel => {
-            const start = translate(document, sel.start, lineDelta, characterDelta);
-            const end = translate(document, start, 0, selectionLength);
-            return new vscode.Selection(start, end);
-        });
-        textEditor.selections = newSelections;
+        if (Array.isArray(characterDelta)) {
+            const n = characterDelta.length;
+            if (!Array.isArray(lineDelta)) {
+                lineDelta = Array(n).fill(lineDelta);
+            }
+            const newSelections = Array.from(textEditor.selections).flatMap(sel => {
+                return Array.from(Array(n).keys()).map(i => {
+                    const start = translate(document, sel.start, lineDelta[i], characterDelta[i]);
+                    const end = translate(document, start, 0, selectionLength);
+                    return new vscode.Selection(start, end);
+                });
+            });
+            textEditor.selections = newSelections;
+        } else {
+            const newSelections = Array.from(textEditor.selections).map(sel => {
+                const start = translate(document, sel.start, lineDelta, characterDelta);
+                const end = translate(document, start, 0, selectionLength);
+                return new vscode.Selection(start, end);
+            });
+            textEditor.selections = newSelections;
+        }
     };
 
     return {
