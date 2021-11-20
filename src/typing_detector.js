@@ -107,24 +107,7 @@ const TypingDetector = function() {
         );
     };
 
-    const processDocumentChangeEvent = function(event) {
-        if (!recording || suspending) {
-            return;
-        }
-        const textEditor = vscode.window.activeTextEditor;
-        if (!textEditor || event.document !== textEditor.document) {
-            return;
-        }
-        if (event.contentChanges.length === 0) {
-            return;
-        }
-
-        const changes = sortContentChanges(event.contentChanges);
-        const selections = (
-            cursorMotionDetector.getPrediction(textEditor) ||
-            util.sortSelections(textEditor.selections)
-        );
-
+    const detectTyping = function(textEditor, selections, changes) {
         if (changes.length === selections.length && isUniformTextInsert(changes)) {
             if (replacesCorrespondingSelection(changes, selections)) {
                 // Every change is a pure insertion of or replacing the corresponding
@@ -134,7 +117,7 @@ const TypingDetector = function() {
                     cursorMotionDetector.setPrediction(textEditor, prediction);
                 }
                 notifyDetectedTyping(TypingType.Direct, { text: changes[0].text });
-                return;
+                return true;
             }
             if (deletesLeftAndInserts(changes, selections)) {
                 // Every change (in possible multi-cursor) is a combination of deleting
@@ -151,7 +134,7 @@ const TypingDetector = function() {
                     cursorMotionDetector.setPrediction(textEditor, prediction);
                 }
                 notifyDetectedTyping(TypingType.Direct, { deleteLeft, text: changes[0].text });
-                return;
+                return true;
             }
         }
         if (isBracketCompletionWithSelection(selections, changes)) {
@@ -164,8 +147,31 @@ const TypingDetector = function() {
             const prediction = makePredictionOnBracketCompletion(changes);
             cursorMotionDetector.setPrediction(textEditor, prediction);
             notifyDetectedTyping(TypingType.Default, { text: changes[0].text });
+            return true;
+        }
+    };
+
+    const processDocumentChangeEvent = function(event) {
+        if (!recording || suspending) {
             return;
         }
+        const textEditor = vscode.window.activeTextEditor;
+        if (!textEditor || event.document !== textEditor.document) {
+            return;
+        }
+        if (event.contentChanges.length === 0) {
+            return;
+        }
+
+        const changes = sortContentChanges(event.contentChanges);
+        const prediction = cursorMotionDetector.getPrediction(textEditor);
+        if (prediction) {
+            if (detectTyping(textEditor, prediction, changes)) {
+                return;
+            }
+        }
+        const selections = util.sortSelections(textEditor.selections);
+        detectTyping(textEditor, selections, changes);
     };
 
     return {
@@ -179,6 +185,7 @@ const TypingDetector = function() {
         resume,
         processDocumentChangeEvent,
         processSelectionChangeEvent : cursorMotionDetector.processSelectionChangeEvent,
+        setPrediction: cursorMotionDetector.setPrediction, // testing purpose only
         getPrediction: cursorMotionDetector.getPrediction // testing purpose only
     };
 };

@@ -131,6 +131,44 @@ describe('TypingDetector', () => {
                 makeContentChange(new vscode.Range(2, 0, 2, 0), 'a')
             ], precond: [[3, 0]], expectedLogs: [], expectedPrediction: null });
         });
+        it('should detect typing occurred at predicted cursor location', async () => {
+            const logs = setupDetectedTypingLog();
+            setSelections([[2, 0]]);
+
+            typingDetector.start();
+            typingDetector.setPrediction(textEditor, TestUtil.arrayToSelections([[3, 0]]));
+            typingDetector.processDocumentChangeEvent({
+                document: textEditor.document,
+                contentChanges: [
+                    makeContentChange(new vscode.Range(3, 0, 3, 0), 'a')
+                ]
+            });
+            typingDetector.stop();
+
+            checkResult(logs, { expectedLogs: [[0, 'a']], expectedPrediction: [[3, 1]] });
+        });
+        it('should detect typing occurred after failed prediction', async () => {
+            const logs = setupDetectedTypingLog();
+            setSelections([[2, 0], [3, 0]]);
+
+            typingDetector.start();
+            typingDetector.setPrediction(textEditor, TestUtil.arrayToSelections([[4, 0], [5, 0], [6, 0]]));
+            setSelections([[3, 0], [4, 0]]); // prediction failure
+            typingDetector.processSelectionChangeEvent({
+                textEditor,
+                selections: textEditor.selections
+            });
+            typingDetector.processDocumentChangeEvent({
+                document: textEditor.document,
+                contentChanges: [
+                    makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
+                    makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
+                ]
+            });
+            typingDetector.stop();
+
+            checkResult(logs, { expectedLogs: [[0, 'a']], expectedPrediction: [[3, 1], [4, 1]] });
+        });
         it('should detect typing with multiple characters', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'abc')
