@@ -103,19 +103,19 @@ const CursorMotionDetector = function() {
         );
     };
     const detectImplicitMotion = function(document, actual, expected) {
-        const motion = calculateMotion(document, actual[0], expected[0]);
-        if (motion) {
-            const isUniformCursorMotion = (
-                actual.length === expected.length &&
-                actual.every((sel,i) => (
+        if (actual.length === expected.length) {
+            const motion = calculateMotion(document, actual[0], expected[0]);
+            if (motion) {
+                if (actual.every((sel, i) => (
+                    i === 0 ||
                     equalsMotion(
                         calculateMotion(document, sel, expected[i]),
                         motion
                     )
-                ))
-            );
-            if (isUniformCursorMotion) {
-                return motion;
+                ))) {
+                    // found uniform cursor motion
+                    return motion;
+                }
             }
         }
     };
