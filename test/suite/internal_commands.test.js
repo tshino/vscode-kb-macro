@@ -183,7 +183,13 @@ describe('internalCommands', () => {
             assert.strictEqual(textEditor.document.lineAt(20).text, ' XY XYeXYgh');
             assert.deepStrictEqual(getSelections(), [[20, 3], [20, 6], [20, 9]]);
         });
-        // TODO: add more tests with 'deleteLeft' option
+        it('should stop deleting at the beginning of the line', async () => {
+            setSelections([[10, 2]]);
+            await internalCommands.performType({ deleteLeft: 4, text: 'AB' });
+
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'ABcd');
+            assert.deepStrictEqual(getSelections(), [[10, 2]]);
+        });
     });
 
     describe('performCursorMotion (horizontal motion)', () => {
