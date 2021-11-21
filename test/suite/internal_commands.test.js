@@ -276,4 +276,34 @@ describe('internalCommands', () => {
             assert.deepStrictEqual(getSelections(), [[3, 1, 3, 4], [4, 1, 4, 4]]);
         });
     });
+
+    describe('performCursorMotion (split into multiple cursors)', () => {
+        before(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n'.repeat(10) +
+                'fghij klmno\n'.repeat(10)
+            ));
+        });
+        it('should split cursor into multiple cursors', async () => {
+            setSelections([[3, 4]]);
+            await internalCommands.performCursorMotion({ characterDelta: [ -3, -1 ] });
+            assert.deepStrictEqual(getSelections(), [[3, 1], [3, 3]]);
+        });
+        it('should split cursor into multiple cursors (with lineDelta)', async () => {
+            setSelections([[3, 4]]);
+            await internalCommands.performCursorMotion({
+                characterDelta: [ -3, -1 ],
+                lineDelta: [ -1, -2 ]
+            });
+            assert.deepStrictEqual(getSelections(), [[2, 2], [1, 4]]);
+        });
+        it('should split cursor into multiple cursors (with selectionLength)', async () => {
+            setSelections([[3, 4]]);
+            await internalCommands.performCursorMotion({
+                characterDelta: [ -3, -1 ],
+                selectionLength: 1
+            });
+            assert.deepStrictEqual(getSelections(), [[3, 1, 3, 2], [3, 3, 3, 4]]);
+        });
+    });
 });
