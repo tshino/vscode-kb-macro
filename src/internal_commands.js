@@ -92,6 +92,8 @@ const internalCommands = (function() {
         const selectionLength = args.selectionLength || 0;
 
         if (Array.isArray(characterDelta)) {
+            // Splitting motion
+            // Each cursor splits into n cursors and goes to locations specified by the args.
             const n = characterDelta.length;
             if (!Array.isArray(lineDelta)) {
                 lineDelta = Array(n).fill(lineDelta);
@@ -105,6 +107,8 @@ const internalCommands = (function() {
             });
             textEditor.selections = newSelections;
         } else {
+            // Unifor motion
+            // Each cursor moves with the same delta specified by the args.
             const newSelections = Array.from(textEditor.selections).map(sel => {
                 const start = translate(document, sel.start, lineDelta, characterDelta);
                 const end = translate(document, start, 0, selectionLength);
