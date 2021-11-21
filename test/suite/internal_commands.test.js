@@ -108,7 +108,14 @@ describe('internalCommands', () => {
             assert.strictEqual(textEditor.document.lineAt(23).text, 'bye');
             assert.deepStrictEqual(getSelections(), [[1, 3], [12, 3], [23, 3]]);
         });
-        it('should replace every selected range with a text', async () => {
+        it('should insert a text into each location of multi-cursor (4)', async () => {
+            setSelections([[25, 0], [25, 4], [25, 8]]);
+            await internalCommands.performType({ text: 'X' });
+
+            assert.strictEqual(textEditor.document.lineAt(25).text, 'X    XefghX');
+            assert.deepStrictEqual(getSelections(), [[25, 1], [25, 6], [25, 11]]);
+        });
+        it('should replace every selected range with a text (1)', async () => {
             setSelections([[0, 0, 2, 0], [10, 4, 12, 0], [20, 8, 22, 4]]);
             await internalCommands.performType({ text: '99\n00' });
 
@@ -119,6 +126,30 @@ describe('internalCommands', () => {
             assert.strictEqual(textEditor.document.lineAt(18).text, '    efgh99');
             assert.strictEqual(textEditor.document.lineAt(19).text, '00efgh');
             assert.deepStrictEqual(getSelections(), [[1, 2], [10, 2], [19, 2]]);
+        });
+        it('should replace every selected range with a text (2)', async () => {
+            setSelections([[25, 0, 25, 2], [25, 3, 25, 5], [25, 6, 25, 8]]);
+            await internalCommands.performType({ text: 'X' });
+
+            assert.strictEqual(textEditor.document.lineAt(25).text, 'X XfX');
+            assert.deepStrictEqual(getSelections(), [[25, 1], [25, 3], [25, 5]]);
+        });
+        it('should replace every selected range with a text (3)', async () => {
+            setSelections([[25, 2, 26, 0], [26, 4, 27, 2], [27, 6, 28, 4]]);
+            await internalCommands.performType({ text: 'X' });
+
+            assert.strictEqual(textEditor.document.lineAt(25).text, '  X    X  efXefgh');
+            assert.deepStrictEqual(getSelections(), [[25, 3], [25, 8], [25, 13]]);
+        });
+        it('should replace every selected range with a text (4)', async () => {
+            setSelections([[25, 0, 25, 1], [25, 3, 25, 4], [25, 6, 25, 7]]);
+            await internalCommands.performType({ text: 'X\nYZ' });
+
+            assert.strictEqual(textEditor.document.lineAt(25).text, 'X');
+            assert.strictEqual(textEditor.document.lineAt(26).text, 'YZ  X');
+            assert.strictEqual(textEditor.document.lineAt(27).text, 'YZefX');
+            assert.strictEqual(textEditor.document.lineAt(28).text, 'YZh');
+            assert.deepStrictEqual(getSelections(), [[26, 2], [27, 2], [28, 2]]);
         });
     });
 
@@ -137,13 +168,20 @@ describe('internalCommands', () => {
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abCDEFG');
             assert.deepStrictEqual(getSelections(), [[10, 7]]);
         });
-        it('should delete left-hand side characters and insert a text with multi-cursor', async () => {
+        it('should delete left-hand side characters and insert a text with multi-cursor (1)', async () => {
             setSelections([[10, 4], [11, 4]]);
             await internalCommands.performType({ deleteLeft: 2, text: 'CDEFG' });
 
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abCDEFG');
             assert.strictEqual(textEditor.document.lineAt(11).text, 'abCDEFG');
             assert.deepStrictEqual(getSelections(), [[10, 7], [11, 7]]);
+        });
+        it('should delete left-hand side characters and insert a text with multi-cursor (2)', async () => {
+            setSelections([[20, 2], [20, 4], [20, 6]]);
+            await internalCommands.performType({ deleteLeft: 1, text: 'XY' });
+
+            assert.strictEqual(textEditor.document.lineAt(20).text, ' XY XYeXYgh');
+            assert.deepStrictEqual(getSelections(), [[20, 3], [20, 6], [20, 9]]);
         });
         // TODO: add more tests with 'deleteLeft' option
     });

@@ -17,13 +17,19 @@ const internalCommands = (function() {
         const numDeleteLeft = (args && args.deleteLeft) || 0;
         const numLF = Array.from(text).filter(ch => ch === '\n').length;
         const lenLastLine = numLF === 0 ? 0 : text.length - (text.lastIndexOf('\n') + 1);
-        let lineOffset = 0;
         const newSelections = [];
         await textEditor.edit(edit => {
+            let lineOffset = 0, lastLine = 0, characterOffset = 0;
             for (let i = 0; i < indices.length; i++) {
-                const selection = textEditor.selections[indices[i]];
-                let pos = selection.active;
+                let selection = textEditor.selections[indices[i]];
+                if (0 < numDeleteLeft) {
+                    selection = new vscode.Selection(selection.active, selection.active);
+                }
+                let pos = selection.start;
                 let removedLineCount = 0;
+                if (lastLine !== pos.line) {
+                    characterOffset = 0;
+                }
                 if (0 < numDeleteLeft) {
                     let range = new vscode.Range(
                         new vscode.Position(
@@ -33,22 +39,25 @@ const internalCommands = (function() {
                         pos
                     );
                     edit.delete(range);
+                    characterOffset -= range.end.character - range.start.character;
                 } else if (!selection.isEmpty) {
                     edit.delete(selection);
-                    pos = selection.start;
                     removedLineCount = selection.end.line - selection.start.line;
                 }
                 edit.insert(pos, text);
                 lineOffset += numLF;
                 if (numLF === 0) {
+                    characterOffset += text.length;
                     pos = new vscode.Position(
                         pos.line + lineOffset,
-                        Math.max(0, pos.character - numDeleteLeft) + text.length
+                        pos.character + characterOffset
                     );
                 } else {
                     pos = new vscode.Position(pos.line + lineOffset, lenLastLine);
                 }
                 lineOffset -= removedLineCount;
+                lastLine = selection.end.line;
+                characterOffset -= selection.end.character - selection.start.character;
                 newSelections[indices[i]] = new vscode.Selection(pos, pos);
             }
         });
