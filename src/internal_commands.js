@@ -25,13 +25,13 @@ const internalCommands = (function() {
                 if (0 < numDeleteLeft) {
                     selection = new vscode.Selection(selection.active, selection.active);
                 }
-                let pos = selection.start;
+                const pos = selection.start;
                 let removedLineCount = 0;
                 if (lastLine !== pos.line) {
                     characterOffset = 0;
                 }
                 if (0 < numDeleteLeft) {
-                    let range = new vscode.Range(
+                    const range = new vscode.Range(
                         new vscode.Position(
                             pos.line,
                             Math.max(0, pos.character - numDeleteLeft)
@@ -48,17 +48,17 @@ const internalCommands = (function() {
                 lineOffset += numLF;
                 if (numLF === 0) {
                     characterOffset += text.length;
-                    pos = new vscode.Position(
-                        pos.line + lineOffset,
-                        pos.character + characterOffset
-                    );
                 } else {
-                    pos = new vscode.Position(pos.line + lineOffset, lenLastLine);
+                    characterOffset = lenLastLine - pos.character;
                 }
+                const newPos = new vscode.Position(
+                    pos.line + lineOffset,
+                    pos.character + characterOffset
+                );
+                newSelections[indices[i]] = new vscode.Selection(newPos, newPos);
                 lineOffset -= removedLineCount;
                 lastLine = selection.end.line;
                 characterOffset -= selection.end.character - selection.start.character;
-                newSelections[indices[i]] = new vscode.Selection(pos, pos);
             }
         });
         if (!util.isEqualSelections(textEditor.selections, newSelections)) {
