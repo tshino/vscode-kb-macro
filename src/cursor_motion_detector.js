@@ -102,59 +102,58 @@ const CursorMotionDetector = function() {
             a.selectionLength === b.selectionLength
         );
     };
+
+    const detectUniformMotion = function(document, target, base) {
+        const motion = calculateMotion(document, target[0], base[0]);
+        if (!motion) {
+            return;
+        }
+        for (let i = 1; i < target.length; i++) {
+            if (!equalsMotion(motion, calculateMotion(document, target[i], base[i]))) {
+                return;
+            }
+        }
+        // found uniform motion
+        return motion;
+    };
+    const detectSplittingMotion = function(document, target, base, n) {
+        const motions = [];
+        for (let j = 0; j < n; j++) {
+            motions[j] = calculateMotion(document, target[j], base[0]);
+            if (!motions[j]) {
+                return;
+            }
+            if (motions[j].selectionLength !== motions[0].selectionLength) {
+                return;
+            }
+        }
+        for (let dest = 0; dest < target.length; dest++) {
+            const src = Math.floor(dest / n);
+            const m = calculateMotion(document, target[dest], base[src]);
+            if (!equalsMotion(m, motions[dest % n])) {
+                return;
+            }
+        }
+        // found uniform splitting motion
+        const motion = {
+            characterDelta: motions.map(m => m.characterDelta)
+        };
+        if ('lineDelta' in motions[0]) {
+            motion.lineDelta = motions.map(m => m.lineDelta);
+        }
+        if ('selectionLength' in motions[0]) {
+            motion.selectionLength = motions[0].selectionLength;
+        }
+        return motion;
+    };
+
     const detectImplicitMotion = function(document, actual, expected) {
+        if (actual.length === expected.length) {
+            return detectUniformMotion(document, actual, expected);
+        }
         if (actual.length % expected.length === 0) {
             const n = actual.length / expected.length;
-            if (n === 1) {
-                const motion = calculateMotion(document, actual[0], expected[0]);
-                if (motion && actual.every((sel, i) => (
-                    i === 0 ||
-                    equalsMotion(
-                        calculateMotion(document, sel, expected[i]),
-                        motion
-                    )
-                ))) {
-                    // found uniform cursor motion
-                    return motion;
-                }
-            } else { // splitting cursor into multi-cursor ?
-                const motions = [];
-                for (let i = 0; i < expected.length; i++) {
-                    for (let j = 0; j < n; j++) {
-                        const dest = i * n + j;
-                        const m = calculateMotion(document, actual[dest], expected[i]);
-                        if (!m) {
-                            return;
-                        }
-                        if (i === 0) {
-                            motions[j] = m;
-                        } else {
-                            if (!equalsMotion(m, motions[j])) {
-                                return;
-                            }
-                        }
-                    }
-                    if (1 < n && i === 0 && 'selectionLength' in motions[0]) {
-                        // selectionLength must be uniform among split cursors
-                        if (!motions.every((m, j) => (
-                            m.selectionLength === motions[0].selectionLength
-                        ))) {
-                            return;
-                        }
-                    }
-                }
-                // found uniform splitting motion
-                const motion = {
-                    characterDelta: motions.map(m => m.characterDelta)
-                };
-                if ('lineDelta' in motions[0]) {
-                    motion.lineDelta = motions.map(m => m.lineDelta);
-                }
-                if ('selectionLength' in motions[0]) {
-                    motion.selectionLength = motions[0].selectionLength;
-                }
-                return motion;
-            }
+            return detectSplittingMotion(document, actual, expected, n);
         }
     };
     const detectAndRecordImplicitMotion = function(event) {
