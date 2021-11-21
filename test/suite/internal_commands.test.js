@@ -350,4 +350,32 @@ describe('internalCommands', () => {
             assert.deepStrictEqual(getSelections(), [[3, 1, 3, 2], [3, 3, 3, 4]]);
         });
     });
+    describe('performCursorMotion (motion with grouped cursors)', () => {
+        before(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                'abcde\n'.repeat(10) +
+                'fghij klmno\n'.repeat(10)
+            ));
+        });
+        it('should move cursors each with group of cursors', async () => {
+            setSelections([[10, 2], [11, 7], [13, 2], [14, 7]]);
+            await internalCommands.performCursorMotion({ characterDelta: 5, groupSize: 2 });
+            assert.deepStrictEqual(getSelections(), [[10, 7], [13, 7]]);
+        });
+        it('should move cursors each with group of cursors', async () => {
+            setSelections([[10, 2], [11, 7], [13, 2], [14, 7]]);
+            await internalCommands.performCursorMotion({ characterDelta: [5, 3], lineDelta: [0, 1], groupSize: 2 });
+            assert.deepStrictEqual(getSelections(), [[10, 7], [11, 3], [13, 7], [14, 3]]);
+        });
+        it('should ignore if groupSize is invalid (1)', async () => {
+            setSelections([[10, 2]]);
+            await internalCommands.performCursorMotion({ characterDelta: 5, groupSize: 2 });
+            assert.deepStrictEqual(getSelections(), [[10, 2]]);
+        });
+        it('should ignore if groupSize is invalid (2)', async () => {
+            setSelections([[10, 2], [11, 2], [12, 2], [13, 2]]);
+            await internalCommands.performCursorMotion({ characterDelta: 5, groupSize: 3 });
+            assert.deepStrictEqual(getSelections(), [[10, 2], [11, 2], [12, 2], [13, 2]]);
+        });
+    });
 });
