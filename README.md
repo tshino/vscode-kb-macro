@@ -123,7 +123,7 @@ Following keybindings are the default keybinding for recording/playback of this 
 
 ## Known issues
 - Keyboard shortcuts that VS Code newly introduced may not be supported by this extension. Because this extension is configured with a fixed set of wrapper keybindings based on a particular version of VS Code for Windows, Linux, and macOS.
-- This extension is tested mainly on Windows at this moment.
+- This extension is intended to work with VS Code on Windows, Linux, and macOS, but is tested mainly on Windows at this moment.
 
 ## Design details
 
