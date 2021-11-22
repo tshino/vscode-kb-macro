@@ -219,7 +219,15 @@
 				"args": {
 					"command": "workbench.action.terminal.hideFind"
 				},
-				"when": "kb-macro.recording && terminalFindVisible && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFindVisible && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindVisible && terminalFocus && terminalProcessSupported"
+			},
+			{
+				"key": "shift+escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.hideFind"
+				},
+				"when": "kb-macro.recording && isMac && terminalFindVisible && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "shift+escape",
@@ -509,7 +517,7 @@
 				"args": {
 					"command": "workbench.action.terminal.clearSelection"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && terminalTextSelected && !terminalFindVisible"
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated && terminalTextSelected && !terminalFindVisible || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && terminalTextSelected && !terminalFindVisible"
 			},
 			{
 				"key": "escape",
@@ -517,7 +525,23 @@
 				"args": {
 					"command": "workbench.action.terminal.hideFind"
 				},
-				"when": "kb-macro.recording && terminalFindVisible && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFindVisible && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindVisible && terminalFocus && terminalProcessSupported"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.clearSelection"
+				},
+				"when": "kb-macro.recording && isMac && terminalFocus && terminalProcessSupported && terminalTextSelected && !terminalFindVisible"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.hideFind"
+				},
+				"when": "kb-macro.recording && isMac && terminalFindVisible && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "escape",
@@ -607,6 +631,14 @@
 				},
 				"when": "kb-macro.recording && textInputFocus",
 				"mac": "cmd+down"
+			},
+			{
+				"key": "ctrl+end",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "interactive.scrollToBottom"
+				},
+				"when": "kb-macro.recording && !isMac && resourceScheme == 'vscode-interactive'"
 			},
 			{
 				"key": "cmd+down",
@@ -1045,8 +1077,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollDownPage"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalAltBufferActive",
-				"mac": "pagedown"
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "pageup",
@@ -1107,8 +1138,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollUpPage"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalAltBufferActive",
-				"mac": "pageup"
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "right",
@@ -1198,6 +1228,14 @@
 				},
 				"when": "kb-macro.recording && textInputFocus",
 				"mac": "cmd+up"
+			},
+			{
+				"key": "ctrl+home",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "interactive.scrollToTop"
+				},
+				"when": "kb-macro.recording && !isMac && resourceScheme == 'vscode-interactive'"
 			},
 			{
 				"key": "cmd+up",
@@ -1447,7 +1485,7 @@
 				"args": {
 					"command": "workbench.action.terminal.killInstance"
 				},
-				"when": "kb-macro.recording && terminalIsOpen && terminalTabsFocus || kb-macro.recording && terminalProcessSupported && terminalTabsFocus"
+				"when": "kb-macro.recording && !isMac && terminalHasBeenCreated && terminalTabsFocus || kb-macro.recording && !isMac && terminalIsOpen && terminalTabsFocus || kb-macro.recording && !isMac && terminalProcessSupported && terminalTabsFocus"
 			},
 			{
 				"key": "cmd+backspace",
@@ -1476,6 +1514,14 @@
 				},
 				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus",
 				"mac": "cmd+backspace"
+			},
+			{
+				"key": "delete",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.killInstance"
+				},
+				"when": "kb-macro.recording && isMac && terminalIsOpen && terminalTabsFocus || kb-macro.recording && isMac && terminalProcessSupported && terminalTabsFocus"
 			},
 			{
 				"key": "delete",
@@ -1757,7 +1803,7 @@
 				"args": {
 					"command": "editor.action.inlineSuggest.commit"
 				},
-				"when": "kb-macro.recording && inlineSuggestionVisible && !editorTabMovesFocus && !inlineSuggestionHasIndentation"
+				"when": "kb-macro.recording && !isMac && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorTabMovesFocus"
 			},
 			{
 				"key": "ctrl+z",
@@ -1931,7 +1977,7 @@
 				"args": {
 					"command": "workbench.action.terminal.findNext"
 				},
-				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported"
 			},
 			{
 				"key": "alt+enter",
@@ -2150,8 +2196,7 @@
 				"args": {
 					"command": "workbench.action.terminal.focusFind"
 				},
-				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "enter",
@@ -2300,7 +2345,7 @@
 				"args": {
 					"command": "workbench.action.terminal.findPrevious"
 				},
-				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported"
 			},
 			{
 				"key": "cmd+down",
@@ -2464,11 +2509,10 @@
 				"args": {
 					"command": "workbench.action.terminal.sendSequence",
 					"args": {
-						"text": "\u001bd"
+						"text": "\r"
 					}
 				},
-				"when": "kb-macro.recording && terminalFocus",
-				"mac": "alt+delete"
+				"when": "kb-macro.recording && !isMac && terminalFocus"
 			},
 			{
 				"key": "ctrl+k ctrl+c",
@@ -2556,8 +2600,15 @@
 				"args": {
 					"command": "problems.action.copy"
 				},
-				"when": "kb-macro.recording && problemFocus",
-				"mac": "cmd+c"
+				"when": "kb-macro.recording && !isMac && problemsVisibility && !relatedInformationFocus && focusedView == 'workbench.panel.markers.view'"
+			},
+			{
+				"key": "cmd+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "problems.action.copy"
+				},
+				"when": "kb-macro.recording && problemFocus"
 			},
 			{
 				"key": "ctrl+c",
@@ -2574,7 +2625,7 @@
 				"args": {
 					"command": "workbench.action.terminal.copySelection"
 				},
-				"when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && terminalTextSelected"
+				"when": "kb-macro.recording && isWindows && terminalFocus && terminalHasBeenCreated && terminalTextSelected || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && terminalTextSelected"
 			},
 			{
 				"key": "cmd+c",
@@ -2671,7 +2722,7 @@
 				"args": {
 					"command": "workbench.action.terminal.paste"
 				},
-				"when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.recording && isWindows && terminalFocus && terminalHasBeenCreated || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+v",
@@ -3105,21 +3156,12 @@
 				"when": "kb-macro.recording && scmRepository"
 			},
 			{
-				"key": "alt+cmd+right",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.nextEditor"
-				},
-				"when": "kb-macro.recording"
-			},
-			{
 				"key": "alt+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.focusNextPane"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported",
-				"mac": "alt+cmd+right"
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "alt+up",
@@ -3162,21 +3204,12 @@
 				"when": "kb-macro.recording && scmRepository"
 			},
 			{
-				"key": "alt+cmd+left",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.previousEditor"
-				},
-				"when": "kb-macro.recording"
-			},
-			{
 				"key": "alt+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.focusPreviousPane"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported",
-				"mac": "alt+cmd+left"
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+k ctrl+d",
@@ -3201,7 +3234,7 @@
 				"args": {
 					"command": "workbench.action.terminal.findNext"
 				},
-				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+f3",
@@ -3251,7 +3284,7 @@
 				"args": {
 					"command": "workbench.action.terminal.findPrevious"
 				},
-				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+shift+f3",
@@ -3310,8 +3343,23 @@
 				"args": {
 					"command": "workbench.action.terminal.renameInstance"
 				},
-				"when": "kb-macro.recording && terminalProcessSupported && terminalTabsFocus && terminalTabsSingularSelection",
-				"mac": "enter"
+				"when": "kb-macro.recording && !isMac && terminalHasBeenCreated && terminalTabsFocus && terminalTabsSingularSelection || kb-macro.recording && !isMac && terminalProcessSupported && terminalTabsFocus && terminalTabsSingularSelection"
+			},
+			{
+				"key": "enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.findPrevious"
+				},
+				"when": "kb-macro.recording && isMac && terminalFindFocused && terminalProcessSupported"
+			},
+			{
+				"key": "enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.renameInstance"
+				},
+				"when": "kb-macro.recording && isMac && terminalProcessSupported && terminalTabsFocus && terminalTabsSingularSelection"
 			},
 			{
 				"key": "f2",
@@ -3487,7 +3535,7 @@
 				"args": {
 					"command": "workbench.action.terminal.sizeToContentWidth"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalIsOpen && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated && terminalIsOpen || kb-macro.recording && !isMac && terminalFocus && terminalIsOpen && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+shift+space",
@@ -3663,6 +3711,14 @@
 				"key": "ctrl+shift+v",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.terminal.paste"
+				},
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
+			},
+			{
+				"key": "ctrl+shift+v",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "markdown.showPreview"
 				},
 				"when": "kb-macro.recording && !notebookEditorFocused && editorLangId == 'markdown'",
@@ -3774,8 +3830,7 @@
 				"args": {
 					"command": "workbench.action.terminal.toggleFindCaseSensitive"
 				},
-				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported",
-				"mac": "alt+cmd+c"
+				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "alt+l",
@@ -3836,8 +3891,7 @@
 				"args": {
 					"command": "workbench.action.terminal.toggleFindRegex"
 				},
-				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported",
-				"mac": "alt+cmd+r"
+				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "alt+w",
@@ -3872,8 +3926,7 @@
 				"args": {
 					"command": "workbench.action.terminal.toggleFindWholeWord"
 				},
-				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported",
-				"mac": "alt+cmd+w"
+				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "alt+p",
@@ -3909,12 +3962,13 @@
 				"mac": "cmd+pagedown"
 			},
 			{
-				"key": "shift+cmd+]",
+				"key": "ctrl+pagedown",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.nextEditor"
 				},
-				"when": "kb-macro.recording"
+				"when": "kb-macro.recording",
+				"mac": "alt+cmd+right"
 			},
 			{
 				"key": "ctrl+pagedown",
@@ -3922,8 +3976,7 @@
 				"args": {
 					"command": "workbench.action.terminal.focusNext"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalEditorFocus",
-				"mac": "shift+cmd+]"
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
 			},
 			{
 				"key": "ctrl+pageup",
@@ -3932,12 +3985,13 @@
 				"mac": "cmd+pageup"
 			},
 			{
-				"key": "shift+cmd+[",
+				"key": "ctrl+pageup",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.previousEditor"
 				},
-				"when": "kb-macro.recording"
+				"when": "kb-macro.recording",
+				"mac": "alt+cmd+left"
 			},
 			{
 				"key": "ctrl+pageup",
@@ -3945,8 +3999,7 @@
 				"args": {
 					"command": "workbench.action.terminal.focusPrevious"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalEditorFocus",
-				"mac": "shift+cmd+["
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
 			},
 			{
 				"key": "ctrl+alt+space",
@@ -4202,21 +4255,12 @@
 				"mac": "cmd+w"
 			},
 			{
-				"key": "cmd+w",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.closeWindow"
-				},
-				"when": "kb-macro.recording && !editorIsOpen && !multipleEditorGroups"
-			},
-			{
 				"key": "ctrl+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.killEditor"
 				},
-				"when": "kb-macro.recording && terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal'",
-				"mac": "cmd+w"
+				"when": "kb-macro.recording && !isMac && terminalEditorFocus && terminalFocus && terminalHasBeenCreated && resourceScheme == 'vscode-terminal' || kb-macro.recording && !isMac && terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal'"
 			},
 			{
 				"key": "ctrl+k ctrl+w",
@@ -4798,12 +4842,28 @@
 				"when": "kb-macro.recording && isWindows"
 			},
 			{
+				"key": "alt+left",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.focusPreviousPane"
+				},
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
+			},
+			{
 				"key": "alt+right",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.navigateForward"
 				},
 				"when": "kb-macro.recording && isWindows"
+			},
+			{
+				"key": "alt+right",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.focusNextPane"
+				},
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+k ctrl+q",
@@ -5127,10 +5187,40 @@
 				"key": "ctrl+shift+c",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.terminal.copySelection"
+				},
+				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated && terminalTextSelected || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && terminalTextSelected"
+			},
+			{
+				"key": "ctrl+shift+c",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.terminal.openNativeConsole"
 				},
 				"when": "kb-macro.recording && !terminalFocus",
 				"mac": "shift+cmd+c"
+			},
+			{
+				"key": "ctrl+shift+2",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.sendSequence",
+					"args": {
+						"text": "\u0000"
+					}
+				},
+				"when": "kb-macro.recording && !isMac && terminalFocus"
+			},
+			{
+				"key": "ctrl+shift+6",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.sendSequence",
+					"args": {
+						"text": "\u001e"
+					}
+				},
+				"when": "kb-macro.recording && !isMac && terminalFocus"
 			},
 			{
 				"key": "ctrl+shift+5",
@@ -5454,7 +5544,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollToBottom"
 				},
-				"when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+				"when": "kb-macro.recording && isWindows && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "ctrl+shift+alt+down",
@@ -5558,7 +5648,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollDown"
 				},
-				"when": "kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+				"when": "kb-macro.recording && isLinux && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "shift+end",
@@ -5566,7 +5656,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollToBottom"
 				},
-				"when": "kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+				"when": "kb-macro.recording && isLinux && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "shift+home",
@@ -5574,7 +5664,23 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollToTop"
 				},
-				"when": "kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+				"when": "kb-macro.recording && isLinux && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+			},
+			{
+				"key": "pagedown",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.scrollDownPage"
+				},
+				"when": "kb-macro.recording && isMac && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+			},
+			{
+				"key": "pageup",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.scrollUpPage"
+				},
+				"when": "kb-macro.recording && isMac && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "ctrl+home",
@@ -5582,7 +5688,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollToTop"
 				},
-				"when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+				"when": "kb-macro.recording && isWindows && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "ctrl+shift+up",
@@ -5606,7 +5712,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollUp"
 				},
-				"when": "kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+				"when": "kb-macro.recording && isLinux && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "ctrl+a",
@@ -5615,6 +5721,22 @@
 					"command": "cursorLineStart"
 				},
 				"when": "kb-macro.recording && isMac && textInputFocus"
+			},
+			{
+				"key": "tab",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.inlineSuggest.commit"
+				},
+				"when": "kb-macro.recording && isMac && inlineSuggestionVisible && !editorTabMovesFocus && !inlineSuggestionHasIndentation"
+			},
+			{
+				"key": "shift+enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.findNext"
+				},
+				"when": "kb-macro.recording && isMac && terminalFindFocused && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+f",
@@ -5646,7 +5768,7 @@
 				"args": {
 					"command": "workbench.action.terminal.resizePaneRight"
 				},
-				"when": "kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.recording && isLinux && terminalFocus && terminalHasBeenCreated || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+shift+right",
@@ -5678,7 +5800,7 @@
 				"args": {
 					"command": "workbench.action.terminal.resizePaneLeft"
 				},
-				"when": "kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.recording && isLinux && terminalFocus && terminalHasBeenCreated || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+shift+left",
@@ -5746,7 +5868,7 @@
 				"args": {
 					"command": "workbench.action.terminal.pasteSelection"
 				},
-				"when": "kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.recording && isLinux && terminalFocus && terminalHasBeenCreated || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+oem_2",
@@ -5760,6 +5882,17 @@
 				"key": "ctrl+oem_2",
 				"command": "toggleExplainMode",
 				"when": "kb-macro.recording && isWindows && suggestWidgetVisible"
+			},
+			{
+				"key": "ctrl+oem_2",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.sendSequence",
+					"args": {
+						"text": "\u001f"
+					}
+				},
+				"when": "kb-macro.recording && isWindows && terminalFocus"
 			},
 			{
 				"key": "ctrl+shift+oem_period",
@@ -5847,7 +5980,15 @@
 				"args": {
 					"command": "workbench.action.terminal.focusTabs"
 				},
-				"when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isWindows && terminalProcessSupported && terminalTabsFocus"
+				"when": "kb-macro.recording && isWindows && terminalFocus && terminalHasBeenCreated || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported || kb-macro.recording && isWindows && terminalHasBeenCreated && terminalTabsFocus || kb-macro.recording && isWindows && terminalProcessSupported && terminalTabsFocus"
+			},
+			{
+				"key": "f3",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.findNext"
+				},
+				"when": "kb-macro.recording && isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+oem_4",
@@ -5856,6 +5997,14 @@
 					"command": "editor.action.outdentLines"
 				},
 				"when": "kb-macro.recording && isWindows && editorTextFocus && !editorReadonly"
+			},
+			{
+				"key": "shift+f3",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.findPrevious"
+				},
+				"when": "kb-macro.recording && isMac && terminalFindFocused && terminalProcessSupported || kb-macro.recording && isMac && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+oem_period",
@@ -5896,6 +6045,14 @@
 					"command": "deleteLeft"
 				},
 				"when": "kb-macro.recording && isMac && textInputFocus"
+			},
+			{
+				"key": "alt+z",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.sizeToContentWidth"
+				},
+				"when": "kb-macro.recording && isMac && terminalFocus && terminalIsOpen && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+shift+oem_4",
@@ -6016,6 +6173,17 @@
 					"command": "increaseSearchEditorContextLines"
 				},
 				"when": "kb-macro.recording && isWindows && inSearchEditor"
+			},
+			{
+				"key": "alt+delete",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.sendSequence",
+					"args": {
+						"text": "\u001bd"
+					}
+				},
+				"when": "kb-macro.recording && isMac && terminalFocus"
 			},
 			{
 				"key": "shift+alt+win+j",
@@ -6231,7 +6399,7 @@
 				"args": {
 					"command": "workbench.action.terminal.killEditor"
 				},
-				"when": "kb-macro.recording && isWindows && terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal'"
+				"when": "kb-macro.recording && isWindows && terminalEditorFocus && terminalFocus && terminalHasBeenCreated && resourceScheme == 'vscode-terminal' || kb-macro.recording && isWindows && terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal'"
 			},
 			{
 				"key": "ctrl+n",
@@ -6417,7 +6585,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollDown"
 				},
-				"when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+				"when": "kb-macro.recording && isWindows && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "ctrl+alt+pageup",
@@ -6425,7 +6593,7 @@
 				"args": {
 					"command": "workbench.action.terminal.scrollUp"
 				},
-				"when": "kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
+				"when": "kb-macro.recording && isWindows && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && isWindows && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
 			},
 			{
 				"key": "ctrl+oem_3",
@@ -6561,6 +6729,17 @@
 				"when": "kb-macro.recording && isLinux && suggestWidgetVisible"
 			},
 			{
+				"key": "ctrl+/",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.sendSequence",
+					"args": {
+						"text": "\u001f"
+					}
+				},
+				"when": "kb-macro.recording && isLinux && terminalFocus"
+			},
+			{
 				"key": "ctrl+shift+[IntlBackslash]",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -6646,7 +6825,7 @@
 				"args": {
 					"command": "workbench.action.terminal.focusTabs"
 				},
-				"when": "kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalProcessSupported && terminalTabsFocus"
+				"when": "kb-macro.recording && isLinux && terminalFocus && terminalHasBeenCreated || kb-macro.recording && isLinux && terminalFocus && terminalProcessSupported || kb-macro.recording && isLinux && terminalHasBeenCreated && terminalTabsFocus || kb-macro.recording && isLinux && terminalProcessSupported && terminalTabsFocus"
 			},
 			{
 				"key": "ctrl+[",
@@ -7237,6 +7416,14 @@
 				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported"
 			},
 			{
+				"key": "cmd+f",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.focusFind"
+				},
+				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported"
+			},
+			{
 				"key": "cmd+e",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7557,6 +7744,30 @@
 				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
+				"key": "alt+cmd+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.toggleFindCaseSensitive"
+				},
+				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported"
+			},
+			{
+				"key": "alt+cmd+r",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.toggleFindRegex"
+				},
+				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported"
+			},
+			{
+				"key": "alt+cmd+w",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.toggleFindWholeWord"
+				},
+				"when": "kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalProcessSupported"
+			},
+			{
 				"key": "cmd+[Quote]",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7757,6 +7968,22 @@
 				"when": "kb-macro.recording"
 			},
 			{
+				"key": "cmd+w",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.closeWindow"
+				},
+				"when": "kb-macro.recording && !editorIsOpen && !multipleEditorGroups"
+			},
+			{
+				"key": "cmd+w",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.killEditor"
+				},
+				"when": "kb-macro.recording && terminalEditorFocus && terminalFocus && terminalProcessSupported && resourceScheme == 'vscode-terminal'"
+			},
+			{
 				"key": "alt+cmd+t",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7805,6 +8032,30 @@
 				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported"
 			},
 			{
+				"key": "shift+cmd+]",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.nextEditor"
+				},
+				"when": "kb-macro.recording"
+			},
+			{
+				"key": "shift+cmd+]",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.focusNext"
+				},
+				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+			},
+			{
+				"key": "alt+cmd+right",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.focusNextPane"
+				},
+				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported"
+			},
+			{
 				"key": "cmd+,",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7819,6 +8070,30 @@
 					"command": "workbench.action.output.toggleOutput"
 				},
 				"when": "kb-macro.recording && workbench.panel.output.active"
+			},
+			{
+				"key": "shift+cmd+[",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.previousEditor"
+				},
+				"when": "kb-macro.recording"
+			},
+			{
+				"key": "shift+cmd+[",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.focusPrevious"
+				},
+				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+			},
+			{
+				"key": "alt+cmd+left",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.focusPreviousPane"
+				},
+				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "cmd+q",
