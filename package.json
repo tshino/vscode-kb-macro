@@ -35,7 +35,7 @@
 		"gen-wrapper": "node ./generator/gen_wrapper.js"
 	},
 	"devDependencies": {
-		"eslint": "^8.2.0",
+		"eslint": "^8.3.0",
 		"glob": "^7.2.0",
 		"mocha": "^9.1.3",
 		"vscode-test": "^1.6.1",
