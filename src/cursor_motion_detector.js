@@ -138,8 +138,8 @@ const CursorMotionDetector = function() {
         const motion = {
             characterDelta: motions.map(m => m.characterDelta)
         };
-        if ('lineDelta' in motions[0]) {
-            motion.lineDelta = motions.map(m => m.lineDelta);
+        if (motions.some(m => 'lineDelta' in m)) {
+            motion.lineDelta = motions.map(m => m.lineDelta || 0);
         }
         if ('selectionLength' in motions[0]) {
             motion.selectionLength = motions[0].selectionLength;
@@ -147,7 +147,7 @@ const CursorMotionDetector = function() {
         return motion;
     };
 
-    const detectImplicitMotion = function(document, actual, expected) {
+    const detectImplicitMotionWithoutGroup = function(document, actual, expected) {
         if (actual.length === expected.length) {
             return detectUniformMotion(document, actual, expected);
         }
@@ -156,6 +156,22 @@ const CursorMotionDetector = function() {
             return detectSplittingMotion(document, actual, expected, n);
         }
     };
+
+    const detectImplicitMotion = function(document, actual, expected) {
+        for (let groupSize = 1; groupSize <= expected.length; groupSize++) {
+            if (expected.length % groupSize === 0) {
+                const base = expected.filter((_,i) => i % groupSize === 0);
+                const motion = detectImplicitMotionWithoutGroup(document, actual, base);
+                if (motion) {
+                    if (1 < groupSize) {
+                        motion.groupSize = groupSize;
+                    }
+                    return motion;
+                }
+            }
+        }
+    };
+
     const detectAndRecordImplicitMotion = function(event) {
         // console.log('cursor', selectionsToString(lastSelections), selectionsToString(event.selections));
         const document = event.textEditor.document;
