@@ -147,13 +147,13 @@ const CursorMotionDetector = function() {
         return motion;
     };
 
-    const detectImplicitMotionWithoutGroup = function(document, actual, expected) {
-        if (actual.length === expected.length) {
-            return detectUniformMotion(document, actual, expected);
+    const detectImplicitMotionWithoutGroup = function(document, target, base) {
+        if (target.length === base.length) {
+            return detectUniformMotion(document, target, base);
         }
-        if (actual.length % expected.length === 0) {
-            const n = actual.length / expected.length;
-            return detectSplittingMotion(document, actual, expected, n);
+        if (target.length % base.length === 0) {
+            const n = target.length / base.length;
+            return detectSplittingMotion(document, target, base, n);
         }
     };
 
