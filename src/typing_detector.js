@@ -42,23 +42,31 @@ const TypingDetector = function() {
     };
 
     const makePrediction = function(changes) {
-        let sels = [], lineOffset = 0;
-        for (let i = 0; i < changes.length; i++) {
-            let chg = changes[i];
-            let pos = chg.range.start.translate({
-                lineDelta: lineOffset,
-                characterDelta: chg.text.length
-            });
+        let lineOffset = 0, lastLine = 0, characterOffset = 0;
+        const newSelections = changes.map(chg => {
+            const pos = chg.range.start;
             const numLF = Array.from(chg.text).filter(ch => ch === '\n').length;
-            if (0 < numLF) {
-                const lenLastLine = chg.text.length - (chg.text.lastIndexOf('\n') + 1);
-                pos = new vscode.Position(pos.line + numLF, lenLastLine);
-                lineOffset += numLF;
+            if (lastLine !== pos.line) {
+                characterOffset = 0;
             }
+            lineOffset += numLF;
+            if (numLF === 0) {
+                characterOffset += chg.text.length;
+            } else {
+                const lenLastLine = chg.text.length - (chg.text.lastIndexOf('\n') + 1);
+                characterOffset = lenLastLine - pos.character;
+            }
+            const newPos = new vscode.Position(
+                pos.line + lineOffset,
+                pos.character + characterOffset
+            );
+            const newSelection = new vscode.Selection(newPos, newPos);
             lineOffset -= chg.range.end.line - chg.range.start.line;
-            sels[i] = new vscode.Selection(pos, pos);
-        }
-        return sels;
+            lastLine = chg.range.end.line;
+            characterOffset -= chg.range.end.character - chg.range.start.character;
+            return newSelection;
+        });
+        return newSelections;
     };
     const makePredictionOnBracketCompletion = function(changes) {
         const sels = [];

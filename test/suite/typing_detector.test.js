@@ -180,6 +180,12 @@ describe('TypingDetector', () => {
                 makeContentChange(new vscode.Range(4, 0, 4, 0), 'a')
             ], precond: [[3, 0], [4, 0]], expectedLogs: [[0, 'a']], expectedPrediction: [[3, 1], [4, 1]] });
         });
+        it('should detect typing with multi-cursor that occurred in a single line', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(3, 0, 3, 0), 'ab'),
+                makeContentChange(new vscode.Range(3, 4, 3, 4), 'ab')
+            ], precond: [[3, 0], [3, 4]], expectedLogs: [[0, 'ab']], expectedPrediction: [[3, 2], [3, 8]] });
+        });
         it('should detect typing with multi-cursor that extends backward', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(3, 0, 3, 0), 'a'),
@@ -220,6 +226,13 @@ describe('TypingDetector', () => {
                 makeContentChange(new vscode.Range(13, 1, 13, 3), 'x')
             ], precond: [[12, 1, 12, 3], [13, 1, 13, 3]],
             expectedLogs: [[0, 'x']], expectedPrediction: [[12, 2], [13, 2]] });
+        });
+        it('should detect typing with multiple selections that occurred in a single line', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(22, 1, 22, 3), 'x'),
+                makeContentChange(new vscode.Range(22, 5, 22, 7), 'x')
+            ], precond: [[22, 1, 22, 3], [22, 5, 22, 7]],
+            expectedLogs: [[0, 'x']], expectedPrediction: [[22, 2], [22, 5]] });
         });
         it('should detect typing with multiple selections that are reversed', async () => {
             testDetection({ changes: [
