@@ -126,5 +126,7 @@ Following keybindings are the default keybinding for recording/playback of this 
 - This extension is intended to work with VS Code on Windows, Linux, and macOS, but is tested mainly on Windows at this moment.
 
 ## Design details
-
 See [DESIGN.md](DESIGN.md).
+
+## Change log
+See [CHANGELOG.md](CHANGELOG.md).
