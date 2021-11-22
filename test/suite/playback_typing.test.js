@@ -29,6 +29,20 @@ describe('Recording and Playback: Typing', () => {
         command: 'internal:performCursorMotion',
         args: { lineDelta: down, characterDelta: delta }
     });
+    const SplitMotion = (ch, ln, sel) => {
+        const motion = { characterDelta: ch };
+        if (ln) motion.lineDelta = ln;
+        if (sel) motion.selectionLength = sel;
+        return {
+            command: 'internal:performCursorMotion',
+            args: motion
+        };
+    };
+    const GroupMotion = (size, ch, ln, sel) => {
+        const m = SplitMotion(ch, ln, sel);
+        m.args.groupSize = size;
+        return m;
+    };
 
     const setSelections = async function(array) {
         await awaitController.waitFor('selection', 1).catch(() => {});
@@ -515,7 +529,59 @@ describe('Recording and Playback: Typing', () => {
             assert.strictEqual(textEditor.document.lineAt(9).text, '}');
             assert.deepStrictEqual(getSelections(), [[8, 22]]);
         });
-        // TODO: add tests for snippet insertion with multiple occurences of a placeholder
+        it('should record and playback of snippet insertion (multiple occurrences of a single placeholder)', async () => {
+            await setSelections([[4, 0]]);
+            keyboardMacro.startRecording();
+            await vscode.commands.executeCommand('type', { text: 'for' });
+            await textEditor.edit(edit => {
+                edit.replace(
+                    new vscode.Selection(4, 0, 4, 3),
+                    'for (let index = 0; index < array.length; index++) {\n' +
+                    '    const element = array[index];\n' +
+                    '    \n' +
+                    '}'
+                );
+            });
+            await setSelections([[7, 1]]); // end of the snippet
+            await setSelections([
+                [4, 9, 4, 14], [4, 20, 4, 25], [4, 42, 4, 47], [5, 26, 5, 31]
+            ]); // placeholder 'index'
+            await vscode.commands.executeCommand('type', { text: 'idx' });
+            await setSelections([[4, 12], [4, 21], [4, 41], [5, 29]]);
+            await setSelections([[4, 24, 4, 29], [5, 20, 5, 25]]); // placeholder 'array'
+            await vscode.commands.executeCommand('type', { text: 'ary' });
+            await setSelections([[4, 27], [5, 23]]);
+            await setSelections([[5, 10, 5, 17]]); // placeholder 'element'
+            await vscode.commands.executeCommand('type', { text: 'el' });
+            await setSelections([[5, 12]]);
+            await setSelections([[6, 4]]); // the blank line in the block
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(getSequence(), [
+                Type('for (let index = 0; index < array.length; index++) {\n' +
+                '    const element = array[index];\n' +
+                '    \n' +
+                '}'),
+                SplitMotion([-43, -32, -10, -7], [-3, -3, -3, -2], 5),
+                Type('idx'),
+                GroupMotion(4, [12, 20], [0, 1], 5),
+                Type('ary'),
+                GroupMotion(2, 10, 1, 7),
+                Type('el'),
+                MoveDown(1, 4)
+            ]);
+            assert.strictEqual(textEditor.document.lineAt(4).text, 'for (let idx = 0; idx < ary.length; idx++) {');
+            assert.strictEqual(textEditor.document.lineAt(5).text, '    const el = ary[idx];');
+            assert.strictEqual(textEditor.document.lineAt(6).text, '    ');
+            assert.strictEqual(textEditor.document.lineAt(7).text, '}');
+
+            await setSelections([[8, 0]]);
+            await keyboardMacro.playback();
+            assert.strictEqual(textEditor.document.lineAt(8).text, 'for (let idx = 0; idx < ary.length; idx++) {');
+            assert.strictEqual(textEditor.document.lineAt(9).text, '    const el = ary[idx];');
+            assert.strictEqual(textEditor.document.lineAt(10).text, '    ');
+            assert.strictEqual(textEditor.document.lineAt(11).text, '}');
+            assert.deepStrictEqual(getSelections(), [[10, 4]]);
+        });
     });
 
     describe('typing with IME', () => {
