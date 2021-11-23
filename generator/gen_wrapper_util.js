@@ -1,5 +1,31 @@
 'use strict';
+const fsPromises = require('fs/promises');
 const util = require('util');
+
+async function readJSON(path, options = {}) {
+    const { allowComments } = options;
+    const file = "" + await fsPromises.readFile(path);
+    let json = file;
+    if (allowComments) {
+        json = json.replace(/\/\/.+/g, ''); // skip line comments
+    }
+    const result = JSON.parse(json);
+    return result;
+}
+
+async function writeJSON(path, value) {
+    const json = JSON.stringify(value, null, '\t');
+    await fsPromises.writeFile(path, json + '\n');
+}
+
+async function loadBaseKeybindings(baseKeybindingsConfig) {
+    const base = [];
+    for (const { path, context } of baseKeybindingsConfig) {
+        const keybindings = await readJSON(path, { allowComments: true });
+        base.push({ keybindings, context });
+    }
+    return base;
+}
 
 function addWhenContext(when, context) {
     if (when) {
@@ -322,6 +348,9 @@ function combineBaseKeybingings(baseKeybindings) {
 }
 
 module.exports = {
+    readJSON,
+    writeJSON,
+    loadBaseKeybindings,
     addWhenContext,
     keybindingsContains,
     combineBaseKeybingings

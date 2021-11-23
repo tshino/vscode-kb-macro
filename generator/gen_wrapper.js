@@ -1,53 +1,29 @@
 'use strict';
-const fsPromises = require('fs/promises');
-const { addWhenContext, combineBaseKeybingings } = require('./gen_wrapper_util');
+const genWrapperUtil = require('./gen_wrapper_util');
 
 const PackageJsonPath = './package.json';
 const ConfigPath = 'generator/config.json';
 
-async function readJSON(path, options = {}) {
-    const { allowComments } = options;
-    const file = "" + await fsPromises.readFile(path);
-    let json = file;
-    if (allowComments) {
-        json = json.replace(/\/\/.+/g, ''); // skip line comments
-    }
-    const result = JSON.parse(json);
-    return result;
-}
-
-async function writeJSON(path, value) {
-    const json = JSON.stringify(value, null, '\t');
-    await fsPromises.writeFile(path, json);
-}
-
-function makeCommandSpec(keybinding) {
-    const spec = {
+function makeWrapperArgs(keybinding) {
+    const args = {
         command: keybinding.command
     };
     if ('args' in keybinding) {
-        spec.args = keybinding.args;
+        args.args = keybinding.args;
     }
-    return spec;
+    return args;
 }
 
-async function loadBaseKeybindings(baseKeybindings) {
-    const base = [];
-    for (const item of baseKeybindings) {
-        base.push({
-            keybindings: await readJSON(item['path'], { allowComments: true }),
-            context: item['context']
-        });
-    }
-    return base;
+function makeWrapperWhen(keybinding) {
+    return genWrapperUtil.addWhenContext(keybinding.when, 'kb-macro.recording');
 }
 
 function makeWrapper(keybinding) {
     const wrapped = {
         key: keybinding.key,
         command: 'kb-macro.wrap',
-        args: makeCommandSpec(keybinding),
-        when: addWhenContext(keybinding.when, 'kb-macro.recording')
+        args: makeWrapperArgs(keybinding),
+        when: makeWrapperWhen(keybinding)
     };
     if ('mac' in keybinding) {
         wrapped.mac = keybinding.mac;
@@ -56,21 +32,25 @@ function makeWrapper(keybinding) {
 }
 
 async function main() {
-    const packageJson = await readJSON(PackageJsonPath);
-    const config = await readJSON(ConfigPath);
+    const packageJson = await genWrapperUtil.readJSON(PackageJsonPath);
+    const config = await genWrapperUtil.readJSON(ConfigPath);
 
     const exclusion = new Set(config['exclusion'] || []);
     const awaitOptions = new Map(config['awaitOptions'] || []);
 
-    const baseKeybindings = await loadBaseKeybindings(config['baseKeybindings'] || []);
-    const combined = combineBaseKeybingings(baseKeybindings);
+    const baseKeybindings = await genWrapperUtil.loadBaseKeybindings(config['baseKeybindings'] || []);
+
+    // combine the three sets of default keybindings of VS Code for Windows, Linux, and macOS.
+    const combined = genWrapperUtil.combineBaseKeybingings(baseKeybindings);
 
     const wrappers = combined.map(
         keybinding => {
             if (exclusion.has(keybinding.command)) {
-                keybinding.when = addWhenContext(keybinding.when, 'kb-macro.recording');
+                // make a keybinding of a direct call for the excluded command
+                keybinding.when = makeWrapperWhen(keybinding);
                 return keybinding;
             } else {
+                // make a wrapper keybinding (indirect call) to enable recording of the command
                 const wrapper = makeWrapper(keybinding);
                 if (awaitOptions.has(wrapper.args.command)) {
                     wrapper.args.await = awaitOptions.get(wrapper.args.command);
@@ -87,7 +67,7 @@ async function main() {
         .concat(config['footer'] || [])
     );
 
-    await writeJSON(PackageJsonPath, packageJson);
+    await genWrapperUtil.writeJSON(PackageJsonPath, packageJson);
 }
 
 main();
