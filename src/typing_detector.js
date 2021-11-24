@@ -41,33 +41,6 @@ const TypingDetector = function() {
         cursorMotionDetector.start(vscode.window.activeTextEditor);
     };
 
-    const makePrediction = function(changes) {
-        let lineOffset = 0, lastLine = 0, characterOffset = 0;
-        const newSelections = changes.map(chg => {
-            const pos = chg.range.start;
-            const numLF = Array.from(chg.text).filter(ch => ch === '\n').length;
-            if (lastLine !== pos.line) {
-                characterOffset = 0;
-            }
-            lineOffset += numLF;
-            if (numLF === 0) {
-                characterOffset += chg.text.length;
-            } else {
-                const lenLastLine = chg.text.length - (chg.text.lastIndexOf('\n') + 1);
-                characterOffset = lenLastLine - pos.character;
-            }
-            const newPos = new vscode.Position(
-                pos.line + lineOffset,
-                pos.character + characterOffset
-            );
-            const newSelection = new vscode.Selection(newPos, newPos);
-            lineOffset -= chg.range.end.line - chg.range.start.line;
-            lastLine = chg.range.end.line;
-            characterOffset -= chg.range.end.character - chg.range.start.character;
-            return newSelection;
-        });
-        return newSelections;
-    };
     const makePredictionOnBracketCompletion = function(changes) {
         const sels = [];
         const offset = changes[0].text.length;
@@ -120,7 +93,7 @@ const TypingDetector = function() {
             if (replacesCorrespondingSelection(changes, selections)) {
                 // Every change is a pure insertion of or replacing the corresponding
                 // selected range with a common text.
-                const prediction = makePrediction(changes);
+                const prediction = util.makeSelectionsAfterTyping(changes);
                 if (!util.isEqualSelections(selections, prediction)) {
                     cursorMotionDetector.setPrediction(textEditor, prediction);
                 }
@@ -137,7 +110,7 @@ const TypingDetector = function() {
                 //  3. accept the suggestion
                 //  4. then edit event happens, that replaces 'ar' with 'Array'
                 const deleteLeft = changes[0].rangeLength;
-                const prediction = makePrediction(changes);
+                const prediction = util.makeSelectionsAfterTyping(changes);
                 if (!util.isEqualSelections(selections, prediction)) {
                     cursorMotionDetector.setPrediction(textEditor, prediction);
                 }

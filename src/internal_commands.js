@@ -15,11 +15,9 @@ const internalCommands = (function() {
         const indices = util.makeIndexOfSortedSelections(textEditor.selections);
         const text = (args && args.text) || '';
         const numDeleteLeft = (args && args.deleteLeft) || 0;
-        const numLF = Array.from(text).filter(ch => ch === '\n').length;
-        const lenLastLine = numLF === 0 ? 0 : text.length - (text.lastIndexOf('\n') + 1);
         const newSelections = [];
         await textEditor.edit(edit => {
-            let lineOffset = 0, lastLine = 0, characterOffset = 0;
+            const changes = [];
             for (let i = 0; i < indices.length; i++) {
                 const selection = textEditor.selections[indices[i]];
                 const range = (0 < numDeleteLeft) ? new vscode.Range(
@@ -32,23 +30,11 @@ const internalCommands = (function() {
                     edit.delete(range);
                 }
                 edit.insert(range.start, text);
-                if (lastLine !== range.start.line) {
-                    characterOffset = 0;
-                }
-                lineOffset += numLF;
-                if (numLF === 0) {
-                    characterOffset += text.length;
-                } else {
-                    characterOffset = lenLastLine - range.start.character;
-                }
-                const newPos = new vscode.Position(
-                    range.start.line + lineOffset,
-                    range.start.character + characterOffset
-                );
-                newSelections[indices[i]] = new vscode.Selection(newPos, newPos);
-                lineOffset -= range.end.line - range.start.line;
-                lastLine = range.end.line;
-                characterOffset -= range.end.character - range.start.character;
+                changes[i] = { range, text };
+            }
+            const selections = util.makeSelectionsAfterTyping(changes);
+            for (let i = 0; i < indices.length; i++) {
+                newSelections[indices[i]] = selections[i];
             }
         });
         if (!util.isEqualSelections(textEditor.selections, newSelections)) {
