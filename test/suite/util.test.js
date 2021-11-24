@@ -153,5 +153,29 @@ describe('util', () => {
             const expected = [ Selection(12, 2, 12, 2), Selection(12, 6, 12, 6) ];
             assert.deepStrictEqual(util.makeSelectionsAfterTyping(changes), expected);
         });
+        it('should make prediction (typing of multi-line text with multiple selections)', () => {
+            const changes = [
+                { range: Range(12, 1, 12, 5), text: 'x\ny' },
+                { range: Range(13, 1, 13, 5), text: 'x\ny' }
+            ];
+            const expected = [ Selection(13, 1, 13, 1), Selection(15, 1, 15, 1) ];
+            assert.deepStrictEqual(util.makeSelectionsAfterTyping(changes), expected);
+        });
+        it('should make prediction (typing of multi-line text with multiple multi-line selections) (1)', () => {
+            const changes = [
+                { range: Range(12, 1, 14, 2), text: 'x\ny' },
+                { range: Range(15, 1, 17, 2), text: 'x\ny' }
+            ];
+            const expected = [ Selection(13, 1, 13, 1), Selection(15, 1, 15, 1) ];
+            assert.deepStrictEqual(util.makeSelectionsAfterTyping(changes), expected);
+        });
+        it('should make prediction (typing of multi-line text with multiple multi-line selections) (2)', () => {
+            const changes = [
+                { range: Range(12, 1, 14, 2), text: 'x\ny' },
+                { range: Range(14, 5, 16, 2), text: 'x\ny' }
+            ];
+            const expected = [ Selection(13, 1, 13, 1), Selection(14, 1, 14, 1) ];
+            assert.deepStrictEqual(util.makeSelectionsAfterTyping(changes), expected);
+        });
     });
 });
