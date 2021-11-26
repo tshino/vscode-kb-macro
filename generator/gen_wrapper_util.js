@@ -256,6 +256,7 @@ function makeCombinedKeybindingsForKeyPart1(contextList, unified, nonUnified) {
             const [ nonUnifiedMac, pos ] = u.macKeybinding;
             const nu = nonUnifiedMac[nonUnifiedMac.length - 1];
             if (pos >= nu.length || nu[pos].done) {
+                combined.push(u.keybinding);
                 continue;
             }
             // flush keybindings that must be written before the unified keybinding.
@@ -311,6 +312,7 @@ function combineBaseKeybingings(baseKeybindings) {
             if (!util.isDeepStrictEqual(u.contexts, otherThanMac)) {
                 continue;
             }
+            let found = false;
             for (const lookup of commandLookup.get(u.keybinding.command)) {
                 if (lookup.context !== 'isMac') {
                     continue;
@@ -321,12 +323,31 @@ function combineBaseKeybingings(baseKeybindings) {
                 const i = nonUnifiedMac.length - 1;
                 for (let k = 0; k < nonUnifiedMac[i].length; k++) {
                     const keybinding = nonUnifiedMac[i][k];
+                    if (keybinding.matched) {
+                        continue;
+                    }
                     if (util.isDeepStrictEqual(target, keybinding)) {
                         // found candidate!
                         u.macKey = lookup.key;
                         u.macKeybinding = [ nonUnifiedMac, k ];
+                        keybinding.matched = true;
+                        found = true;
+                        break;
                     }
                 }
+                if (found) {
+                    break;
+                }
+            }
+        }
+    }
+    // clean-up
+    for (const key of keyDict.keys()) {
+        const unified = unifiedKeybindings.get(key) || [];
+        for (const u of unified) {
+            if (u.makKey) {
+                const [ nonUnifiedMac, k ] = u.macKeybinding[0];
+                delete nonUnifiedMac[nonUnifiedMac.length - 1][k].matched;
             }
         }
     }

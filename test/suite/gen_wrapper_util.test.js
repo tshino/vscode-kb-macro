@@ -362,7 +362,7 @@ describe('gen_wrapper_util', () => {
                     keybindings: [
                         { key: 'ctrl+b', command: 'command2' },
                         { key: 'ctrl+b', command: 'command1', when: 'context1' }, // <= common A except 'key'
-                        { key: 'ctrl+b', command: 'command3', when: 'context4' } // <= common B
+                        { key: 'ctrl+b', command: 'command3', when: 'context4' } // <= common B except 'key'
                     ],
                     context: 'isMac'
                 }
@@ -371,6 +371,42 @@ describe('gen_wrapper_util', () => {
                 { key: 'ctrl+b', command: 'command2', when: 'isMac' },
                 { key: 'ctrl+a', command: 'command1', when: 'context1', mac: 'ctrl+b' }, // <= A
                 { key: 'ctrl+c', command: 'command3', when: 'context4', mac: 'ctrl+b' }, // <= B
+                { key: 'ctrl+a', command: 'command2', when: 'isWindows && context2' },
+                { key: 'ctrl+a', command: 'command1', when: 'isLinux && context3' }
+            ];
+            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
+        });
+        it('should unify keybindings using "mac" key (special case that a same command applies to multiple keys) [compaction]', () => {
+            const input = [
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command1' }, // <= common A
+                        { key: 'ctrl+a', command: 'command2', when: 'context2' },
+                        { key: 'ctrl+c', command: 'command1' } // <= common B
+                    ],
+                    context: 'isWindows'
+                },
+                {
+                    keybindings: [
+                        { key: 'ctrl+a', command: 'command1' }, // <= common A
+                        { key: 'ctrl+a', command: 'command1', when: 'context3' },
+                        { key: 'ctrl+c', command: 'command1' } // <= common B
+                    ],
+                    context: 'isLinux'
+                },
+                {
+                    keybindings: [
+                        { key: 'ctrl+b', command: 'command2' },
+                        { key: 'ctrl+b', command: 'command1' }, // <= common A except 'key'
+                        { key: 'ctrl+d', command: 'command1' } // <= common B except 'key'
+                    ],
+                    context: 'isMac'
+                }
+            ];
+            const expected = [
+                { key: 'ctrl+b', command: 'command2', when: 'isMac' },
+                { key: 'ctrl+a', command: 'command1', mac: 'ctrl+b' }, // <= A
+                { key: 'ctrl+c', command: 'command1', mac: 'ctrl+d' }, // <= B
                 { key: 'ctrl+a', command: 'command2', when: 'isWindows && context2' },
                 { key: 'ctrl+a', command: 'command1', when: 'isLinux && context3' }
             ];
