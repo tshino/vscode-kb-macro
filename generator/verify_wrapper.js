@@ -15,6 +15,13 @@ const containsWhenContext = function(when, context) {
     }
     return false;
 }
+const removeWhenContext = function(when, context) {
+    return when.split('||').map(cond => {
+        return cond.split('&&').filter(cond => {
+            return cond.trim() !== context;
+        }).map(cond => cond.trim()).join(' && ');
+    }).filter(cond => cond !== '').join(' || ');
+}
 
 const availableOnWindows = function(keybinding) {
     return (
@@ -50,6 +57,33 @@ const availableOnMac = function(keybinding) {
     );
 }
 
+const unwrapCommon = function(keybinding) {
+    keybinding = genWrapperUtil.copyKeybinding(keybinding);
+    if (keybinding.command === 'kb-macro.wrap') {
+        keybinding.command = keybinding.args.command;
+        if ('args' in keybinding.args) {
+            keybinding.args = keybinding.args.args;
+        } else {
+            delete keybinding.args;
+        }
+    }
+    keybinding.when = removeWhenContext(keybinding.when, 'kb-macro.recording');
+    return keybinding;
+}
+const unwrapForWindows = function(keybinding) {
+    keybinding = unwrapCommon(keybinding);
+    keybinding.when = removeWhenContext(keybinding.when, 'isWindows');
+    keybinding.when = removeWhenContext(keybinding.when, '!isLinux');
+    keybinding.when = removeWhenContext(keybinding.when, '!isMac');
+    if (keybinding.when === '') {
+        delete keybinding.when;
+    }
+    if ('mac' in keybinding) {
+        delete keybinding.mac;
+    }
+    return keybinding;
+}
+
 async function verifyWrapper() {
     const packageJson = await genWrapperUtil.readJSON(PackageJsonPath);
     const config = await genWrapperUtil.readJSON(ConfigPath);
@@ -81,11 +115,14 @@ async function verifyWrapper() {
         const wrapper = wrappers.filter(availableOnWindows);
         const base = baseKeybindings.filter(({ context }) => context === 'isWindows')[0].keybindings;
 
-        // wrapper.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
-        // base.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
-        // await genWrapperUtil.writeJSON('wrapper.json', wrapper);
+        wrapper.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        base.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        const unwrapped = wrapper.map(unwrapForWindows);
+        // await genWrapperUtil.writeJSON('unwrapped.json', unwrapped);
         // await genWrapperUtil.writeJSON('base.json', base);
+
         assert.strictEqual(wrapper.length, base.length, 'the number of default keybindings should match to the base (Windows)');
+        assert.deepStrictEqual(unwrapped, base, 'unwrapped default keybindings should exactly match to the base (Windows)');
     }
     // Linux
     {

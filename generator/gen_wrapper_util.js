@@ -373,6 +373,7 @@ module.exports = {
     writeJSON,
     loadBaseKeybindings,
     addWhenContext,
+    copyKeybinding,
     keybindingsContains,
     combineBaseKeybingings
 };
