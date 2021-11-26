@@ -25,6 +25,30 @@ const availableOnWindows = function(keybinding) {
         !/\bcmd\b/.test(keybinding.key)
     );
 }
+const availableOnLinux = function(keybinding) {
+    return (
+        !containsWhenContext(keybinding.when, 'isWindows') &&
+        !containsWhenContext(keybinding.when, 'isMac') &&
+        !containsWhenContext(keybinding.when, '!isLinux') &&
+        !/\bwin\b/.test(keybinding.key) &&
+        !/\bcmd\b/.test(keybinding.key)
+    );
+}
+const availableOnMac = function(keybinding) {
+    return (
+        !containsWhenContext(keybinding.when, 'isWindows') &&
+        !containsWhenContext(keybinding.when, 'isLinux') &&
+        !containsWhenContext(keybinding.when, '!isMac') &&
+        (
+            (
+                !/\bwin\b/.test(keybinding.key) &&
+                !/\bmeta\b/.test(keybinding.key)
+            ) || (
+                'mac' in keybinding
+            )
+        )
+    );
+}
 
 async function verifyWrapper() {
     const packageJson = await genWrapperUtil.readJSON(PackageJsonPath);
@@ -61,7 +85,29 @@ async function verifyWrapper() {
         // base.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
         // await genWrapperUtil.writeJSON('wrapper.json', wrapper);
         // await genWrapperUtil.writeJSON('base.json', base);
-        assert.strictEqual(wrapper.length, base.length);
+        assert.strictEqual(wrapper.length, base.length, 'the number of default keybindings should match to the base (Windows)');
+    }
+    // Linux
+    {
+        const wrapper = wrappers.filter(availableOnLinux);
+        const base = baseKeybindings.filter(({ context }) => context === 'isLinux')[0].keybindings;
+
+        // wrapper.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        // base.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        // await genWrapperUtil.writeJSON('wrapper.json', wrapper);
+        // await genWrapperUtil.writeJSON('base.json', base);
+        assert.strictEqual(wrapper.length, base.length, 'the number of default keybindings should match to the base (Linux)');
+    }
+    // Mac
+    {
+        const wrapper = wrappers.filter(availableOnMac);
+        const base = baseKeybindings.filter(({ context }) => context === 'isMac')[0].keybindings;
+
+        // wrapper.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        // base.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        // await genWrapperUtil.writeJSON('wrapper.json', wrapper);
+        // await genWrapperUtil.writeJSON('base.json', base);
+        assert.strictEqual(wrapper.length, base.length, 'the number of default keybindings should match to the base (macOS)');
     }
 
     for (const wrapper of wrappers) {
