@@ -14,14 +14,14 @@ const containsWhenContext = function(when, context) {
         });
     }
     return false;
-}
+};
 const removeWhenContext = function(when, context) {
     return when.split('||').map(cond => {
         return cond.split('&&').filter(cond => {
             return cond.trim() !== context;
         }).map(cond => cond.trim()).join(' && ');
     }).filter(cond => cond !== '').join(' || ');
-}
+};
 
 const availableOnWindows = function(keybinding) {
     return (
@@ -31,7 +31,7 @@ const availableOnWindows = function(keybinding) {
         !/\bmeta\b/.test(keybinding.key) &&
         !/\bcmd\b/.test(keybinding.key)
     );
-}
+};
 const availableOnLinux = function(keybinding) {
     return (
         !containsWhenContext(keybinding.when, 'isWindows') &&
@@ -40,7 +40,7 @@ const availableOnLinux = function(keybinding) {
         !/\bwin\b/.test(keybinding.key) &&
         !/\bcmd\b/.test(keybinding.key)
     );
-}
+};
 const availableOnMac = function(keybinding) {
     return (
         !containsWhenContext(keybinding.when, 'isWindows') &&
@@ -55,7 +55,7 @@ const availableOnMac = function(keybinding) {
             )
         )
     );
-}
+};
 
 const unwrapCommon = function(keybinding) {
     keybinding = genWrapperUtil.copyKeybinding(keybinding);
@@ -69,7 +69,7 @@ const unwrapCommon = function(keybinding) {
     }
     keybinding.when = removeWhenContext(keybinding.when, 'kb-macro.recording');
     return keybinding;
-}
+};
 const unwrapForWindows = function(keybinding) {
     keybinding = unwrapCommon(keybinding);
     keybinding.when = removeWhenContext(keybinding.when, 'isWindows');
@@ -82,7 +82,7 @@ const unwrapForWindows = function(keybinding) {
         delete keybinding.mac;
     }
     return keybinding;
-}
+};
 const unwrapForLinux = function(keybinding) {
     keybinding = unwrapCommon(keybinding);
     keybinding.when = removeWhenContext(keybinding.when, 'isLinux');
@@ -95,7 +95,7 @@ const unwrapForLinux = function(keybinding) {
         delete keybinding.mac;
     }
     return keybinding;
-}
+};
 const unwrapForMac = function(keybinding) {
     keybinding = unwrapCommon(keybinding);
     keybinding.when = removeWhenContext(keybinding.when, 'isMac');
@@ -109,14 +109,22 @@ const unwrapForMac = function(keybinding) {
         delete keybinding.mac;
     }
     return keybinding;
-}
+};
+
+const isWrapped = function(keybinding) {
+    return (
+        keybinding.command === 'kb-macro.wrap' &&
+        'args' in keybinding &&
+        'command' in keybinding.args
+    );
+};
 
 async function verifyWrapper() {
     const packageJson = await genWrapperUtil.readJSON(PackageJsonPath);
     const config = await genWrapperUtil.readJSON(ConfigPath);
 
-    // const exclusion = new Set(config['exclusion'] || []);
-    // const awaitOptions = new Map(config['awaitOptions'] || []);
+    const exclusion = new Set(config['exclusion'] || []);
+    const awaitOptions = new Map(config['awaitOptions'] || []);
 
     const baseKeybindings = await genWrapperUtil.loadBaseKeybindings(config['baseKeybindings'] || []);
 
@@ -185,6 +193,32 @@ async function verifyWrapper() {
             containsWhenContext(wrapper.when, 'kb-macro.recording'),
             '"when" in a wrapper should contain "kb-macro.recording &&" context'
         );
+        if (isWrapped(wrapper)) {
+            assert.strictEqual(
+                exclusion.has(wrapper.args.command),
+                false,
+                'the command in a wrapped keybinding should not be included in the exclution list'
+            );
+            if (awaitOptions.has(wrapper.args.command)) {
+                assert.deepStrictEqual(
+                    wrapper.args['await'],
+                    awaitOptions.get(wrapper.args.command),
+                    'a command included in the awaitOptions list should have the await option specified in the list'
+                );
+            } else {
+                assert.strictEqual(
+                    'await' in wrapper.args,
+                    false,
+                    'a command that is not included in the awaitOptions list should not have await option'
+                );
+            }
+        } else {
+            assert.strictEqual(
+                exclusion.has(wrapper.command),
+                true,
+                'the command in a unwrapped keybinding should be included in the exclution list'
+            );
+        }
     }
 }
 
