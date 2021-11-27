@@ -2,9 +2,9 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.3.0] - 2021-11-27
 - New
-  - (Internal) Introduced the new script `verify-wrapper.js` to verify default keybinding wrappers. [#10](https://github.com/tshino/vscode-kb-macro/issues/10)
+  - (Internal) Introduced a new script `verify-wrapper.js` to verify default keybinding wrappers. [#10](https://github.com/tshino/vscode-kb-macro/issues/10)
 - Fix
   - Some of the default keyboard shortcuts of VS Code were not being recorded unexpectedly due to a bug in the `gen-wrapper.js` script.
 
