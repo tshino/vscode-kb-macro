@@ -45,6 +45,22 @@ async function makeKeymapWrapper(configPath) {
 
     const baseKeybindings = packageJson['contributes']['keybindings'];
 
+    // resolve wildcards in awaitOptions
+    const wildcardCommands = Array.from(awaitOptions.keys()).filter(
+        command => command.endsWith('*')
+    );
+    for (const wildcard of wildcardCommands) {
+        const awaitOption = awaitOptions.get(wildcard);
+        const prefix = wildcard.slice(0, -1);
+        const matches = baseKeybindings.filter(
+            keybinding => keybinding.command.startsWith(prefix)
+        ).map(keybinding => keybinding.command);
+        for (const match of matches) {
+            awaitOptions.set(match, awaitOption);
+        }
+        awaitOptions.delete(wildcard);
+    }
+
     const wrappers = baseKeybindings.map(
         keybinding => {
             if (exclusion.has(keybinding.command)) {
