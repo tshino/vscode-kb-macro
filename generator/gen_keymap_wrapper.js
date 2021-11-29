@@ -35,11 +35,11 @@ function makeWrapper(keybinding) {
 async function makeKeymapWrapper(configPath) {
     const dirname = path.dirname(configPath);
     const id = path.basename(configPath, '.config.json');
-    const packageJsonPath = path.resolve(dirname, id + '.package.json');
+    const packageJsonPath = path.resolve(dirname, 'tmp/' + id + '.package.json');
     const packageJson = await genWrapperUtil.readJSON(packageJsonPath);
     console.log('generating keymap wrapper for', { id, displayName: packageJson['displayName'] });
 
-    const config = await genWrapperUtil.readJSON(configPath, { allowComments: true });
+    const config = await genWrapperUtil.readJSON(configPath);
     const exclusion = new Set(config['exclusion'] || []);
     const awaitOptions = new Map(config['awaitOptions'] || []);
 

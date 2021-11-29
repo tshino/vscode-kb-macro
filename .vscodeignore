@@ -5,6 +5,7 @@
 .yarnrc
 test/**
 generator/**
+keymap-wrapper/**
 **/jsconfig.json
 **/*.map
 **/.eslintrc.json

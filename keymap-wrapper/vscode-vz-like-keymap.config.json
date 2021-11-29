@@ -1,0 +1,35 @@
+{
+    "base": {
+        "githubRepoURL": "https://github.com/tshino/vscode-vz-like-keymap"
+    },
+
+    "awaitOptions": [
+        [ "vz.cursor*", "selection" ],
+        [ "vz.scroll*", "selection" ],
+        [ "vz.toggleSelection", "selection" ],
+        [ "vz.toggleBoxSelection", "selection" ],
+        [ "vz.reverseSelection", "selection" ],
+        [ "vz.stopBoxSelection", "selection" ],
+        [ "vz.jumpToBracket", "selection" ],
+        [ "vz.tagJump", "selection" ],
+
+        [ "vz.delete*", "document selection" ],
+        [ "vz.insert*", "document selection" ],
+        [ "vz.copy*", "document selection" ],
+        [ "vz.transform*", "document selection" ],
+        [ "vz.undelete", "document selection" ],
+        [ "tab", "document selection" ],
+        [ "vz.enter", "document selection" ],
+
+        [ "vz.clipboardCut*", "document selection clipboard" ],
+        [ "vz.clipboardCopy*", "selection clipboard" ],
+        [ "vz.clipboardPopAndPaste", "document selection clipboard" ],
+        [ "vz.clipboardPaste", "document selection" ],
+        [ "vz.clipboardClearStack", "clipboard" ],
+
+        [ "undo", "document selection" ],
+        [ "vz.undo", "document selection" ],
+        [ "redo", "document selection" ],
+        [ "vz.redo", "document selection" ]
+    ]
+}

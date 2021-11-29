@@ -34,7 +34,8 @@
 		"test": "node ./test/runTest.js",
 		"gen-wrapper": "node ./generator/gen_wrapper.js",
 		"postgen-wrapper": "npm run verify-wrapper",
-		"verify-wrapper": "node ./generator/verify_wrapper.js"
+		"verify-wrapper": "node ./generator/verify_wrapper.js",
+		"update-keymap-wrapper": "./keymap-wrapper/update.sh"
 	},
 	"devDependencies": {
 		"ansi-regex": ">=6.0.1",
