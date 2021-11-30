@@ -33,20 +33,21 @@ function makeWrapper(keybinding) {
 }
 
 function resolveWildcardInAwaitOptions(awaitOptions, baseKeybindings) {
-    const wildcardCommands = Array.from(awaitOptions.keys()).filter(
-        command => command.endsWith('*')
-    );
-    for (const wildcard of wildcardCommands) {
-        const awaitOption = awaitOptions.get(wildcard);
-        const prefix = wildcard.slice(0, -1);
-        const matches = baseKeybindings.filter(
-            keybinding => keybinding.command.startsWith(prefix)
-        ).map(keybinding => keybinding.command);
-        for (const match of matches) {
-            awaitOptions.set(match, awaitOption);
+    const newAwaitOptions = new Map;
+    for (const [ command, awaitOption ] of awaitOptions) {
+        if (command.endsWith('*')) { // wildcard
+            const prefix = command.slice(0, -1);
+            const matches = baseKeybindings.filter(
+                keybinding => keybinding.command.startsWith(prefix)
+            ).map(keybinding => keybinding.command);
+            for (const match of matches) {
+                newAwaitOptions.set(match, awaitOption);
+            }
+        } else {
+            newAwaitOptions.set(command, awaitOption);
         }
-        awaitOptions.delete(wildcard);
     }
+    return newAwaitOptions;
 }
 
 async function makeKeymapWrapper(configPath) {
@@ -58,11 +59,11 @@ async function makeKeymapWrapper(configPath) {
 
     const config = await genWrapperUtil.readJSON(configPath);
     const exclusion = new Set(config['exclusion'] || []);
-    const awaitOptions = new Map(config['awaitOptions'] || []);
 
     const baseKeybindings = packageJson['contributes']['keybindings'];
 
-    resolveWildcardInAwaitOptions(awaitOptions, baseKeybindings);
+    const rawAwaitOptions = new Map(config['awaitOptions'] || []);
+    const awaitOptions = resolveWildcardInAwaitOptions(rawAwaitOptions, baseKeybindings);
 
     const wrappers = baseKeybindings.map(
         keybinding => {

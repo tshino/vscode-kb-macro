@@ -3,6 +3,27 @@
         "githubRepoURL": "https://github.com/tshino/vscode-vz-like-keymap"
     },
 
+    "exclusion": [
+        "editor.action.triggerSuggest",
+        "hideSuggestWidget",
+        "selectNextSuggestion",
+        "selectPrevSuggestion",
+        "selectNextPageSuggestion",
+        "selectPrevPageSuggestion",
+        "toggleExplainMode",
+        "toggleSuggestionDetails",
+        "toggleSuggestionFocus",
+        "acceptSelectedSuggestion",
+        "acceptAlternativeSelectedSuggestion",
+        "insertSnippet",
+        "leaveSnippet",
+        "editor.action.insertSnippet",
+        "jumpToNextSnippetPlaceholder",
+        "jumpToPrevSnippetPlaceholder",
+        "workbench.action.showCommands",
+        "showPrevParameterHint",
+        "showNextParameterHint"
+    ],
     "awaitOptions": [
         [ "vz.cursor*", "selection" ],
         [ "vz.scroll*", "selection" ],
@@ -15,7 +36,7 @@
 
         [ "vz.delete*", "document selection" ],
         [ "vz.insert*", "document selection" ],
-        [ "vz.copy*", "document selection" ],
+        [ "vz.copyLines*", "document selection" ],
         [ "vz.transform*", "document selection" ],
         [ "vz.undelete", "document selection" ],
         [ "tab", "document selection" ],
@@ -30,6 +51,16 @@
         [ "undo", "document selection" ],
         [ "vz.undo", "document selection" ],
         [ "redo", "document selection" ],
-        [ "vz.redo", "document selection" ]
+        [ "vz.redo", "document selection" ],
+
+        [ "history.show*", "selection" ],
+        [ "vz.findStart*", "selection" ],
+        [ "vz.findStartEnter", "document selection" ],
+        [ "vz.findPreviousMatch", "selection" ],
+        [ "vz.findNextMatch", "selection" ],
+        [ "vz.selectWordToFind", "selection" ],
+        [ "vz.expandWordToFind", "selection" ],
+        [ "vz.replaceOne", "document selection" ],
+        [ "vz.closeFindWidget", "selection" ]
     ]
 }
