@@ -368,6 +368,19 @@ function combineBaseKeybingings(baseKeybindings) {
     return keybindings;
 }
 
+const ValidAwaitTargets = new Set(['selection', 'document', 'clipboard']);
+
+function isValidAwaitOption(awaitOption) {
+    if (typeof awaitOption !== 'string') {
+        return false;
+    }
+    const awaitList = awaitOption.split(' ').filter(target => target !== '');
+    return (
+        awaitList.length === 0 ||
+        awaitList.every(target => ValidAwaitTargets.has(target))
+    );
+}
+
 module.exports = {
     readJSON,
     writeJSON,
@@ -375,5 +388,6 @@ module.exports = {
     addWhenContext,
     copyKeybinding,
     keybindingsContains,
-    combineBaseKeybingings
+    combineBaseKeybingings,
+    isValidAwaitOption
 };

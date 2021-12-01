@@ -413,4 +413,29 @@ describe('gen_wrapper_util', () => {
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
     });
+    describe('isValidAwaitOption', () => {
+        const isValidAwaitOption = genWrapperUtil.isValidAwaitOption;
+        it('should return true if passed string is a valid await option for a wrapper', () => {
+            assert.strictEqual(isValidAwaitOption('selection'), true);
+            assert.strictEqual(isValidAwaitOption('document'), true);
+            assert.strictEqual(isValidAwaitOption('clipboard'), true);
+        });
+        it('should return true on empty string', () => {
+            assert.strictEqual(isValidAwaitOption(''), true);
+        });
+        it('should return false on string with invalid await target', () => {
+            assert.strictEqual(isValidAwaitOption('hello'), false);
+            assert.strictEqual(isValidAwaitOption('selection world'), false);
+        });
+        it('should return false on any value of types other than string', () => {
+            assert.strictEqual(isValidAwaitOption(null), false);
+            assert.strictEqual(isValidAwaitOption(), false);
+            assert.strictEqual(isValidAwaitOption([]), false);
+        });
+        it('should return true on string with multiple valid await targets', () => {
+            assert.strictEqual(isValidAwaitOption('document selection'), true);
+            assert.strictEqual(isValidAwaitOption('selection clipboard'), true);
+            assert.strictEqual(isValidAwaitOption('selection document clipboard'), true);
+        });
+    });
 });
