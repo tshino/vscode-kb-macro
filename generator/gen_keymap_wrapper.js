@@ -32,6 +32,15 @@ function makeWrapper(keybinding) {
     return wrapped;
 }
 
+function checkAwaitOptions(awaitOptions) {
+    for (const awaitOption of awaitOptions.values()) {
+        if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
+            console.error('Error: Invalid awaitOption found:', awaitOption);
+            process.exit(1);
+        }
+    }
+}
+
 function resolveWildcardInAwaitOptions(awaitOptions, baseKeybindings) {
     const newAwaitOptions = new Map;
     for (const [ command, awaitOption ] of awaitOptions) {
@@ -64,6 +73,7 @@ async function makeKeymapWrapper(configPath) {
 
     const rawAwaitOptions = new Map(config['awaitOptions'] || []);
     const awaitOptions = resolveWildcardInAwaitOptions(rawAwaitOptions, baseKeybindings);
+    checkAwaitOptions(awaitOptions);
 
     const wrappers = baseKeybindings.map(
         keybinding => {

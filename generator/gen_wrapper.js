@@ -31,12 +31,22 @@ function makeWrapper(keybinding) {
     return wrapped;
 }
 
+function checkAwaitOptions(awaitOptions) {
+    for (const awaitOption of awaitOptions.values()) {
+        if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
+            console.error('Invalid awaitOption found:', awaitOption);
+            process.exit(1);
+        }
+    }
+}
+
 async function main() {
     const packageJson = await genWrapperUtil.readJSON(PackageJsonPath);
     const config = await genWrapperUtil.readJSON(ConfigPath);
 
     const exclusion = new Set(config['exclusion'] || []);
     const awaitOptions = new Map(config['awaitOptions'] || []);
+    checkAwaitOptions(awaitOptions);
 
     const baseKeybindings = await genWrapperUtil.loadBaseKeybindings(config['baseKeybindings'] || []);
 
