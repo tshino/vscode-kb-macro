@@ -62,5 +62,28 @@
         [ "vz.expandWordToFind", "selection" ],
         [ "vz.replaceOne", "document selection" ],
         [ "vz.closeFindWidget", "selection" ]
+    ],
+    "header": [],
+    "footer": [
+        {
+            "key": "ctrl+oem_102",
+            "command": "kb-macro.startRecording",
+            "when": "!kb-macro.recording && config.vzKeymap.ctrl+_"
+        },
+        {
+            "key": "ctrl+oem_102",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording && config.vzKeymap.ctrl+_"
+        },
+        {
+            "key": "ctrl+oem_7",
+            "command": "kb-macro.finishRecording",
+            "when": "kb-macro.recording && config.vzKeymap.ctrl+^"
+        },
+        {
+            "key": "ctrl+oem_7",
+            "command": "kb-macro.playback",
+            "when": "!kb-macro.recording && config.vzKeymap.ctrl+^"
+        }
     ]
 }

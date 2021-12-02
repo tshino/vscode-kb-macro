@@ -92,8 +92,15 @@ async function makeKeymapWrapper(configPath) {
         }
     );
 
+    const wrapperKeybindings = (
+        []
+        .concat(config['header'] || [])
+        .concat(wrappers)
+        .concat(config['footer'] || [])
+    );
+
     const wrapperPath = path.resolve(dirname, id + '.json');
-    await genWrapperUtil.writeJSON(wrapperPath, wrappers);
+    await genWrapperUtil.writeJSON(wrapperPath, wrapperKeybindings);
     console.log('...done (' + id + '.json)');
 }
 
