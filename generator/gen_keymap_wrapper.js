@@ -32,6 +32,14 @@ function makeWrapper(keybinding) {
     return wrapped;
 }
 
+function checkExclusion(exclusion, commands) {
+    for (const command of exclusion) {
+        if (!commands.has(command)) {
+            console.warn('Warning: No matching command:', command);
+        }
+    }
+}
+
 function checkAwaitOptions(awaitOptions) {
     for (const awaitOption of awaitOptions.values()) {
         if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
@@ -71,10 +79,12 @@ async function makeKeymapWrapper(configPath) {
     console.log('** generating keymap wrapper for', { id, displayName: packageJson['displayName'] });
 
     const config = await genWrapperUtil.readJSON(configPath);
-    const exclusion = new Set(config['exclusion'] || []);
 
     const baseKeybindings = packageJson['contributes']['keybindings'];
     const commands = new Set(baseKeybindings.map(keybinding => keybinding.command));
+
+    const exclusion = new Set(config['exclusion'] || []);
+    checkExclusion(exclusion, commands);
 
     const rawAwaitOptions = new Map(config['awaitOptions'] || []);
     const awaitOptions = resolveWildcardInAwaitOptions(rawAwaitOptions, commands);
