@@ -41,18 +41,22 @@ function checkAwaitOptions(awaitOptions) {
     }
 }
 
-function resolveWildcardInAwaitOptions(awaitOptions, baseKeybindings) {
+function resolveWildcardInAwaitOptions(awaitOptions, commands) {
     const newAwaitOptions = new Map;
     for (const [ command, awaitOption ] of awaitOptions) {
         if (command.endsWith('*')) { // wildcard
             const prefix = command.slice(0, -1);
-            const matches = baseKeybindings.filter(
-                keybinding => keybinding.command.startsWith(prefix)
-            ).map(keybinding => keybinding.command);
+            const matches = Array.from(commands.values()).filter(c => c.startsWith(prefix));
+            if (matches.length === 0) {
+                console.warn('Warning: No matching commands for wildcard:', command);
+            }
             for (const match of matches) {
                 newAwaitOptions.set(match, awaitOption);
             }
         } else {
+            if (!commands.has(command)) {
+                console.warn('Warning: No matching command:', command);
+            }
             newAwaitOptions.set(command, awaitOption);
         }
     }
@@ -70,9 +74,10 @@ async function makeKeymapWrapper(configPath) {
     const exclusion = new Set(config['exclusion'] || []);
 
     const baseKeybindings = packageJson['contributes']['keybindings'];
+    const commands = new Set(baseKeybindings.map(keybinding => keybinding.command));
 
     const rawAwaitOptions = new Map(config['awaitOptions'] || []);
-    const awaitOptions = resolveWildcardInAwaitOptions(rawAwaitOptions, baseKeybindings);
+    const awaitOptions = resolveWildcardInAwaitOptions(rawAwaitOptions, commands);
     checkAwaitOptions(awaitOptions);
 
     const wrappers = baseKeybindings.map(
