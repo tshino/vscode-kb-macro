@@ -43,8 +43,8 @@ The script also performs some optimization work to reduce the amount of wrapper 
 | `generator/default-keybindings-win.json` | the default keybindings of VS Code for Windows |
 | `generator/default-keybindings-linux.json` | the default keybindings of VS Code for Linux |
 | `generator/default-keybindings-mac.json` | the default keybindings of VS Code for macOS |
-| `generator/gen_wrapperjs` | a script to generate default wrapper keybindings and write them in `package.json` |
-| `generator/verify_wrapperjs` | a script to verify the output of `gen_wrapper.js` |
+| `generator/gen_wrapper.js` | a script to generate default wrapper keybindings and write them in `package.json` |
+| `generator/verify_wrapper.js` | a script to verify the output of `gen_wrapper.js` |
 
 ## Capturing typed characters
 
