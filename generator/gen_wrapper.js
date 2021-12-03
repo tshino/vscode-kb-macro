@@ -31,6 +31,14 @@ function makeWrapper(keybinding) {
     return wrapped;
 }
 
+function checkExclusion(exclusion, commands) {
+    for (const command of exclusion) {
+        if (!commands.has(command)) {
+            console.warn('Warning: No matching command:', command);
+        }
+    }
+}
+
 function checkAwaitOptions(awaitOptions) {
     for (const awaitOption of awaitOptions.values()) {
         if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
@@ -49,6 +57,8 @@ async function main() {
     checkAwaitOptions(awaitOptions);
 
     const baseKeybindings = await genWrapperUtil.loadBaseKeybindings(config['baseKeybindings'] || []);
+    const commands = new Set(baseKeybindings.flatMap(item => item.keybindings).map(keybinding => keybinding.command));
+    checkExclusion(exclusion, commands);
 
     // combine the three sets of default keybindings of VS Code for Windows, Linux, and macOS.
     const combined = genWrapperUtil.combineBaseKeybingings(baseKeybindings);
