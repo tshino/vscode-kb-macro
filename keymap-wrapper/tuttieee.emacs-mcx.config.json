@@ -1,0 +1,20 @@
+{
+    "base": {
+        "type": "url",
+        "url": "https://github.com/whitphx/vscode-emacs-mcx/raw/v0.36.5/package.json"
+    },
+    "awaitOptions": [
+        [ "emacs-mcx.forwardChar", "selection" ],
+        [ "emacs-mcx.backwardChar", "selection" ],
+        [ "emacs-mcx.nextLine", "selection" ],
+        [ "emacs-mcx.previousLine", "selection" ],
+        [ "emacs-mcx.forwardWord", "selection" ],
+        [ "emacs-mcx.backwardWord", "selection" ],
+        [ "emacs-mcx.moveEndOfLine", "selection" ],
+        [ "emacs-mcx.moveBeginningOfLine", "selection" ],
+
+        [ "emacs-mcx.deleteForwardChar", "document selection" ],
+        [ "emacs-mcx.deleteBackwardChar", "document selection" ],
+        [ "emacs-mcx.newLine", "document selection" ]
+    ]
+}
