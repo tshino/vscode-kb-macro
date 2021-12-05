@@ -5,25 +5,6 @@
     },
 
     "exclusion": [
-        "editor.action.triggerSuggest",
-        "hideSuggestWidget",
-        "selectNextSuggestion",
-        "selectPrevSuggestion",
-        "selectNextPageSuggestion",
-        "selectPrevPageSuggestion",
-        "toggleExplainMode",
-        "toggleSuggestionDetails",
-        "toggleSuggestionFocus",
-        "acceptSelectedSuggestion",
-        "acceptAlternativeSelectedSuggestion",
-        "insertSnippet",
-        "leaveSnippet",
-        "editor.action.insertSnippet",
-        "jumpToNextSnippetPlaceholder",
-        "jumpToPrevSnippetPlaceholder",
-        "workbench.action.showCommands",
-        "showPrevParameterHint",
-        "showNextParameterHint"
     ],
     "awaitOptions": [
         [ "vz.cursor*", "selection" ],

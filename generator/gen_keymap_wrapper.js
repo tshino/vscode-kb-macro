@@ -3,6 +3,7 @@ const path = require('path');
 const glob = require('glob');
 const genWrapperUtil = require('./gen_wrapper_util');
 
+const CommonConfigPath = 'generator/config.json';
 const KeymapWrapperPath = 'keymap-wrapper/';
 
 function makeWrapperArgs(keybinding) {
@@ -71,7 +72,7 @@ function resolveWildcardInAwaitOptions(awaitOptions, commands) {
     return newAwaitOptions;
 }
 
-async function makeKeymapWrapper(configPath) {
+async function makeKeymapWrapper(configPath, commonConfig) {
     const dirname = path.dirname(configPath);
     const id = path.basename(configPath, '.config.json');
     const packageJsonPath = path.resolve(dirname, 'tmp/' + id + '.package.json');
@@ -83,11 +84,19 @@ async function makeKeymapWrapper(configPath) {
     const baseKeybindings = packageJson['contributes']['keybindings'];
     const commands = new Set(baseKeybindings.map(keybinding => keybinding.command));
 
-    const exclusion = new Set(config['exclusion'] || []);
-    checkExclusion(exclusion, commands);
+    const exclusion = new Set(commonConfig['exclusion'] || []);
+    {
+        const rawExclusion = config['exclusion'] || [];
+        checkExclusion(rawExclusion, commands);
+        rawExclusion.forEach(e => exclusion.add(e));
+    }
 
-    const rawAwaitOptions = new Map(config['awaitOptions'] || []);
-    const awaitOptions = resolveWildcardInAwaitOptions(rawAwaitOptions, commands);
+    const awaitOptions = new Map(commonConfig['awaitOptions'] || []);
+    {
+        const rawAwaitOptions = new Map(config['awaitOptions'] || []);
+        const resolved = resolveWildcardInAwaitOptions(rawAwaitOptions, commands);
+        resolved.forEach((val, key) => awaitOptions.set(key, val));
+    }
     checkAwaitOptions(awaitOptions);
 
     const wrappers = baseKeybindings.map(
@@ -120,6 +129,7 @@ async function makeKeymapWrapper(configPath) {
 }
 
 async function main() {
+    const commonConfig = await genWrapperUtil.readJSON(CommonConfigPath);
     const files = await new Promise((c, e) => {
         glob('*.config.json', { cwd: KeymapWrapperPath }, (err, files) => {
             if (err) {
@@ -131,7 +141,7 @@ async function main() {
     });
     for (const f of files) {
         const configPath = path.resolve(KeymapWrapperPath, f);
-        await makeKeymapWrapper(configPath);
+        await makeKeymapWrapper(configPath, commonConfig);
     }
 }
 

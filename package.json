@@ -717,10 +717,7 @@
 			},
 			{
 				"key": "down",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "showNextParameterHint"
-				},
+				"command": "showNextParameterHint",
 				"when": "kb-macro.recording && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
 			},
 			{
@@ -1298,10 +1295,7 @@
 			},
 			{
 				"key": "up",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "showPrevParameterHint"
-				},
+				"command": "showPrevParameterHint",
 				"when": "kb-macro.recording && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
 			},
 			{
@@ -1640,10 +1634,7 @@
 			},
 			{
 				"key": "ctrl+n",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "showNextParameterHint"
-				},
+				"command": "showNextParameterHint",
 				"when": "kb-macro.recording && isMac && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
 			},
 			{
@@ -1756,10 +1747,7 @@
 			},
 			{
 				"key": "ctrl+p",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "showPrevParameterHint"
-				},
+				"command": "showPrevParameterHint",
 				"when": "kb-macro.recording && isMac && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
 			},
 			{
@@ -3246,10 +3234,7 @@
 			},
 			{
 				"key": "alt+down",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "showNextParameterHint"
-				},
+				"command": "showNextParameterHint",
 				"when": "kb-macro.recording && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
 			},
 			{
@@ -3294,10 +3279,7 @@
 			},
 			{
 				"key": "alt+up",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "showPrevParameterHint"
-				},
+				"command": "showPrevParameterHint",
 				"when": "kb-macro.recording && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
 			},
 			{

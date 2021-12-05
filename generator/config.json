@@ -30,7 +30,9 @@
         "editor.action.insertSnippet",
         "jumpToNextSnippetPlaceholder",
         "jumpToPrevSnippetPlaceholder",
-        "workbench.action.showCommands"
+        "workbench.action.showCommands",
+        "showPrevParameterHint",
+        "showNextParameterHint"
     ],
     "awaitOptions": [
         [ "editor.action.clipboardCopyAction", "clipboard" ],
