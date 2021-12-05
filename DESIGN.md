@@ -48,7 +48,7 @@ The script also performs some optimization work to reduce the amount of wrapper 
 
 ## Capturing typed characters
 
-On VS Code, typed characters in text editors are treated differently than other keystrokes. We don't put every possible character in the keybindings. When you type characters in a text editor, for each character, the `type` build-in command is invoked internally. The `type` command performs inserting each character into the document.
+On VS Code, typed characters in text editors are treated differently than other keystrokes. We don't put every possible character in the keybindings. When you type characters in a text editor, for each character, the `type` built-in command is invoked internally. The `type` command performs inserting each character into the document.
 
 As far as I know, an extension is allowed to override the `type` built-in command using `vscode.commands.registerCommand` API. Actually, the VSCodeVim extension seems to do that to customize the behavior for typed characters.
 
