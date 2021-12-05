@@ -1,0 +1,1873 @@
+[
+	{
+		"key": "ctrl+s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": ""
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLeft",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "left",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLeft",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "shift+left",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLeftSelect",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorRight",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "right",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorRight",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "shift+right",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorRightSelect",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+e",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "up",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !suggestWidgetVisible"
+	},
+	{
+		"key": "shift+up",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorUpSelect",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "down",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !suggestWidgetVisible"
+	},
+	{
+		"key": "shift+down",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorDownSelect",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+a",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorWordStartLeft",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+f",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorWordStartRight",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorPageUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "pageup",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorPageUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !suggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorPageDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "pagedown",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorPageDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !suggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+w",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.scrollLineUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && config.vzKeymap.ctrl+W"
+	},
+	{
+		"key": "shift+pageup",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.scrollLineUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+z",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.scrollLineDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && config.vzKeymap.ctrl+Z"
+	},
+	{
+		"key": "shift+pagedown",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.scrollLineDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLineStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLineStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLineEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLineEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "home",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorHome",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "shift+home",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorHomeSelect",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "end",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "shift+end",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorEndSelect",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q [",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorHome",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+[",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorHome",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ]",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+]",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorTop",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorTop",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorBottom",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorBottom",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+e",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorViewTop",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q e",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorViewTop",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorViewBottom",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorViewBottom",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": ""
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.toggleSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+k ctrl+b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.toggleBoxSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+k b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.toggleBoxSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.reverseSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.reverseSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "escape",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.toggleSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && vz.inSelectionMode && !editorHasSelection && !suggestWidgetVisible && !parameterHintsVisible && !accessibilityHelpWidgetVisible && !breakpointWidgetVisible && !findWidgetVisible"
+	},
+	{
+		"key": "shift+escape",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.toggleSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && vz.inSelectionMode && !editorHasSelection && !suggestWidgetVisible && !parameterHintsVisible && !accessibilityHelpWidgetVisible && !breakpointWidgetVisible && !findWidgetVisible"
+	},
+	{
+		"key": "escape",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.stopBoxSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorHasMultipleSelections && editorTextFocus && !suggestWidgetVisible && !parameterHintsVisible && !accessibilityHelpWidgetVisible && !breakpointWidgetVisible && !findWidgetVisible"
+	},
+	{
+		"key": "shift+escape",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.stopBoxSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorHasMultipleSelections && editorTextFocus && !suggestWidgetVisible && !parameterHintsVisible && !accessibilityHelpWidgetVisible && !breakpointWidgetVisible && !findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+j",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.gotoLine"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q j",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.gotoLine"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+k",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.jumpToBracket",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q k",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.jumpToBracket",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.markPosition"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.markPosition"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q ctrl+p",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLastPosition",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+q p",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cursorLastPosition",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "shift+f10",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.tagJump",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && config.vzKeymap.shift+F10"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": ""
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteLeft",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "backspace",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteLeft",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+g",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": ""
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+g",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteRight",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "delete",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteRight",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q ctrl+h",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteWordLeft",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q h",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteWordLeft",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": ""
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+t",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteWordRight",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+delete",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteWordRight",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q ctrl+t",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteAllLeft",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q t",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteAllLeft",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q ctrl+y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteAllRight",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.deleteAllRight",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+u",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.undelete",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+i",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "tab",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && config.vzKeymap.ctrl+I"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": ""
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.enter",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible"
+	},
+	{
+		"key": "enter",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.enter",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": ""
+		},
+		"when": "kb-macro.recording && editorFocus && config.vzKeymap.ctrl+N"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.insertLineBefore",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && config.vzKeymap.ctrl+N"
+	},
+	{
+		"key": "ctrl+k ctrl+d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.copyLinesDown",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+k d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.copyLinesDown",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q ctrl+n",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.insertPath",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q n",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.insertPath",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q ctrl+u",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.transformCase",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+q u",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.transformCase",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardCutAndPush",
+			"await": "document selection clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && config.vzKeymap.textStack"
+	},
+	{
+		"key": "ctrl+y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardCut",
+			"await": "document selection clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !config.vzKeymap.textStack"
+	},
+	{
+		"key": "ctrl+k ctrl+k",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardCopyAndPush",
+			"await": "selection clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus && config.vzKeymap.textStack"
+	},
+	{
+		"key": "ctrl+k k",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardCopyAndPush",
+			"await": "selection clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus && config.vzKeymap.textStack"
+	},
+	{
+		"key": "ctrl+k ctrl+k",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardCopy",
+			"await": "selection clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !config.vzKeymap.textStack"
+	},
+	{
+		"key": "ctrl+k k",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardCopy",
+			"await": "selection clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !config.vzKeymap.textStack"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": ""
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardPopAndPaste",
+			"await": "document selection clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && config.vzKeymap.textStack"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardPaste",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !config.vzKeymap.textStack"
+	},
+	{
+		"key": "ctrl+k ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardPaste",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+k c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardPaste",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+k ctrl+y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardClearStack",
+			"await": "clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+k y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.clipboardClearStack",
+			"await": "clipboard"
+		},
+		"when": "kb-macro.recording && editorTextFocus"
+	},
+	{
+		"key": "ctrl+k ctrl+u",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "undo",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !vz.keyboardMacroRecording"
+	},
+	{
+		"key": "ctrl+k ctrl+u",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.undo",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && vz.keyboardMacroRecording"
+	},
+	{
+		"key": "ctrl+k u",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "undo",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !vz.keyboardMacroRecording"
+	},
+	{
+		"key": "ctrl+k u",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.undo",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && vz.keyboardMacroRecording"
+	},
+	{
+		"key": "alt+backspace",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "undo",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !vz.keyboardMacroRecording"
+	},
+	{
+		"key": "alt+backspace",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.undo",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && vz.keyboardMacroRecording"
+	},
+	{
+		"key": "shift+alt+backspace",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "redo",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !vz.keyboardMacroRecording"
+	},
+	{
+		"key": "shift+alt+backspace",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.redo",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && vz.keyboardMacroRecording"
+	},
+	{
+		"key": "ctrl+q ctrl+f",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.find"
+		},
+		"when": "kb-macro.recording && editorFocus && !findInputFocussed"
+	},
+	{
+		"key": "ctrl+q f",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.find"
+		},
+		"when": "kb-macro.recording && editorFocus && !findInputFocussed"
+	},
+	{
+		"key": "ctrl+q ctrl+f",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed"
+	},
+	{
+		"key": "ctrl+q f",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.selectWordToFind",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && config.vzKeymap.ctrl+L"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.expandWordToFind",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed && config.vzKeymap.ctrl+L"
+	},
+	{
+		"key": "ctrl+q ctrl+a",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findReplace"
+		},
+		"when": "kb-macro.recording && editorFocus && !replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+q a",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findReplace"
+		},
+		"when": "kb-macro.recording && editorFocus && !replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+q ctrl+a",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+q a",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+e",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "history.showPrevious",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && historyNavigationBackwardsEnabled && historyNavigationWidget"
+	},
+	{
+		"key": "ctrl+x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "history.showNext",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && historyNavigationForwardsEnabled && historyNavigationWidget"
+	},
+	{
+		"key": "enter",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed"
+	},
+	{
+		"key": "shift+enter",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed"
+	},
+	{
+		"key": "pageup",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartPreviousMatch",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && !replaceInputFocussed && !suggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartPreviousMatch",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && !replaceInputFocussed"
+	},
+	{
+		"key": "pageup",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findPreviousMatch",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findPreviousMatch",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && replaceInputFocussed"
+	},
+	{
+		"key": "pagedown",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartNextMatch",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && !replaceInputFocussed && !suggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartNextMatch",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && !replaceInputFocussed"
+	},
+	{
+		"key": "pagedown",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findNextMatch",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findNextMatch",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && replaceInputFocussed"
+	},
+	{
+		"key": "enter",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.replaceOne",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.replaceOne",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+q ctrl+o",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.replaceOne",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q o",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.replaceOne",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorLeft",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "left",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorLeft",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorRight",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "right",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorRight",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+e",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "up",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "down",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+a",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorWordStartLeft",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+f",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorWordStartRight",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorLineStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorLineStart",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorLineEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorLineEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "home",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorHome",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "end",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q [",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorHome",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+[",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorHome",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ]",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+]",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorEnd",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorTop",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorTop",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorBottom",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorBottom",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+e",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorViewTop",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q e",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorViewTop",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q ctrl+x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorViewBottom",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+q x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCursorViewBottom",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+w",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartScrollLineUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && config.vzKeymap.ctrl+W"
+	},
+	{
+		"key": "shift+pageup",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartScrollLineUp",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+z",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartScrollLineDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible && config.vzKeymap.ctrl+Z"
+	},
+	{
+		"key": "shift+pagedown",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartScrollLineDown",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCancelSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed || kb-macro.recording && editorFocus && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+k ctrl+b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCancelSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed || kb-macro.recording && editorFocus && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+k b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartCancelSelection",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && findInputFocussed || kb-macro.recording && editorFocus && replaceInputFocussed"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartEnter",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible && !editorReadonly && !suggestWidgetVisible && !renameInputVisible"
+	},
+	{
+		"key": "enter",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.findStartEnter",
+			"await": "document selection"
+		},
+		"when": "kb-macro.recording && editorTextFocus && findWidgetVisible && !editorReadonly && !suggestWidgetVisible && !renameInputVisible"
+	},
+	{
+		"key": "escape",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.closeFindWidget",
+			"await": "selection"
+		},
+		"when": "kb-macro.recording && editorFocus && !suggestWidgetVisible && !parameterHintsVisible && !accessibilityHelpWidgetVisible && !breakpointWidgetVisible && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+oem_102",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.startRecording"
+		},
+		"when": "kb-macro.recording && config.vzKeymap.ctrl+_ && editorTextFocus && !vz.keyboardMacroRecording"
+	},
+	{
+		"key": "ctrl+oem_102",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.cancelRecording"
+		},
+		"when": "kb-macro.recording && config.vzKeymap.ctrl+_ && editorTextFocus && vz.keyboardMacroRecording"
+	},
+	{
+		"key": "ctrl+oem_7",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.finishRecording"
+		},
+		"when": "kb-macro.recording && config.vzKeymap.ctrl+^ && editorTextFocus && vz.keyboardMacroRecording"
+	},
+	{
+		"key": "ctrl+oem_7",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "vz.replay"
+		},
+		"when": "kb-macro.recording && config.vzKeymap.ctrl+^ && editorTextFocus && !vz.keyboardMacroRecording"
+	},
+	{
+		"key": "alt+y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.moveEditorToNextGroup"
+		},
+		"when": "kb-macro.recording && !multipleEditorGroups && !sideBarFocus && !panelFocus && config.vzKeymap.alt+Y"
+	},
+	{
+		"key": "alt+y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.focusSecondEditorGroup"
+		},
+		"when": "kb-macro.recording && !multipleEditorGroups && groupEditorsCount == 1 && !sideBarFocus && !panelFocus && config.vzKeymap.alt+Y"
+	},
+	{
+		"key": "alt+y",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.joinTwoGroups"
+		},
+		"when": "kb-macro.recording && multipleEditorGroups && !sideBarFocus && !panelFocus && config.vzKeymap.alt+Y"
+	},
+	{
+		"key": "alt+w",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"
+		},
+		"when": "kb-macro.recording && !multipleEditorGroups && !sideBarFocus && !panelFocus && !findWidgetVisible && config.vzKeymap.alt+W"
+	},
+	{
+		"key": "alt+w",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.focusNextGroup"
+		},
+		"when": "kb-macro.recording && multipleEditorGroups && !sideBarFocus && !panelFocus && !findWidgetVisible && config.vzKeymap.alt+W"
+	},
+	{
+		"key": "ctrl+q ctrl+q",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.quickOpenView"
+		},
+		"when": "kb-macro.recording && editorFocus"
+	},
+	{
+		"key": "ctrl+alt+b",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.toggleSidebarVisibility"
+		},
+		"when": "kb-macro.recording"
+	},
+	{
+		"key": "ctrl+alt+j",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "workbench.action.togglePanel"
+		},
+		"when": "kb-macro.recording"
+	},
+	{
+		"key": "ctrl+e",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.focusUp"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.focusDown"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.collapse"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+d",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.expand"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.focusPageUp"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.focusPageDown"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+q ctrl+r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.focusFirst"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+q r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.focusFirst"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+q ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.focusLast"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+q c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.focusLast"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "list.select"
+		},
+		"when": "kb-macro.recording && listFocus && !inputFocus && config.vzKeymap.listViewKeys"
+	},
+	{
+		"key": "ctrl+e",
+		"command": "selectPrevSuggestion",
+		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+x",
+		"command": "selectNextSuggestion",
+		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+r",
+		"command": "selectPrevPageSuggestion",
+		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "selectNextPageSuggestion",
+		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+q ctrl+r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "selectFirstSuggestion"
+		},
+		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+q r",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "selectFirstSuggestion"
+		},
+		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+q ctrl+c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "selectLastSuggestion"
+		},
+		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+q c",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "selectLastSuggestion"
+		},
+		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "acceptSelectedSuggestion",
+		"when": "kb-macro.recording && acceptSuggestionOnEnter && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus && config.vzKeymap.suggestionWidgetKeys"
+	},
+	{
+		"key": "ctrl+x",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "settings.action.focusSettingsFromSearch"
+		},
+		"when": "kb-macro.recording && inSettingsSearch && !suggestWidgetVisible && config.vzKeymap.settingsPageKeys"
+	},
+	{
+		"key": "ctrl+s",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "settings.action.focusTOC"
+		},
+		"when": "kb-macro.recording && inSettingsEditor && settingRowFocus && config.vzKeymap.settingsPageKeys"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "settings.action.focusSettingsList"
+		},
+		"when": "kb-macro.recording && inSettingsEditor && settingsTocRowFocus && config.vzKeymap.settingsPageKeys"
+	},
+	{
+		"key": "ctrl+m",
+		"command": "kb-macro.wrap",
+		"args": {
+			"command": "settings.action.focusSettingControl"
+		},
+		"when": "kb-macro.recording && settingRowFocus && config.vzKeymap.settingsPageKeys"
+	},
+	{
+		"key": "ctrl+e",
+		"command": "showPrevParameterHint",
+		"when": "kb-macro.recording && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible && config.vzKeymap.parameterHintKeys"
+	},
+	{
+		"key": "ctrl+x",
+		"command": "showNextParameterHint",
+		"when": "kb-macro.recording && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible && config.vzKeymap.parameterHintKeys"
+	},
+	{
+		"key": "ctrl+oem_102",
+		"command": "kb-macro.startRecording",
+		"when": "!kb-macro.recording && config.vzKeymap.ctrl+_"
+	},
+	{
+		"key": "ctrl+oem_102",
+		"command": "kb-macro.cancelRecording",
+		"when": "kb-macro.recording && config.vzKeymap.ctrl+_"
+	},
+	{
+		"key": "ctrl+oem_7",
+		"command": "kb-macro.finishRecording",
+		"when": "kb-macro.recording && config.vzKeymap.ctrl+^"
+	},
+	{
+		"key": "ctrl+oem_7",
+		"command": "kb-macro.playback",
+		"when": "!kb-macro.recording && config.vzKeymap.ctrl+^"
+	}
+]
