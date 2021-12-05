@@ -103,6 +103,7 @@ const CursorMotionDetector = function() {
         );
     };
 
+    // Detect motion where each cursor moves with the same set of parameters
     const detectUniformMotion = function(document, target, base) {
         const motion = calculateMotion(document, target[0], base[0]);
         if (!motion) {
@@ -116,6 +117,7 @@ const CursorMotionDetector = function() {
         // found uniform motion
         return motion;
     };
+    // Detect motion where each cursor splits into n cursors in the same ways
     const detectSplittingMotion = function(document, target, base, n) {
         const motions = [];
         for (let j = 0; j < n; j++) {
@@ -127,7 +129,7 @@ const CursorMotionDetector = function() {
                 return;
             }
         }
-        for (let dest = 0; dest < target.length; dest++) {
+        for (let dest = n; dest < target.length; dest++) {
             const src = Math.floor(dest / n);
             const m = calculateMotion(document, target[dest], base[src]);
             if (!equalsMotion(m, motions[dest % n])) {
@@ -147,6 +149,8 @@ const CursorMotionDetector = function() {
         return motion;
     };
 
+    // Detect motion where every cursor has one or more corresponding destinations
+    // with the same relative motion
     const detectImplicitMotionWithoutGroup = function(document, target, base) {
         if (target.length === base.length) {
             return detectUniformMotion(document, target, base);
@@ -157,6 +161,8 @@ const CursorMotionDetector = function() {
         }
     };
 
+    // Detect motion where every group of cursors moves in the same manner
+    // The first one in each group is used for the base of each motion
     const detectImplicitMotion = function(document, actual, expected) {
         for (let groupSize = 1; groupSize <= expected.length; groupSize++) {
             if (expected.length % groupSize === 0) {
