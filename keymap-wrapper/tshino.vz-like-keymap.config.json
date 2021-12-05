@@ -1,6 +1,7 @@
 {
     "base": {
-        "githubRepoURL": "https://github.com/tshino/vscode-vz-like-keymap"
+        "type": "github-latest-release",
+        "repo": "https://github.com/tshino/vscode-vz-like-keymap"
     },
 
     "exclusion": [
