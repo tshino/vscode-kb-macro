@@ -62,6 +62,10 @@ The followings are the details.
 - If you have an `args` parameter for the target command, you could write it in `args.args`.
 - If the target command is not a build-in command of VS Code, in other words, it is provided by an extension, likely you may need to add an `args.await` parameter in the wrapper. See below.
 
+## How to enable your favorite keymap extension to record
+
+See [Keymap Wrappers](keymap-wrapper/README.md).
+
 ## The `args.await` parameter
 
 When this extension performs playback of a recorded command sequence, the commands should be executed one by one exactly. Specifically, each command in the sequence should end its execution and all the side effects of the command such as document change should be completed before the subsequent command is invoked. Otherwise, it may cause an unexpected result.
