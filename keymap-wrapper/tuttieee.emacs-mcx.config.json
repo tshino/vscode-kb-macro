@@ -12,9 +12,43 @@
         [ "emacs-mcx.backwardWord", "selection" ],
         [ "emacs-mcx.moveEndOfLine", "selection" ],
         [ "emacs-mcx.moveBeginningOfLine", "selection" ],
+        [ "emacs-mcx.backToIndentation", "selection" ],
+        [ "emacs-mcx.scrollUpCommand", "selection" ],
+        [ "emacs-mcx.scrollDownCommand", "selection" ],
+        [ "emacs-mcx.backwardParagraph", "selection" ],
+        [ "emacs-mcx.forwardParagraph", "selection" ],
+        [ "emacs-mcx.endOfBuffer", "selection" ],
+        [ "emacs-mcx.beginningOfBuffer", "selection" ],
 
-        [ "emacs-mcx.deleteForwardChar", "document selection" ],
-        [ "emacs-mcx.deleteBackwardChar", "document selection" ],
-        [ "emacs-mcx.newLine", "document selection" ]
+        [ "emacs-mcx.recenterTopBottom", "" ],
+
+        [ "emacs-mcx.addSelectionToNextFindMatch", "selection" ],
+        [ "emacs-mcx.addSelectionToPreviousFindMatch", "selection" ],
+        [ "emacs-mcx.isearchAbort", "selection" ],
+        [ "emacs-mcx.setMarkCommand", "selection" ],
+        [ "emacs-mcx.exchangePointAndMark", "selection" ],
+        [ "emacs-mcx.rectangleMarkMode", "selection" ],
+
+        [ "emacs-mcx.typeChar", "document selection" ],
+        [ "emacs-mcx.newLine", "document selection" ],
+        [ "emacs-mcx.delete*", "document selection" ],
+        [ "emacs-mcx.openRectangle", "document selection" ],
+        [ "emacs-mcx.clearRectangle", "document selection" ],
+        [ "emacs-mcx.stringRectangle", "document selection" ],
+        [ "emacs-mcx.replaceKillRingToRectangle", "document selection" ],
+
+        [ "emacs-mcx.paredit.forwardSexp", "selection" ],
+        [ "emacs-mcx.paredit.backwardSexp", "selection" ],
+        [ "emacs-mcx.paredit.killSexp", "document selection clipboard" ],
+
+        [ "emacs-mcx.kill*", "document selection clipboard" ],
+        [ "emacs-mcx.backwardKillWord", "document selection clipboard" ],
+        [ "emacs-mcx.copyRegion", "selection clipboard" ],
+        [ "emacs-mcx.copyRectangleAsKill", "selection clipboard" ],
+        [ "emacs-mcx.yank*", "document selection" ],
+
+        [ "emacs-mcx.cancel", "selection" ],
+        [ "emacs-mcx.isearchExit", "document selection" ],
+        [ "emacs-mcx.executeCommands", "document selection" ]
     ]
 }
