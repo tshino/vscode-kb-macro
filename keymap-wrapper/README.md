@@ -23,4 +23,4 @@ I am currently working to add more keymap wrappers to support some popular keyma
 1. `git clone` this repository
 2. Run `npm install`
 3. Make a config file for a new keymap wrapper in the `keymap-wrapper` directory. The file name should be in the form of `{EXTENSION-ID}.config.json`.
-4. Run `npm run update-keymap-wrapper` (on bash) which downloads `package.json` of each target keymap extension into `keymap-wrapper/tmp` directory and generates and writes a keymap wrapper file into `keymap-wrapper` directory. (or run `node generator/gen-keymap-wrapper.js` to skip downloading)
+4. Run `npm run update-keymap-wrapper` (on bash) which downloads `package.json` of each target keymap extension into `keymap-wrapper/tmp` directory and generates and writes a keymap wrapper file into `keymap-wrapper` directory. (or run `node generator/gen_keymap_wrapper.js` to skip downloading)
