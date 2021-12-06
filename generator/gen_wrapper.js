@@ -73,7 +73,10 @@ async function main() {
                 // make a wrapper keybinding (indirect call) to enable recording of the command
                 const wrapper = makeWrapper(keybinding);
                 if (awaitOptions.has(wrapper.args.command)) {
-                    wrapper.args.await = awaitOptions.get(wrapper.args.command);
+                    const awaitOption = awaitOptions.get(wrapper.args.command);
+                    if (awaitOption) {
+                        wrapper.args['await'] = awaitOption;
+                    }
                 }
                 return wrapper;
             }
