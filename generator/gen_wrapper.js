@@ -65,7 +65,7 @@ async function main() {
 
     const wrappers = combined.map(
         keybinding => {
-            if (exclusion.has(keybinding.command)) {
+            if (exclusion.has(keybinding.command) || keybinding.command === '') {
                 // make a keybinding of a direct call for the excluded command
                 keybinding.when = makeWrapperWhen(keybinding);
                 return keybinding;

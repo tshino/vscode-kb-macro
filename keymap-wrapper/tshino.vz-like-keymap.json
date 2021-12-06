@@ -1,10 +1,7 @@
 [
 	{
 		"key": "ctrl+s",
-		"command": "kb-macro.wrap",
-		"args": {
-			"command": ""
-		},
+		"command": "",
 		"when": "kb-macro.recording && editorFocus"
 	},
 	{
@@ -387,10 +384,7 @@
 	},
 	{
 		"key": "ctrl+b",
-		"command": "kb-macro.wrap",
-		"args": {
-			"command": ""
-		},
+		"command": "",
 		"when": "kb-macro.recording && editorFocus"
 	},
 	{
@@ -553,10 +547,7 @@
 	},
 	{
 		"key": "ctrl+h",
-		"command": "kb-macro.wrap",
-		"args": {
-			"command": ""
-		},
+		"command": "",
 		"when": "kb-macro.recording && editorFocus"
 	},
 	{
@@ -579,10 +570,7 @@
 	},
 	{
 		"key": "ctrl+g",
-		"command": "kb-macro.wrap",
-		"args": {
-			"command": ""
-		},
+		"command": "",
 		"when": "kb-macro.recording && editorFocus"
 	},
 	{
@@ -623,10 +611,7 @@
 	},
 	{
 		"key": "ctrl+t",
-		"command": "kb-macro.wrap",
-		"args": {
-			"command": ""
-		},
+		"command": "",
 		"when": "kb-macro.recording && editorFocus"
 	},
 	{
@@ -703,10 +688,7 @@
 	},
 	{
 		"key": "ctrl+m",
-		"command": "kb-macro.wrap",
-		"args": {
-			"command": ""
-		},
+		"command": "",
 		"when": "kb-macro.recording && editorFocus"
 	},
 	{
@@ -729,10 +711,7 @@
 	},
 	{
 		"key": "ctrl+n",
-		"command": "kb-macro.wrap",
-		"args": {
-			"command": ""
-		},
+		"command": "",
 		"when": "kb-macro.recording && editorFocus && config.vzKeymap.ctrl+N"
 	},
 	{
@@ -854,10 +833,7 @@
 	},
 	{
 		"key": "ctrl+j",
-		"command": "kb-macro.wrap",
-		"args": {
-			"command": ""
-		},
+		"command": "",
 		"when": "kb-macro.recording && editorFocus"
 	},
 	{
