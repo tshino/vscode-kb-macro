@@ -35,7 +35,7 @@
 		"gen-wrapper": "node ./generator/gen_wrapper.js",
 		"postgen-wrapper": "npm run verify-wrapper",
 		"verify-wrapper": "node ./generator/verify_wrapper.js",
-		"update-keymap-wrapper": "./keymap-wrapper/update.sh"
+		"update-keymap-wrapper": "./generator/update_keymap_wrapper.sh"
 	},
 	"devDependencies": {
 		"ansi-regex": ">=6.0.1",
