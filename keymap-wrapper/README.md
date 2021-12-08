@@ -17,7 +17,7 @@ Open the keymap wrapper (JSON) link, copy the whole keybindings in the file, and
 | Keymap extension | Extension ID | Keymap wrapper | Start rec. | Stop rec. | Playback | Note |
 | ---------------- | ------------ | -------------- | ---------- | --------- | -------- | ---- |
 | [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | `tuttieee.emacs-mcx` | [tuttieee.emacs-mcx.json](tuttieee.emacs-mcx.json) | `C-x S-9` | `C-x S-0` | `C-x e` | VS Code can't map '(' and ')' keys |
-| [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.kb-macro) | `tshino.vz-like-keymap` | [tshino.vz-like-keymap.json](tshino.vz-like-keymap.json) | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` | |
+| [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap) | `tshino.vz-like-keymap` | [tshino.vz-like-keymap.json](tshino.vz-like-keymap.json) | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` | |
 
 ## Making a Keymap Wrapper
 
