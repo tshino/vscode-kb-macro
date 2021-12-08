@@ -23,12 +23,13 @@ function makeWrapperWhen(keybinding) {
 function makeWrapper(keybinding) {
     const wrapped = {
         key: keybinding.key,
+        mac: keybinding.mac,
         command: 'kb-macro.wrap',
         args: makeWrapperArgs(keybinding),
         when: makeWrapperWhen(keybinding)
     };
-    if ('mac' in keybinding) {
-        wrapped.mac = keybinding.mac;
+    if (!('mac' in keybinding)) {
+        delete wrapped.mac;
     }
     return wrapped;
 }
