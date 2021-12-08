@@ -50,5 +50,22 @@
         [ "emacs-mcx.cancel", "selection" ],
         [ "emacs-mcx.isearchExit", "document selection" ],
         [ "emacs-mcx.executeCommands", "document selection" ]
+    ],
+    "footer": [
+        {
+            "key": "ctrl+x shift+9",
+            "command": "kb-macro.startRecording",
+            "when": "!kb-macro.recording"
+        },
+        {
+            "key": "ctrl+x shift+0",
+            "command": "kb-macro.finishRecording",
+            "when": "kb-macro.recording"
+        },
+        {
+            "key": "ctrl+x e",
+            "command": "kb-macro.playback",
+            "when": "!kb-macro.recording"
+        }
     ]
 }
