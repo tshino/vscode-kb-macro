@@ -18,6 +18,22 @@ async function writeJSON(path, value) {
     await fsPromises.writeFile(path, json + '\n');
 }
 
+async function writeCompactKeybindingsJSON(path, keybindings) {
+    const json = JSON.stringify(keybindings, null, '\t');
+    const compactJson = json.replace(
+        /,\n\s+"(?!when)/gm, ', "'
+    ).replace(
+        /\{\n\s+/gm, '{ '
+    ).replace(
+        /: \[\n\s+/gm, ': [ '
+    ).replace(
+        /\n\s+\]/gm, ' ]'
+    ).replace(
+        /\s*\n\s+}/gm, ' }'
+    );
+    await fsPromises.writeFile(path, compactJson + '\n');
+}
+
 async function loadBaseKeybindings(baseKeybindingsConfig) {
     const base = [];
     for (const { path, context } of baseKeybindingsConfig) {
@@ -384,6 +400,7 @@ function isValidAwaitOption(awaitOption) {
 module.exports = {
     readJSON,
     writeJSON,
+    writeCompactKeybindingsJSON,
     loadBaseKeybindings,
     addWhenContext,
     copyKeybinding,

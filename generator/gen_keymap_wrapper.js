@@ -127,7 +127,7 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     );
 
     const wrapperPath = path.resolve(dirname, id + '.json');
-    await genWrapperUtil.writeJSON(wrapperPath, wrapperKeybindings);
+    await genWrapperUtil.writeCompactKeybindingsJSON(wrapperPath, wrapperKeybindings);
     console.log('...done (' + id + '.json)');
 }
 
