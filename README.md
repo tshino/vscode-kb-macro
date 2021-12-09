@@ -13,7 +13,7 @@ With this Visual Studio Code extension, you can record and playback your keyboar
 ```
 
 **IMPORTANT NOTE**
-  - If you are using any other keymap extension or have your own `keybindings.json`, unfortunately, likely keystrokes in them won't be recorded. See the section below to enable them.
+  - If you are using any other keymap extension or have custom keybindings in the `keybindings.json`, unfortunately, likely keystrokes in them won't be recorded. See the section below to enable them.
 
 **YOU CAN RECORD** (basically):
   - Characters that you type in a text editor
@@ -60,7 +60,7 @@ The followings are the details.
 - The `kb-macro.wrap` command is the wrapper that executes the target command specified in the `args.command` parameter and records it on the sequence.
 - The `when` clause of a wrapper keybinding should contain additional context `kb-macro.recording`, which evaluates to `true` when macro recording is active.
 - If you have an `args` parameter for the target command, you could write it in `args.args`.
-- If the target command is not a build-in command of VS Code, in other words, it is provided by an extension, likely you may need to add an `args.await` parameter in the wrapper. See below.
+- If the target command is not a built-in command of VS Code, in other words, it is provided by an extension, likely you may need to add an `args.await` parameter in the wrapper. See below.
 
 ## How to enable your favorite keymap extension to record
 
@@ -74,7 +74,7 @@ The mechanism of this extension to playback recorded command sequence relies on 
 
 So, we don't have a proper way to execute commands one by one, without any knowledge of target commands.
 
-We need to know the true timing of the end of command execution, especially for commands with side effects. The `args.await` parameter is the way to tell this extension about the important side effects of a target command.
+We need to know the true timing of the end of command execution, especially for commands with side effects. The `args.await` parameter is the way to tell this extension the set of possible side effects of a target command.
 ```json
     {
         "key": "ctrl+alt+z",
@@ -96,7 +96,7 @@ The value of an `args.await` parameter is a space-separated keyword list. Possib
 
 If multiple keywords are specified in an `args.await` parameter, it means all of them are expected to happen.
 
-If a target command does not always reproduce the specified side effects, it is okay since the playback mechanism has a timeout which is 300 milliseconds.
+If a target command does not always reproduce the specified side effects, it is okay since the playback mechanism has a timeout, which is 300 milliseconds.
 
 ## How to use custom shortcut keys for recording and playback
 
