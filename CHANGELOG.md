@@ -4,7 +4,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [Unreleased]
 - New
-  - Added [link](keymap-wrapper/README.md) to the recommended keymap wrappers list to README.
+  - Added [a list of recommended keymap wrappers](keymap-wrapper/README.md).
 
 ### [0.3.0] - 2021-11-27
 - New
