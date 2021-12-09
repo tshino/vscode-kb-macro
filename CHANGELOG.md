@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- New
+  - Added [link](keymap-wrapper/README.md) to the recommended keymap wrappers list to README.
+
 ### [0.3.0] - 2021-11-27
 - New
   - (Internal) Introduced a new script `verify-wrapper.js` to verify default keybinding wrappers. [#10](https://github.com/tshino/vscode-kb-macro/issues/10)
