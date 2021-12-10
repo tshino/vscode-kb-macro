@@ -2,9 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.4.0] - 2021-12-10
 - New
   - Added [a list of recommended keymap wrappers](keymap-wrapper/README.md).
+    - For now, it includes [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) and [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap).
 - Update
   - Updated default keybindings based on VS Code 1.63.0 (Windows, Linux).
 - Fix
