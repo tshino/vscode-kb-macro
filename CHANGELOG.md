@@ -5,6 +5,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [Unreleased]
 - New
   - Added [a list of recommended keymap wrappers](keymap-wrapper/README.md).
+- Fix
+  - The wrapper generating script had a potential issue of generating keybindings for macOS in the incorrect order.
 
 ### [0.3.0] - 2021-11-27
 - New

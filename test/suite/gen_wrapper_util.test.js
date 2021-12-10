@@ -340,7 +340,7 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
-        it('should unify keybindings that are common for Windows and Linux and also Mac except assigned "key" (using "mac" key) (2) [compaction]', () => {
+        it('should unify keybindings using "mac" key (2) [compaction]', () => {
             const input = [
                 {
                     keybindings: [
@@ -376,7 +376,7 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
-        it('should unify keybindings using "mac" key (special case that a same command applies to multiple keys) [compaction]', () => {
+        it('should unify keybindings using "mac" key (3) (special case that a same command applies to multiple keys) [compaction]', () => {
             const input = [
                 {
                     keybindings: [
@@ -409,6 +409,39 @@ describe('gen_wrapper_util', () => {
                 { key: 'ctrl+c', command: 'command1', mac: 'ctrl+d' }, // <= B
                 { key: 'ctrl+a', command: 'command2', when: 'isWindows && context2' },
                 { key: 'ctrl+a', command: 'command1', when: 'isLinux && context3' }
+            ];
+            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
+        });
+        it('should unify keybindings using "mac" key (4) [compaction]', () => {
+            const input = [
+                {
+                    keybindings: [
+                        { key: 'ctrl+delete', command: 'command1', when: 'context1' },
+                        { key: 'alt+delete', command: 'command3', when: 'context3' }
+                    ],
+                    context: 'isWindows'
+                },
+                {
+                    keybindings: [
+                        { key: 'ctrl+delete', command: 'command1', when: 'context1' },
+                        { key: 'alt+delete', command: 'command3', when: 'context3' }
+                    ],
+                    context: 'isLinux'
+                },
+                {
+                    keybindings: [
+                        { key: 'alt+delete', command: 'command2', when: 'context2' },
+                        { key: 'alt+delete', command: 'command3', when: 'context3' },
+                        { key: 'alt+delete', command: 'command1', when: 'context1' }
+                    ],
+                    context: 'isMac'
+                }
+            ];
+            const expected = [
+                { key: 'ctrl+delete', command: 'command1', when: '!isMac && context1' },
+                { key: 'alt+delete', command: 'command2', when: 'isMac && context2' },
+                { key: 'alt+delete', command: 'command3', when: 'context3' },
+                { key: 'alt+delete', command: 'command1', when: 'isMac && context1' }
             ];
             assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });

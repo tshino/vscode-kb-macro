@@ -322,7 +322,9 @@ function combineBaseKeybingings(baseKeybindings) {
     // Find out special patterns where 'mac' key can be used to unify keybindings.
     const otherThanMac = contextList.filter(c => c !== 'isMac');
     const macIndex = contextList.findIndex(c => c === 'isMac');
+    const checkedKeys = new Set();
     for (const key of keyDict.keys()) {
+        checkedKeys.add(key);
         const unified = unifiedKeybindings.get(key) || [];
         for (const u of unified) {
             if (!util.isDeepStrictEqual(u.contexts, otherThanMac)) {
@@ -336,6 +338,10 @@ function combineBaseKeybingings(baseKeybindings) {
                 const target = copyKeybinding(u.originalKeybinding);
                 target.key = lookup.key;
                 const nonUnifiedMac = nonUnifiedKeybindings.get(lookup.key)[macIndex];
+                if (!checkedKeys.has(lookup.key) && 1 < nonUnifiedMac.length) {
+                    // to avoid wrong order listing
+                    continue;
+                }
                 const i = nonUnifiedMac.length - 1;
                 for (let k = 0; k < nonUnifiedMac[i].length; k++) {
                     const keybinding = nonUnifiedMac[i][k];
@@ -361,8 +367,8 @@ function combineBaseKeybingings(baseKeybindings) {
     for (const key of keyDict.keys()) {
         const unified = unifiedKeybindings.get(key) || [];
         for (const u of unified) {
-            if (u.makKey) {
-                const [ nonUnifiedMac, k ] = u.macKeybinding[0];
+            if (u.macKey) {
+                const [ nonUnifiedMac, k ] = u.macKeybinding;
                 delete nonUnifiedMac[nonUnifiedMac.length - 1][k].matched;
             }
         }
