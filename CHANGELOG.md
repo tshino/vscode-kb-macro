@@ -5,6 +5,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [Unreleased]
 - New
   - Added [a list of recommended keymap wrappers](keymap-wrapper/README.md).
+- Update
+  - Updated default keybindings based on VS Code 1.63.0 (Windows, Linux).
 - Fix
   - The wrapper generating script had a potential issue of generating keybindings for macOS in the incorrect order.
 
