@@ -533,5 +533,23 @@ describe('gen_wrapper_util', () => {
             };
             assert.deepStrictEqual(makeWrapper(input), expected);
         });
+        it('should make wrapper keybinding (4) (with awaitOption)', () => {
+            const input = {
+                key: 'key1',
+                command: 'command1',
+                when: 'context1'
+            };
+            const awaitOption = 'await1 await2';
+            const expected = {
+                key: 'key1',
+                command: 'kb-macro.wrap',
+                args: {
+                    command: 'command1',
+                    "await": "await1 await2"
+                },
+                when: 'kb-macro.recording && context1'
+            };
+            assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
+        });
     });
 });

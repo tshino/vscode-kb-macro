@@ -80,13 +80,8 @@ async function makeKeymapWrapper(configPath, commonConfig) {
                 return keybinding;
             } else {
                 // make a wrapper keybinding (indirect call) to enable recording of the command
-                const wrapper = genWrapperUtil.makeWrapper(keybinding);
-                if (awaitOptions.has(wrapper.args.command)) {
-                    const awaitOption = awaitOptions.get(wrapper.args.command);
-                    if (awaitOption) {
-                        wrapper.args['await'] = awaitOption;
-                    }
-                }
+                const awaitOption = awaitOptions.get(keybinding.command) || '';
+                const wrapper = genWrapperUtil.makeWrapper(keybinding, awaitOption);
                 return wrapper;
             }
         }

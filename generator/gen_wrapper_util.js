@@ -417,7 +417,7 @@ function makeWrapperWhen(keybinding) {
     return addWhenContext(keybinding.when, 'kb-macro.recording');
 }
 
-function makeWrapper(keybinding) {
+function makeWrapper(keybinding, awaitOption) {
     const wrapped = {
         key: keybinding.key,
         mac: keybinding.mac,
@@ -427,6 +427,9 @@ function makeWrapper(keybinding) {
     };
     if (!('mac' in keybinding)) {
         delete wrapped.mac;
+    }
+    if (awaitOption) {
+        wrapped.args['await'] = awaitOption;
     }
     return wrapped;
 }
