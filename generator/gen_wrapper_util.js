@@ -403,6 +403,34 @@ function isValidAwaitOption(awaitOption) {
     );
 }
 
+function makeWrapperArgs(keybinding) {
+    const args = {
+        command: keybinding.command
+    };
+    if ('args' in keybinding) {
+        args.args = keybinding.args;
+    }
+    return args;
+}
+
+function makeWrapperWhen(keybinding) {
+    return addWhenContext(keybinding.when, 'kb-macro.recording');
+}
+
+function makeWrapper(keybinding) {
+    const wrapped = {
+        key: keybinding.key,
+        mac: keybinding.mac,
+        command: 'kb-macro.wrap',
+        args: makeWrapperArgs(keybinding),
+        when: makeWrapperWhen(keybinding)
+    };
+    if (!('mac' in keybinding)) {
+        delete wrapped.mac;
+    }
+    return wrapped;
+}
+
 module.exports = {
     readJSON,
     writeJSON,
@@ -412,5 +440,7 @@ module.exports = {
     copyKeybinding,
     keybindingsContains,
     combineBaseKeybingings,
-    isValidAwaitOption
+    isValidAwaitOption,
+    makeWrapperWhen,
+    makeWrapper
 };

@@ -629,12 +629,12 @@
 			},
 			{
 				"key": "ctrl+end",
+				"mac": "cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "cursorBottom"
 				},
-				"when": "kb-macro.recording && textInputFocus",
-				"mac": "cmd+down"
+				"when": "kb-macro.recording && textInputFocus"
 			},
 			{
 				"key": "ctrl+end",
@@ -675,21 +675,21 @@
 			},
 			{
 				"key": "ctrl+end",
+				"mac": "cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.focusBottom"
 				},
-				"when": "kb-macro.recording && notebookEditorFocused && !inputFocus",
-				"mac": "cmd+down"
+				"when": "kb-macro.recording && notebookEditorFocused && !inputFocus"
 			},
 			{
 				"key": "ctrl+shift+end",
+				"mac": "shift+cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "cursorBottomSelect"
 				},
-				"when": "kb-macro.recording && textInputFocus",
-				"mac": "shift+cmd+down"
+				"when": "kb-macro.recording && textInputFocus"
 			},
 			{
 				"key": "down",
@@ -1239,12 +1239,12 @@
 			},
 			{
 				"key": "ctrl+home",
+				"mac": "cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "cursorTop"
 				},
-				"when": "kb-macro.recording && textInputFocus",
-				"mac": "cmd+up"
+				"when": "kb-macro.recording && textInputFocus"
 			},
 			{
 				"key": "ctrl+home",
@@ -1277,21 +1277,21 @@
 			},
 			{
 				"key": "ctrl+home",
+				"mac": "cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.focusTop"
 				},
-				"when": "kb-macro.recording && notebookEditorFocused && !inputFocus",
-				"mac": "cmd+up"
+				"when": "kb-macro.recording && notebookEditorFocused && !inputFocus"
 			},
 			{
 				"key": "ctrl+shift+home",
+				"mac": "shift+cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "cursorTopSelect"
 				},
-				"when": "kb-macro.recording && textInputFocus",
-				"mac": "shift+cmd+up"
+				"when": "kb-macro.recording && textInputFocus"
 			},
 			{
 				"key": "up",
@@ -1441,57 +1441,57 @@
 			},
 			{
 				"key": "delete",
+				"mac": "cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "debug.removeBreakpoint"
 				},
-				"when": "kb-macro.recording && breakpointsFocused && !breakpointInputFocused",
-				"mac": "cmd+backspace"
+				"when": "kb-macro.recording && breakpointsFocused && !breakpointInputFocused"
 			},
 			{
 				"key": "delete",
+				"mac": "cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "debug.removeWatchExpression"
 				},
-				"when": "kb-macro.recording && watchExpressionsFocused && !expressionSelected",
-				"mac": "cmd+backspace"
+				"when": "kb-macro.recording && watchExpressionsFocused && !expressionSelected"
 			},
 			{
 				"key": "delete",
+				"mac": "cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "keybindings.editor.removeKeybinding"
 				},
-				"when": "kb-macro.recording && inKeybindings && keybindingFocus && !inputFocus",
-				"mac": "cmd+backspace"
+				"when": "kb-macro.recording && inKeybindings && keybindingFocus && !inputFocus"
 			},
 			{
 				"key": "delete",
+				"mac": "cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.delete"
 				},
-				"when": "kb-macro.recording && notebookEditable && notebookEditorFocused && !inputFocus",
-				"mac": "cmd+backspace"
+				"when": "kb-macro.recording && notebookEditable && notebookEditorFocused && !inputFocus"
 			},
 			{
 				"key": "delete",
+				"mac": "cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notification.clear"
 				},
-				"when": "kb-macro.recording && notificationFocus",
-				"mac": "cmd+backspace"
+				"when": "kb-macro.recording && notificationFocus"
 			},
 			{
 				"key": "delete",
+				"mac": "cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.remove"
 				},
-				"when": "kb-macro.recording && fileMatchOrMatchFocus && searchViewletVisible",
-				"mac": "cmd+backspace"
+				"when": "kb-macro.recording && fileMatchOrMatchFocus && searchViewletVisible"
 			},
 			{
 				"key": "delete",
@@ -1522,12 +1522,12 @@
 			},
 			{
 				"key": "delete",
+				"mac": "cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "deleteFile"
 				},
-				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus",
-				"mac": "cmd+backspace"
+				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus"
 			},
 			{
 				"key": "delete",
@@ -1555,30 +1555,30 @@
 			},
 			{
 				"key": "ctrl+a",
+				"mac": "cmd+a",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.selectAll"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+a"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+a",
+				"mac": "cmd+a",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "list.selectAll"
 				},
-				"when": "kb-macro.recording && listFocus && listSupportsMultiselect && !inputFocus",
-				"mac": "cmd+a"
+				"when": "kb-macro.recording && listFocus && listSupportsMultiselect && !inputFocus"
 			},
 			{
 				"key": "ctrl+l",
+				"mac": "cmd+l",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "expandLineSelection"
 				},
-				"when": "kb-macro.recording && textInputFocus",
-				"mac": "cmd+l"
+				"when": "kb-macro.recording && textInputFocus"
 			},
 			{
 				"key": "ctrl+l",
@@ -1616,12 +1616,12 @@
 			},
 			{
 				"key": "ctrl+shift+z",
+				"mac": "shift+cmd+z",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "redo"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+z"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+y",
@@ -1662,30 +1662,30 @@
 			},
 			{
 				"key": "ctrl+down",
+				"mac": "ctrl+cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.focusInOutput"
 				},
-				"when": "kb-macro.recording && notebookCellHasOutputs && notebookEditorFocused",
-				"mac": "ctrl+cmd+down"
+				"when": "kb-macro.recording && notebookCellHasOutputs && notebookEditorFocused"
 			},
 			{
 				"key": "ctrl+down",
+				"mac": "ctrl+cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.focusNextEditor"
 				},
-				"when": "kb-macro.recording && notebookEditorFocused && notebookOutputFocused",
-				"mac": "ctrl+cmd+down"
+				"when": "kb-macro.recording && notebookEditorFocused && notebookOutputFocused"
 			},
 			{
 				"key": "ctrl+down",
+				"mac": "cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "problems.action.focusProblemsFromFilter"
 				},
-				"when": "kb-macro.recording && problemsFilterFocus",
-				"mac": "cmd+down"
+				"when": "kb-macro.recording && problemsFilterFocus"
 			},
 			{
 				"key": "cmd+down",
@@ -1713,21 +1713,21 @@
 			},
 			{
 				"key": "ctrl+down",
+				"mac": "cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.focus.nextInputBox"
 				},
-				"when": "kb-macro.recording && inSearchEditor && inputBoxFocus || kb-macro.recording && inputBoxFocus && searchViewletVisible",
-				"mac": "cmd+down"
+				"when": "kb-macro.recording && inSearchEditor && inputBoxFocus || kb-macro.recording && inputBoxFocus && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+down",
+				"mac": "cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.navigationModeFocusNext"
 				},
-				"when": "kb-macro.recording && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && accessibilityModeEnabled && terminalFocus && terminalProcessSupported",
-				"mac": "cmd+down"
+				"when": "kb-macro.recording && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+up",
@@ -1752,57 +1752,57 @@
 			},
 			{
 				"key": "ctrl+up",
+				"mac": "ctrl+cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.focusOutOutput"
 				},
-				"when": "kb-macro.recording && notebookEditorFocused",
-				"mac": "ctrl+cmd+up"
+				"when": "kb-macro.recording && notebookEditorFocused"
 			},
 			{
 				"key": "ctrl+up",
+				"mac": "cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.focusSearchFromResults"
 				},
-				"when": "kb-macro.recording && firstMatchFocus && searchViewletVisible",
-				"mac": "cmd+up"
+				"when": "kb-macro.recording && firstMatchFocus && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+up",
+				"mac": "cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.focus.previousInputBox"
 				},
-				"when": "kb-macro.recording && inSearchEditor && inputBoxFocus || kb-macro.recording && inputBoxFocus && searchViewletVisible && !searchInputBoxFocus",
-				"mac": "cmd+up"
+				"when": "kb-macro.recording && inSearchEditor && inputBoxFocus || kb-macro.recording && inputBoxFocus && searchViewletVisible && !searchInputBoxFocus"
 			},
 			{
 				"key": "ctrl+up",
+				"mac": "cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.navigationModeFocusPrevious"
 				},
-				"when": "kb-macro.recording && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && accessibilityModeEnabled && terminalFocus && terminalProcessSupported",
-				"mac": "cmd+up"
+				"when": "kb-macro.recording && accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || kb-macro.recording && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "alt+pagedown",
+				"mac": "cmd+pagedown",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "scrollPageDown"
 				},
-				"when": "kb-macro.recording && textInputFocus",
-				"mac": "cmd+pagedown"
+				"when": "kb-macro.recording && textInputFocus"
 			},
 			{
 				"key": "alt+pageup",
+				"mac": "cmd+pageup",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "scrollPageUp"
 				},
-				"when": "kb-macro.recording && textInputFocus",
-				"mac": "cmd+pageup"
+				"when": "kb-macro.recording && textInputFocus"
 			},
 			{
 				"key": "tab",
@@ -1861,12 +1861,12 @@
 			},
 			{
 				"key": "ctrl+z",
+				"mac": "cmd+z",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "undo"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+z"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "f12",
@@ -2139,12 +2139,12 @@
 			},
 			{
 				"key": "alt+enter",
+				"mac": "cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.openInEditor"
 				},
-				"when": "kb-macro.recording && hasSearchResult && searchViewletFocus",
-				"mac": "cmd+enter"
+				"when": "kb-macro.recording && hasSearchResult && searchViewletFocus"
 			},
 			{
 				"key": "ctrl+alt+enter",
@@ -2164,93 +2164,93 @@
 			},
 			{
 				"key": "ctrl+alt+enter",
+				"mac": "alt+cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.replaceAll"
 				},
-				"when": "kb-macro.recording && editorFocus && findWidgetVisible",
-				"mac": "alt+cmd+enter"
+				"when": "kb-macro.recording && editorFocus && findWidgetVisible"
 			},
 			{
 				"key": "ctrl+alt+enter",
+				"mac": "alt+cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.replaceAll"
 				},
-				"when": "kb-macro.recording && replaceActive && searchViewletVisible && !findWidgetVisible",
-				"mac": "alt+cmd+enter"
+				"when": "kb-macro.recording && replaceActive && searchViewletVisible && !findWidgetVisible"
 			},
 			{
 				"key": "ctrl+f",
+				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "actions.find"
 				},
-				"when": "kb-macro.recording && editorFocus || kb-macro.recording && editorIsOpen",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && editorFocus || kb-macro.recording && editorIsOpen"
 			},
 			{
 				"key": "ctrl+f",
+				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.extensioneditor.showfind"
 				},
-				"when": "kb-macro.recording && !editorFocus && activeEditor == 'workbench.editor.extension'",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && !editorFocus && activeEditor == 'workbench.editor.extension'"
 			},
 			{
 				"key": "ctrl+f",
+				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.webvieweditor.showFind"
 				},
-				"when": "kb-macro.recording && webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor'",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && webviewFindWidgetEnabled && !editorFocus && activeEditor == 'WebviewEditor'"
 			},
 			{
 				"key": "ctrl+f",
+				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "repl.action.filter"
 				},
-				"when": "kb-macro.recording && inDebugRepl && textInputFocus",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && inDebugRepl && textInputFocus"
 			},
 			{
 				"key": "ctrl+f",
+				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "settings.action.search"
 				},
-				"when": "kb-macro.recording && inSettingsEditor",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && inSettingsEditor"
 			},
 			{
 				"key": "ctrl+f",
+				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "keybindings.editor.searchKeybindings"
 				},
-				"when": "kb-macro.recording && inKeybindings",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && inKeybindings"
 			},
 			{
 				"key": "ctrl+f",
+				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.find"
 				},
-				"when": "kb-macro.recording && notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'"
 			},
 			{
 				"key": "ctrl+f",
+				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "problems.action.focusFilter"
 				},
-				"when": "kb-macro.recording && focusedView == 'workbench.panel.markers.view'",
-				"mac": "cmd+f"
+				"when": "kb-macro.recording && focusedView == 'workbench.panel.markers.view'"
 			},
 			{
 				"key": "ctrl+f",
@@ -2419,21 +2419,21 @@
 			},
 			{
 				"key": "enter",
+				"mac": "cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "explorer.openAndPassFocus"
 				},
-				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus",
-				"mac": "cmd+down"
+				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsFolder && !inputFocus"
 			},
 			{
 				"key": "ctrl+u",
+				"mac": "cmd+u",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "cursorUndo"
 				},
-				"when": "kb-macro.recording && textInputFocus",
-				"mac": "cmd+u"
+				"when": "kb-macro.recording && textInputFocus"
 			},
 			{
 				"key": "ctrl+right",
@@ -2493,12 +2493,12 @@
 			},
 			{
 				"key": "ctrl+left",
+				"mac": "shift+cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "list.collapseAll"
 				},
-				"when": "kb-macro.recording && listFocus && !inputFocus",
-				"mac": "shift+cmd+up"
+				"when": "kb-macro.recording && listFocus && !inputFocus"
 			},
 			{
 				"key": "ctrl+left",
@@ -2510,15 +2510,16 @@
 			},
 			{
 				"key": "ctrl+backspace",
+				"mac": "alt+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "deleteWordLeft"
 				},
-				"when": "kb-macro.recording && textInputFocus && !editorReadonly",
-				"mac": "alt+backspace"
+				"when": "kb-macro.recording && textInputFocus && !editorReadonly"
 			},
 			{
 				"key": "ctrl+backspace",
+				"mac": "alt+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.sendSequence",
@@ -2526,8 +2527,7 @@
 						"text": "\u0017"
 					}
 				},
-				"when": "kb-macro.recording && terminalFocus",
-				"mac": "alt+backspace"
+				"when": "kb-macro.recording && terminalFocus"
 			},
 			{
 				"key": "ctrl+delete",
@@ -2550,39 +2550,39 @@
 			},
 			{
 				"key": "ctrl+k ctrl+c",
+				"mac": "cmd+k cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.addCommentLine"
 				},
-				"when": "kb-macro.recording && editorTextFocus && !editorReadonly",
-				"mac": "cmd+k cmd+c"
+				"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
 			},
 			{
 				"key": "ctrl+k ctrl+c",
+				"mac": "cmd+k cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.collapseCellInput"
 				},
-				"when": "kb-macro.recording && notebookCellListFocused && !inputFocus && !notebookCellInputIsCollapsed",
-				"mac": "cmd+k cmd+c"
+				"when": "kb-macro.recording && notebookCellListFocused && !inputFocus && !notebookCellInputIsCollapsed"
 			},
 			{
 				"key": "ctrl+k ctrl+c",
+				"mac": "cmd+k cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.expandCellInput"
 				},
-				"when": "kb-macro.recording && notebookCellInputIsCollapsed && notebookCellListFocused",
-				"mac": "cmd+k cmd+c"
+				"when": "kb-macro.recording && notebookCellInputIsCollapsed && notebookCellListFocused"
 			},
 			{
 				"key": "ctrl+d",
+				"mac": "cmd+d",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.addSelectionToNextFindMatch"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "cmd+d"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "shift+alt+a",
@@ -2594,12 +2594,12 @@
 			},
 			{
 				"key": "ctrl+f2",
+				"mac": "cmd+f2",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.changeAll"
 				},
-				"when": "kb-macro.recording && editorTextFocus && !editorReadonly",
-				"mac": "cmd+f2"
+				"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
 			},
 			{
 				"key": "cmd+c",
@@ -2611,22 +2611,22 @@
 			},
 			{
 				"key": "ctrl+c",
+				"mac": "cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.clipboardCopyAction",
 					"await": "clipboard"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+c"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+c",
+				"mac": "cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "keybindings.editor.copyKeybindingEntry"
 				},
-				"when": "kb-macro.recording && inKeybindings && keybindingFocus",
-				"mac": "cmd+c"
+				"when": "kb-macro.recording && inKeybindings && keybindingFocus"
 			},
 			{
 				"key": "ctrl+c",
@@ -2646,12 +2646,12 @@
 			},
 			{
 				"key": "ctrl+c",
+				"mac": "cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.copyMatch"
 				},
-				"when": "kb-macro.recording && fileMatchOrMatchFocus",
-				"mac": "cmd+c"
+				"when": "kb-macro.recording && fileMatchOrMatchFocus"
 			},
 			{
 				"key": "ctrl+c",
@@ -2671,21 +2671,21 @@
 			},
 			{
 				"key": "ctrl+c",
+				"mac": "cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "filesExplorer.copy"
 				},
-				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus",
-				"mac": "cmd+c"
+				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
 			},
 			{
 				"key": "ctrl+c",
+				"mac": "cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "remote.tunnel.copyAddressInline"
 				},
-				"when": "kb-macro.recording && tunnelViewFocus && tunnelType == 'Detected' && tunnelViewMultiSelection == 'undefined' || kb-macro.recording && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined'",
-				"mac": "cmd+c"
+				"when": "kb-macro.recording && tunnelViewFocus && tunnelType == 'Detected' && tunnelViewMultiSelection == 'undefined' || kb-macro.recording && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined'"
 			},
 			{
 				"key": "shift+delete",
@@ -2698,12 +2698,12 @@
 			},
 			{
 				"key": "shift+delete",
+				"mac": "alt+cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "deleteFile"
 				},
-				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus",
-				"mac": "alt+cmd+backspace"
+				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
 			},
 			{
 				"key": "cmd+x",
@@ -2715,22 +2715,22 @@
 			},
 			{
 				"key": "ctrl+x",
+				"mac": "cmd+x",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.clipboardCutAction",
 					"await": "document selection clipboard"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+x"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+x",
+				"mac": "cmd+x",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "filesExplorer.cut"
 				},
-				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus",
-				"mac": "cmd+x"
+				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
 			},
 			{
 				"key": "cmd+v",
@@ -2742,13 +2742,13 @@
 			},
 			{
 				"key": "shift+insert",
+				"mac": "cmd+v",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.clipboardPasteAction",
 					"await": "document selection"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+v"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+v",
@@ -2788,12 +2788,12 @@
 			},
 			{
 				"key": "ctrl+v",
+				"mac": "cmd+v",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "filesExplorer.paste"
 				},
-				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus",
-				"mac": "cmd+v"
+				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
 			},
 			{
 				"key": "shift+alt+down",
@@ -2845,30 +2845,30 @@
 			},
 			{
 				"key": "ctrl+k ctrl+k",
+				"mac": "cmd+k cmd+k",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.defineKeybinding"
 				},
-				"when": "kb-macro.recording && editorTextFocus && !editorReadonly && editorLangId == 'jsonc'",
-				"mac": "cmd+k cmd+k"
+				"when": "kb-macro.recording && editorTextFocus && !editorReadonly && editorLangId == 'jsonc'"
 			},
 			{
 				"key": "ctrl+k ctrl+k",
+				"mac": "cmd+k cmd+k",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.selectFromAnchorToCursor"
 				},
-				"when": "kb-macro.recording && editorTextFocus && selectionAnchorSet",
-				"mac": "cmd+k cmd+k"
+				"when": "kb-macro.recording && editorTextFocus && selectionAnchorSet"
 			},
 			{
 				"key": "ctrl+shift+k",
+				"mac": "shift+cmd+k",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.deleteLines"
 				},
-				"when": "kb-macro.recording && textInputFocus && !editorReadonly",
-				"mac": "shift+cmd+k"
+				"when": "kb-macro.recording && textInputFocus && !editorReadonly"
 			},
 			{
 				"key": "f7",
@@ -2960,21 +2960,21 @@
 			},
 			{
 				"key": "ctrl+k ctrl+f",
+				"mac": "cmd+k cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.formatSelection"
 				},
-				"when": "kb-macro.recording && editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly",
-				"mac": "cmd+k cmd+f"
+				"when": "kb-macro.recording && editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
 			},
 			{
 				"key": "ctrl+f12",
+				"mac": "cmd+f12",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.goToImplementation"
 				},
-				"when": "kb-macro.recording && editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor",
-				"mac": "cmd+f12"
+				"when": "kb-macro.recording && editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
 			},
 			{
 				"key": "shift+alt+i",
@@ -3098,57 +3098,57 @@
 			},
 			{
 				"key": "ctrl+shift+enter",
+				"mac": "shift+cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.insertLineBefore"
 				},
-				"when": "kb-macro.recording && editorTextFocus && !editorReadonly",
-				"mac": "shift+cmd+enter"
+				"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
 			},
 			{
 				"key": "ctrl+shift+enter",
+				"mac": "shift+cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "list.toggleSelection"
 				},
-				"when": "kb-macro.recording && listFocus && !inputFocus",
-				"mac": "shift+cmd+enter"
+				"when": "kb-macro.recording && listFocus && !inputFocus"
 			},
 			{
 				"key": "ctrl+shift+enter",
+				"mac": "shift+cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.insertCodeCellAbove"
 				},
-				"when": "kb-macro.recording && notebookCellListFocused && !inputFocus",
-				"mac": "shift+cmd+enter"
+				"when": "kb-macro.recording && notebookCellListFocused && !inputFocus"
 			},
 			{
 				"key": "ctrl+shift+enter",
+				"mac": "shift+cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.replaceAllInFile"
 				},
-				"when": "kb-macro.recording && fileMatchFocus && replaceActive && searchViewletVisible",
-				"mac": "shift+cmd+enter"
+				"when": "kb-macro.recording && fileMatchFocus && replaceActive && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+shift+enter",
+				"mac": "shift+cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.replaceAllInFolder"
 				},
-				"when": "kb-macro.recording && folderMatchFocus && replaceActive && searchViewletVisible",
-				"mac": "shift+cmd+enter"
+				"when": "kb-macro.recording && folderMatchFocus && replaceActive && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+shift+f2",
+				"mac": "shift+cmd+f2",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.linkedEditing"
 				},
-				"when": "kb-macro.recording && editorHasRenameProvider && editorTextFocus && !editorReadonly",
-				"mac": "shift+cmd+f2"
+				"when": "kb-macro.recording && editorHasRenameProvider && editorTextFocus && !editorReadonly"
 			},
 			{
 				"key": "alt+f8",
@@ -3290,12 +3290,12 @@
 			},
 			{
 				"key": "ctrl+k ctrl+d",
+				"mac": "cmd+k cmd+d",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.moveSelectionToNextFindMatch"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "cmd+k cmd+d"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "f3",
@@ -3315,12 +3315,12 @@
 			},
 			{
 				"key": "ctrl+f3",
+				"mac": "cmd+f3",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.nextSelectionMatchFindAction"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "cmd+f3"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "shift+alt+o",
@@ -3340,12 +3340,12 @@
 			},
 			{
 				"key": "ctrl+shift+f12",
+				"mac": "shift+cmd+f12",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.peekImplementation"
 				},
-				"when": "kb-macro.recording && editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
-				"mac": "shift+cmd+f12"
+				"when": "kb-macro.recording && editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
 			},
 			{
 				"key": "shift+f3",
@@ -3365,12 +3365,12 @@
 			},
 			{
 				"key": "ctrl+shift+f3",
+				"mac": "shift+cmd+f3",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.previousSelectionMatchFindAction"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "shift+cmd+f3"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "ctrl+shift+r",
@@ -3382,12 +3382,12 @@
 			},
 			{
 				"key": "ctrl+shift+r",
+				"mac": "shift+cmd+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "rerunSearchEditorSearch"
 				},
-				"when": "kb-macro.recording && inSearchEditor",
-				"mac": "shift+cmd+r"
+				"when": "kb-macro.recording && inSearchEditor"
 			},
 			{
 				"key": "ctrl+shift+r",
@@ -3399,12 +3399,12 @@
 			},
 			{
 				"key": "ctrl+k ctrl+u",
+				"mac": "cmd+k cmd+u",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.removeCommentLine"
 				},
-				"when": "kb-macro.recording && editorTextFocus && !editorReadonly",
-				"mac": "cmd+k cmd+u"
+				"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
 			},
 			{
 				"key": "f2",
@@ -3440,84 +3440,84 @@
 			},
 			{
 				"key": "f2",
+				"mac": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "debug.renameWatchExpression"
 				},
-				"when": "kb-macro.recording && watchExpressionsFocused",
-				"mac": "enter"
+				"when": "kb-macro.recording && watchExpressionsFocused"
 			},
 			{
 				"key": "f2",
+				"mac": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "debug.setVariable"
 				},
-				"when": "kb-macro.recording && variablesFocused",
-				"mac": "enter"
+				"when": "kb-macro.recording && variablesFocused"
 			},
 			{
 				"key": "f2",
+				"mac": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "remote.tunnel.label"
 				},
-				"when": "kb-macro.recording && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined'",
-				"mac": "enter"
+				"when": "kb-macro.recording && tunnelViewFocus && tunnelType == 'Forwarded' && tunnelViewMultiSelection == 'undefined'"
 			},
 			{
 				"key": "f2",
+				"mac": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "renameFile"
 				},
-				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus",
-				"mac": "enter"
+				"when": "kb-macro.recording && explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
 			},
 			{
 				"key": "ctrl+k f12",
+				"mac": "cmd+k f12",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.revealDefinitionAside"
 				},
-				"when": "kb-macro.recording && editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor",
-				"mac": "cmd+k f12"
+				"when": "kb-macro.recording && editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
 			},
 			{
 				"key": "ctrl+shift+l",
+				"mac": "shift+cmd+l",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.selectHighlights"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "shift+cmd+l"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "ctrl+shift+l",
+				"mac": "shift+cmd+l",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "addCursorsAtSearchResults"
 				},
-				"when": "kb-macro.recording && fileMatchOrMatchFocus && searchViewletVisible",
-				"mac": "shift+cmd+l"
+				"when": "kb-macro.recording && fileMatchOrMatchFocus && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+shift+l",
+				"mac": "shift+cmd+l",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "selectAllSearchEditorMatches"
 				},
-				"when": "kb-macro.recording && inSearchEditor",
-				"mac": "shift+cmd+l"
+				"when": "kb-macro.recording && inSearchEditor"
 			},
 			{
 				"key": "ctrl+k ctrl+b",
+				"mac": "cmd+k cmd+b",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.setSelectionAnchor"
 				},
-				"when": "kb-macro.recording && editorTextFocus",
-				"mac": "cmd+k cmd+b"
+				"when": "kb-macro.recording && editorTextFocus"
 			},
 			{
 				"key": "alt+f1",
@@ -3537,57 +3537,57 @@
 			},
 			{
 				"key": "ctrl+k ctrl+i",
+				"mac": "cmd+k cmd+i",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.showHover"
 				},
-				"when": "kb-macro.recording && editorTextFocus",
-				"mac": "cmd+k cmd+i"
+				"when": "kb-macro.recording && editorTextFocus"
 			},
 			{
 				"key": "ctrl+k ctrl+i",
+				"mac": "cmd+k cmd+i",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.debug.action.showDebugHover"
 				},
-				"when": "kb-macro.recording && editorTextFocus && inDebugMode",
-				"mac": "cmd+k cmd+i"
+				"when": "kb-macro.recording && editorTextFocus && inDebugMode"
 			},
 			{
 				"key": "shift+alt+right",
+				"mac": "ctrl+shift+right",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.smartSelect.expand"
 				},
-				"when": "kb-macro.recording && editorTextFocus",
-				"mac": "ctrl+shift+right"
+				"when": "kb-macro.recording && editorTextFocus"
 			},
 			{
 				"key": "shift+alt+left",
+				"mac": "ctrl+shift+left",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.smartSelect.shrink"
 				},
-				"when": "kb-macro.recording && editorTextFocus",
-				"mac": "ctrl+shift+left"
+				"when": "kb-macro.recording && editorTextFocus"
 			},
 			{
 				"key": "ctrl+h",
+				"mac": "alt+cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.startFindReplaceAction"
 				},
-				"when": "kb-macro.recording && editorFocus || kb-macro.recording && editorIsOpen",
-				"mac": "alt+cmd+f"
+				"when": "kb-macro.recording && editorFocus || kb-macro.recording && editorIsOpen"
 			},
 			{
 				"key": "ctrl+h",
+				"mac": "cmd+h",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "testing.toggleTestingPeekHistory"
 				},
-				"when": "kb-macro.recording && testing.isPeekVisible",
-				"mac": "cmd+h"
+				"when": "kb-macro.recording && testing.isPeekVisible"
 			},
 			{
 				"key": "ctrl+m",
@@ -3615,12 +3615,12 @@
 			},
 			{
 				"key": "ctrl+shift+space",
+				"mac": "shift+cmd+space",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.triggerParameterHints"
 				},
-				"when": "kb-macro.recording && editorHasSignatureHelpProvider && editorTextFocus",
-				"mac": "shift+cmd+space"
+				"when": "kb-macro.recording && editorHasSignatureHelpProvider && editorTextFocus"
 			},
 			{
 				"key": "ctrl+i",
@@ -3646,12 +3646,12 @@
 			},
 			{
 				"key": "ctrl+k ctrl+x",
+				"mac": "cmd+k cmd+x",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.trimTrailingWhitespace"
 				},
-				"when": "kb-macro.recording && editorTextFocus && !editorReadonly",
-				"mac": "cmd+k cmd+x"
+				"when": "kb-macro.recording && editorTextFocus && !editorReadonly"
 			},
 			{
 				"key": "f9",
@@ -3663,120 +3663,120 @@
 			},
 			{
 				"key": "ctrl+k ctrl+0",
+				"mac": "cmd+k cmd+0",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldAll"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+0"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+8",
+				"mac": "cmd+k cmd+8",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldAllMarkerRegions"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+8"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+1",
+				"mac": "cmd+k cmd+1",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldLevel1"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+1"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+2",
+				"mac": "cmd+k cmd+2",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldLevel2"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+2"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+3",
+				"mac": "cmd+k cmd+3",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldLevel3"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+3"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+4",
+				"mac": "cmd+k cmd+4",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldLevel4"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+4"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+5",
+				"mac": "cmd+k cmd+5",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldLevel5"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+5"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+6",
+				"mac": "cmd+k cmd+6",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldLevel6"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+6"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+7",
+				"mac": "cmd+k cmd+7",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.foldLevel7"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+7"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+l",
+				"mac": "cmd+k cmd+l",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.toggleFold"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+l"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+j",
+				"mac": "cmd+k cmd+j",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.unfoldAll"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+j"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+k ctrl+9",
+				"mac": "cmd+k cmd+9",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.unfoldAllMarkerRegions"
 				},
-				"when": "kb-macro.recording && editorTextFocus && foldingEnabled",
-				"mac": "cmd+k cmd+9"
+				"when": "kb-macro.recording && editorTextFocus && foldingEnabled"
 			},
 			{
 				"key": "ctrl+shift+v",
+				"mac": "shift+cmd+v",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.pasteAbove"
 				},
-				"when": "kb-macro.recording && notebookEditorFocused && !inputFocus",
-				"mac": "shift+cmd+v"
+				"when": "kb-macro.recording && notebookEditorFocused && !inputFocus"
 			},
 			{
 				"key": "ctrl+shift+v",
@@ -3788,30 +3788,30 @@
 			},
 			{
 				"key": "ctrl+shift+v",
+				"mac": "shift+cmd+v",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "markdown.showPreview"
 				},
-				"when": "kb-macro.recording && !notebookEditorFocused && editorLangId == 'markdown'",
-				"mac": "shift+cmd+v"
+				"when": "kb-macro.recording && !notebookEditorFocused && editorLangId == 'markdown'"
 			},
 			{
 				"key": "ctrl+shift+backspace",
+				"mac": "shift+cmd+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.searchEditor.action.deleteFileResults"
 				},
-				"when": "kb-macro.recording && inSearchEditor",
-				"mac": "shift+cmd+backspace"
+				"when": "kb-macro.recording && inSearchEditor"
 			},
 			{
 				"key": "ctrl+k f2",
+				"mac": "cmd+k f2",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "togglePeekWidgetFocus"
 				},
-				"when": "kb-macro.recording && inReferenceSearchEditor || kb-macro.recording && referenceSearchVisible",
-				"mac": "cmd+k f2"
+				"when": "kb-macro.recording && inReferenceSearchEditor || kb-macro.recording && referenceSearchVisible"
 			},
 			{
 				"key": "alt+f5",
@@ -3863,48 +3863,48 @@
 			},
 			{
 				"key": "ctrl+shift+1",
+				"mac": "shift+cmd+1",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.replaceOne"
 				},
-				"when": "kb-macro.recording && editorFocus && findWidgetVisible",
-				"mac": "shift+cmd+1"
+				"when": "kb-macro.recording && editorFocus && findWidgetVisible"
 			},
 			{
 				"key": "ctrl+shift+1",
+				"mac": "shift+cmd+1",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.replace"
 				},
-				"when": "kb-macro.recording && matchFocus && replaceActive && searchViewletVisible",
-				"mac": "shift+cmd+1"
+				"when": "kb-macro.recording && matchFocus && replaceActive && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+shift+1",
+				"mac": "shift+cmd+1",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.replaceAllInFile"
 				},
-				"when": "kb-macro.recording && fileMatchFocus && replaceActive && searchViewletVisible",
-				"mac": "shift+cmd+1"
+				"when": "kb-macro.recording && fileMatchFocus && replaceActive && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+shift+1",
+				"mac": "shift+cmd+1",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "search.action.replaceAllInFolder"
 				},
-				"when": "kb-macro.recording && folderMatchFocus && replaceActive && searchViewletVisible",
-				"mac": "shift+cmd+1"
+				"when": "kb-macro.recording && folderMatchFocus && replaceActive && searchViewletVisible"
 			},
 			{
 				"key": "alt+c",
+				"mac": "alt+cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleFindCaseSensitive"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "alt+cmd+c"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "alt+c",
@@ -3940,12 +3940,12 @@
 			},
 			{
 				"key": "alt+c",
+				"mac": "alt+cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleSearchEditorCaseSensitive"
 				},
-				"when": "kb-macro.recording && inSearchEditor && searchInputBoxFocus",
-				"mac": "alt+cmd+c"
+				"when": "kb-macro.recording && inSearchEditor && searchInputBoxFocus"
 			},
 			{
 				"key": "alt+c",
@@ -3957,30 +3957,30 @@
 			},
 			{
 				"key": "alt+l",
+				"mac": "alt+cmd+l",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleFindInSelection"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "alt+cmd+l"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "alt+l",
+				"mac": "alt+cmd+l",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleSearchEditorContextLines"
 				},
-				"when": "kb-macro.recording && inSearchEditor",
-				"mac": "alt+cmd+l"
+				"when": "kb-macro.recording && inSearchEditor"
 			},
 			{
 				"key": "alt+r",
+				"mac": "alt+cmd+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleFindRegex"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "alt+cmd+r"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "alt+cmd+r",
@@ -3992,21 +3992,21 @@
 			},
 			{
 				"key": "alt+r",
+				"mac": "alt+cmd+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleSearchEditorRegex"
 				},
-				"when": "kb-macro.recording && inSearchEditor && searchInputBoxFocus",
-				"mac": "alt+cmd+r"
+				"when": "kb-macro.recording && inSearchEditor && searchInputBoxFocus"
 			},
 			{
 				"key": "alt+r",
+				"mac": "alt+cmd+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleSearchRegex"
 				},
-				"when": "kb-macro.recording && searchViewletFocus",
-				"mac": "alt+cmd+r"
+				"when": "kb-macro.recording && searchViewletFocus"
 			},
 			{
 				"key": "alt+r",
@@ -4018,30 +4018,30 @@
 			},
 			{
 				"key": "alt+w",
+				"mac": "alt+cmd+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleFindWholeWord"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "alt+cmd+w"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "alt+w",
+				"mac": "alt+cmd+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleSearchEditorWholeWord"
 				},
-				"when": "kb-macro.recording && inSearchEditor && searchInputBoxFocus",
-				"mac": "alt+cmd+w"
+				"when": "kb-macro.recording && inSearchEditor && searchInputBoxFocus"
 			},
 			{
 				"key": "alt+w",
+				"mac": "alt+cmd+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleSearchWholeWord"
 				},
-				"when": "kb-macro.recording && searchViewletFocus",
-				"mac": "alt+cmd+w"
+				"when": "kb-macro.recording && searchViewletFocus"
 			},
 			{
 				"key": "alt+w",
@@ -4053,30 +4053,30 @@
 			},
 			{
 				"key": "alt+p",
+				"mac": "alt+cmd+p",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "togglePreserveCase"
 				},
-				"when": "kb-macro.recording && editorFocus",
-				"mac": "alt+cmd+p"
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "alt+p",
+				"mac": "alt+cmd+p",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "keybindings.editor.toggleSortByPrecedence"
 				},
-				"when": "kb-macro.recording && inKeybindings",
-				"mac": "alt+cmd+p"
+				"when": "kb-macro.recording && inKeybindings"
 			},
 			{
 				"key": "alt+p",
+				"mac": "alt+cmd+p",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "toggleSearchPreserveCase"
 				},
-				"when": "kb-macro.recording && searchViewletFocus",
-				"mac": "alt+cmd+p"
+				"when": "kb-macro.recording && searchViewletFocus"
 			},
 			{
 				"key": "ctrl+pagedown",
@@ -4086,12 +4086,12 @@
 			},
 			{
 				"key": "ctrl+pagedown",
+				"mac": "shift+cmd+]",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.nextEditor"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+]"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+pagedown",
@@ -4109,12 +4109,12 @@
 			},
 			{
 				"key": "ctrl+pageup",
+				"mac": "shift+cmd+[",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.previousEditor"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+["
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+pageup",
@@ -4179,12 +4179,12 @@
 			},
 			{
 				"key": "ctrl+f5",
+				"mac": "cmd+f5",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "debug.openView"
 				},
-				"when": "kb-macro.recording && !debuggersAvailable",
-				"mac": "cmd+f5"
+				"when": "kb-macro.recording && !debuggersAvailable"
 			},
 			{
 				"key": "ctrl+f5",
@@ -4284,30 +4284,30 @@
 			},
 			{
 				"key": "ctrl+k ctrl+a",
+				"mac": "cmd+k cmd+a",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "keybindings.editor.addKeybinding"
 				},
-				"when": "kb-macro.recording && inKeybindings && keybindingFocus",
-				"mac": "cmd+k cmd+a"
+				"when": "kb-macro.recording && inKeybindings && keybindingFocus"
 			},
 			{
 				"key": "ctrl+k ctrl+e",
+				"mac": "cmd+k cmd+e",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "keybindings.editor.defineWhenExpression"
 				},
-				"when": "kb-macro.recording && inKeybindings && keybindingFocus",
-				"mac": "cmd+k cmd+e"
+				"when": "kb-macro.recording && inKeybindings && keybindingFocus"
 			},
 			{
 				"key": "alt+k",
+				"mac": "alt+cmd+k",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "keybindings.editor.recordSearchKeys"
 				},
-				"when": "kb-macro.recording && inKeybindings && inKeybindingsSearch",
-				"mac": "alt+cmd+k"
+				"when": "kb-macro.recording && inKeybindings && inKeybindingsSearch"
 			},
 			{
 				"key": "y",
@@ -4343,39 +4343,39 @@
 			},
 			{
 				"key": "ctrl+k t",
+				"mac": "cmd+k t",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.collapseCellOutput"
 				},
-				"when": "kb-macro.recording && notebookCellHasOutputs && notebookCellListFocused && !inputFocus && !notebookCellOutputIsCollapsed",
-				"mac": "cmd+k t"
+				"when": "kb-macro.recording && notebookCellHasOutputs && notebookCellListFocused && !inputFocus && !notebookCellOutputIsCollapsed"
 			},
 			{
 				"key": "ctrl+k t",
+				"mac": "cmd+k t",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "notebook.cell.expandCellOutput"
 				},
-				"when": "kb-macro.recording && notebookCellListFocused && notebookCellOutputIsCollapsed",
-				"mac": "cmd+k t"
+				"when": "kb-macro.recording && notebookCellListFocused && notebookCellOutputIsCollapsed"
 			},
 			{
 				"key": "ctrl+w",
+				"mac": "cmd+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.closeActiveEditor"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+w"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+w",
+				"mac": "cmd+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.closeGroup"
 				},
-				"when": "kb-macro.recording && activeEditorGroupEmpty && multipleEditorGroups",
-				"mac": "cmd+w"
+				"when": "kb-macro.recording && activeEditorGroupEmpty && multipleEditorGroups"
 			},
 			{
 				"key": "ctrl+w",
@@ -4387,57 +4387,57 @@
 			},
 			{
 				"key": "ctrl+k ctrl+w",
+				"mac": "cmd+k cmd+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.closeAllEditors"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+w"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k ctrl+shift+w",
+				"mac": "cmd+k shift+cmd+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.closeAllGroups"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k shift+cmd+w"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k w",
+				"mac": "cmd+k w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.closeEditorsInGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k w"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k f",
+				"mac": "cmd+k f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.closeFolder"
 				},
-				"when": "kb-macro.recording && emptyWorkspaceSupport && workbenchState != 'empty'",
-				"mac": "cmd+k f"
+				"when": "kb-macro.recording && emptyWorkspaceSupport && workbenchState != 'empty'"
 			},
 			{
 				"key": "ctrl+k u",
+				"mac": "cmd+k u",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.closeUnmodifiedEditors"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k u"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+w",
+				"mac": "shift+cmd+w",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.closeWindow"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+w"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+f4",
@@ -4465,12 +4465,12 @@
 			},
 			{
 				"key": "ctrl+shift+f5",
+				"mac": "shift+cmd+f5",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.debug.restart"
 				},
-				"when": "kb-macro.recording && inDebugMode",
-				"mac": "shift+cmd+f5"
+				"when": "kb-macro.recording && inDebugMode"
 			},
 			{
 				"key": "shift+f11",
@@ -4498,30 +4498,30 @@
 			},
 			{
 				"key": "ctrl+k m",
+				"mac": "cmd+k m",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.editor.changeLanguageMode"
 				},
-				"when": "kb-macro.recording && !notebookEditorFocused",
-				"mac": "cmd+k m"
+				"when": "kb-macro.recording && !notebookEditorFocused"
 			},
 			{
 				"key": "ctrl+k p",
+				"mac": "cmd+k p",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.files.copyPathOfActiveFile"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k p"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+n",
+				"mac": "cmd+n",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.files.newUntitledFile"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+n"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+o",
@@ -4541,12 +4541,12 @@
 			},
 			{
 				"key": "ctrl+o",
+				"mac": "cmd+o",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.files.openFileFolder"
 				},
-				"when": "kb-macro.recording && isMacNative && openFolderWorkspaceSupport",
-				"mac": "cmd+o"
+				"when": "kb-macro.recording && isMacNative && openFolderWorkspaceSupport"
 			},
 			{
 				"key": "ctrl+o",
@@ -4574,138 +4574,138 @@
 			},
 			{
 				"key": "ctrl+k r",
+				"mac": "cmd+k r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.files.revealActiveFileInWindows"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k r"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+s",
+				"mac": "cmd+s",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.files.save"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+s"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+s",
+				"mac": "shift+cmd+s",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.files.saveAs"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+s"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+s",
+				"mac": "shift+cmd+s",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.files.saveLocalFile"
 				},
-				"when": "kb-macro.recording && remoteFileDialogVisible",
-				"mac": "shift+cmd+s"
+				"when": "kb-macro.recording && remoteFileDialogVisible"
 			},
 			{
 				"key": "ctrl+k o",
+				"mac": "cmd+k o",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.files.showOpenedFileInNewWindow"
 				},
-				"when": "kb-macro.recording && emptyWorkspaceSupport",
-				"mac": "cmd+k o"
+				"when": "kb-macro.recording && emptyWorkspaceSupport"
 			},
 			{
 				"key": "ctrl+shift+f",
+				"mac": "shift+cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.findInFiles"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+f"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+f",
+				"mac": "shift+cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.view.search"
 				},
-				"when": "kb-macro.recording && workbench.view.search.active && neverMatch =~ /doesNotMatch/",
-				"mac": "shift+cmd+f"
+				"when": "kb-macro.recording && workbench.view.search.active && neverMatch =~ /doesNotMatch/"
 			},
 			{
 				"key": "ctrl+shift+f",
+				"mac": "shift+cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.searchWorkspace"
 				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && terminalTextSelected",
-				"mac": "shift+cmd+f"
+				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported && terminalTextSelected"
 			},
 			{
 				"key": "ctrl+k ctrl+up",
+				"mac": "cmd+k cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusAboveGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+up"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k ctrl+down",
+				"mac": "cmd+k cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusBelowGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+down"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+8",
+				"mac": "cmd+8",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusEighthEditorGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+8"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+5",
+				"mac": "cmd+5",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusFifthEditorGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+5"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+1",
+				"mac": "cmd+1",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusFirstEditorGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+1"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+4",
+				"mac": "cmd+4",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusFourthEditorGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+4"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k ctrl+left",
+				"mac": "cmd+k cmd+left",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusLeftGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+left"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "f6",
@@ -4733,57 +4733,57 @@
 			},
 			{
 				"key": "ctrl+k ctrl+right",
+				"mac": "cmd+k cmd+right",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusRightGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+right"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+2",
+				"mac": "cmd+2",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusSecondEditorGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+2"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+7",
+				"mac": "cmd+7",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusSeventhEditorGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+7"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+0",
+				"mac": "cmd+0",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusSideBar"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+0"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+6",
+				"mac": "cmd+6",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusSixthEditorGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+6"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+3",
+				"mac": "cmd+3",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.focusThirdEditorGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+3"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+g",
@@ -4795,183 +4795,183 @@
 			},
 			{
 				"key": "ctrl+shift+o",
+				"mac": "shift+cmd+o",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.gotoSymbol"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+o"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k enter",
+				"mac": "cmd+k enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.keepEditor"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k enter"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k ctrl+r",
+				"mac": "cmd+k cmd+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.keybindingsReference"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+r"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k ctrl+r",
+				"mac": "cmd+k cmd+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "git.revertSelectedRanges"
 				},
-				"when": "kb-macro.recording && isInDiffEditor",
-				"mac": "cmd+k cmd+r"
+				"when": "kb-macro.recording && isInDiffEditor"
 			},
 			{
 				"key": "ctrl+9",
+				"mac": "cmd+9",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.lastEditorInGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+9"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+0",
+				"mac": "ctrl+0",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.lastEditorInGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+0"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k down",
+				"mac": "cmd+k down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveActiveEditorGroupDown"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k down"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k down",
+				"mac": "cmd+k down",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "views.moveViewDown"
 				},
-				"when": "kb-macro.recording && focusedView != ''",
-				"mac": "cmd+k down"
+				"when": "kb-macro.recording && focusedView != ''"
 			},
 			{
 				"key": "ctrl+k left",
+				"mac": "cmd+k left",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveActiveEditorGroupLeft"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k left"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k left",
+				"mac": "cmd+k left",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "views.moveViewLeft"
 				},
-				"when": "kb-macro.recording && focusedView != ''",
-				"mac": "cmd+k left"
+				"when": "kb-macro.recording && focusedView != ''"
 			},
 			{
 				"key": "ctrl+k right",
+				"mac": "cmd+k right",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveActiveEditorGroupRight"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k right"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k right",
+				"mac": "cmd+k right",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "views.moveViewRight"
 				},
-				"when": "kb-macro.recording && focusedView != ''",
-				"mac": "cmd+k right"
+				"when": "kb-macro.recording && focusedView != ''"
 			},
 			{
 				"key": "ctrl+k up",
+				"mac": "cmd+k up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveActiveEditorGroupUp"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k up"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k up",
+				"mac": "cmd+k up",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "views.moveViewUp"
 				},
-				"when": "kb-macro.recording && focusedView != ''",
-				"mac": "cmd+k up"
+				"when": "kb-macro.recording && focusedView != ''"
 			},
 			{
 				"key": "ctrl+shift+pageup",
+				"mac": "cmd+k shift+cmd+left",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveEditorLeftInGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k shift+cmd+left"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+pagedown",
+				"mac": "cmd+k shift+cmd+right",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveEditorRightInGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k shift+cmd+right"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "shift+alt+1",
+				"mac": "ctrl+cmd+1",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveEditorToFirstGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+cmd+1"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "shift+alt+9",
+				"mac": "ctrl+cmd+9",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveEditorToLastGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+cmd+9"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+alt+right",
+				"mac": "ctrl+cmd+right",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveEditorToNextGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+cmd+right"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+alt+left",
+				"mac": "ctrl+cmd+left",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.moveEditorToPreviousGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+cmd+left"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+left",
@@ -5007,120 +5007,120 @@
 			},
 			{
 				"key": "ctrl+k ctrl+q",
+				"mac": "cmd+k cmd+q",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.navigateToLastEditLocation"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+q"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+n",
+				"mac": "shift+cmd+n",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.newWindow"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+n"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k ctrl+pagedown",
+				"mac": "cmd+k alt+cmd+right",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.nextEditorInGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k alt+cmd+right"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+1",
+				"mac": "ctrl+1",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex1"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+1"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+2",
+				"mac": "ctrl+2",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex2"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+2"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+3",
+				"mac": "ctrl+3",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex3"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+3"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+4",
+				"mac": "ctrl+4",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex4"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+4"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+5",
+				"mac": "ctrl+5",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex5"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+5"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+6",
+				"mac": "ctrl+6",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex6"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+6"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+7",
+				"mac": "ctrl+7",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex7"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+7"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+8",
+				"mac": "ctrl+8",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex8"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+8"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "alt+9",
+				"mac": "ctrl+9",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openEditorAtIndex9"
 				},
-				"when": "kb-macro.recording",
-				"mac": "ctrl+9"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k ctrl+s",
+				"mac": "cmd+k cmd+s",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openGlobalKeybindings"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+s"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+r",
@@ -5140,57 +5140,57 @@
 			},
 			{
 				"key": "ctrl+r",
+				"mac": "cmd+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.reloadWindow"
 				},
-				"when": "kb-macro.recording && isDevelopment",
-				"mac": "cmd+r"
+				"when": "kb-macro.recording && isDevelopment"
 			},
 			{
 				"key": "ctrl+k shift+enter",
+				"mac": "cmd+k shift+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.pinEditor"
 				},
-				"when": "kb-macro.recording && !activeEditorIsPinned",
-				"mac": "cmd+k shift+enter"
+				"when": "kb-macro.recording && !activeEditorIsPinned"
 			},
 			{
 				"key": "ctrl+k shift+enter",
+				"mac": "cmd+k shift+enter",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.unpinEditor"
 				},
-				"when": "kb-macro.recording && activeEditorIsPinned",
-				"mac": "cmd+k shift+enter"
+				"when": "kb-macro.recording && activeEditorIsPinned"
 			},
 			{
 				"key": "ctrl+k ctrl+pageup",
+				"mac": "cmd+k alt+cmd+left",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.previousEditorInGroup"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k alt+cmd+left"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+e",
+				"mac": "cmd+p",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.quickOpen"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+p"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+e",
+				"mac": "cmd+p",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.quickOpenNavigateNextInFilePicker"
 				},
-				"when": "kb-macro.recording && inFilesPicker && inQuickOpen",
-				"mac": "cmd+p"
+				"when": "kb-macro.recording && inFilesPicker && inQuickOpen"
 			},
 			{
 				"key": "ctrl+p",
@@ -5258,57 +5258,57 @@
 			},
 			{
 				"key": "ctrl+shift+t",
+				"mac": "shift+cmd+t",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.reopenClosedEditor"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+t"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+h",
+				"mac": "shift+cmd+h",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.replaceInFiles"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+h"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+j",
+				"mac": "shift+cmd+j",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.search.toggleQueryDetails"
 				},
-				"when": "kb-macro.recording && inSearchEditor || kb-macro.recording && searchViewletFocus",
-				"mac": "shift+cmd+j"
+				"when": "kb-macro.recording && inSearchEditor || kb-macro.recording && searchViewletFocus"
 			},
 			{
 				"key": "ctrl+k ctrl+t",
+				"mac": "cmd+k cmd+t",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.selectTheme"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k cmd+t"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k ctrl+p",
+				"mac": "alt+cmd+tab",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.showAllEditors"
 				},
-				"when": "kb-macro.recording",
-				"mac": "alt+cmd+tab"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+t",
+				"mac": "cmd+t",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.showAllSymbols"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+t"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "f1",
@@ -5323,21 +5323,21 @@
 			},
 			{
 				"key": "ctrl+shift+p",
+				"mac": "shift+cmd+p",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.quickOpenNavigatePreviousInFilePicker"
 				},
-				"when": "kb-macro.recording && inFilesPicker && inQuickOpen",
-				"mac": "shift+cmd+p"
+				"when": "kb-macro.recording && inFilesPicker && inQuickOpen"
 			},
 			{
 				"key": "ctrl+shift+b",
+				"mac": "shift+cmd+b",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.tasks.build"
 				},
-				"when": "kb-macro.recording",
-				"mac": "shift+cmd+b"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+c",
@@ -5349,12 +5349,12 @@
 			},
 			{
 				"key": "ctrl+shift+c",
+				"mac": "shift+cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.openNativeConsole"
 				},
-				"when": "kb-macro.recording && !terminalFocus",
-				"mac": "shift+cmd+c"
+				"when": "kb-macro.recording && !terminalFocus"
 			},
 			{
 				"key": "ctrl+shift+2",
@@ -5404,21 +5404,21 @@
 			},
 			{
 				"key": "shift+alt+0",
+				"mac": "alt+cmd+0",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.toggleEditorGroupLayout"
 				},
-				"when": "kb-macro.recording",
-				"mac": "alt+cmd+0"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "f11",
+				"mac": "ctrl+cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.toggleFullScreen"
 				},
-				"when": "kb-macro.recording && !isIOS",
-				"mac": "ctrl+cmd+f"
+				"when": "kb-macro.recording && !isIOS"
 			},
 			{
 				"key": "f11",
@@ -5438,120 +5438,120 @@
 			},
 			{
 				"key": "ctrl+j",
+				"mac": "cmd+j",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.togglePanel"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+j"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+b",
+				"mac": "cmd+b",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.toggleSidebarVisibility"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+b"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k z",
+				"mac": "cmd+k z",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.toggleZenMode"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k z"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+numpad_add",
+				"mac": "cmd+numpad_add",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.zoomIn"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+numpad_add"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+numpad_subtract",
+				"mac": "cmd+numpad_subtract",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.zoomOut"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+numpad_subtract"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+numpad0",
+				"mac": "cmd+numpad0",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.zoomReset"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+numpad0"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+shift+m",
+				"mac": "shift+cmd+m",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.actions.view.problems"
 				},
-				"when": "kb-macro.recording && workbench.panel.markers.view.active",
-				"mac": "shift+cmd+m"
+				"when": "kb-macro.recording && workbench.panel.markers.view.active"
 			},
 			{
 				"key": "ctrl+shift+y",
+				"mac": "shift+cmd+y",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.debug.action.toggleRepl"
 				},
-				"when": "kb-macro.recording && workbench.panel.repl.view.active",
-				"mac": "shift+cmd+y"
+				"when": "kb-macro.recording && workbench.panel.repl.view.active"
 			},
 			{
 				"key": "ctrl+k c",
+				"mac": "cmd+k c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.files.action.compareWithClipboard"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k c"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k d",
+				"mac": "cmd+k d",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.files.action.compareWithSaved"
 				},
-				"when": "kb-macro.recording",
-				"mac": "cmd+k d"
+				"when": "kb-macro.recording"
 			},
 			{
 				"key": "ctrl+k e",
+				"mac": "cmd+k e",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.files.action.focusOpenEditorsView"
 				},
-				"when": "kb-macro.recording && workbench.explorer.openEditorsView.active",
-				"mac": "cmd+k e"
+				"when": "kb-macro.recording && workbench.explorer.openEditorsView.active"
 			},
 			{
 				"key": "ctrl+shift+d",
+				"mac": "shift+cmd+d",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.view.debug"
 				},
-				"when": "kb-macro.recording && viewContainer.workbench.view.debug.enabled",
-				"mac": "shift+cmd+d"
+				"when": "kb-macro.recording && viewContainer.workbench.view.debug.enabled"
 			},
 			{
 				"key": "ctrl+shift+e",
+				"mac": "shift+cmd+e",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.view.explorer"
 				},
-				"when": "kb-macro.recording && viewContainer.workbench.view.explorer.enabled",
-				"mac": "shift+cmd+e"
+				"when": "kb-macro.recording && viewContainer.workbench.view.explorer.enabled"
 			},
 			{
 				"key": "ctrl+shift+e",
@@ -5563,12 +5563,12 @@
 			},
 			{
 				"key": "ctrl+shift+x",
+				"mac": "shift+cmd+x",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.view.extensions"
 				},
-				"when": "kb-macro.recording && viewContainer.workbench.view.extensions.enabled",
-				"mac": "shift+cmd+x"
+				"when": "kb-macro.recording && viewContainer.workbench.view.extensions.enabled"
 			},
 			{
 				"key": "ctrl+shift+g",
@@ -5620,21 +5620,21 @@
 			},
 			{
 				"key": "ctrl+shift+i",
+				"mac": "alt+cmd+i",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.toggleDevTools"
 				},
-				"when": "kb-macro.recording && isDevelopment",
-				"mac": "alt+cmd+i"
+				"when": "kb-macro.recording && isDevelopment"
 			},
 			{
 				"key": "ctrl+k ctrl+alt+s",
+				"mac": "cmd+k alt+cmd+s",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "git.stageSelectedRanges"
 				},
-				"when": "kb-macro.recording && isInDiffEditor",
-				"mac": "cmd+k alt+cmd+s"
+				"when": "kb-macro.recording && isInDiffEditor"
 			},
 			{
 				"key": "shift+alt+f12",
@@ -5646,21 +5646,21 @@
 			},
 			{
 				"key": "ctrl+k ctrl+n",
+				"mac": "cmd+k cmd+n",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "git.unstageSelectedRanges"
 				},
-				"when": "kb-macro.recording && isInDiffEditor",
-				"mac": "cmd+k cmd+n"
+				"when": "kb-macro.recording && isInDiffEditor"
 			},
 			{
 				"key": "ctrl+k v",
+				"mac": "cmd+k v",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "markdown.showPreviewToSide"
 				},
-				"when": "kb-macro.recording && !notebookEditorFocused && editorLangId == 'markdown'",
-				"mac": "cmd+k v"
+				"when": "kb-macro.recording && !notebookEditorFocused && editorLangId == 'markdown'"
 			},
 			{
 				"key": "alt+]",

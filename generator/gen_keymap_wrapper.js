@@ -6,34 +6,6 @@ const genWrapperUtil = require('./gen_wrapper_util');
 const CommonConfigPath = 'generator/config.json';
 const KeymapWrapperPath = 'keymap-wrapper/';
 
-function makeWrapperArgs(keybinding) {
-    const args = {
-        command: keybinding.command
-    };
-    if ('args' in keybinding) {
-        args.args = keybinding.args;
-    }
-    return args;
-}
-
-function makeWrapperWhen(keybinding) {
-    return genWrapperUtil.addWhenContext(keybinding.when, 'kb-macro.recording');
-}
-
-function makeWrapper(keybinding) {
-    const wrapped = {
-        key: keybinding.key,
-        mac: keybinding.mac,
-        command: 'kb-macro.wrap',
-        args: makeWrapperArgs(keybinding),
-        when: makeWrapperWhen(keybinding)
-    };
-    if (!('mac' in keybinding)) {
-        delete wrapped.mac;
-    }
-    return wrapped;
-}
-
 function checkExclusion(exclusion, commands) {
     for (const command of exclusion) {
         if (!commands.has(command)) {
@@ -104,11 +76,11 @@ async function makeKeymapWrapper(configPath, commonConfig) {
         keybinding => {
             if (exclusion.has(keybinding.command) || keybinding.command === '') {
                 // make a keybinding of a direct call for the excluded command
-                keybinding.when = makeWrapperWhen(keybinding);
+                keybinding.when = genWrapperUtil.makeWrapperWhen(keybinding);
                 return keybinding;
             } else {
                 // make a wrapper keybinding (indirect call) to enable recording of the command
-                const wrapper = makeWrapper(keybinding);
+                const wrapper = genWrapperUtil.makeWrapper(keybinding);
                 if (awaitOptions.has(wrapper.args.command)) {
                     const awaitOption = awaitOptions.get(wrapper.args.command);
                     if (awaitOption) {

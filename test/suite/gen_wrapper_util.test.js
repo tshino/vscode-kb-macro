@@ -471,4 +471,67 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(isValidAwaitOption('selection document clipboard'), true);
         });
     });
+    describe('makeWrapperWhen', () => {
+        const makeWrapperWhen = genWrapperUtil.makeWrapperWhen;
+        it('should append recording context to the "when" field', () => {
+            const input = { key: 'key1', command: 'command1', when: 'context1' };
+            const expected = 'kb-macro.recording && context1';
+            assert.strictEqual(makeWrapperWhen(input), expected);
+        });
+    });
+    describe('makeWrapper', () => {
+        const makeWrapper = genWrapperUtil.makeWrapper;
+        it('should make wrapper keybinding for given base keybinding (1)', () => {
+            const input = {
+                key: 'key1',
+                command: 'command1',
+                when: 'context1'
+            };
+            const expected = {
+                key: 'key1',
+                command: 'kb-macro.wrap',
+                args: {
+                    command: 'command1'
+                },
+                when: 'kb-macro.recording && context1'
+            };
+            assert.deepStrictEqual(makeWrapper(input), expected);
+        });
+        it('should make wrapper keybinding (2) (with args for target command)', () => {
+            const input = {
+                key: 'key1',
+                command: 'command1',
+                args: { opt1: 'arg1' },
+                when: 'context1'
+            };
+            const expected = {
+                key: 'key1',
+                command: 'kb-macro.wrap',
+                args: {
+                    command: 'command1',
+                    args: { opt1: 'arg1' }
+                },
+                when: 'kb-macro.recording && context1'
+            };
+            assert.deepStrictEqual(makeWrapper(input), expected);
+        });
+        it('should make wrapper keybinding (3) (with "mac" key)', () => {
+            const input = {
+                key: 'key1',
+                mac: 'key2',
+                command: 'command1',
+                when: 'context1'
+            };
+            const expected = {
+                key: 'key1',
+                mac: 'key2',
+                command: 'kb-macro.wrap',
+                args: {
+                    command: 'command1'
+                },
+                when: 'kb-macro.recording && context1'
+            };
+            assert.deepStrictEqual(makeWrapper(input), expected);
+        });
+    });
 });
