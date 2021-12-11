@@ -481,7 +481,7 @@ function makeWrapper(keybinding, awaitOption) {
         if (!('mac' in keybinding)) {
             delete wrapped.mac;
         }
-        if (awaitOption) {
+        if (awaitItem['await']) {
             wrapped.args['await'] = awaitItem['await'];
         }
         return wrapped;

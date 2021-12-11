@@ -587,6 +587,34 @@ describe('gen_wrapper_util', () => {
                 command: 'command1',
                 when: 'context1'
             };
+            const awaitOption = '[cond1]await1';
+            const expected = [
+                {
+                    key: 'key1',
+                    command: 'kb-macro.wrap',
+                    args: {
+                        command: 'command1',
+                        "await": 'await1'
+                    },
+                    when: 'kb-macro.recording && cond1 && context1'
+                },
+                {
+                    key: 'key1',
+                    command: 'kb-macro.wrap',
+                    args: {
+                        command: 'command1'
+                    },
+                    when: 'kb-macro.recording && !cond1 && context1'
+                }
+            ];
+            assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
+        });
+        it('should make wrapper keybinding (6) (with conditional awaitOption)', () => {
+            const input = {
+                key: 'key1',
+                command: 'command1',
+                when: 'context1'
+            };
             const awaitOption = 'await1 [cond1]await2';
             const expected = [
                 {
