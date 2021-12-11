@@ -25,13 +25,14 @@
         [ "emacs-mcx.addSelectionToNextFindMatch", "selection" ],
         [ "emacs-mcx.addSelectionToPreviousFindMatch", "selection" ],
         [ "emacs-mcx.isearchAbort", "selection" ],
-        [ "emacs-mcx.setMarkCommand", "selection" ],
+        [ "emacs-mcx.setMarkCommand", "[editorHasSelection]selection" ],
         [ "emacs-mcx.exchangePointAndMark", "selection" ],
-        [ "emacs-mcx.rectangleMarkMode", "selection" ],
+        [ "emacs-mcx.rectangleMarkMode", "[editorHasSelection]selection" ],
 
         [ "emacs-mcx.typeChar", "document selection" ],
         [ "emacs-mcx.newLine", "document selection" ],
         [ "emacs-mcx.delete*", "document selection" ],
+        [ "emacs-mcx.deleteForwardChar", "document [editorHasSelection]selection" ],
         [ "emacs-mcx.openRectangle", "document selection" ],
         [ "emacs-mcx.clearRectangle", "document selection" ],
         [ "emacs-mcx.stringRectangle", "document selection" ],
@@ -42,12 +43,13 @@
         [ "emacs-mcx.paredit.killSexp", "document selection clipboard" ],
 
         [ "emacs-mcx.kill*", "document selection clipboard" ],
+        [ "emacs-mcx.killWord", "document clipboard" ],
         [ "emacs-mcx.backwardKillWord", "document selection clipboard" ],
         [ "emacs-mcx.copyRegion", "selection clipboard" ],
         [ "emacs-mcx.copyRectangleAsKill", "selection clipboard" ],
         [ "emacs-mcx.yank*", "document selection" ],
 
-        [ "emacs-mcx.cancel", "selection" ],
+        [ "emacs-mcx.cancel", "[editorHasSelection]selection" ],
         [ "emacs-mcx.isearchExit", "document selection" ],
         [ "emacs-mcx.executeCommands", "document selection" ]
     ],

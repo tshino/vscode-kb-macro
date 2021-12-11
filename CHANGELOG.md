@@ -6,7 +6,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - New
   - (Internal) Introduced Conditional Await syntax on keymap wrapper's config file.
 - Update
-  - Updated keymap wrapper for Vz Keymap; Reduced unecessary delays in playback.
+  - Updated keymap wrappers for Vz Keymap and Awesome Emacs Keymap; Reduced unecessary delays in playback.
 
 ### [0.4.0] - 2021-12-10
 - New
