@@ -44,11 +44,16 @@ async function loadBaseKeybindings(baseKeybindingsConfig) {
 }
 
 function addWhenContext(when, context) {
+    context = context || '';
     if (when) {
         const conditions = when.split('||');
         const restricted = context.split('||').map(
             context => conditions.map(
-                cond => context.trim() + ' && ' + cond.trim()
+                cond => {
+                    context = context.trim();
+                    cond = cond.trim();
+                    return context ? context + ' && ' + cond : cond;
+                }
             ).join(' || ')
         ).join(' || ');
         return restricted;
@@ -399,8 +404,53 @@ function isValidAwaitOption(awaitOption) {
     const awaitList = awaitOption.split(' ').filter(target => target !== '');
     return (
         awaitList.length === 0 ||
-        awaitList.every(target => ValidAwaitTargets.has(target))
+        awaitList.every(target => {
+            const matches = /^\[.+\]([^\]]+)/.exec(target);
+            if (matches) {
+                target = matches[1];
+            }
+            return ValidAwaitTargets.has(target);
+        })
     );
+}
+
+function decomposeAwaitOption(awaitOption) {
+    awaitOption = awaitOption || '';
+    const awaitList = (
+        awaitOption.split(' ')
+        .filter(target => target !== '')
+        .map(awaitItem => {
+            const matches = /^\[(.+)\]([^\]]+)/.exec(awaitItem);
+            if (matches) {
+                return { condition: matches[1], 'await': matches[2] };
+            } else {
+                return { condition: '', 'await': awaitItem };
+            }
+        })
+    );
+    const conditionals = awaitList.filter(a => a.condition);
+    if (1 < conditionals.length) {
+        console.error('Error: multiple conditional await options are not supported');
+        throw 'error';
+    } else if (0 < conditionals.length) {
+        return [
+            {
+                context: conditionals[0].condition,
+                'await': awaitList.map(a => a['await']).join(' ')
+            },
+            {
+                context: '!' + conditionals[0].condition,
+                'await': awaitList.filter(a => !a.condition).map(a => a['await']).join(' ')
+            }
+        ];
+    } else {
+        return [
+            {
+                context: '',
+                'await': awaitOption
+            }
+        ];
+    }
 }
 
 function makeWrapperArgs(keybinding) {
@@ -418,20 +468,25 @@ function makeWrapperWhen(keybinding) {
 }
 
 function makeWrapper(keybinding, awaitOption) {
-    const wrapped = {
-        key: keybinding.key,
-        mac: keybinding.mac,
-        command: 'kb-macro.wrap',
-        args: makeWrapperArgs(keybinding),
-        when: makeWrapperWhen(keybinding)
-    };
-    if (!('mac' in keybinding)) {
-        delete wrapped.mac;
-    }
-    if (awaitOption) {
-        wrapped.args['await'] = awaitOption;
-    }
-    return wrapped;
+    const awaitList = decomposeAwaitOption(awaitOption);
+    const wrappers = awaitList.map(awaitItem => {
+        const when = addWhenContext(keybinding.when, awaitItem.context);
+        const wrapped = {
+            key: keybinding.key,
+            mac: keybinding.mac,
+            command: 'kb-macro.wrap',
+            args: makeWrapperArgs(keybinding),
+            when: addWhenContext(when, 'kb-macro.recording')
+        };
+        if (!('mac' in keybinding)) {
+            delete wrapped.mac;
+        }
+        if (awaitOption) {
+            wrapped.args['await'] = awaitItem['await'];
+        }
+        return wrapped;
+    });
+    return wrappers;
 }
 
 module.exports = {
@@ -444,6 +499,7 @@ module.exports = {
     keybindingsContains,
     combineBaseKeybingings,
     isValidAwaitOption,
+    decomposeAwaitOption,
     makeWrapperWhen,
     makeWrapper
 };

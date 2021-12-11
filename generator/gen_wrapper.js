@@ -36,17 +36,17 @@ async function main() {
     // combine the three sets of default keybindings of VS Code for Windows, Linux, and macOS.
     const combined = genWrapperUtil.combineBaseKeybingings(baseKeybindings);
 
-    const wrappers = combined.map(
+    const wrappers = combined.flatMap(
         keybinding => {
             if (exclusion.has(keybinding.command) || keybinding.command === '') {
                 // make a keybinding of a direct call for the excluded command
                 keybinding.when = genWrapperUtil.makeWrapperWhen(keybinding);
-                return keybinding;
+                return [ keybinding ];
             } else {
                 // make a wrapper keybinding (indirect call) to enable recording of the command
                 const awaitOption = awaitOptions.get(keybinding.command) || '';
-                const wrapper = genWrapperUtil.makeWrapper(keybinding, awaitOption);
-                return wrapper;
+                const wrappers = genWrapperUtil.makeWrapper(keybinding, awaitOption);
+                return wrappers;
             }
         }
     );

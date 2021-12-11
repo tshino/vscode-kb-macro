@@ -72,17 +72,17 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     }
     checkAwaitOptions(awaitOptions);
 
-    const wrappers = baseKeybindings.map(
+    const wrappers = baseKeybindings.flatMap(
         keybinding => {
             if (exclusion.has(keybinding.command) || keybinding.command === '') {
                 // make a keybinding of a direct call for the excluded command
                 keybinding.when = genWrapperUtil.makeWrapperWhen(keybinding);
-                return keybinding;
+                return [ keybinding ];
             } else {
                 // make a wrapper keybinding (indirect call) to enable recording of the command
                 const awaitOption = awaitOptions.get(keybinding.command) || '';
-                const wrapper = genWrapperUtil.makeWrapper(keybinding, awaitOption);
-                return wrapper;
+                const wrappers = genWrapperUtil.makeWrapper(keybinding, awaitOption);
+                return wrappers;
             }
         }
     );

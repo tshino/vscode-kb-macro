@@ -8,8 +8,14 @@ describe('gen_wrapper_util', () => {
         it('should return given context if when clause is empty', () => {
             assert.strictEqual(addWhenContext('', 'context'), 'context');
         });
+        it('should return given when clause if context is empty', () => {
+            assert.strictEqual(addWhenContext('when-clause', ''), 'when-clause');
+        });
         it('should return given context even if when clause is undefined', () => {
             assert.strictEqual(addWhenContext(undefined, 'context'), 'context');
+        });
+        it('should return empty string even if given context is undefined', () => {
+            assert.strictEqual(addWhenContext(undefined, undefined), '');
         });
         it('should append AND condition in front of given when clause (1)', () => {
             assert.strictEqual(addWhenContext('when-clause', 'context'), 'context && when-clause');
@@ -453,6 +459,9 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(isValidAwaitOption('document'), true);
             assert.strictEqual(isValidAwaitOption('clipboard'), true);
         });
+        it('should return true on a valid await option with condition', () => {
+            assert.strictEqual(isValidAwaitOption('[condition]selection'), true);
+        });
         it('should return true on empty string', () => {
             assert.strictEqual(isValidAwaitOption(''), true);
         });
@@ -469,6 +478,27 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(isValidAwaitOption('document selection'), true);
             assert.strictEqual(isValidAwaitOption('selection clipboard'), true);
             assert.strictEqual(isValidAwaitOption('selection document clipboard'), true);
+        });
+        it('should return true on valid await items where one has a condition', () => {
+            assert.strictEqual(isValidAwaitOption('[condition]document selection'), true);
+        });
+    });
+    describe('decomposeAwaitOption', () => {
+        const decomposeAwaitOption = genWrapperUtil.decomposeAwaitOption;
+        it('should not modify unconditional await option', () => {
+            const input = 'await1 await2';
+            const expected = [
+                { context: '', 'await': 'await1 await2' }
+            ];
+            assert.deepStrictEqual(decomposeAwaitOption(input), expected);
+        });
+        it('should separate conditional await option into unconditional ones', () => {
+            const input = 'await1 [cond1]await2';
+            const expected = [
+                { context: 'cond1', 'await': 'await1 await2' },
+                { context: '!cond1', 'await': 'await1' }
+            ];
+            assert.deepStrictEqual(decomposeAwaitOption(input), expected);
         });
     });
     describe('makeWrapperWhen', () => {
@@ -487,14 +517,14 @@ describe('gen_wrapper_util', () => {
                 command: 'command1',
                 when: 'context1'
             };
-            const expected = {
+            const expected = [ {
                 key: 'key1',
                 command: 'kb-macro.wrap',
                 args: {
                     command: 'command1'
                 },
                 when: 'kb-macro.recording && context1'
-            };
+            } ];
             assert.deepStrictEqual(makeWrapper(input), expected);
         });
         it('should make wrapper keybinding (2) (with args for target command)', () => {
@@ -504,7 +534,7 @@ describe('gen_wrapper_util', () => {
                 args: { opt1: 'arg1' },
                 when: 'context1'
             };
-            const expected = {
+            const expected = [ {
                 key: 'key1',
                 command: 'kb-macro.wrap',
                 args: {
@@ -512,7 +542,7 @@ describe('gen_wrapper_util', () => {
                     args: { opt1: 'arg1' }
                 },
                 when: 'kb-macro.recording && context1'
-            };
+            } ];
             assert.deepStrictEqual(makeWrapper(input), expected);
         });
         it('should make wrapper keybinding (3) (with "mac" key)', () => {
@@ -522,7 +552,7 @@ describe('gen_wrapper_util', () => {
                 command: 'command1',
                 when: 'context1'
             };
-            const expected = {
+            const expected = [ {
                 key: 'key1',
                 mac: 'key2',
                 command: 'kb-macro.wrap',
@@ -530,7 +560,7 @@ describe('gen_wrapper_util', () => {
                     command: 'command1'
                 },
                 when: 'kb-macro.recording && context1'
-            };
+            } ];
             assert.deepStrictEqual(makeWrapper(input), expected);
         });
         it('should make wrapper keybinding (4) (with awaitOption)', () => {
@@ -540,7 +570,7 @@ describe('gen_wrapper_util', () => {
                 when: 'context1'
             };
             const awaitOption = 'await1 await2';
-            const expected = {
+            const expected = [ {
                 key: 'key1',
                 command: 'kb-macro.wrap',
                 args: {
@@ -548,7 +578,36 @@ describe('gen_wrapper_util', () => {
                     "await": "await1 await2"
                 },
                 when: 'kb-macro.recording && context1'
+            } ];
+            assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
+        });
+        it('should make wrapper keybinding (5) (with conditional awaitOption)', () => {
+            const input = {
+                key: 'key1',
+                command: 'command1',
+                when: 'context1'
             };
+            const awaitOption = 'await1 [cond1]await2';
+            const expected = [
+                {
+                    key: 'key1',
+                    command: 'kb-macro.wrap',
+                    args: {
+                        command: 'command1',
+                        "await": "await1 await2"
+                    },
+                    when: 'kb-macro.recording && cond1 && context1'
+                },
+                {
+                    key: 'key1',
+                    command: 'kb-macro.wrap',
+                    args: {
+                        command: 'command1',
+                        "await": "await1"
+                    },
+                    when: 'kb-macro.recording && !cond1 && context1'
+                }
+            ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
         });
     });
