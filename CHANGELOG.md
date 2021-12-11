@@ -10,6 +10,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - New
   - Added [a list of recommended keymap wrappers](keymap-wrapper/README.md).
     - For now, it includes [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) and [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap).
+  - (Internal) Added a new script `gen_keymap_wrapper.js` to generate keymap wrapper. [#11](https://github.com/tshino/vscode-kb-macro/issues/11)
 - Update
   - Updated default keybindings based on VS Code 1.63.0 (Windows, Linux).
 - Fix
@@ -17,9 +18,9 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [0.3.0] - 2021-11-27
 - New
-  - (Internal) Introduced a new script `verify-wrapper.js` to verify default keybinding wrappers. [#10](https://github.com/tshino/vscode-kb-macro/issues/10)
+  - (Internal) Introduced a new script `verify_wrapper.js` to verify default keybinding wrappers. [#10](https://github.com/tshino/vscode-kb-macro/issues/10)
 - Fix
-  - Some of the default keyboard shortcuts of VS Code were not being recorded unexpectedly due to a bug in the `gen-wrapper.js` script.
+  - Some of the default keyboard shortcuts of VS Code were not being recorded unexpectedly due to a bug in the `gen_wrapper.js` script.
 
 ### [0.2.0] - 2021-11-23
 - New
