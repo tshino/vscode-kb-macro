@@ -33,6 +33,30 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(addWhenContext('c1 || c2', 'c3 || c4'), 'c3 && c1 || c3 && c2 || c4 && c1 || c4 && c2');
         });
     });
+    describe('copyKeybinding', () => {
+        const copyKeybinding = genWrapperUtil.copyKeybinding;
+        it('should clone keybinding object', () => {
+            const input = { key: 'key1', command: 'cmd1' };
+            const expected = { key: 'key1', command: 'cmd1' };
+            assert.strictEqual(copyKeybinding(input) === expected, false);
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (1)', () => {
+            const input = { key: 'key1', command: 'cmd1', when: 'when1' };
+            const expected = { key: 'key1', command: 'cmd1', when: 'when1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (2)', () => {
+            const input = { key: 'key1', command: 'cmd1', mac: 'macKey1' };
+            const expected = { key: 'key1', command: 'cmd1', mac: 'macKey1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (3)', () => {
+            const input = { key: 'key1', command: 'cmd1', args: 'arg1' };
+            const expected = { key: 'key1', command: 'cmd1', args: 'arg1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+    });
     describe('keybindingsContains', () => {
         const keybindingsContains = genWrapperUtil.keybindingsContains;
         it('should detect specified keybinding in given keybindings and return the index', () => {
