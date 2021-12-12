@@ -160,7 +160,7 @@ function makeWrapper(keybinding, awaitOption) {
             mac: keybinding.mac,
             command: 'kb-macro.wrap',
             args: makeWrapperArgs(keybinding),
-            when: addWhenContext(when, 'kb-macro.recording')
+            when: makeWrapperWhen({ when })
         };
         if (!('mac' in keybinding)) {
             delete wrapped.mac;
