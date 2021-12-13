@@ -16,7 +16,7 @@ function checkExclusion(exclusion, commands) {
 function checkAwaitOptions(awaitOptions) {
     for (const awaitOption of awaitOptions.values()) {
         if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
-            console.error('Invalid awaitOption found:', awaitOption);
+            console.error('Error: Invalid awaitOption found:', awaitOption);
             process.exit(1);
         }
     }
