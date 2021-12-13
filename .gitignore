@@ -1,4 +1,5 @@
-node_modules
-.vscode-test/
-*.vsix
+/node_modules
+/.vscode-test/
+/*.vsix
 /keymap-wrapper/tmp
+/dist
