@@ -2,7 +2,7 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.5.0] - 2021-12-14
 - New
   - Added Web extension support. [#17](https://github.com/tshino/vscode-kb-macro/pull/17)
   - (Internal) Introduced Conditional Await syntax on keymap wrapper's config file.
