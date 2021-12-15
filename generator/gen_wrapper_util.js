@@ -79,6 +79,27 @@ function keybindingsContains(keybindings, keybinding) {
     return -1;
 }
 
+function extractOSSpecificKeys(keybinding) {
+    const keybindings = [];
+    const restContext = [];
+    if ('mac' in keybinding && keybinding.key !== keybinding.mac) {
+        const mac = copyKeybinding(keybinding);
+        mac.key = keybinding.mac;
+        mac.when = addWhenContext(keybinding.when, 'isMac');
+        delete mac.mac;
+        keybindings.push(mac);
+        restContext.push('!isMac');
+    }
+    const rest = copyKeybinding(keybinding);
+    delete rest.mac;
+    const restWhen = restContext.join(' && ');
+    if (restWhen) {
+        rest.when = addWhenContext(rest.when, restWhen);
+    }
+    keybindings.push(rest);
+    return keybindings;
+}
+
 const ValidAwaitTargets = new Set(['selection', 'document', 'clipboard']);
 
 function isValidAwaitOption(awaitOption) {
@@ -180,6 +201,7 @@ module.exports = {
     addWhenContext,
     copyKeybinding,
     keybindingsContains,
+    extractOSSpecificKeys,
     isValidAwaitOption,
     decomposeAwaitOption,
     makeWrapperWhen,

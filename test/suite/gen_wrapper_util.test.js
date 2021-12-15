@@ -57,6 +57,33 @@ describe('gen_wrapper_util', () => {
             assert.deepStrictEqual(copyKeybinding(input), expected);
         });
     });
+    describe('extractOSSpecificKeys', () => {
+        const extractOSSpecificKeys = genWrapperUtil.extractOSSpecificKeys;
+        it('should return array of cloned given keybinding object', () => {
+            const keybinding = { key: 'key1', command: 'cmd1', when: 'ctx1' };
+            const result = extractOSSpecificKeys(keybinding);
+            assert.strictEqual(result.length, 1);
+            assert.strictEqual(result[0] === keybinding, false);
+            assert.deepStrictEqual(result, [ keybinding ]);
+        });
+        it('should separate keybinding with "mac" key', () => {
+            const input = { key: 'key1', mac: 'key2', command: 'cmd1' };
+            const expected = [
+                { key: 'key2', command: 'cmd1', when: 'isMac' },
+                { key: 'key1', command: 'cmd1', when: '!isMac' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should remove "mac" key if the value are equal to "key"', () => {
+            const input = { key: 'key1', mac: 'key1', command: 'cmd1' };
+            const expected = [
+                { key: 'key1', command: 'cmd1' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+    });
     describe('keybindingsContains', () => {
         const keybindingsContains = genWrapperUtil.keybindingsContains;
         it('should detect specified keybinding in given keybindings and return the index', () => {
