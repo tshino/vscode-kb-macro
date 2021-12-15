@@ -83,6 +83,58 @@ describe('gen_wrapper_util', () => {
             const result = extractOSSpecificKeys(input);
             assert.deepStrictEqual(result, expected);
         });
+        it('should separate keybinding with "linux" key', () => {
+            const input = { key: 'key1', linux: 'key2', command: 'cmd1' };
+            const expected = [
+                { key: 'key2', command: 'cmd1', when: 'isLinux' },
+                { key: 'key1', command: 'cmd1', when: '!isLinux' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should remove "linux" key if the value are equal to "key"', () => {
+            const input = { key: 'key1', linux: 'key1', command: 'cmd1' };
+            const expected = [
+                { key: 'key1', command: 'cmd1' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should separate keybinding with "win" key', () => {
+            const input = { key: 'key1', win: 'key2', command: 'cmd1' };
+            const expected = [
+                { key: 'key2', command: 'cmd1', when: 'isWindows' },
+                { key: 'key1', command: 'cmd1', when: '!isWindows' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should remove "win" key if the value are equal to "key"', () => {
+            const input = { key: 'key1', win: 'key1', command: 'cmd1' };
+            const expected = [
+                { key: 'key1', command: 'cmd1' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should remove all of "win", "linux", and "mac" keys if they are all the same to "key"', () => {
+            const input = { key: 'key1', win: 'key1', linux: 'key1', mac: 'key1', command: 'cmd1' };
+            const expected = [
+                { key: 'key1', command: 'cmd1' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should separate keybinding with "win" and "mac" keys', () => {
+            const input = { key: 'key1', win: 'key2', mac: 'key3', command: 'cmd1' };
+            const expected = [
+                { key: 'key3', command: 'cmd1', when: 'isMac' },
+                { key: 'key2', command: 'cmd1', when: 'isWindows' },
+                { key: 'key1', command: 'cmd1', when: '!isMac && !isWindows' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
     });
     describe('keybindingsContains', () => {
         const keybindingsContains = genWrapperUtil.keybindingsContains;

@@ -80,18 +80,37 @@ function keybindingsContains(keybindings, keybinding) {
 }
 
 function extractOSSpecificKeys(keybinding) {
+    const clone = keybinding => {
+        const clone = copyKeybinding(keybinding);
+        delete clone.mac;
+        delete clone.linux;
+        delete clone.win;
+        return clone;
+    };
     const keybindings = [];
     const restContext = [];
     if ('mac' in keybinding && keybinding.key !== keybinding.mac) {
-        const mac = copyKeybinding(keybinding);
+        const mac = clone(keybinding);
         mac.key = keybinding.mac;
         mac.when = addWhenContext(keybinding.when, 'isMac');
-        delete mac.mac;
         keybindings.push(mac);
         restContext.push('!isMac');
     }
-    const rest = copyKeybinding(keybinding);
-    delete rest.mac;
+    if ('linux' in keybinding && keybinding.key !== keybinding.linux) {
+        const linux = clone(keybinding);
+        linux.key = keybinding.linux;
+        linux.when = addWhenContext(keybinding.when, 'isLinux');
+        keybindings.push(linux);
+        restContext.push('!isLinux');
+    }
+    if ('win' in keybinding && keybinding.key !== keybinding.win) {
+        const win = clone(keybinding);
+        win.key = keybinding.win;
+        win.when = addWhenContext(keybinding.when, 'isWindows');
+        keybindings.push(win);
+        restContext.push('!isWindows');
+    }
+    const rest = clone(keybinding);
     const restWhen = restContext.join(' && ');
     if (restWhen) {
         rest.when = addWhenContext(rest.when, restWhen);
