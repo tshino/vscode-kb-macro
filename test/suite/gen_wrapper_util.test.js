@@ -88,8 +88,8 @@ describe('gen_wrapper_util', () => {
         it('should separate keybinding with "mac" key', () => {
             const input = { key: 'key1', mac: 'key2', command: 'cmd1' };
             const expected = [
-                { key: 'key1', command: 'cmd1' },
-                { key: 'key2', command: 'cmd1', when: 'isMac' }
+                { key: 'key2', command: 'cmd1', when: 'isMac' },
+                { key: 'key1', command: 'cmd1', when: '!isMac' }
             ];
             const result = extractOSSpecificKeys(input);
             assert.deepStrictEqual(result, expected);
@@ -105,8 +105,8 @@ describe('gen_wrapper_util', () => {
         it('should separate keybinding with "linux" key', () => {
             const input = { key: 'key1', linux: 'key2', command: 'cmd1' };
             const expected = [
-                { key: 'key1', command: 'cmd1' },
-                { key: 'key2', command: 'cmd1', when: 'isLinux' }
+                { key: 'key2', command: 'cmd1', when: 'isLinux' },
+                { key: 'key1', command: 'cmd1', when: '!isLinux' }
             ];
             const result = extractOSSpecificKeys(input);
             assert.deepStrictEqual(result, expected);
@@ -122,8 +122,8 @@ describe('gen_wrapper_util', () => {
         it('should separate keybinding with "win" key', () => {
             const input = { key: 'key1', win: 'key2', command: 'cmd1' };
             const expected = [
-                { key: 'key1', command: 'cmd1' },
-                { key: 'key2', command: 'cmd1', when: 'isWindows' }
+                { key: 'key2', command: 'cmd1', when: 'isWindows' },
+                { key: 'key1', command: 'cmd1', when: '!isWindows' }
             ];
             const result = extractOSSpecificKeys(input);
             assert.deepStrictEqual(result, expected);
@@ -144,12 +144,12 @@ describe('gen_wrapper_util', () => {
             const result = extractOSSpecificKeys(input);
             assert.deepStrictEqual(result, expected);
         });
-        it('should separate keybinding with multiple OS specific keys', () => {
+        it('should separate keybinding with "win" and "mac" keys', () => {
             const input = { key: 'key1', win: 'key2', mac: 'key3', command: 'cmd1' };
             const expected = [
-                { key: 'key1', command: 'cmd1' },
                 { key: 'key3', command: 'cmd1', when: 'isMac' },
-                { key: 'key2', command: 'cmd1', when: 'isWindows' }
+                { key: 'key2', command: 'cmd1', when: 'isWindows' },
+                { key: 'key1', command: 'cmd1', when: '!isMac && !isWindows' }
             ];
             const result = extractOSSpecificKeys(input);
             assert.deepStrictEqual(result, expected);
