@@ -79,9 +79,10 @@ const unwrapForWindows = function(keybinding) {
     if (keybinding.when === '') {
         delete keybinding.when;
     }
-    if ('mac' in keybinding) {
-        delete keybinding.mac;
+    if ('win' in keybinding) {
+        keybinding.key = keybinding.win;
     }
+    genWrapperUtil.removeOSSpecificKeys(keybinding);
     return keybinding;
 };
 const unwrapForLinux = function(keybinding) {
@@ -92,9 +93,10 @@ const unwrapForLinux = function(keybinding) {
     if (keybinding.when === '') {
         delete keybinding.when;
     }
-    if ('mac' in keybinding) {
-        delete keybinding.mac;
+    if ('linux' in keybinding) {
+        keybinding.key = keybinding.linux;
     }
+    genWrapperUtil.removeOSSpecificKeys(keybinding);
     return keybinding;
 };
 const unwrapForMac = function(keybinding) {
@@ -107,8 +109,8 @@ const unwrapForMac = function(keybinding) {
     }
     if ('mac' in keybinding) {
         keybinding.key = keybinding.mac;
-        delete keybinding.mac;
     }
+    genWrapperUtil.removeOSSpecificKeys(keybinding);
     return keybinding;
 };
 

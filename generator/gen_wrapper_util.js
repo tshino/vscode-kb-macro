@@ -58,6 +58,12 @@ function copyKeybinding(keybinding) {
         key: keybinding.key,
         command: keybinding.command
     };
+    if ('win' in keybinding) {
+        copy.win = keybinding.win;
+    }
+    if ('linux' in keybinding) {
+        copy.linux = keybinding.linux;
+    }
     if ('mac' in keybinding) {
         copy.mac = keybinding.mac;
     }
@@ -69,6 +75,12 @@ function copyKeybinding(keybinding) {
     }
     return copy;
 }
+
+function removeOSSpecificKeys(keybinding) {
+    delete keybinding.mac;
+    delete keybinding.win;
+    delete keybinding.linux;
+};
 
 function keybindingsContains(keybindings, keybinding) {
     for (let i = 0; i < keybindings.length; i++) {
@@ -82,9 +94,7 @@ function keybindingsContains(keybindings, keybinding) {
 function extractOSSpecificKeys(keybinding) {
     const clone = keybinding => {
         const clone = copyKeybinding(keybinding);
-        delete clone.mac;
-        delete clone.linux;
-        delete clone.win;
+        removeOSSpecificKeys(clone);
         return clone;
     };
     const keybindings = [];
@@ -210,6 +220,7 @@ module.exports = {
     writeCompactKeybindingsJSON,
     addWhenContext,
     copyKeybinding,
+    removeOSSpecificKeys,
     keybindingsContains,
     extractOSSpecificKeys,
     isValidAwaitOption,

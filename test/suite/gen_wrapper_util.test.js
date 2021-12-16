@@ -47,14 +47,33 @@ describe('gen_wrapper_util', () => {
             assert.deepStrictEqual(copyKeybinding(input), expected);
         });
         it('should clone keybinding object with optional field (2)', () => {
+            const input = { key: 'key1', command: 'cmd1', args: 'arg1' };
+            const expected = { key: 'key1', command: 'cmd1', args: 'arg1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (3)', () => {
             const input = { key: 'key1', command: 'cmd1', mac: 'macKey1' };
             const expected = { key: 'key1', command: 'cmd1', mac: 'macKey1' };
             assert.deepStrictEqual(copyKeybinding(input), expected);
         });
-        it('should clone keybinding object with optional field (3)', () => {
-            const input = { key: 'key1', command: 'cmd1', args: 'arg1' };
-            const expected = { key: 'key1', command: 'cmd1', args: 'arg1' };
+        it('should clone keybinding object with optional field (4)', () => {
+            const input = { key: 'key1', command: 'cmd1', linux: 'linuxKey1' };
+            const expected = { key: 'key1', command: 'cmd1', linux: 'linuxKey1' };
             assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (5)', () => {
+            const input = { key: 'key1', command: 'cmd1', win: 'winKey1' };
+            const expected = { key: 'key1', command: 'cmd1', win: 'winKey1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+    });
+    describe('removeOSSpecificKeys', () => {
+        const removeOSSpecificKeys = genWrapperUtil.removeOSSpecificKeys;
+        it('should delete "mac", "linux", and "win" keys in given keybinding object', () => {
+            const input = { key: 'key1', command: 'cmd1', win: 'win1', linux: 'linux1', mac: 'mac1' };
+            const expected = { key: 'key1', command: 'cmd1' };
+            removeOSSpecificKeys(input);
+            assert.deepStrictEqual(input, expected);
         });
     });
     describe('extractOSSpecificKeys', () => {
