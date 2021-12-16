@@ -88,34 +88,25 @@ function extractOSSpecificKeys(keybinding) {
         return clone;
     };
     const keybindings = [];
-    const restContext = [];
     if ('mac' in keybinding && keybinding.key !== keybinding.mac) {
         const mac = clone(keybinding);
         mac.key = keybinding.mac;
         mac.when = addWhenContext(keybinding.when, 'isMac');
         keybindings.push(mac);
-        restContext.push('!isMac');
     }
     if ('linux' in keybinding && keybinding.key !== keybinding.linux) {
         const linux = clone(keybinding);
         linux.key = keybinding.linux;
         linux.when = addWhenContext(keybinding.when, 'isLinux');
         keybindings.push(linux);
-        restContext.push('!isLinux');
     }
     if ('win' in keybinding && keybinding.key !== keybinding.win) {
         const win = clone(keybinding);
         win.key = keybinding.win;
         win.when = addWhenContext(keybinding.when, 'isWindows');
         keybindings.push(win);
-        restContext.push('!isWindows');
     }
-    const rest = clone(keybinding);
-    const restWhen = restContext.join(' && ');
-    if (restWhen) {
-        rest.when = addWhenContext(rest.when, restWhen);
-    }
-    keybindings.push(rest);
+    keybindings.unshift(clone(keybinding));
     return keybindings;
 }
 
