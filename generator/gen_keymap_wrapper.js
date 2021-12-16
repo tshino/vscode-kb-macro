@@ -73,6 +73,8 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     checkAwaitOptions(awaitOptions);
 
     const wrappers = baseKeybindings.flatMap(
+        genWrapperUtil.extractOSSpecificKeys
+    ).flatMap(
         keybinding => {
             if (exclusion.has(keybinding.command) || keybinding.command === '') {
                 // make a keybinding of a direct call for the excluded command
