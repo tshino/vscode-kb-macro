@@ -6,14 +6,15 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - New
   - Added Sublime Text Keymap support. [#18](https://github.com/tshino/vscode-kb-macro/issues/18)
 - Fix
-  - Keymap wrapper for Awesome Emacs Keymap may have not been working correctly on macOS due to "mac" keys in user `keybindings.json`.
+  - Keymap wrapper for Awesome Emacs Keymap may have not been working correctly on Mac due to "mac" keys in user `keybindings.json`.
 
 ### [0.5.0] - 2021-12-14
 - New
   - Added Web extension support. [#17](https://github.com/tshino/vscode-kb-macro/pull/17)
   - (Internal) Introduced Conditional Await syntax on keymap wrapper's config file.
 - Update
-  - Updated keymap wrappers for Vz Keymap and Awesome Emacs Keymap; Reduced unnecessary delays in playback.
+  - Updated keymap wrappers for Vz Keymap; Reduced unnecessary delays in playback.
+  - Updated keymap wrappers for Awesome Emacs Keymap; Reduced unnecessary delays in playback.
 
 ### [0.4.0] - 2021-12-10
 - New
