@@ -6,8 +6,8 @@ const genWrapperUtil = require('./gen_wrapper_util');
 const CommonConfigPath = 'generator/config.json';
 const KeymapWrapperPath = 'keymap-wrapper/';
 
-function checkExclusion(exclusion, commands) {
-    for (const command of exclusion) {
+function checkCommandPresence(list, commands) {
+    for (const command of list) {
         if (!commands.has(command)) {
             console.warn('Warning: No matching command:', command);
         }
@@ -57,10 +57,13 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     const baseKeybindings = packageJson['contributes']['keybindings'];
     const commands = new Set(baseKeybindings.map(keybinding => keybinding.command));
 
+    const ignore = new Set(config['ignore'] || []);
+    checkCommandPresence(ignore, commands);
+
     const exclusion = new Set(commonConfig['exclusion'] || []);
     {
         const rawExclusion = config['exclusion'] || [];
-        checkExclusion(rawExclusion, commands);
+        checkCommandPresence(rawExclusion, commands);
         rawExclusion.forEach(e => exclusion.add(e));
     }
 
@@ -72,7 +75,9 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     }
     checkAwaitOptions(awaitOptions);
 
-    const wrappers = baseKeybindings.flatMap(
+    const wrappers = baseKeybindings.filter(
+        keybinding => !ignore.has(keybinding.command)
+    ).flatMap(
         genWrapperUtil.extractOSSpecificKeys
     ).flatMap(
         keybinding => {
