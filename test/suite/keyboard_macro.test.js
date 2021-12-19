@@ -253,6 +253,15 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.playback();
             assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
         });
+        it('should abort playback with repeat argument if command execution failed', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.push({ command: 'INVALID' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.playback({ repeat: 5 });
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+        });
         it('should prevent reentry', async () => {
             keyboardMacro.startRecording();
             keyboardMacro.push({ command: 'internal:log' });

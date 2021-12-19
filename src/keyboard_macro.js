@@ -126,9 +126,10 @@ const KeyboardMacro = function({ awaitController }) {
             args = (args && typeof(args) === 'object') ? args : {};
             const repeat = typeof(args.repeat) === 'number' ? args.repeat : 1;
             const commands = sequence.get();
-            for (let k = 0; k < repeat; k++) {
+            let ok = true;
+            for (let k = 0; k < repeat && ok; k++) {
                 for (const spec of commands) {
-                    const ok = await invokeCommandSync(spec, 'playback');
+                    ok = await invokeCommandSync(spec, 'playback');
                     if (!ok) {
                         break;
                     }
