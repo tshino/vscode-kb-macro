@@ -224,6 +224,25 @@ describe('KeybaordMacro', () => {
                 'end'
             ]);
         });
+        it('should repeat 5 times (repeat argument)', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.playback({ repeat: 5 });
+            assert.deepStrictEqual(logs, [
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'begin',
+                'end'
+            ]);
+        });
         it('should abort playback if command execution failed', async () => {
             keyboardMacro.startRecording();
             keyboardMacro.push({ command: 'internal:log' });

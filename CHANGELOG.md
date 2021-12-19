@@ -5,6 +5,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [Unreleased]
 - New
   - Added Sublime Text Keymap support. [#18](https://github.com/tshino/vscode-kb-macro/issues/18)
+  - Added 'repeat' argument support to the playback command.
 - Update
   - Updated keymap wrapper for Vz Keymap; Removed unnecessary wrappers for Vz Keymap's built-in macro feature.
 - Fix
