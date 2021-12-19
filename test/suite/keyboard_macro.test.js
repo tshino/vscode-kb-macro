@@ -224,6 +224,16 @@ describe('KeybaordMacro', () => {
                 'end'
             ]);
         });
+        it('should abort playback if command execution failed', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.push({ command: 'INVALID' });
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.playback();
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+        });
         it('should prevent reentry', async () => {
             keyboardMacro.startRecording();
             keyboardMacro.push({ command: 'internal:log' });
@@ -290,6 +300,7 @@ describe('KeybaordMacro', () => {
 
             assert.deepStrictEqual(logs, []);
             assert.strictEqual(keyboardMacro.isRecording(), false);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
         it('should invoke and record specified command synchronously', async () => {
             keyboardMacro.startRecording();

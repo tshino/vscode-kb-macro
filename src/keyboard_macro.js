@@ -124,11 +124,7 @@ const KeyboardMacro = function({ awaitController }) {
     const playback = makeGuardedCommand(async function() {
         if (!recording) {
             const commands = sequence.get();
-            for (let i = 0; i < commands.length; i++) {
-                const spec = commands[i];
-                if (spec.failed) {
-                    continue;
-                }
+            for (const spec of commands) {
                 const ok = await invokeCommandSync(spec, 'playback');
                 if (!ok) {
                     break;
@@ -159,13 +155,12 @@ const KeyboardMacro = function({ awaitController }) {
             if (!spec) {
                 return;
             }
-            push(spec);
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
             }
             const ok = await invokeCommandSync(spec, 'wrap');
-            if (!ok) {
-                spec.failed = true;
+            if (ok) {
+                push(spec);
             }
             if (onEndWrappedCommandCallback) {
                 onEndWrappedCommandCallback();
