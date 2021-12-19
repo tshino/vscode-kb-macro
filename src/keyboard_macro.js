@@ -121,13 +121,18 @@ const KeyboardMacro = function({ awaitController }) {
         return ok;
     };
 
-    const playback = makeGuardedCommand(async function() {
+    const playback = makeGuardedCommand(async function(args) {
         if (!recording) {
+            args = (args && typeof(args) === 'object') ? args : {};
+            const repeat = typeof(args.repeat) === 'number' ? args.repeat : 1;
             const commands = sequence.get();
-            for (const spec of commands) {
-                const ok = await invokeCommandSync(spec, 'playback');
-                if (!ok) {
-                    break;
+            let ok = true;
+            for (let k = 0; k < repeat && ok; k++) {
+                for (const spec of commands) {
+                    ok = await invokeCommandSync(spec, 'playback');
+                    if (!ok) {
+                        break;
+                    }
                 }
             }
         }
