@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Update
+  - Added comment lines to keymap wrapper files to describe keymap name and its version. [#20](https://github.com/tshino/vscode-kb-macro/pull/20)
+
 ### [0.6.0] - 2021-12-19
 - New
   - Added Sublime Text Keymap support. [#18](https://github.com/tshino/vscode-kb-macro/issues/18)

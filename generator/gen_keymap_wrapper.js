@@ -50,7 +50,9 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     const id = path.basename(configPath, '.config.json');
     const packageJsonPath = path.resolve(dirname, 'tmp/' + id + '.package.json');
     const packageJson = await genWrapperUtil.readJSON(packageJsonPath);
-    console.log('** generating keymap wrapper for', { id, displayName: packageJson['displayName'] });
+    const displayName = packageJson['displayName'];
+    const version = packageJson['version'];
+    console.log('** generating keymap wrapper for', { id, displayName, version });
 
     const config = await genWrapperUtil.readJSON(configPath);
 
@@ -102,7 +104,16 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     );
 
     const wrapperPath = path.resolve(dirname, id + '.json');
-    await genWrapperUtil.writeCompactKeybindingsJSON(wrapperPath, wrapperKeybindings);
+    const compactJson = genWrapperUtil.makeCompactKeybindingsJSON(wrapperKeybindings);
+    const fileContent = compactJson.replace(
+        /^\[\n/,
+        (
+            '[\n' +
+            `\t// Keymap wrapper for ${displayName} v${version}\n` +
+            '\t// (required by Keyboard Macro Beta)\n'
+        )
+    ) + '\n';
+    await genWrapperUtil.writeFile(wrapperPath, fileContent);
     console.log('...done (' + id + '.json)');
 }
 
