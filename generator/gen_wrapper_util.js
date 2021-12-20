@@ -18,7 +18,11 @@ async function writeJSON(path, value) {
     await fsPromises.writeFile(path, json + '\n');
 }
 
-async function writeCompactKeybindingsJSON(path, keybindings) {
+async function writeFile(path, content) {
+    await fsPromises.writeFile(path, content);
+}
+
+function makeCompactKeybindingsJSON(keybindings) {
     const json = JSON.stringify(keybindings, null, '\t');
     const compactJson = json.replace(
         /,\n\s+"(?!when)/gm, ', "'
@@ -31,7 +35,7 @@ async function writeCompactKeybindingsJSON(path, keybindings) {
     ).replace(
         /\s*\n\s+}/gm, ' }'
     );
-    await fsPromises.writeFile(path, compactJson + '\n');
+    return compactJson;
 }
 
 function addWhenContext(when, context) {
@@ -226,7 +230,8 @@ function makeWrapper(keybinding, awaitOption) {
 module.exports = {
     readJSON,
     writeJSON,
-    writeCompactKeybindingsJSON,
+    writeFile,
+    makeCompactKeybindingsJSON,
     addWhenContext,
     copyKeybinding,
     removeOSSpecificKeys,
