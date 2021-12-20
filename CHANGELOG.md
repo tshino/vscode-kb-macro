@@ -4,7 +4,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [Unreleased]
 - Update
-  - Added comment lines to keymap wrapper files to describe keymap name and its version.
+  - Added comment lines to keymap wrapper files to describe keymap name and its version. [#20](https://github.com/tshino/vscode-kb-macro/pull/20)
 
 ### [0.6.0] - 2021-12-19
 - New
