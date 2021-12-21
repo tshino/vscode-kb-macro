@@ -50,9 +50,17 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     const id = path.basename(configPath, '.config.json');
     const packageJsonPath = path.resolve(dirname, 'tmp/' + id + '.package.json');
     const packageJson = await genWrapperUtil.readJSON(packageJsonPath);
+
+    const uniqueId = packageJson['publisher'] + '.' + packageJson['name'];
     const displayName = packageJson['displayName'];
     const version = packageJson['version'];
-    console.log('** generating keymap wrapper for', { id, displayName, version });
+    console.log('\n** generating keymap wrapper for', { uniqueId, displayName, version });
+
+    if (id !== uniqueId) {
+        console.warn('Warning: Config file name does not match extension unique ID');
+        console.info(`  config ID   : ${id}`);
+        console.info(`  extension ID: ${uniqueId}`);
+    }
 
     const config = await genWrapperUtil.readJSON(configPath);
 
