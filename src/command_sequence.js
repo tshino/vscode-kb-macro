@@ -22,9 +22,13 @@ const CommandSequence = function() {
                 const lineDelta1 = args1.lineDelta || 0;
                 const lineDelta2 = args2.lineDelta || 0;
                 const selectionLength2 = args2.selectionLength || 0;
+                const groupSize1 = args1.groupSize || 1;
+                const groupSize2 = args2.groupSize || 1;
                 if (lineDelta1 === 0 &&
                     lineDelta2 === 0 &&
                     selectionLength2 === 0 &&
+                    groupSize1 === 1 &&
+                    groupSize2 === 1 &&
                     characterDelta1 + characterDelta2 === 0) {
                     sequence.splice(i, 2);
                     i--;

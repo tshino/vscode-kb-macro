@@ -172,5 +172,35 @@ describe('CommandSequence', () => {
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ MOVE1, MOVE2 ]);
         });
+        it('should retain consecutive cursor motions that include splitting motion', () => {
+            const MOVE1 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: [ 1, 2 ] }
+            };
+            const MOVE2 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: -1 }
+            };
+            const seq = CommandSequence();
+            seq.push(MOVE1);
+            seq.push(MOVE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ MOVE1, MOVE2 ]);
+        });
+        it('should retain consecutive cursor motions that include group motion', () => {
+            const MOVE1 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: 2, groupSize: 2 }
+            };
+            const MOVE2 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: -2 }
+            };
+            const seq = CommandSequence();
+            seq.push(MOVE1);
+            seq.push(MOVE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ MOVE1, MOVE2 ]);
+        });
     });
 });

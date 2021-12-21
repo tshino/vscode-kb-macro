@@ -230,8 +230,13 @@ describe('internalCommands', () => {
             assert.deepStrictEqual(getSelections(), [[3, 5]]);
         });
 
-        it('should move the cursor to left based on start position of current selection', async () => {
+        it('should move the cursor to left based on start position of current selection (1)', async () => {
             setSelections([[12, 6, 12, 11]]);
+            await internalCommands.performCursorMotion({ characterDelta: -4 });
+            assert.deepStrictEqual(getSelections(), [[12, 2]]);
+        });
+        it('should move the cursor to left based on start position of current selection (2)', async () => {
+            setSelections([[12, 11, 12, 6]]);
             await internalCommands.performCursorMotion({ characterDelta: -4 });
             assert.deepStrictEqual(getSelections(), [[12, 2]]);
         });
