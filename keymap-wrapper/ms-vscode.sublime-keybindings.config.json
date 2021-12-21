@@ -6,27 +6,43 @@
     "footer": [
         {
             "key": "ctrl+q",
-            "mac": "cmd+q",
             "command": "kb-macro.startRecording",
-            "when": "!kb-macro.recording"
+            "when": "!kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+q",
+            "command": "kb-macro.startRecording",
+            "when": "!kb-macro.recording && isMac"
         },
         {
             "key": "ctrl+shift+q",
-            "mac": "cmd+shift+q",
             "command": "kb-macro.cancelRecording",
-            "when": "kb-macro.recording"
+            "when": "kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+shift+q",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording && isMac"
         },
         {
             "key": "ctrl+q",
-            "mac": "cmd+q",
             "command": "kb-macro.finishRecording",
-            "when": "kb-macro.recording"
+            "when": "kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+q",
+            "command": "kb-macro.finishRecording",
+            "when": "kb-macro.recording && isMac"
         },
         {
             "key": "ctrl+shift+q",
-            "mac": "cmd+shift+q",
             "command": "kb-macro.playback",
-            "when": "!kb-macro.recording"
+            "when": "!kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+shift+q",
+            "command": "kb-macro.playback",
+            "when": "!kb-macro.recording && isMac"
         }
     ]
 }
