@@ -4,13 +4,13 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [Unreleased]
 - New
-  - Added Notepad++ Keymap support. [#21](https://github.com/tshino/vscode-kb-macro/pull/21)
+  - Added Notepad++ Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#21](https://github.com/tshino/vscode-kb-macro/pull/21)
 - Update
   - Added comment lines to keymap wrapper files to describe keymap name and its version. [#20](https://github.com/tshino/vscode-kb-macro/pull/20)
 
 ### [0.6.0] - 2021-12-19
 - New
-  - Added Sublime Text Keymap support. [#18](https://github.com/tshino/vscode-kb-macro/issues/18)
+  - Added Sublime Text Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#18](https://github.com/tshino/vscode-kb-macro/issues/18)
   - Added 'repeat' argument support to the playback command. [#19](https://github.com/tshino/vscode-kb-macro/pull/19)
 - Update
   - Updated keymap wrapper for Vz Keymap; Removed unnecessary wrappers for Vz Keymap's built-in macro feature.
