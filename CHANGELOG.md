@@ -9,6 +9,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Added comment lines to keymap wrapper files to describe keymap name and its version. [#20](https://github.com/tshino/vscode-kb-macro/pull/20)
 - Fix
   - Keymap wrapper for Sublime Text may have not been working correctly on Mac due to "mac" keys in user `keybindings.json`.
+  - Fixed minor issues on command sequence optimization to reduce redundant cursor movement.
 
 ### [0.6.0] - 2021-12-19
 - New
