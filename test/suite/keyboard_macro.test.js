@@ -19,14 +19,41 @@ describe('KeybaordMacro', () => {
         });
         it('should set callback function', async () => {
             const logs = [];
-
-            keyboardMacro.onChangeRecordingState(() => {
-                logs.push('invoked');
+            keyboardMacro.onChangeRecordingState(({ recording, reason }) => {
+                logs.push([ recording, reason ]);
             });
+
             keyboardMacro.startRecording();
             keyboardMacro.finishRecording();
+            keyboardMacro.startRecording();
+            keyboardMacro.cancelRecording();
 
-            assert.deepStrictEqual(logs, ['invoked', 'invoked']);
+            assert.deepStrictEqual(logs, [
+                [ true, keyboardMacro.RecordingStateReason.Start ],
+                [ false, keyboardMacro.RecordingStateReason.Finish ],
+                [ true, keyboardMacro.RecordingStateReason.Start ],
+                [ false, keyboardMacro.RecordingStateReason.Cancel ]
+            ]);
+        });
+    });
+    describe('onBeginWrappedCommand, onEndWrappedCommand', () => {
+        const logs = [];
+        beforeEach(async () => {
+            keyboardMacro.cancelRecording();
+            logs.length = 0;
+            keyboardMacro.registerInternalCommand('internal:log', () => {
+                logs.push('invoked');
+            });
+        });
+        it('should set callback function', async () => {
+            keyboardMacro.onBeginWrappedCommand(() => { logs.push('begin'); });
+            keyboardMacro.onEndWrappedCommand(() => { logs.push('end'); });
+
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [ 'begin', 'invoked', 'end' ]);
         });
     });
     describe('startRecording', () => {
@@ -379,6 +406,4 @@ describe('KeybaordMacro', () => {
             assert.strictEqual(keyboardMacro.isRecording(), true);
         });
     });
-    // TODO: add tests for onBeginWrappedCommand
-    // TODO: add tests for onEndWrappedCommand
 });

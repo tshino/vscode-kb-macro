@@ -334,7 +334,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [
                         new vscode.Selection(3, 10, 3, 10), new vscode.Selection(3, 12, 3, 12),
-                        new vscode.Selection(6, 10, 6, 10), new vscode.Selection(6, 11, 6, 11)  // <= not match as non-grouped pure split
+                        new vscode.Selection(6, 10, 6, 10), new vscode.Selection(6, 11, 6, 11)  // <= not match non-grouped pure split
                     ] }
                 ],
                 expectedLogs: [ GroupMotion(2, [3, 5, 10, 11], [0, 0, 3, 3]) ]
@@ -370,5 +370,4 @@ describe('CursorMotionDetector', () => {
             });
         });
     });
-    // TODO: add more tests for CursorMotionDetector
 });
