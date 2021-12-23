@@ -19,7 +19,7 @@ You can find the keybinding definitions for start/stop recording and playback at
 | ---------------- | -------------- | ------------ | ---------- | --------- | -------- | ---- |
 | [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | [tuttieee.emacs-mcx.json](tuttieee.emacs-mcx.json) | 2021-12-17 | `C-x S-9` | `C-x S-0` | `C-x e` | VS Code can't map '(' and ')' keys |
 | [Notepad++ Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.notepadplusplus-keybindings) | [ms-vscode.notepadplusplus-keybindings.json](ms-vscode.notepadplusplus-keybindings.json) | 2021-12-21 | `Ctrl+Shift+R` | `Ctrl+Shift+R` | `Ctrl+Shift+P` | `Ctrl+Shift+P` conflicts with Command Palette. |
-| [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [ms-vscode.sublime-keybindings.json](ms-vscode.sublime-keybindings.json) | 2021-12-17 | `Ctrl+Q` | `Ctrl+Q` | `Ctrl+Shift+Q` | |
+| [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [ms-vscode.sublime-keybindings.json](ms-vscode.sublime-keybindings.json) | 2021-12-21 | `Ctrl+Q` | `Ctrl+Q` | `Ctrl+Shift+Q` | |
 | [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap) | [tshino.vz-like-keymap.json](tshino.vz-like-keymap.json) | 2021-12-11 | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` | |
 
 ## Making a Keymap Wrapper
