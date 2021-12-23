@@ -4,6 +4,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [Unreleased]
 - New
+  - Added Atom Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#22](https://github.com/tshino/vscode-kb-macro/pull/22)
   - Added Notepad++ Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#21](https://github.com/tshino/vscode-kb-macro/pull/21)
 - Update
   - Added comment lines to keymap wrapper files to describe keymap name and its version. [#20](https://github.com/tshino/vscode-kb-macro/pull/20)

@@ -17,6 +17,7 @@ You can find the keybinding definitions for start/stop recording and playback at
 
 | Keymap extension | Keymap wrapper (JSON) | Last updated | Start rec. | Stop rec. | Playback | Note |
 | ---------------- | -------------- | ------------ | ---------- | --------- | -------- | ---- |
+| [Atom Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings) | [ms-vscode.atom-keybindings.json](ms-vscode.atom-keybindings.json) | 2021-12-24 | `Ctrl+Alt+R` | `Ctrl+Alt+R` | `Ctrl+Alt+P` | |
 | [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | [tuttieee.emacs-mcx.json](tuttieee.emacs-mcx.json) | 2021-12-17 | `C-x S-9` | `C-x S-0` | `C-x e` | VS Code can't map '(' and ')' keys |
 | [Notepad++ Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.notepadplusplus-keybindings) | [ms-vscode.notepadplusplus-keybindings.json](ms-vscode.notepadplusplus-keybindings.json) | 2021-12-21 | `Ctrl+Shift+R` | `Ctrl+Shift+R` | `Ctrl+Shift+P` | `Ctrl+Shift+P` conflicts with Command Palette. |
 | [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [ms-vscode.sublime-keybindings.json](ms-vscode.sublime-keybindings.json) | 2021-12-21 | `Ctrl+Q` | `Ctrl+Q` | `Ctrl+Shift+Q` | |

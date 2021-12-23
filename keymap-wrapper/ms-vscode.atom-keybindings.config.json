@@ -1,0 +1,28 @@
+{
+    "base": {
+        "type": "url",
+        "url": "https://github.com/microsoft/vscode-atom-keybindings/raw/main/package.json"
+    },
+    "footer": [
+        {
+            "key": "ctrl+alt+r",
+            "command": "kb-macro.startRecording",
+            "when": "!kb-macro.recording"
+        },
+        {
+            "key": "ctrl+alt+r",
+            "command": "kb-macro.finishRecording",
+            "when": "kb-macro.recording"
+        },
+        {
+            "key": "ctrl+alt+p",
+            "command": "kb-macro.playback",
+            "when": "!kb-macro.recording"
+        },
+        {
+            "key": "ctrl+alt+p",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording"
+        }
+    ]
+}
