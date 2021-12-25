@@ -33,6 +33,18 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(addWhenContext('c1 || c2', 'c3 || c4'), 'c3 && c1 || c3 && c2 || c4 && c1 || c4 && c2');
         });
     });
+    describe('negateContext', () => {
+        const negateContext = genWrapperUtil.negateContext;
+        it('should append operator ! in front of given context', () => {
+            assert.strictEqual(negateContext('c1'), '!c1');
+        });
+        it('should return "false" if given context is empty', () => {
+            assert.strictEqual(negateContext(''), 'false');
+        });
+        it('should not use double negation (1)', () => {
+            assert.strictEqual(negateContext('!c1'), 'c1');
+        });
+    });
     describe('copyKeybinding', () => {
         const copyKeybinding = genWrapperUtil.copyKeybinding;
         it('should clone keybinding object', () => {
@@ -367,6 +379,35 @@ describe('gen_wrapper_util', () => {
                         "await": "await1"
                     },
                     when: 'kb-macro.recording && !cond1 && context1'
+                }
+            ];
+            assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
+        });
+        it('should make wrapper keybinding (7) (with conditional awaitOption with negation)', () => {
+            const input = {
+                key: 'key1',
+                command: 'command1',
+                when: 'context1'
+            };
+            const awaitOption = 'await1 [!cond1]await2';
+            const expected = [
+                {
+                    key: 'key1',
+                    command: 'kb-macro.wrap',
+                    args: {
+                        command: 'command1',
+                        "await": "await1 await2"
+                    },
+                    when: 'kb-macro.recording && !cond1 && context1'
+                },
+                {
+                    key: 'key1',
+                    command: 'kb-macro.wrap',
+                    args: {
+                        command: 'command1',
+                        "await": "await1"
+                    },
+                    when: 'kb-macro.recording && cond1 && context1'
                 }
             ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);

@@ -57,6 +57,19 @@ function addWhenContext(when, context) {
     }
 }
 
+function negateContext(context) {
+    if (context) {
+        context = context.trim();
+        if (context.startsWith('!')) {
+            return context.slice(1);
+        } else {
+            return '!' + context;
+        }
+    } else {
+        return 'false';
+    }
+}
+
 function copyKeybinding(keybinding) {
     const copy = {
         key: keybinding.key,
@@ -177,7 +190,7 @@ function decomposeAwaitOption(awaitOption) {
                 'await': awaitList.map(a => a['await']).join(' ')
             },
             {
-                context: '!' + conditionals[0].condition,
+                context: negateContext(conditionals[0].condition),
                 'await': awaitList.filter(a => !a.condition).map(a => a['await']).join(' ')
             }
         ];
@@ -233,6 +246,7 @@ module.exports = {
     writeFile,
     makeCompactKeybindingsJSON,
     addWhenContext,
+    negateContext,
     copyKeybinding,
     removeOSSpecificKeys,
     keybindingsContains,
