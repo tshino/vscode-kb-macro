@@ -68,4 +68,26 @@ describe('HelperContext', () => {
             ]);
         });
     });
+    describe('headOfLine', () => {
+        const helperContext = HelperContext();
+        it('should be true if cursor is at head of a line', () => {
+            helperContext.reset({ selections: [ new vscode.Selection(5, 0, 5, 0) ] });
+            assert.strictEqual(helperContext.getContext(HeadOfLine), true);
+        });
+        it('should be false if cursor is not at head of a line', () => {
+            helperContext.reset({ selections: [ new vscode.Selection(5, 1, 5, 1) ] });
+            assert.strictEqual(helperContext.getContext(HeadOfLine), false);
+        });
+        it('should be false if selection is not empty', () => {
+            helperContext.reset({ selections: [ new vscode.Selection(5, 0, 5, 10) ] });
+            assert.strictEqual(helperContext.getContext(HeadOfLine), false);
+        });
+        it('should be false if there are multiple cursors', () => {
+            helperContext.reset({ selections: [
+                new vscode.Selection(5, 0, 5, 0),
+                new vscode.Selection(6, 0, 6, 0)
+            ] });
+            assert.strictEqual(helperContext.getContext(HeadOfLine), false);
+        });
+    });
 });
