@@ -1,5 +1,6 @@
 'use strict';
 const assert = require('assert');
+const util = require('util');
 const genWrapperUtil = require('./gen_wrapper_util');
 const defaultKeybindingsLoader = require('./default_keybindings_loader');
 
@@ -114,6 +115,60 @@ const unwrapForMac = function(keybinding) {
     return keybinding;
 };
 
+const joinComplementalKeybindings = function(keybindings) {
+    for (let i = 0; i + 1 < keybindings.length; i++) {
+        const k1 = keybindings[i];
+        const k2 = keybindings[i+ 1];
+        if (k1.key === k2.key &&
+            k1.win === k2.win &&
+            k1.linux === k2.linux &&
+            k1.mac === k2.mac &&
+            k1.command === k2.command &&
+            k1.args && k2.args &&
+            k1.args.command === k2.args.command) {
+            const w1 = k1.when;
+            const w2 = k2.when;
+            if (!w1 || !w2) {
+                continue;
+            }
+            const p1 = w1.split('||');
+            const p2 = w2.split('||');
+            if (p1.length !== p2.length) {
+                continue;
+            }
+            const f1 = p1.map(p => p.split('&&').map(f => f.trim()));
+            const f2 = p2.map(p => p.split('&&').map(f => f.trim()));
+            if (!util.isDeepStrictEqual(f1.map(f => f.length), f2.map(f => f.length))) {
+                continue;
+            }
+            const diff1 = f1.map((f, j) => f.filter((_, k) => f1[j][k] !== f2[j][k]));
+            const diff2 = f2.map((f, j) => f.filter((_, k) => f1[j][k] !== f2[j][k]));
+            if (!diff1.every(d => d.length === 1) || !diff2.every(d => d.length === 1)) {
+                continue;
+            }
+            const common = f1.map((f, j) => f.filter((_, k) => f1[j][k] === f2[j][k]));
+            const c1 = diff1.map(d => d[0]);
+            const c2 = diff2.map(d => d[0]);
+            if (util.isDeepStrictEqual(c1, c2.map(c => '!' + c)) ||
+                util.isDeepStrictEqual(c1.map(c => '!' + c), c2)) {
+                keybindings[i].when = common.map(r => r.join(' && ')).join(' || ');
+                if (keybindings[i].when === '') {
+                    delete keybindings[i].when;
+                }
+                const a1 = k1.args['await'];
+                const a2 = k2.args['await'];
+                keybindings[i].args['await'] = a1.length < a2.length ? a2 : a1;
+                keybindings.splice(i + 1, 1);
+            }
+        }
+    }
+};
+
+const makeUnconditionalAwaitOption = function(awaitOption) {
+    const awaitList = genWrapperUtil.parseAwaitOption(awaitOption);
+    return awaitList.map(a => a['await']).join(' ');
+};
+
 const isWrapped = function(keybinding) {
     return (
         keybinding.command === 'kb-macro.wrap' &&
@@ -147,6 +202,7 @@ async function verifyWrapper() {
     );
 
     const wrappers = keybindings.slice(header.length, -footer.length);
+    joinComplementalKeybindings(wrappers);
 
     // Windows
     {
@@ -159,7 +215,7 @@ async function verifyWrapper() {
         // await genWrapperUtil.writeJSON('unwrapped.json', unwrapped);
         // await genWrapperUtil.writeJSON('base.json', base);
 
-        assert.strictEqual(wrapper.length, base.length, 'the number of default keybindings should match the base (Windows)');
+        assert.strictEqual(unwrapped.length, base.length, 'the number of unrapped default keybindings should match the base (Windows)');
         assert.deepStrictEqual(unwrapped, base, 'unwrapped wrappers should exactly match the base (Windows)');
     }
     // Linux
@@ -173,7 +229,7 @@ async function verifyWrapper() {
         // await genWrapperUtil.writeJSON('unwrapped.json', unwrapped);
         // await genWrapperUtil.writeJSON('base.json', base);
 
-        assert.strictEqual(wrapper.length, base.length, 'the number of default keybindings should match the base (Linux)');
+        assert.strictEqual(unwrapped.length, base.length, 'the number of unrapped default keybindings should match the base (Linux)');
         assert.deepStrictEqual(unwrapped, base, 'unwrapped wrappers should exactly match the base (Linux)');
     }
     // Mac
@@ -187,7 +243,7 @@ async function verifyWrapper() {
         // await genWrapperUtil.writeJSON('unwrapped.json', unwrapped);
         // await genWrapperUtil.writeJSON('base.json', base);
 
-        assert.strictEqual(wrapper.length, base.length, 'the number of default keybindings should match the base (macOS)');
+        assert.strictEqual(unwrapped.length, base.length, 'the number of unrapped default keybindings should match the base (macOS)');
         assert.deepStrictEqual(unwrapped, base, 'unwrapped wrappers should exactly match the base (macOS)');
     }
 
@@ -203,9 +259,10 @@ async function verifyWrapper() {
                 'the command in a wrapped keybinding should not be included in the exclution list'
             );
             if (awaitOptions.has(wrapper.args.command)) {
+                const unconditional = makeUnconditionalAwaitOption(awaitOptions.get(wrapper.args.command));
                 assert.deepStrictEqual(
                     wrapper.args['await'],
-                    awaitOptions.get(wrapper.args.command),
+                    unconditional,
                     'a command included in the awaitOptions list should have the await option specified in the list'
                 );
             } else {
