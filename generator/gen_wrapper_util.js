@@ -165,7 +165,7 @@ function isValidAwaitOption(awaitOption) {
     );
 }
 
-function decomposeAwaitOption(awaitOption) {
+function parseAwaitOption(awaitOption) {
     awaitOption = awaitOption || '';
     const awaitList = (
         awaitOption.split(' ')
@@ -179,9 +179,14 @@ function decomposeAwaitOption(awaitOption) {
             }
         })
     );
+    return awaitList;
+}
+
+function decomposeAwaitOption(awaitOption) {
+    const awaitList = parseAwaitOption(awaitOption);
     const conditionals = awaitList.filter(a => a.condition);
     if (1 < conditionals.length) {
-        console.error('Error: multiple conditional await options are not supported');
+        console.error('Error: Using multiple conditional await options is not supported');
         throw 'error';
     } else if (0 < conditionals.length) {
         return [
@@ -198,7 +203,7 @@ function decomposeAwaitOption(awaitOption) {
         return [
             {
                 context: '',
-                'await': awaitOption
+                'await': awaitOption || ''
             }
         ];
     }
@@ -252,6 +257,7 @@ module.exports = {
     keybindingsContains,
     extractOSSpecificKeys,
     isValidAwaitOption,
+    parseAwaitOption,
     decomposeAwaitOption,
     makeWrapperWhen,
     makeWrapper

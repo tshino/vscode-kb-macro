@@ -228,6 +228,7 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(isValidAwaitOption('[condition]document selection'), true);
         });
     });
+    // TODO: add tests for parseAwaitOption()
     describe('decomposeAwaitOption', () => {
         const decomposeAwaitOption = genWrapperUtil.decomposeAwaitOption;
         it('should not modify unconditional await option', () => {
