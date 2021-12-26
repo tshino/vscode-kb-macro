@@ -8,6 +8,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Added Notepad++ Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#21](https://github.com/tshino/vscode-kb-macro/pull/21)
   - Added new 'when' clause context `kb-macro.headOfLine`, which evaluates true if the cursor is at the beginning of a line, for the help of defining more precise await options.
 - Update
+  - Reduced unnecessary delay after the `editor.action.clipboardCutAction` command.
   - Added comment lines to keymap wrapper files to describe keymap name and its version. [#20](https://github.com/tshino/vscode-kb-macro/pull/20)
 - Fix
   - Keymap wrapper for Sublime Text may have not been working correctly on Mac due to "mac" keys in user `keybindings.json`.

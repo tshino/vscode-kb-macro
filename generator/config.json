@@ -36,7 +36,7 @@
     ],
     "awaitOptions": [
         [ "editor.action.clipboardCopyAction", "clipboard" ],
-        [ "editor.action.clipboardCutAction", "document selection clipboard" ],
+        [ "editor.action.clipboardCutAction", "document [!kb-macro.headOfLine]selection clipboard" ],
         [ "editor.action.clipboardPasteAction", "document selection" ]
     ],
     "header": [

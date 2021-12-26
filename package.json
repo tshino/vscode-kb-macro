@@ -2702,7 +2702,16 @@
 					"command": "editor.action.clipboardCutAction",
 					"await": "document selection clipboard"
 				},
-				"when": "kb-macro.recording && isWindows"
+				"when": "kb-macro.recording && !kb-macro.headOfLine && isWindows"
+			},
+			{
+				"key": "shift+delete",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.clipboardCutAction",
+					"await": "document clipboard"
+				},
+				"when": "kb-macro.recording && kb-macro.headOfLine && isWindows"
 			},
 			{
 				"key": "shift+delete",
@@ -2729,7 +2738,17 @@
 					"command": "editor.action.clipboardCutAction",
 					"await": "document selection clipboard"
 				},
-				"when": "kb-macro.recording"
+				"when": "kb-macro.recording && !kb-macro.headOfLine"
+			},
+			{
+				"key": "ctrl+x",
+				"mac": "cmd+x",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.clipboardCutAction",
+					"await": "document clipboard"
+				},
+				"when": "kb-macro.recording && kb-macro.headOfLine"
 			},
 			{
 				"key": "ctrl+x",

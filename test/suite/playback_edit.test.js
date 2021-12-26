@@ -342,8 +342,8 @@ describe('Recording and Playback: Edit', () => {
             });
         });
         describe('clipboardCutAction', () => {
-            it('should cut one line', async () => {
-                const seq = [ Cmd.ClipboardCut ];
+            it('should cut one line (1)', async () => {
+                const seq = [ Cmd.ClipboardCut_HOL ];
                 await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]], d: [
                     [ 0, 'fghij' ]
                 ], c: 'abcde\n' });
@@ -354,8 +354,20 @@ describe('Recording and Playback: Edit', () => {
                 assert.deepStrictEqual(getSelections(), [[2, 0]]);
                 assert.strictEqual(await TestUtil.readClipboard(), 'pqrstu\n');
             });
+            it('should cut one line (2)', async () => {
+                const seq = [ Cmd.ClipboardCut_NotHOL ];
+                await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 0]], d: [
+                    [ 0, 'fghij' ]
+                ], c: 'abcde\n' });
+
+                await setSelections([[2, 2]]);
+                await keyboardMacro.playback();
+                assert.strictEqual(textEditor.document.lineAt(2).text, 'vwxyz');
+                assert.deepStrictEqual(getSelections(), [[2, 0]]);
+                assert.strictEqual(await TestUtil.readClipboard(), 'pqrstu\n');
+            });
             it('should cut multiple lines', async () => {
-                const seq = [ Cmd.ClipboardCut, Cmd.ClipboardCut ];
+                const seq = [ Cmd.ClipboardCut_HOL, Cmd.ClipboardCut_HOL ];
                 await testRecording(seq, { s: [[1, 0]] }, { s: [[1, 0]], d: [
                     [ 1, 'pqrstu' ],
                     [ 2, 'vwxyz' ]
@@ -368,7 +380,7 @@ describe('Recording and Playback: Edit', () => {
                 assert.strictEqual(await TestUtil.readClipboard(), 'pqrstu\n');
             });
             it('should cut selected range', async () => {
-                const seq = [ Cmd.ClipboardCut ];
+                const seq = [ Cmd.ClipboardCut_NotHOL ];
                 await testRecording(seq, { s: [[0, 3, 1, 2]] }, { s: [[0, 3]], d: [
                     [ 0, 'abchij' ],
                 ], c: 'de\nfg' });
