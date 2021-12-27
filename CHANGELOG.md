@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- New
+  - Added Delphi Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#23](https://github.com/tshino/vscode-kb-macro/pull/23)
+
 ### [0.7.0] - 2021-12-26
 - New
   - Added Atom Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#22](https://github.com/tshino/vscode-kb-macro/pull/22)
