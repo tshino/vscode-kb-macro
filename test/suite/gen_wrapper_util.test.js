@@ -228,7 +228,29 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(isValidAwaitOption('[condition]document selection'), true);
         });
     });
-    // TODO: add tests for parseAwaitOption()
+    describe('parseAwaitOption', () => {
+        const parseAwaitOption = genWrapperUtil.parseAwaitOption;
+        it('should return empty array for falsy input', () => {
+            assert.deepStrictEqual(parseAwaitOption(undefined), []);
+        });
+        it('should return single element for single await option', () => {
+            assert.deepStrictEqual(parseAwaitOption('xxxxx'), [
+                { condition: '', 'await': 'xxxxx' }
+            ]);
+        });
+        it('should return multiple elements for multi-await option', () => {
+            assert.deepStrictEqual(parseAwaitOption('xxxxx yyyyy'), [
+                { condition: '', 'await': 'xxxxx' },
+                { condition: '', 'await': 'yyyyy' }
+            ]);
+        });
+        it('should detect condition specifier', () => {
+            assert.deepStrictEqual(parseAwaitOption('xxxxx [cond]yyyyy'), [
+                { condition: '', 'await': 'xxxxx' },
+                { condition: 'cond', 'await': 'yyyyy' }
+            ]);
+        });
+    });
     describe('decomposeAwaitOption', () => {
         const decomposeAwaitOption = genWrapperUtil.decomposeAwaitOption;
         it('should not modify unconditional await option', () => {
