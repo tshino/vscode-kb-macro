@@ -11,22 +11,42 @@
         {
             "key": "ctrl+shift+r",
             "command": "kb-macro.startRecording",
-            "when": "!kb-macro.recording"
+            "when": "!kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+shift+r",
+            "command": "kb-macro.startRecording",
+            "when": "!kb-macro.recording && isMac"
         },
         {
             "key": "ctrl+shift+r",
             "command": "kb-macro.finishRecording",
-            "when": "kb-macro.recording"
+            "when": "kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+shift+r",
+            "command": "kb-macro.finishRecording",
+            "when": "kb-macro.recording && isMac"
         },
         {
             "key": "ctrl+shift+p",
             "command": "kb-macro.playback",
-            "when": "!kb-macro.recording"
+            "when": "!kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+shift+p",
+            "command": "kb-macro.playback",
+            "when": "!kb-macro.recording && isMac"
         },
         {
             "key": "ctrl+shift+p",
             "command": "kb-macro.cancelRecording",
-            "when": "kb-macro.recording"
+            "when": "kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+shift+p",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording && isMac"
         }
     ]
 }
