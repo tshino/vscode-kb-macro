@@ -1,0 +1,28 @@
+{
+    "base": {
+        "type": "url",
+        "url": "https://github.com/microsoft/vscode-vs-keybindings/raw/main/package.json"
+    },
+    "footer": [
+        {
+            "key": "ctrl+m r",
+            "command": "kb-macro.startRecording",
+            "when": "!kb-macro.recording"
+        },
+        {
+            "key": "ctrl+m r",
+            "command": "kb-macro.finishRecording",
+            "when": "kb-macro.recording"
+        },
+        {
+            "key": "ctrl+m enter",
+            "command": "kb-macro.playback",
+            "when": "!kb-macro.recording"
+        },
+        {
+            "key": "ctrl+m enter",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording"
+        }
+    ]
+}

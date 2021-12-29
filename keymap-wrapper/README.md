@@ -21,6 +21,7 @@ Click the keymap wrapper link in the table below, which opens a JSON file. Copy 
 | [Delphi Keymap](https://marketplace.visualstudio.com/items?itemName=alefragnani.delphi-keybindings) | [link](alefragnani.delphi-keybindings.json) | 2021-12-27 | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+P` |
 | [Notepad++ Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.notepadplusplus-keybindings) | [link](ms-vscode.notepadplusplus-keybindings.json) | 2021-12-26 | `Ctrl+Shift+R` | `Ctrl+Shift+R` | `Ctrl+Shift+P` |
 | [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [link](ms-vscode.sublime-keybindings.json) | 2021-12-21 | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Shift+Q` |
+| [Visual Studio Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vs-keybindings) | [link](ms-vscode.vs-keybindings.json) | 2021-12-29 | `Ctrl+M R` | `Ctrl+M R` | `Ctrl+M Enter` |
 | [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap) | [link](tshino.vz-like-keymap.json) | 2021-12-11 | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` |
 
 - Some keybinding for start/stop recording and playback in the above table are overriding the default shortcuts of VS Code such as Command Palette (`Ctrl/Cmd+Shift+P`).
