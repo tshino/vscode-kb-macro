@@ -6,6 +6,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - New
   - Added Delphi Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#23](https://github.com/tshino/vscode-kb-macro/pull/23)
   - Added Visual Studio Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#24](https://github.com/tshino/vscode-kb-macro/pull/24)
+- Update
+  - (Internal) Added colors to warnings and errors on the console output of generator scripts.
 
 ### [0.7.0] - 2021-12-26
 - New
