@@ -2,6 +2,16 @@
 const fsPromises = require('fs/promises');
 const util = require('util');
 
+function error(...msg) {
+    msg = [ '\u001b[31mError:' ].concat(msg).concat([ '\u001b[0m' ]);
+    console.log.apply(null, msg);
+}
+
+function warn(...msg) {
+    msg = [ '\u001b[33mWarning:' ].concat(msg).concat([ '\u001b[0m' ]);
+    console.log.apply(null, msg);
+}
+
 async function readJSON(path, options = {}) {
     const { allowComments } = options;
     const file = "" + await fsPromises.readFile(path);
@@ -186,7 +196,7 @@ function decomposeAwaitOption(awaitOption) {
     const awaitList = parseAwaitOption(awaitOption);
     const conditionals = awaitList.filter(a => a.condition);
     if (1 < conditionals.length) {
-        console.error('Error: Using multiple conditional await options is not supported');
+        error('Using multiple conditional await options is not supported');
         throw 'error';
     } else if (0 < conditionals.length) {
         return [
@@ -246,6 +256,8 @@ function makeWrapper(keybinding, awaitOption) {
 }
 
 module.exports = {
+    error,
+    warn,
     readJSON,
     writeJSON,
     writeFile,

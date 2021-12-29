@@ -6,10 +6,13 @@ const genWrapperUtil = require('./gen_wrapper_util');
 const CommonConfigPath = 'generator/config.json';
 const KeymapWrapperPath = 'keymap-wrapper/';
 
+const error = genWrapperUtil.error;
+const warn = genWrapperUtil.warn;
+
 function checkCommandPresence(list, commands) {
     for (const command of list) {
         if (!commands.has(command)) {
-            console.warn('Warning: No matching command:', command);
+            warn('No matching command:', command);
         }
     }
 }
@@ -17,7 +20,7 @@ function checkCommandPresence(list, commands) {
 function checkAwaitOptions(awaitOptions) {
     for (const awaitOption of awaitOptions.values()) {
         if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
-            console.error('Error: Invalid awaitOption found:', awaitOption);
+            error('Invalid awaitOption found:', awaitOption);
             process.exit(1);
         }
     }
@@ -30,14 +33,14 @@ function resolveWildcardInAwaitOptions(awaitOptions, commands) {
             const prefix = command.slice(0, -1);
             const matches = Array.from(commands.values()).filter(c => c.startsWith(prefix));
             if (matches.length === 0) {
-                console.warn('Warning: No matching commands for wildcard:', command);
+                warn('No matching commands for wildcard:', command);
             }
             for (const match of matches) {
                 newAwaitOptions.set(match, awaitOption);
             }
         } else {
             if (!commands.has(command)) {
-                console.warn('Warning: No matching command:', command);
+                warn('No matching command:', command);
             }
             newAwaitOptions.set(command, awaitOption);
         }
@@ -57,7 +60,7 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     console.log('\n** generating keymap wrapper for', { uniqueId, displayName, version });
 
     if (id !== uniqueId) {
-        console.warn('Warning: Config file name does not match extension unique ID');
+        warn('Config file name does not match extension unique ID');
         console.info(`  config ID   : ${id}`);
         console.info(`  extension ID: ${uniqueId}`);
     }

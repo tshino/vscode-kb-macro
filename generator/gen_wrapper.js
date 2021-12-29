@@ -5,10 +5,13 @@ const defaultKeybindingsLoader = require('./default_keybindings_loader');
 const PackageJsonPath = './package.json';
 const ConfigPath = 'generator/config.json';
 
+const error = genWrapperUtil.error;
+const warn = genWrapperUtil.warn;
+
 function checkExclusion(exclusion, commands) {
     for (const command of exclusion) {
         if (!commands.has(command)) {
-            console.warn('Warning: No matching command:', command);
+            warn('No matching command:', command);
         }
     }
 }
@@ -16,7 +19,7 @@ function checkExclusion(exclusion, commands) {
 function checkAwaitOptions(awaitOptions) {
     for (const awaitOption of awaitOptions.values()) {
         if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
-            console.error('Error: Invalid awaitOption found:', awaitOption);
+            error('Invalid awaitOption found:', awaitOption);
             process.exit(1);
         }
     }
