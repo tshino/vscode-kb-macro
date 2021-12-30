@@ -24,9 +24,11 @@ Click the keymap wrapper link in the table below, which opens a JSON file. Copy 
 | [Visual Studio Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vs-keybindings) | [link](ms-vscode.vs-keybindings.json) | 2021-12-29 | `Ctrl+M R` | `Ctrl+M R` | `Ctrl+M Enter` |
 | [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap) | [link](tshino.vz-like-keymap.json) | 2021-12-11 | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` |
 
-- Some keybinding for start/stop recording and playback in the above table are overriding the default shortcuts of VS Code such as Command Palette (`Ctrl/Cmd+Shift+P`).
-- You can find the definitions of them at the bottom of each keymap wrapper file. You can customize them as you like.
-- The `S-9` and `S-0` in the row of Awesome Emacs Keymap are meant to be `(` and `)` on the US keyboard. We had to write as such because VS Code seems to not allow using `(` or `)` in keybindings.
+- Each keyboard shortcut for start/stop recording and playback is assigned to the same ones that the original editor is using, as much as possible.
+- Since Atom seems to not have macro recording functionality, I set them to the default of this extension.
+- Some shortcuts in the above table are overriding the default shortcuts of VS Code such as Command Palette (`Ctrl/Cmd+Shift+P`) unintentionally.
+- You can find the definitions of them at the bottom of each keymap wrapper file (find the `startRecording` command etc.). You can customize them as you like.
+- The `S-9` and `S-0` in the row of Awesome Emacs Keymap are meant to be `(` and `)` on the US keyboard. We had to write in such a way because VS Code seems to not allow using `(` or `)` in keybindings.
 
 ## Making a Keymap Wrapper
 
