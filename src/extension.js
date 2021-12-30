@@ -32,6 +32,7 @@ function activate(context) {
     registerCommand('cancelRecording', keyboardMacro.cancelRecording);
     registerCommand('finishRecording', keyboardMacro.finishRecording);
     registerCommand('playback', keyboardMacro.playback);
+    registerCommand('abortPlayback', keyboardMacro.abortPlayback);
     registerCommand('wrap', keyboardMacro.wrap);
 
     keyboardMacro.registerInternalCommand('internal:performType', internalCommands.performType);
