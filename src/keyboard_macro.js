@@ -14,20 +14,25 @@ const KeyboardMacro = function({ awaitController }) {
     let onEndWrappedCommandCallback = null;
     let recording = false;
     let locked = false;
+    let playing = false;
+    let shouldAbortPlayback = false;
     const sequence = CommandSequence();
     const internalCommands = new Map();
 
-    const makeGuardedCommand = function(func) {
+    const makeGuardedCommand = function(body, teardown) {
         return async function(args) {
             if (locked) {
                 return;
             }
             locked = true;
             try {
-                await func(args);
+                await body(args);
             } catch (error) {
                 console.error(error);
                 console.info('kb-macro: Exception in guarded command');
+            }
+            if (teardown) {
+                teardown();
             }
             locked = false;
         };
@@ -123,20 +128,31 @@ const KeyboardMacro = function({ awaitController }) {
 
     const playback = makeGuardedCommand(async function(args) {
         if (!recording) {
+            playing = true;
+            shouldAbortPlayback = false;
             args = (args && typeof(args) === 'object') ? args : {};
             const repeat = typeof(args.repeat) === 'number' ? args.repeat : 1;
             const commands = sequence.get();
             let ok = true;
-            for (let k = 0; k < repeat && ok; k++) {
+            for (let k = 0; k < repeat && ok && !shouldAbortPlayback; k++) {
                 for (const spec of commands) {
                     ok = await invokeCommandSync(spec, 'playback');
-                    if (!ok) {
+                    if (!ok || shouldAbortPlayback) {
                         break;
                     }
                 }
             }
         }
+    }, function teardown() {
+        playing = false;
+        shouldAbortPlayback = false;
     });
+
+    const abortPlayback = async function() {
+        if (playing) {
+            shouldAbortPlayback = true;
+        }
+    };
 
     const makeCommandSpec = function(args) {
         if (!args || !args.command) {
@@ -184,10 +200,12 @@ const KeyboardMacro = function({ awaitController }) {
         finishRecording,
         push,
         playback,
+        abortPlayback,
         wrap,
 
         // testing purpose only
         isRecording: () => { return recording; },
+        isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); }
     };
 };

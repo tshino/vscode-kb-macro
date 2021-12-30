@@ -25,6 +25,7 @@
 		"onCommand:kb-macro.startRecording",
 		"onCommand:kb-macro.cancelRecording",
 		"onCommand:kb-macro.playback",
+		"onCommand:kb-macro.abortPlayback",
 		"onCommand:kb-macro.wrap"
 	],
 	"main": "./src/extension.js",
@@ -89,6 +90,10 @@
 			{
 				"command": "kb-macro.playback",
 				"title": "Keyboard Macro: Playback"
+			},
+			{
+				"command": "kb-macro.abortPlayback",
+				"title": "Keyboard Macro: Abort Playback"
 			}
 		],
 		"keybindings": [
