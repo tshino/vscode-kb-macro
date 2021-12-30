@@ -1,7 +1,7 @@
 {
     "base": {
         "type": "url",
-        "url": "https://github.com/whitphx/vscode-emacs-mcx/raw/v0.36.6/package.json"
+        "url": "https://github.com/whitphx/vscode-emacs-mcx/raw/v0.37.0/package.json"
     },
     "awaitOptions": [
         [ "emacs-mcx.forwardChar", "selection" ],
@@ -68,6 +68,15 @@
             "key": "ctrl+x e",
             "command": "kb-macro.playback",
             "when": "!kb-macro.recording"
+        },
+        {
+            "key": "ctrl+x e",
+            "command": "emacs-mcx.executeCommandWithPrefixArgument",
+            "args": {
+                "command": "kb-macro.playback",
+                "prefixArgumentKey": "repeat"
+            },
+            "when": "!kb-macro.recording && emacs-mcx.prefixArgumentExists"
         }
     ]
 }
