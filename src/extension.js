@@ -69,9 +69,13 @@ function activate(context) {
     );
     addEventListener(
         keyboardMacro.onChangePlaybackState,
-        function({ playing }) {
+        function({ playing, reason }) {
             const contextName = ContextPrefix + 'playing';
             vscode.commands.executeCommand('setContext', contextName, playing);
+
+            if (playing === false && reason === keyboardMacro.PlaybackStateReason.Abort) {
+                vscode.window.setStatusBarMessage('Playback aborted!', 3000);
+            }
         }
     );
     addEventListener(

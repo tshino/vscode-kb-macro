@@ -45,14 +45,24 @@ describe('KeybaordMacro', () => {
             keyboardMacro.onChangePlaybackState((event) => {
                 logs.push(event);
             });
+            keyboardMacro.registerInternalCommand('internal:delay', async () => {
+                await TestUtil.sleep(100);
+            });
 
             keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:delay' });
             keyboardMacro.finishRecording();
+
             await keyboardMacro.playback();
+            const promise = keyboardMacro.playback();
+            keyboardMacro.abortPlayback();
+            await promise;
 
             assert.deepStrictEqual(logs, [
-                { playing: true },
-                { playing: false }
+                { playing: true, reason: keyboardMacro.PlaybackStateReason.Start },
+                { playing: false, reason: keyboardMacro.PlaybackStateReason.Finish },
+                { playing: true, reason: keyboardMacro.PlaybackStateReason.Start },
+                { playing: false, reason: keyboardMacro.PlaybackStateReason.Abort }
             ]);
         });
     });

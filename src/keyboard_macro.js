@@ -8,6 +8,11 @@ const KeyboardMacro = function({ awaitController }) {
         Cancel: 1,
         Finish: 2
     };
+    const PlaybackStateReason = {
+        Start: 0,
+        Abort: 1,
+        Finish: 2
+    };
 
     let onChangeRecordingStateCallback = null;
     let onChangePlaybackStateCallback = null;
@@ -66,10 +71,10 @@ const KeyboardMacro = function({ awaitController }) {
     const onChangePlaybackState = function(callback) {
         onChangePlaybackStateCallback = callback;
     };
-    const changePlaybackState = function(newState) {
+    const changePlaybackState = function(newState, reason) {
         playing = newState;
         if (onChangePlaybackStateCallback) {
-            onChangePlaybackStateCallback({ playing });
+            onChangePlaybackStateCallback({ playing, reason });
         }
     };
     const onBeginWrappedCommand = function(callback) {
@@ -136,7 +141,7 @@ const KeyboardMacro = function({ awaitController }) {
 
     const playback = makeGuardedCommand(async function(args) {
         if (!recording) {
-            changePlaybackState(true);
+            changePlaybackState(true, PlaybackStateReason.Start);
             shouldAbortPlayback = false;
             args = (args && typeof(args) === 'object') ? args : {};
             const repeat = typeof(args.repeat) === 'number' ? args.repeat : 1;
@@ -152,8 +157,12 @@ const KeyboardMacro = function({ awaitController }) {
             }
         }
     }, function teardown() {
-        changePlaybackState(false);
-        shouldAbortPlayback = false;
+        if (shouldAbortPlayback) {
+            changePlaybackState(false, PlaybackStateReason.Abort);
+            shouldAbortPlayback = false;
+        } else {
+            changePlaybackState(false, PlaybackStateReason.Finish);
+        }
     });
 
     const abortPlayback = async function() {
@@ -199,6 +208,7 @@ const KeyboardMacro = function({ awaitController }) {
 
     return {
         RecordingStateReason,
+        PlaybackStateReason,
         onChangeRecordingState,
         onChangePlaybackState,
         onBeginWrappedCommand,
