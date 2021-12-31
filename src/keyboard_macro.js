@@ -8,8 +8,14 @@ const KeyboardMacro = function({ awaitController }) {
         Cancel: 1,
         Finish: 2
     };
+    const PlaybackStateReason = {
+        Start: 0,
+        Abort: 1,
+        Finish: 2
+    };
 
     let onChangeRecordingStateCallback = null;
+    let onChangePlaybackStateCallback = null;
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
     let recording = false;
@@ -56,9 +62,19 @@ const KeyboardMacro = function({ awaitController }) {
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
     };
-    const notifyNewState = function(reason) {
+    const changeRecordingState = function(newState, reason) {
+        recording = newState;
         if (onChangeRecordingStateCallback) {
             onChangeRecordingStateCallback({ recording, reason });
+        }
+    };
+    const onChangePlaybackState = function(callback) {
+        onChangePlaybackStateCallback = callback;
+    };
+    const changePlaybackState = function(newState, reason) {
+        playing = newState;
+        if (onChangePlaybackStateCallback) {
+            onChangePlaybackStateCallback({ playing, reason });
         }
     };
     const onBeginWrappedCommand = function(callback) {
@@ -75,22 +91,19 @@ const KeyboardMacro = function({ awaitController }) {
     const startRecording = makeGuardedCommandSync(function() {
         if (!recording) {
             sequence.clear();
-            recording = true;
-            notifyNewState(RecordingStateReason.Start);
+            changeRecordingState(true, RecordingStateReason.Start);
         }
     });
     const cancelRecording = makeGuardedCommandSync(function() {
         if (recording) {
             sequence.clear();
-            recording = false;
-            notifyNewState(RecordingStateReason.Cancel);
+            changeRecordingState(false, RecordingStateReason.Cancel);
         }
     });
     const finishRecording = makeGuardedCommandSync(function() {
         if (recording) {
             sequence.optimize();
-            recording = false;
-            notifyNewState(RecordingStateReason.Finish);
+            changeRecordingState(false, RecordingStateReason.Finish);
         }
     });
 
@@ -128,7 +141,7 @@ const KeyboardMacro = function({ awaitController }) {
 
     const playback = makeGuardedCommand(async function(args) {
         if (!recording) {
-            playing = true;
+            changePlaybackState(true, PlaybackStateReason.Start);
             shouldAbortPlayback = false;
             args = (args && typeof(args) === 'object') ? args : {};
             const repeat = typeof(args.repeat) === 'number' ? args.repeat : 1;
@@ -144,8 +157,12 @@ const KeyboardMacro = function({ awaitController }) {
             }
         }
     }, function teardown() {
-        playing = false;
-        shouldAbortPlayback = false;
+        if (shouldAbortPlayback) {
+            changePlaybackState(false, PlaybackStateReason.Abort);
+            shouldAbortPlayback = false;
+        } else {
+            changePlaybackState(false, PlaybackStateReason.Finish);
+        }
     });
 
     const abortPlayback = async function() {
@@ -191,7 +208,9 @@ const KeyboardMacro = function({ awaitController }) {
 
     return {
         RecordingStateReason,
+        PlaybackStateReason,
         onChangeRecordingState,
+        onChangePlaybackState,
         onBeginWrappedCommand,
         onEndWrappedCommand,
         registerInternalCommand,
