@@ -17,7 +17,7 @@ Click the keymap wrapper link in the table below, which opens a JSON file. Copy 
 | Keymap extension | Keymap wrapper | Last updated | Start recording | Stop recording | Playback |
 | ---------------- | -------------- | ------------ | ---------- | --------- | -------- |
 | [Atom Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings) | [link](ms-vscode.atom-keybindings.json) | 2021-12-24 | `Ctrl+Alt+R` | `Ctrl+Alt+R` | `Ctrl+Alt+P` |
-| [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | [link](tuttieee.emacs-mcx.json) | 2021-12-30 | `C-x S-9` | `C-x S-0` | `C-x e` |
+| [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | [link](tuttieee.emacs-mcx.json) | 2022-01-01 | `C-x S-9` | `C-x S-0` | `C-x e` |
 | [Delphi Keymap](https://marketplace.visualstudio.com/items?itemName=alefragnani.delphi-keybindings) | [link](alefragnani.delphi-keybindings.json) | 2021-12-27 | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+P` |
 | [Notepad++ Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.notepadplusplus-keybindings) | [link](ms-vscode.notepadplusplus-keybindings.json) | 2021-12-26 | `Ctrl+Shift+R` | `Ctrl+Shift+R` | `Ctrl+Shift+P` |
 | [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [link](ms-vscode.sublime-keybindings.json) | 2021-12-21 | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Shift+Q` |
@@ -32,6 +32,7 @@ Click the keymap wrapper link in the table below, which opens a JSON file. Copy 
 - Notes on **Awesome Emacs Keymap**:
     - You can also use the emacs-style prefix-arguments with the playback command! For example `C-u 7 C-x e` will playback the sequence 7 times. Please be sure that you are using the Awesome Emacs Keymap v0.37.0 or later. Thanks to [@whitphx (Tsuchiya)](https://github.com/whitphx) for the collaborative work!
     - The `S-9` (`shift+9`) and `S-0` (`shift+0`) in the table are meant to be `(` and `)` respectively on the US keyboard. We had to write them in such a way because VS Code seems to not allow using `(` or `)` in keybindings. If your keyboard has a different layout, please adjust the keybindings by yourself.
+    - You can also use `C-g` to abort the playback.
 
 ## Making a Keymap Wrapper
 

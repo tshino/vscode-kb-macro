@@ -77,6 +77,11 @@
                 "prefixArgumentKey": "repeat"
             },
             "when": "!kb-macro.recording && emacs-mcx.prefixArgumentExists"
+        },
+        {
+            "key": "ctrl+g",
+            "command": "kb-macro.abortPlayback",
+            "when": "kb-macro.playing"
         }
     ]
 }

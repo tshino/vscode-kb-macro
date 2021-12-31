@@ -1220,5 +1220,7 @@
 	{ "key": "ctrl+x e", "command": "kb-macro.playback",
 		"when": "!kb-macro.recording" },
 	{ "key": "ctrl+x e", "command": "emacs-mcx.executeCommandWithPrefixArgument", "args": { "command": "kb-macro.playback", "prefixArgumentKey": "repeat" },
-		"when": "!kb-macro.recording && emacs-mcx.prefixArgumentExists" }
+		"when": "!kb-macro.recording && emacs-mcx.prefixArgumentExists" },
+	{ "key": "ctrl+g", "command": "kb-macro.abortPlayback",
+		"when": "kb-macro.playing" }
 ]
