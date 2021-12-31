@@ -36,6 +36,26 @@ describe('KeybaordMacro', () => {
             ]);
         });
     });
+    describe('onChangePlaybackState', () => {
+        beforeEach(async () => {
+            keyboardMacro.cancelRecording();
+        });
+        it('should set callback function', async () => {
+            const logs = [];
+            keyboardMacro.onChangePlaybackState((event) => {
+                logs.push(event);
+            });
+
+            keyboardMacro.startRecording();
+            keyboardMacro.finishRecording();
+            await keyboardMacro.playback();
+
+            assert.deepStrictEqual(logs, [
+                { playing: true },
+                { playing: false }
+            ]);
+        });
+    });
     describe('onBeginWrappedCommand, onEndWrappedCommand', () => {
         const logs = [];
         beforeEach(async () => {
