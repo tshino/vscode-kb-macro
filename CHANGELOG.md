@@ -7,7 +7,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Added Delphi Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#23](https://github.com/tshino/vscode-kb-macro/pull/23)
   - Added Visual Studio Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#24](https://github.com/tshino/vscode-kb-macro/pull/24)
   - Added emacs-style prefix-arguments support through the keymap wrapper for Awesome Emacs Keymap. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#25](https://github.com/tshino/vscode-kb-macro/pull/25)
-  - Added new `kb-macro.abortPlayback` command. [#26](https://github.com/tshino/vscode-kb-macro/pull/26)
+  - Added new `kb-macro.abortPlayback` command, which is available on `escape` key. [#26](https://github.com/tshino/vscode-kb-macro/pull/26)
   - Added new `kb-macro.playing` 'when'-clause context, which evaluates true when the macro playback is ongoing. [#27](https://github.com/tshino/vscode-kb-macro/pull/27)
 - Update
   - (Internal) Added colors to warnings and errors on the console output of generator scripts.

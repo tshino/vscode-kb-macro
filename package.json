@@ -8554,6 +8554,11 @@
 				"key": "ctrl+shift+alt+p",
 				"command": "kb-macro.cancelRecording",
 				"when": "kb-macro.recording && config.keyboardMacro.recordingShortcuts == 'Option2'"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.abortPlayback",
+				"when": "kb-macro.playing"
 			}
 		]
 	}
