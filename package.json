@@ -23,6 +23,7 @@
 	},
 	"activationEvents": [
 		"onCommand:kb-macro.startRecording",
+		"onCommand:kb-macro.finishRecording",
 		"onCommand:kb-macro.cancelRecording",
 		"onCommand:kb-macro.playback",
 		"onCommand:kb-macro.abortPlayback",
