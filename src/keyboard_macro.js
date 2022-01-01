@@ -8,26 +8,37 @@ const KeyboardMacro = function({ awaitController }) {
         Cancel: 1,
         Finish: 2
     };
+    const PlaybackStateReason = {
+        Start: 0,
+        Abort: 1,
+        Finish: 2
+    };
 
     let onChangeRecordingStateCallback = null;
+    let onChangePlaybackStateCallback = null;
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
     let recording = false;
     let locked = false;
+    let playing = false;
+    let shouldAbortPlayback = false;
     const sequence = CommandSequence();
     const internalCommands = new Map();
 
-    const makeGuardedCommand = function(func) {
+    const makeGuardedCommand = function(body, teardown) {
         return async function(args) {
             if (locked) {
                 return;
             }
             locked = true;
             try {
-                await func(args);
+                await body(args);
             } catch (error) {
                 console.error(error);
                 console.info('kb-macro: Exception in guarded command');
+            }
+            if (teardown) {
+                teardown();
             }
             locked = false;
         };
@@ -51,9 +62,19 @@ const KeyboardMacro = function({ awaitController }) {
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
     };
-    const notifyNewState = function(reason) {
+    const changeRecordingState = function(newState, reason) {
+        recording = newState;
         if (onChangeRecordingStateCallback) {
             onChangeRecordingStateCallback({ recording, reason });
+        }
+    };
+    const onChangePlaybackState = function(callback) {
+        onChangePlaybackStateCallback = callback;
+    };
+    const changePlaybackState = function(newState, reason) {
+        playing = newState;
+        if (onChangePlaybackStateCallback) {
+            onChangePlaybackStateCallback({ playing, reason });
         }
     };
     const onBeginWrappedCommand = function(callback) {
@@ -70,22 +91,19 @@ const KeyboardMacro = function({ awaitController }) {
     const startRecording = makeGuardedCommandSync(function() {
         if (!recording) {
             sequence.clear();
-            recording = true;
-            notifyNewState(RecordingStateReason.Start);
+            changeRecordingState(true, RecordingStateReason.Start);
         }
     });
     const cancelRecording = makeGuardedCommandSync(function() {
         if (recording) {
             sequence.clear();
-            recording = false;
-            notifyNewState(RecordingStateReason.Cancel);
+            changeRecordingState(false, RecordingStateReason.Cancel);
         }
     });
     const finishRecording = makeGuardedCommandSync(function() {
         if (recording) {
             sequence.optimize();
-            recording = false;
-            notifyNewState(RecordingStateReason.Finish);
+            changeRecordingState(false, RecordingStateReason.Finish);
         }
     });
 
@@ -121,21 +139,37 @@ const KeyboardMacro = function({ awaitController }) {
         return ok;
     };
 
-    const playback = makeGuardedCommand(async function() {
+    const playback = makeGuardedCommand(async function(args) {
         if (!recording) {
+            changePlaybackState(true, PlaybackStateReason.Start);
+            shouldAbortPlayback = false;
+            args = (args && typeof(args) === 'object') ? args : {};
+            const repeat = typeof(args.repeat) === 'number' ? args.repeat : 1;
             const commands = sequence.get();
-            for (let i = 0; i < commands.length; i++) {
-                const spec = commands[i];
-                if (spec.failed) {
-                    continue;
-                }
-                const ok = await invokeCommandSync(spec, 'playback');
-                if (!ok) {
-                    break;
+            let ok = true;
+            for (let k = 0; k < repeat && ok && !shouldAbortPlayback; k++) {
+                for (const spec of commands) {
+                    ok = await invokeCommandSync(spec, 'playback');
+                    if (!ok || shouldAbortPlayback) {
+                        break;
+                    }
                 }
             }
         }
+    }, function teardown() {
+        if (shouldAbortPlayback) {
+            changePlaybackState(false, PlaybackStateReason.Abort);
+            shouldAbortPlayback = false;
+        } else {
+            changePlaybackState(false, PlaybackStateReason.Finish);
+        }
     });
+
+    const abortPlayback = async function() {
+        if (playing) {
+            shouldAbortPlayback = true;
+        }
+    };
 
     const makeCommandSpec = function(args) {
         if (!args || !args.command) {
@@ -159,13 +193,12 @@ const KeyboardMacro = function({ awaitController }) {
             if (!spec) {
                 return;
             }
-            push(spec);
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
             }
             const ok = await invokeCommandSync(spec, 'wrap');
-            if (!ok) {
-                spec.failed = true;
+            if (ok) {
+                push(spec);
             }
             if (onEndWrappedCommandCallback) {
                 onEndWrappedCommandCallback();
@@ -175,7 +208,9 @@ const KeyboardMacro = function({ awaitController }) {
 
     return {
         RecordingStateReason,
+        PlaybackStateReason,
         onChangeRecordingState,
+        onChangePlaybackState,
         onBeginWrappedCommand,
         onEndWrappedCommand,
         registerInternalCommand,
@@ -184,10 +219,12 @@ const KeyboardMacro = function({ awaitController }) {
         finishRecording,
         push,
         playback,
+        abortPlayback,
         wrap,
 
         // testing purpose only
         isRecording: () => { return recording; },
+        isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); }
     };
 };

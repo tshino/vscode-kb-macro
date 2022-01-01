@@ -100,7 +100,7 @@ If a target command does not always reproduce the specified side effects, it is 
 
 ## How to use custom shortcut keys for recording and playback
 
-Following keybindings are the default keybinding for recording/playback of this extension. Copy and paste this into your `keybindings.json` and modify it as you like.
+This is the default keybinding set for recording/playback of this extension. Copy and paste this into your `keybindings.json` and modify it as you like.
 
 ```json
     {
@@ -122,6 +122,11 @@ Following keybindings are the default keybinding for recording/playback of this 
         "key": "ctrl+alt+p",
         "command": "kb-macro.cancelRecording",
         "when": "kb-macro.recording"
+    },
+    {
+        "key": "escape",
+        "command": "kb-macro.abortPlayback",
+        "when": "kb-macro.playing"
     }
 ```
 

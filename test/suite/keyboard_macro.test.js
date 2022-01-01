@@ -19,14 +19,71 @@ describe('KeybaordMacro', () => {
         });
         it('should set callback function', async () => {
             const logs = [];
-
-            keyboardMacro.onChangeRecordingState(() => {
-                logs.push('invoked');
+            keyboardMacro.onChangeRecordingState(({ recording, reason }) => {
+                logs.push([ recording, reason ]);
             });
+
             keyboardMacro.startRecording();
             keyboardMacro.finishRecording();
+            keyboardMacro.startRecording();
+            keyboardMacro.cancelRecording();
 
-            assert.deepStrictEqual(logs, ['invoked', 'invoked']);
+            assert.deepStrictEqual(logs, [
+                [ true, keyboardMacro.RecordingStateReason.Start ],
+                [ false, keyboardMacro.RecordingStateReason.Finish ],
+                [ true, keyboardMacro.RecordingStateReason.Start ],
+                [ false, keyboardMacro.RecordingStateReason.Cancel ]
+            ]);
+        });
+    });
+    describe('onChangePlaybackState', () => {
+        beforeEach(async () => {
+            keyboardMacro.cancelRecording();
+        });
+        it('should set callback function', async () => {
+            const logs = [];
+            keyboardMacro.onChangePlaybackState((event) => {
+                logs.push(event);
+            });
+            keyboardMacro.registerInternalCommand('internal:delay', async () => {
+                await TestUtil.sleep(100);
+            });
+
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:delay' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.playback();
+            const promise = keyboardMacro.playback();
+            keyboardMacro.abortPlayback();
+            await promise;
+
+            assert.deepStrictEqual(logs, [
+                { playing: true, reason: keyboardMacro.PlaybackStateReason.Start },
+                { playing: false, reason: keyboardMacro.PlaybackStateReason.Finish },
+                { playing: true, reason: keyboardMacro.PlaybackStateReason.Start },
+                { playing: false, reason: keyboardMacro.PlaybackStateReason.Abort }
+            ]);
+        });
+    });
+    describe('onBeginWrappedCommand, onEndWrappedCommand', () => {
+        const logs = [];
+        beforeEach(async () => {
+            keyboardMacro.cancelRecording();
+            logs.length = 0;
+            keyboardMacro.registerInternalCommand('internal:log', () => {
+                logs.push('invoked');
+            });
+        });
+        it('should set callback function', async () => {
+            keyboardMacro.onBeginWrappedCommand(() => { logs.push('begin'); });
+            keyboardMacro.onEndWrappedCommand(() => { logs.push('end'); });
+
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [ 'begin', 'invoked', 'end' ]);
         });
     });
     describe('startRecording', () => {
@@ -224,6 +281,44 @@ describe('KeybaordMacro', () => {
                 'end'
             ]);
         });
+        it('should repeat 5 times (repeat argument)', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.playback({ repeat: 5 });
+            assert.deepStrictEqual(logs, [
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'begin',
+                'end'
+            ]);
+        });
+        it('should abort playback if command execution failed', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.push({ command: 'INVALID' });
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.playback();
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+        });
+        it('should abort playback with repeat argument if command execution failed', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.push({ command: 'INVALID' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.playback({ repeat: 5 });
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+        });
         it('should prevent reentry', async () => {
             keyboardMacro.startRecording();
             keyboardMacro.push({ command: 'internal:log' });
@@ -251,6 +346,61 @@ describe('KeybaordMacro', () => {
                 'end'
             ]);
             assert.strictEqual(keyboardMacro.isRecording(), false);
+        });
+    });
+    describe('isPlaying', () => {
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+        });
+        it('should be false if playback is not ongoing', async () => {
+            assert.strictEqual(keyboardMacro.isPlaying(), false);
+        });
+        it('should be true while playback is ongoing', async () => {
+            const logs = [];
+            keyboardMacro.registerInternalCommand('internal:checkIsPlaying', () => {
+                logs.push([ 'while playback', keyboardMacro.isPlaying() ]);
+            });
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:checkIsPlaying' });
+            keyboardMacro.finishRecording();
+
+            logs.push([ 'before playback', keyboardMacro.isPlaying() ]);
+            await keyboardMacro.playback();
+            logs.push([ 'after playback', keyboardMacro.isPlaying() ]);
+
+            assert.deepStrictEqual(logs, [
+                [ 'before playback', false ],
+                [ 'while playback', true ],
+                [ 'after playback', false ]
+            ]);
+        });
+    });
+    describe('abortPlayback', () => {
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+        });
+        it('should abort playback', async () => {
+            const logs = [];
+            keyboardMacro.registerInternalCommand('internal:log', async () => {
+                logs.push('begin');
+                await TestUtil.sleep(50);
+                logs.push('end');
+            });
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+            const promise = keyboardMacro.playback({ repeat: 3 });
+            assert.strictEqual(keyboardMacro.isPlaying(), true);
+            await TestUtil.sleep(100);
+            keyboardMacro.abortPlayback();
+            await promise;
+            assert.strictEqual(keyboardMacro.isPlaying(), false);
+
+            assert.strictEqual(logs.length < 2 * 3 * 3, true);
         });
     });
     describe('wrap', () => {
@@ -290,6 +440,7 @@ describe('KeybaordMacro', () => {
 
             assert.deepStrictEqual(logs, []);
             assert.strictEqual(keyboardMacro.isRecording(), false);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
         it('should invoke and record specified command synchronously', async () => {
             keyboardMacro.startRecording();
@@ -340,6 +491,4 @@ describe('KeybaordMacro', () => {
             assert.strictEqual(keyboardMacro.isRecording(), true);
         });
     });
-    // TODO: add tests for onBeginWrappedCommand
-    // TODO: add tests for onEndWrappedCommand
 });

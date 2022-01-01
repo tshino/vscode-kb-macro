@@ -1,0 +1,48 @@
+{
+    "base": {
+        "type": "url",
+        "url": "https://github.com/microsoft/vscode-sublime-keybindings/raw/main/package.json"
+    },
+    "footer": [
+        {
+            "key": "ctrl+q",
+            "command": "kb-macro.startRecording",
+            "when": "!kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+q",
+            "command": "kb-macro.startRecording",
+            "when": "!kb-macro.recording && isMac"
+        },
+        {
+            "key": "ctrl+shift+q",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+shift+q",
+            "command": "kb-macro.cancelRecording",
+            "when": "kb-macro.recording && isMac"
+        },
+        {
+            "key": "ctrl+q",
+            "command": "kb-macro.finishRecording",
+            "when": "kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+q",
+            "command": "kb-macro.finishRecording",
+            "when": "kb-macro.recording && isMac"
+        },
+        {
+            "key": "ctrl+shift+q",
+            "command": "kb-macro.playback",
+            "when": "!kb-macro.recording && !isMac"
+        },
+        {
+            "key": "cmd+shift+q",
+            "command": "kb-macro.playback",
+            "when": "!kb-macro.recording && isMac"
+        }
+    ]
+}

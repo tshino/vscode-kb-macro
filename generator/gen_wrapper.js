@@ -1,13 +1,17 @@
 'use strict';
 const genWrapperUtil = require('./gen_wrapper_util');
+const defaultKeybindingsLoader = require('./default_keybindings_loader');
 
 const PackageJsonPath = './package.json';
 const ConfigPath = 'generator/config.json';
 
+const error = genWrapperUtil.error;
+const warn = genWrapperUtil.warn;
+
 function checkExclusion(exclusion, commands) {
     for (const command of exclusion) {
         if (!commands.has(command)) {
-            console.warn('Warning: No matching command:', command);
+            warn('No matching command:', command);
         }
     }
 }
@@ -15,7 +19,7 @@ function checkExclusion(exclusion, commands) {
 function checkAwaitOptions(awaitOptions) {
     for (const awaitOption of awaitOptions.values()) {
         if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
-            console.error('Invalid awaitOption found:', awaitOption);
+            error('Invalid awaitOption found:', awaitOption);
             process.exit(1);
         }
     }
@@ -29,12 +33,12 @@ async function main() {
     const awaitOptions = new Map(config['awaitOptions'] || []);
     checkAwaitOptions(awaitOptions);
 
-    const baseKeybindings = await genWrapperUtil.loadBaseKeybindings(config['baseKeybindings'] || []);
+    const baseKeybindings = await defaultKeybindingsLoader.loadBaseKeybindings(config['baseKeybindings'] || []);
     const commands = new Set(baseKeybindings.flatMap(item => item.keybindings).map(keybinding => keybinding.command));
     checkExclusion(exclusion, commands);
 
     // combine the three sets of default keybindings of VS Code for Windows, Linux, and macOS.
-    const combined = genWrapperUtil.combineBaseKeybingings(baseKeybindings);
+    const combined = defaultKeybindingsLoader.combineBaseKeybingings(baseKeybindings);
 
     const wrappers = combined.flatMap(
         keybinding => {

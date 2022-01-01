@@ -6,10 +6,13 @@ const genWrapperUtil = require('./gen_wrapper_util');
 const CommonConfigPath = 'generator/config.json';
 const KeymapWrapperPath = 'keymap-wrapper/';
 
-function checkExclusion(exclusion, commands) {
-    for (const command of exclusion) {
+const error = genWrapperUtil.error;
+const warn = genWrapperUtil.warn;
+
+function checkCommandPresence(list, commands) {
+    for (const command of list) {
         if (!commands.has(command)) {
-            console.warn('Warning: No matching command:', command);
+            warn('No matching command:', command);
         }
     }
 }
@@ -17,7 +20,7 @@ function checkExclusion(exclusion, commands) {
 function checkAwaitOptions(awaitOptions) {
     for (const awaitOption of awaitOptions.values()) {
         if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
-            console.error('Error: Invalid awaitOption found:', awaitOption);
+            error('Invalid awaitOption found:', awaitOption);
             process.exit(1);
         }
     }
@@ -30,14 +33,14 @@ function resolveWildcardInAwaitOptions(awaitOptions, commands) {
             const prefix = command.slice(0, -1);
             const matches = Array.from(commands.values()).filter(c => c.startsWith(prefix));
             if (matches.length === 0) {
-                console.warn('Warning: No matching commands for wildcard:', command);
+                warn('No matching commands for wildcard:', command);
             }
             for (const match of matches) {
                 newAwaitOptions.set(match, awaitOption);
             }
         } else {
             if (!commands.has(command)) {
-                console.warn('Warning: No matching command:', command);
+                warn('No matching command:', command);
             }
             newAwaitOptions.set(command, awaitOption);
         }
@@ -50,17 +53,30 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     const id = path.basename(configPath, '.config.json');
     const packageJsonPath = path.resolve(dirname, 'tmp/' + id + '.package.json');
     const packageJson = await genWrapperUtil.readJSON(packageJsonPath);
-    console.log('** generating keymap wrapper for', { id, displayName: packageJson['displayName'] });
+
+    const uniqueId = packageJson['publisher'] + '.' + packageJson['name'];
+    const displayName = packageJson['displayName'];
+    const version = packageJson['version'];
+    console.log('\n** generating keymap wrapper for', { uniqueId, displayName, version });
+
+    if (id !== uniqueId) {
+        warn('Config file name does not match extension unique ID');
+        console.info(`  config ID   : ${id}`);
+        console.info(`  extension ID: ${uniqueId}`);
+    }
 
     const config = await genWrapperUtil.readJSON(configPath);
 
     const baseKeybindings = packageJson['contributes']['keybindings'];
     const commands = new Set(baseKeybindings.map(keybinding => keybinding.command));
 
+    const ignore = new Set(config['ignore'] || []);
+    checkCommandPresence(ignore, commands);
+
     const exclusion = new Set(commonConfig['exclusion'] || []);
     {
         const rawExclusion = config['exclusion'] || [];
-        checkExclusion(rawExclusion, commands);
+        checkCommandPresence(rawExclusion, commands);
         rawExclusion.forEach(e => exclusion.add(e));
     }
 
@@ -72,7 +88,11 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     }
     checkAwaitOptions(awaitOptions);
 
-    const wrappers = baseKeybindings.flatMap(
+    const wrappers = baseKeybindings.filter(
+        keybinding => !ignore.has(keybinding.command)
+    ).flatMap(
+        genWrapperUtil.extractOSSpecificKeys
+    ).flatMap(
         keybinding => {
             if (exclusion.has(keybinding.command) || keybinding.command === '') {
                 // make a keybinding of a direct call for the excluded command
@@ -95,7 +115,16 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     );
 
     const wrapperPath = path.resolve(dirname, id + '.json');
-    await genWrapperUtil.writeCompactKeybindingsJSON(wrapperPath, wrapperKeybindings);
+    const compactJson = genWrapperUtil.makeCompactKeybindingsJSON(wrapperKeybindings);
+    const fileContent = compactJson.replace(
+        /^\[\n/,
+        (
+            '[\n' +
+            `\t// Keymap wrapper for ${displayName} v${version}\n` +
+            '\t// (required by Keyboard Macro Beta)\n'
+        )
+    ) + '\n';
+    await genWrapperUtil.writeFile(wrapperPath, fileContent);
     console.log('...done (' + id + '.json)');
 }
 

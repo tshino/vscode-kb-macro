@@ -4,6 +4,12 @@
         "repo": "https://github.com/tshino/vscode-vz-like-keymap"
     },
 
+    "ignore": [
+        "vz.startRecording",
+        "vz.cancelRecording",
+        "vz.finishRecording",
+        "vz.replay"
+    ],
     "exclusion": [
     ],
     "awaitOptions": [

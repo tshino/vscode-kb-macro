@@ -33,6 +33,140 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(addWhenContext('c1 || c2', 'c3 || c4'), 'c3 && c1 || c3 && c2 || c4 && c1 || c4 && c2');
         });
     });
+    describe('negateContext', () => {
+        const negateContext = genWrapperUtil.negateContext;
+        it('should append operator ! in front of given context', () => {
+            assert.strictEqual(negateContext('c1'), '!c1');
+        });
+        it('should return "false" if given context is empty', () => {
+            assert.strictEqual(negateContext(''), 'false');
+        });
+        it('should not use double negation (1)', () => {
+            assert.strictEqual(negateContext('!c1'), 'c1');
+        });
+    });
+    describe('copyKeybinding', () => {
+        const copyKeybinding = genWrapperUtil.copyKeybinding;
+        it('should clone keybinding object', () => {
+            const input = { key: 'key1', command: 'cmd1' };
+            const expected = { key: 'key1', command: 'cmd1' };
+            assert.strictEqual(copyKeybinding(input) === expected, false);
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (1)', () => {
+            const input = { key: 'key1', command: 'cmd1', when: 'when1' };
+            const expected = { key: 'key1', command: 'cmd1', when: 'when1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (2)', () => {
+            const input = { key: 'key1', command: 'cmd1', args: 'arg1' };
+            const expected = { key: 'key1', command: 'cmd1', args: 'arg1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (3)', () => {
+            const input = { key: 'key1', command: 'cmd1', mac: 'macKey1' };
+            const expected = { key: 'key1', command: 'cmd1', mac: 'macKey1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (4)', () => {
+            const input = { key: 'key1', command: 'cmd1', linux: 'linuxKey1' };
+            const expected = { key: 'key1', command: 'cmd1', linux: 'linuxKey1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+        it('should clone keybinding object with optional field (5)', () => {
+            const input = { key: 'key1', command: 'cmd1', win: 'winKey1' };
+            const expected = { key: 'key1', command: 'cmd1', win: 'winKey1' };
+            assert.deepStrictEqual(copyKeybinding(input), expected);
+        });
+    });
+    describe('removeOSSpecificKeys', () => {
+        const removeOSSpecificKeys = genWrapperUtil.removeOSSpecificKeys;
+        it('should delete "mac", "linux", and "win" keys in given keybinding object', () => {
+            const input = { key: 'key1', command: 'cmd1', win: 'win1', linux: 'linux1', mac: 'mac1' };
+            const expected = { key: 'key1', command: 'cmd1' };
+            removeOSSpecificKeys(input);
+            assert.deepStrictEqual(input, expected);
+        });
+    });
+    describe('extractOSSpecificKeys', () => {
+        const extractOSSpecificKeys = genWrapperUtil.extractOSSpecificKeys;
+        it('should return array of cloned given keybinding object', () => {
+            const keybinding = { key: 'key1', command: 'cmd1', when: 'ctx1' };
+            const result = extractOSSpecificKeys(keybinding);
+            assert.strictEqual(result.length, 1);
+            assert.strictEqual(result[0] === keybinding, false);
+            assert.deepStrictEqual(result, [ keybinding ]);
+        });
+        it('should separate keybinding with "mac" key', () => {
+            const input = { key: 'key1', mac: 'key2', command: 'cmd1' };
+            const expected = [
+                { key: 'key2', command: 'cmd1', when: 'isMac' },
+                { key: 'key1', command: 'cmd1', when: '!isMac' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should remove "mac" key if the value are equal to "key"', () => {
+            const input = { key: 'key1', mac: 'key1', command: 'cmd1' };
+            const expected = [
+                { key: 'key1', command: 'cmd1' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should separate keybinding with "linux" key', () => {
+            const input = { key: 'key1', linux: 'key2', command: 'cmd1' };
+            const expected = [
+                { key: 'key2', command: 'cmd1', when: 'isLinux' },
+                { key: 'key1', command: 'cmd1', when: '!isLinux' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should remove "linux" key if the value are equal to "key"', () => {
+            const input = { key: 'key1', linux: 'key1', command: 'cmd1' };
+            const expected = [
+                { key: 'key1', command: 'cmd1' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should separate keybinding with "win" key', () => {
+            const input = { key: 'key1', win: 'key2', command: 'cmd1' };
+            const expected = [
+                { key: 'key2', command: 'cmd1', when: 'isWindows' },
+                { key: 'key1', command: 'cmd1', when: '!isWindows' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should remove "win" key if the value are equal to "key"', () => {
+            const input = { key: 'key1', win: 'key1', command: 'cmd1' };
+            const expected = [
+                { key: 'key1', command: 'cmd1' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should remove all of "win", "linux", and "mac" keys if they are all the same to "key"', () => {
+            const input = { key: 'key1', win: 'key1', linux: 'key1', mac: 'key1', command: 'cmd1' };
+            const expected = [
+                { key: 'key1', command: 'cmd1' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+        it('should separate keybinding with "win" and "mac" keys', () => {
+            const input = { key: 'key1', win: 'key2', mac: 'key3', command: 'cmd1' };
+            const expected = [
+                { key: 'key3', command: 'cmd1', when: 'isMac' },
+                { key: 'key2', command: 'cmd1', when: 'isWindows' },
+                { key: 'key1', command: 'cmd1', when: '!isMac && !isWindows' }
+            ];
+            const result = extractOSSpecificKeys(input);
+            assert.deepStrictEqual(result, expected);
+        });
+    });
     describe('keybindingsContains', () => {
         const keybindingsContains = genWrapperUtil.keybindingsContains;
         it('should detect specified keybinding in given keybindings and return the index', () => {
@@ -61,395 +195,6 @@ describe('gen_wrapper_util', () => {
                 keybindingsContains(keybindings, { key: 'ctrl+c', command: 'command2' }),
                 -1
             );
-        });
-    });
-    describe('combineBaseKeybingings', () => {
-        const combineBaseKeybingings = genWrapperUtil.combineBaseKeybingings;
-        it('should create a combined keybindings which consists of given set of keybindings with added context', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' },
-                        { key: 'ctrl+b', command: 'command2', when: 'context1' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+c', command: 'command3' },
-                        { key: 'ctrl+d', command: 'command4', when: 'context2 || context3' }
-                    ],
-                    context: 'isLinux'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+a', command: 'command1', when: 'isWindows' },
-                { key: 'ctrl+b', command: 'command2', when: 'isWindows && context1' },
-                { key: 'ctrl+c', command: 'command3', when: 'isLinux' },
-                { key: 'ctrl+d', command: 'command4', when: 'isLinux && context2 || isLinux && context3' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should retain keybindings that share a common key but have different commands or when-clause', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' },
-                        { key: 'ctrl+a', command: 'command2' },
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command3' },
-                        { key: 'ctrl+a', command: 'command3', when: 'context1' }
-                    ],
-                    context: 'isLinux'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+a', command: 'command1', when: 'isWindows' },
-                { key: 'ctrl+a', command: 'command2', when: 'isWindows' },
-                { key: 'ctrl+a', command: 'command3', when: 'isLinux' },
-                { key: 'ctrl+a', command: 'command3', when: 'isLinux && context1' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should unify keybindings that share a common definition among all sources [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' }, // <= common
-                        { key: 'ctrl+a', command: 'command2' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' }, // <= common
-                        { key: 'ctrl+a', command: 'command1', when: 'context1' }
-                    ],
-                    context: 'isLinux'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+a', command: 'command1' }, // <= common
-                { key: 'ctrl+a', command: 'command2', when: 'isWindows' },
-                { key: 'ctrl+a', command: 'command1', when: 'isLinux && context1' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should retain the original order of keybindings in each source', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common
-                        { key: 'ctrl+a', command: 'command2', when: 'cond2' } // should come after common one
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command3', when: 'cond3' }, // should come before common one
-                        { key: 'ctrl+a', command: 'command1', when: 'cond1' } // <= common
-                    ],
-                    context: 'isLinux'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+a', command: 'command3', when: 'isLinux && cond3' },
-                { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common
-                { key: 'ctrl+a', command: 'command2', when: 'isWindows && cond2' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should not unify keybindings that cause conflicts that prevent retaining the proper order', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common I
-                        { key: 'ctrl+a', command: 'command2', when: 'cond2' },
-                        { key: 'ctrl+a', command: 'command3', when: 'cond3' } // <= common II
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command3', when: 'cond3' }, // <= common II
-                        { key: 'ctrl+a', command: 'command1', when: 'cond1' } // <= common I
-                    ],
-                    context: 'isLinux'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+a', command: 'command3', when: 'isLinux && cond3' },
-                { key: 'ctrl+a', command: 'command1', when: 'cond1' }, // <= common I
-                { key: 'ctrl+a', command: 'command2', when: 'isWindows && cond2' },
-                { key: 'ctrl+a', command: 'command3', when: 'isWindows && cond3' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should unify keybindings that share a common definition among a subset of sources [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' }, // <= partially common
-                        { key: 'ctrl+a', command: 'command2' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' }, // <= partially common
-                        { key: 'ctrl+a', command: 'command1', when: 'context1' }
-                    ],
-                    context: 'isLinux'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+b', command: 'command1', when: 'context1' }
-                    ],
-                    context: 'isMac'
-                }
-            ];
-            // We use negative form of '!isMac' rather than OR form 'isWindows || isLinux'
-            // for compaction of package.json.
-            const expected = [
-                { key: 'ctrl+a', command: 'command1', when: '!isMac' }, // <= partially common
-                { key: 'ctrl+a', command: 'command2', when: 'isWindows' },
-                { key: 'ctrl+a', command: 'command1', when: 'isLinux && context1' },
-                { key: 'ctrl+b', command: 'command1', when: 'isMac && context1' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should unify keybindings that share a common definition among 2nd and 3rd source [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command2' } // <= partially common
-                    ],
-                    context: 'isLinux'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command3' },
-                        { key: 'ctrl+a', command: 'command2' } // <= partially common
-                    ],
-                    context: 'isMac'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+a', command: 'command3', when: 'isMac' },
-                { key: 'ctrl+a', command: 'command2', when: '!isWindows' }, // <= partially common
-                { key: 'ctrl+a', command: 'command1', when: 'isWindows' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should drop reduntant "isWindows" if the keystroke contains Win key [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+win+a', command: 'command1', when: 'context1' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+alt+a', command: 'command2', when: 'context2' }
-                    ],
-                    context: 'isLinux'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+win+a', command: 'command1', when: 'context1' },
-                { key: 'ctrl+alt+a', command: 'command2', when: 'isLinux && context2' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should drop reduntant "isLinux" if the keystroke contains Meta key [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1', when: 'context1' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'meta+a', command: 'command2', when: 'context2' }
-                    ],
-                    context: 'isLinux'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+a', command: 'command1', when: 'isWindows && context1' },
-                { key: 'meta+a', command: 'command2', when: 'context2' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should drop reduntant "isMac" if the keystroke contains Command key [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1', when: 'context1' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'cmd+a', command: 'command2', when: 'context2' }
-                    ],
-                    context: 'isMac'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+a', command: 'command1', when: 'isWindows && context1' },
-                { key: 'cmd+a', command: 'command2', when: 'context2' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should unify keybindings that are common for Windows and Linux and also Mac except assigned "key" (using "mac" key) (1) [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1', when: 'context1' }, // <= common
-                        { key: 'ctrl+a', command: 'command2', when: 'context2' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1', when: 'context1' }, // <= common
-                        { key: 'ctrl+a', command: 'command1', when: 'context3' }
-                    ],
-                    context: 'isLinux'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+b', command: 'command2' },
-                        { key: 'ctrl+b', command: 'command1', when: 'context1' } // <= common except 'key'
-                    ],
-                    context: 'isMac'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+b', command: 'command2', when: 'isMac' },
-                { key: 'ctrl+a', command: 'command1', when: 'context1', mac: 'ctrl+b' }, // <= unified with 'mac' key
-                { key: 'ctrl+a', command: 'command2', when: 'isWindows && context2' },
-                { key: 'ctrl+a', command: 'command1', when: 'isLinux && context3' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should unify keybindings using "mac" key (2) [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1', when: 'context1' }, // <= common A
-                        { key: 'ctrl+a', command: 'command2', when: 'context2' },
-                        { key: 'ctrl+c', command: 'command3', when: 'context4' } // <= common B
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1', when: 'context1' }, // <= common A
-                        { key: 'ctrl+a', command: 'command1', when: 'context3' },
-                        { key: 'ctrl+c', command: 'command3', when: 'context4' } // <= common B
-                    ],
-                    context: 'isLinux'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+b', command: 'command2' },
-                        { key: 'ctrl+b', command: 'command1', when: 'context1' }, // <= common A except 'key'
-                        { key: 'ctrl+b', command: 'command3', when: 'context4' } // <= common B except 'key'
-                    ],
-                    context: 'isMac'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+b', command: 'command2', when: 'isMac' },
-                { key: 'ctrl+a', command: 'command1', when: 'context1', mac: 'ctrl+b' }, // <= A
-                { key: 'ctrl+c', command: 'command3', when: 'context4', mac: 'ctrl+b' }, // <= B
-                { key: 'ctrl+a', command: 'command2', when: 'isWindows && context2' },
-                { key: 'ctrl+a', command: 'command1', when: 'isLinux && context3' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should unify keybindings using "mac" key (3) (special case that a same command applies to multiple keys) [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' }, // <= common A
-                        { key: 'ctrl+a', command: 'command2', when: 'context2' },
-                        { key: 'ctrl+c', command: 'command1' } // <= common B
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+a', command: 'command1' }, // <= common A
-                        { key: 'ctrl+a', command: 'command1', when: 'context3' },
-                        { key: 'ctrl+c', command: 'command1' } // <= common B
-                    ],
-                    context: 'isLinux'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+b', command: 'command2' },
-                        { key: 'ctrl+b', command: 'command1' }, // <= common A except 'key'
-                        { key: 'ctrl+d', command: 'command1' } // <= common B except 'key'
-                    ],
-                    context: 'isMac'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+b', command: 'command2', when: 'isMac' },
-                { key: 'ctrl+a', command: 'command1', mac: 'ctrl+b' }, // <= A
-                { key: 'ctrl+c', command: 'command1', mac: 'ctrl+d' }, // <= B
-                { key: 'ctrl+a', command: 'command2', when: 'isWindows && context2' },
-                { key: 'ctrl+a', command: 'command1', when: 'isLinux && context3' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
-        });
-        it('should unify keybindings using "mac" key (4) [compaction]', () => {
-            const input = [
-                {
-                    keybindings: [
-                        { key: 'ctrl+delete', command: 'command1', when: 'context1' },
-                        { key: 'alt+delete', command: 'command3', when: 'context3' }
-                    ],
-                    context: 'isWindows'
-                },
-                {
-                    keybindings: [
-                        { key: 'ctrl+delete', command: 'command1', when: 'context1' },
-                        { key: 'alt+delete', command: 'command3', when: 'context3' }
-                    ],
-                    context: 'isLinux'
-                },
-                {
-                    keybindings: [
-                        { key: 'alt+delete', command: 'command2', when: 'context2' },
-                        { key: 'alt+delete', command: 'command3', when: 'context3' },
-                        { key: 'alt+delete', command: 'command1', when: 'context1' }
-                    ],
-                    context: 'isMac'
-                }
-            ];
-            const expected = [
-                { key: 'ctrl+delete', command: 'command1', when: '!isMac && context1' },
-                { key: 'alt+delete', command: 'command2', when: 'isMac && context2' },
-                { key: 'alt+delete', command: 'command3', when: 'context3' },
-                { key: 'alt+delete', command: 'command1', when: 'isMac && context1' }
-            ];
-            assert.deepStrictEqual(combineBaseKeybingings(input), expected);
         });
     });
     describe('isValidAwaitOption', () => {
@@ -481,6 +226,29 @@ describe('gen_wrapper_util', () => {
         });
         it('should return true on valid await items where one has a condition', () => {
             assert.strictEqual(isValidAwaitOption('[condition]document selection'), true);
+        });
+    });
+    describe('parseAwaitOption', () => {
+        const parseAwaitOption = genWrapperUtil.parseAwaitOption;
+        it('should return empty array for falsy input', () => {
+            assert.deepStrictEqual(parseAwaitOption(undefined), []);
+        });
+        it('should return single element for single await option', () => {
+            assert.deepStrictEqual(parseAwaitOption('xxxxx'), [
+                { condition: '', 'await': 'xxxxx' }
+            ]);
+        });
+        it('should return multiple elements for multi-await option', () => {
+            assert.deepStrictEqual(parseAwaitOption('xxxxx yyyyy'), [
+                { condition: '', 'await': 'xxxxx' },
+                { condition: '', 'await': 'yyyyy' }
+            ]);
+        });
+        it('should detect condition specifier', () => {
+            assert.deepStrictEqual(parseAwaitOption('xxxxx [cond]yyyyy'), [
+                { condition: '', 'await': 'xxxxx' },
+                { condition: 'cond', 'await': 'yyyyy' }
+            ]);
         });
     });
     describe('decomposeAwaitOption', () => {
@@ -634,6 +402,35 @@ describe('gen_wrapper_util', () => {
                         "await": "await1"
                     },
                     when: 'kb-macro.recording && !cond1 && context1'
+                }
+            ];
+            assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
+        });
+        it('should make wrapper keybinding (7) (with conditional awaitOption with negation)', () => {
+            const input = {
+                key: 'key1',
+                command: 'command1',
+                when: 'context1'
+            };
+            const awaitOption = 'await1 [!cond1]await2';
+            const expected = [
+                {
+                    key: 'key1',
+                    command: 'kb-macro.wrap',
+                    args: {
+                        command: 'command1',
+                        "await": "await1 await2"
+                    },
+                    when: 'kb-macro.recording && !cond1 && context1'
+                },
+                {
+                    key: 'key1',
+                    command: 'kb-macro.wrap',
+                    args: {
+                        command: 'command1',
+                        "await": "await1"
+                    },
+                    when: 'kb-macro.recording && cond1 && context1'
                 }
             ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);

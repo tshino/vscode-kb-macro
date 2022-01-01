@@ -3,6 +3,7 @@
 .github/**
 .gitignore
 .yarnrc
+build/**
 test/**
 generator/**
 keymap-wrapper/**

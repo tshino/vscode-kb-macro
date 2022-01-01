@@ -3,11 +3,13 @@ const vscode = require('vscode');
 const { AwaitController } = require('./await_controller.js');
 const { KeyboardMacro } = require('./keyboard_macro.js');
 const { TypingDetector } = require('./typing_detector.js');
+const { HelperContext } = require('./helper_context.js');
 const internalCommands = require('./internal_commands.js');
 
 const awaitController = AwaitController();
 const keyboardMacro = KeyboardMacro({ awaitController });
 const typingDetector = TypingDetector();
+const helperContext = HelperContext();
 
 function activate(context) {
     const CommandPrefix = 'kb-macro.';
@@ -30,6 +32,7 @@ function activate(context) {
     registerCommand('cancelRecording', keyboardMacro.cancelRecording);
     registerCommand('finishRecording', keyboardMacro.finishRecording);
     registerCommand('playback', keyboardMacro.playback);
+    registerCommand('abortPlayback', keyboardMacro.abortPlayback);
     registerCommand('wrap', keyboardMacro.wrap);
 
     keyboardMacro.registerInternalCommand('internal:performType', internalCommands.performType);
@@ -65,6 +68,24 @@ function activate(context) {
         }
     );
     addEventListener(
+        keyboardMacro.onChangePlaybackState,
+        function({ playing, reason }) {
+            const contextName = ContextPrefix + 'playing';
+            vscode.commands.executeCommand('setContext', contextName, playing);
+
+            if (playing === false && reason === keyboardMacro.PlaybackStateReason.Abort) {
+                vscode.window.setStatusBarMessage('Playback aborted!', 3000);
+            }
+        }
+    );
+    addEventListener(
+        helperContext.onChangeContext,
+        function({ name, value }) {
+            const contextName = ContextPrefix + name;
+            vscode.commands.executeCommand('setContext', contextName, value);
+        }
+    );
+    addEventListener(
         keyboardMacro.onBeginWrappedCommand,
         function() {
             typingDetector.suspend();
@@ -88,6 +109,13 @@ function activate(context) {
         function(event) {
             awaitController.processSelectionChangeEvent(event);
             typingDetector.processSelectionChangeEvent(event);
+            helperContext.processSelectionChangeEvent(event);
+        }
+    );
+    addEventListener(
+        vscode.window.onDidChangeActiveTextEditor,
+        function(event) {
+            helperContext.processActiveTextEditorChangeEvent(event);
         }
     );
     addEventListener(
@@ -117,6 +145,8 @@ function activate(context) {
             }
         }
     );
+
+    helperContext.reset(vscode.window.activeTextEditor);
 }
 
 function deactivate() {}

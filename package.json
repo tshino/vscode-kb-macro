@@ -2,7 +2,7 @@
 	"name": "kb-macro",
 	"displayName": "Keyboard Macro Beta",
 	"description": "Recordable keyboard macro for Visual Studio Code",
-	"version": "0.4.0",
+	"version": "0.8.0",
 	"publisher": "tshino",
 	"engines": {
 		"vscode": "^1.63.0"
@@ -23,11 +23,14 @@
 	},
 	"activationEvents": [
 		"onCommand:kb-macro.startRecording",
+		"onCommand:kb-macro.finishRecording",
 		"onCommand:kb-macro.cancelRecording",
 		"onCommand:kb-macro.playback",
+		"onCommand:kb-macro.abortPlayback",
 		"onCommand:kb-macro.wrap"
 	],
 	"main": "./src/extension.js",
+	"browser": "./dist/web/extension.js",
 	"scripts": {
 		"lint": "eslint .",
 		"-pretest": "npm run lint",
@@ -35,15 +38,22 @@
 		"gen-wrapper": "node ./generator/gen_wrapper.js",
 		"postgen-wrapper": "npm run verify-wrapper",
 		"verify-wrapper": "node ./generator/verify_wrapper.js",
-		"update-keymap-wrapper": "./generator/update_keymap_wrapper.sh"
+		"update-keymap-wrapper": "./generator/update_keymap_wrapper.sh",
+		"vscode:prepublish": "npm run package-web",
+		"compile-web": "webpack --config ./build/web-extension.webpack.config.js",
+		"watch-web": "webpack --watch --config ./build/web-extension.webpack.config.js",
+		"package-web": "webpack --mode production --devtool hidden-source-map --config ./build/web-extension.webpack.config.js"
 	},
 	"devDependencies": {
 		"ansi-regex": ">=6.0.1",
-		"eslint": "^8.4.1",
+		"eslint": "^8.6.0",
 		"glob": "^7.2.0",
 		"json": "^11.0.0",
 		"mocha": "^9.1.3",
-		"vscode-test": "^1.6.1"
+		"vscode-test": "^1.6.1",
+		"webpack": "^5.65.0",
+		"webpack-cli": "^4.9.1",
+		"process": "^0.11.10"
 	},
 	"contributes": {
 		"configuration": {
@@ -81,6 +91,10 @@
 			{
 				"command": "kb-macro.playback",
 				"title": "Keyboard Macro: Playback"
+			},
+			{
+				"command": "kb-macro.abortPlayback",
+				"title": "Keyboard Macro: Abort Playback"
 			}
 		],
 		"keybindings": [
@@ -2889,7 +2903,16 @@
 				"args": {
 					"command": "deleteWordLeft"
 				},
-				"when": "kb-macro.recording && textInputFocus && !editorReadonly"
+				"when": "kb-macro.recording && !kb-macro.headOfLine && isWindows"
+			},
+			{
+				"key": "shift+delete",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.clipboardCutAction",
+					"await": "document clipboard"
+				},
+				"when": "kb-macro.recording && kb-macro.headOfLine && isWindows"
 			},
 			{
 				"key": "alt+backspace",
@@ -2916,7 +2939,17 @@
 				"args": {
 					"command": "deleteWordPartRight"
 				},
-				"when": "kb-macro.recording && textInputFocus && !editorReadonly"
+				"when": "kb-macro.recording && !kb-macro.headOfLine"
+			},
+			{
+				"key": "ctrl+x",
+				"mac": "cmd+x",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.clipboardCutAction",
+					"await": "document clipboard"
+				},
+				"when": "kb-macro.recording && kb-macro.headOfLine"
 			},
 			{
 				"key": "alt+delete",
@@ -6067,6 +6100,11 @@
 				"key": "ctrl+shift+alt+p",
 				"command": "kb-macro.cancelRecording",
 				"when": "kb-macro.recording && config.keyboardMacro.recordingShortcuts == 'Option2'"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.abortPlayback",
+				"when": "kb-macro.playing"
 			}
 		]
 	}

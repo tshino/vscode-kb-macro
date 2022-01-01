@@ -2,11 +2,44 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.8.0] - 2022-01-01
 - New
+  - Added Delphi Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#23](https://github.com/tshino/vscode-kb-macro/pull/23)
+  - Added Visual Studio Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#24](https://github.com/tshino/vscode-kb-macro/pull/24)
+  - Added emacs-style prefix-arguments support through the keymap wrapper for Awesome Emacs Keymap. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#25](https://github.com/tshino/vscode-kb-macro/pull/25)
+  - Added new `kb-macro.abortPlayback` command, which is available on `escape` key. [#26](https://github.com/tshino/vscode-kb-macro/pull/26)
+  - Added new `kb-macro.playing` 'when'-clause context, which evaluates true when the macro playback is ongoing. [#27](https://github.com/tshino/vscode-kb-macro/pull/27)
+- Update
+  - (Internal) Added colors to warnings and errors on the console output of generator scripts.
+
+### [0.7.0] - 2021-12-26
+- New
+  - Added Atom Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#22](https://github.com/tshino/vscode-kb-macro/pull/22)
+  - Added Notepad++ Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#21](https://github.com/tshino/vscode-kb-macro/pull/21)
+  - Added new 'when' clause context `kb-macro.headOfLine`, which evaluates true if the cursor is at the beginning of a line, for the help of defining more precise await options.
+- Update
+  - Reduced unnecessary delays after the `editor.action.clipboardCutAction` command.
+  - Added comment lines to keymap wrapper files to describe keymap name and its version. [#20](https://github.com/tshino/vscode-kb-macro/pull/20)
+- Fix
+  - Keymap wrapper for Sublime Text may have not been working correctly on Mac due to "mac" keys in user `keybindings.json`.
+  - Fixed minor issues on command sequence optimization to reduce redundant cursor movement.
+
+### [0.6.0] - 2021-12-19
+- New
+  - Added Sublime Text Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#18](https://github.com/tshino/vscode-kb-macro/issues/18)
+  - Added 'repeat' argument support to the playback command. [#19](https://github.com/tshino/vscode-kb-macro/pull/19)
+- Update
+  - Updated keymap wrapper for Vz Keymap; Removed unnecessary wrappers for Vz Keymap's built-in macro feature.
+- Fix
+  - Keymap wrapper for Awesome Emacs Keymap may have not been working correctly on Mac due to "mac" keys in user `keybindings.json`.
+
+### [0.5.0] - 2021-12-14
+- New
+  - Added Web extension support. [#17](https://github.com/tshino/vscode-kb-macro/pull/17)
   - (Internal) Introduced Conditional Await syntax on keymap wrapper's config file.
 - Update
-  - Updated keymap wrappers for Vz Keymap and Awesome Emacs Keymap; Reduced unecessary delays in playback.
+  - Updated keymap wrapper for Vz Keymap; Reduced unnecessary delays in playback.
+  - Updated keymap wrapper for Awesome Emacs Keymap; Reduced unnecessary delays in playback.
 
 ### [0.4.0] - 2021-12-10
 - New
