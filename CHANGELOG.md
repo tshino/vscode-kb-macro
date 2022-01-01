@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Fix
+  - Reenabled running tests with macOS runners on GitHub Actions. [#28](https://github.com/tshino/vscode-kb-macro/pull/28)
+
 ### [0.8.0] - 2022-01-01
 - New
   - Added Delphi Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#23](https://github.com/tshino/vscode-kb-macro/pull/23)
