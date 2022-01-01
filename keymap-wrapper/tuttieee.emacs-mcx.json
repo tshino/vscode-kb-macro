@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.37.0
+	// Keymap wrapper for Awesome Emacs Keymap v0.37.1
 	// (required by Keyboard Macro Beta)
 	{ "key": "ctrl+u", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.universalArgument" },
 		"when": "kb-macro.recording && editorTextFocus" },
@@ -1211,7 +1211,7 @@
 		"when": "kb-macro.recording && editorTextFocus" },
 	{ "key": "ctrl+x j", "command": "kb-macro.wrap", "args": { "command": "workbench.action.togglePanel" },
 		"when": "kb-macro.recording && !terminalFocus" },
-	{ "key": "ctrl+i", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.executeCommands", "args": [ "emacs-mcx.forwardChar", "emacs-mcx.nextLine" ], "await": "document selection" },
+	{ "key": "ctrl+i", "command": "kb-macro.wrap", "args": { "command": "tab" },
 		"when": "kb-macro.recording" },
 	{ "key": "ctrl+x shift+9", "command": "kb-macro.startRecording",
 		"when": "!kb-macro.recording" },
