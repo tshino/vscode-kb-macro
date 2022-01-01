@@ -30,6 +30,11 @@ jobs:
     - name: Run tests (Linux)
       run: xvfb-run -a npm run test
       if: runner.os == 'Linux'
-    - name: Run tests (Windows, macOS)
+    - name: Run tests (macOS)
+      run: |
+        node generator/_patch_for_ci_on_macos.js
+        npm run test
+      if: runner.os == 'macOS'
+    - name: Run tests (Windows)
       run: npm run test
-      if: runner.os != 'Linux'
+      if: runner.os == 'Windows'
