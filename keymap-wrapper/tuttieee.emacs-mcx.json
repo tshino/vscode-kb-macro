@@ -1,6 +1,8 @@
 [
 	// Keymap wrapper for Awesome Emacs Keymap v0.37.1
 	// (required by Keyboard Macro Beta)
+	// The latest version can be found at:
+	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
 	{ "key": "ctrl+u", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.universalArgument" },
 		"when": "kb-macro.recording && editorTextFocus" },
 	{ "key": "0", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.universalArgumentDigit", "args": [ 0 ] },

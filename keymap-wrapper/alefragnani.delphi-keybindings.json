@@ -1,6 +1,8 @@
 [
 	// Keymap wrapper for Delphi Keymap v9.4.0
 	// (required by Keyboard Macro Beta)
+	// The latest version can be found at:
+	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
 	{ "key": "f9", "command": "kb-macro.wrap", "args": { "command": "workbench.action.debug.start" },
 		"when": "kb-macro.recording && !inDebugMode" },
 	{ "key": "f9", "command": "kb-macro.wrap", "args": { "command": "workbench.action.debug.continue" },

@@ -121,7 +121,9 @@ async function makeKeymapWrapper(configPath, commonConfig) {
         (
             '[\n' +
             `\t// Keymap wrapper for ${displayName} v${version}\n` +
-            '\t// (required by Keyboard Macro Beta)\n'
+            '\t// (required by Keyboard Macro Beta)\n' +
+            '\t// The latest version can be found at:\n' +
+            '\t// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md\n'
         )
     ) + '\n';
     await genWrapperUtil.writeFile(wrapperPath, fileContent);

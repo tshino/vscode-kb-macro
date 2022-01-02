@@ -1,6 +1,8 @@
 [
 	// Keymap wrapper for Visual Studio Keymap v0.2.1
 	// (required by Keyboard Macro Beta)
+	// The latest version can be found at:
+	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
 	{ "key": "ctrl+shift+b", "command": "kb-macro.wrap", "args": { "command": "workbench.action.tasks.build" },
 		"when": "kb-macro.recording" },
 	{ "key": "ctrl+b", "command": "kb-macro.wrap", "args": { "command": "workbench.debug.viewlet.action.addFunctionBreakpointAction" },

@@ -1,6 +1,8 @@
 [
 	// Keymap wrapper for Sublime Text Keymap and Settings Importer v4.0.10
 	// (required by Keyboard Macro Beta)
+	// The latest version can be found at:
+	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
 	{ "key": "cmd+y", "command": "kb-macro.wrap", "args": { "command": "redo" },
 		"when": "kb-macro.recording && isMac && editorTextFocus && !editorReadonly" },
 	{ "key": "ctrl+y", "command": "kb-macro.wrap", "args": { "command": "redo" },

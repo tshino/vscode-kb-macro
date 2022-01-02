@@ -1,6 +1,8 @@
 [
 	// Keymap wrapper for Atom Keymap v3.0.9
 	// (required by Keyboard Macro Beta)
+	// The latest version can be found at:
+	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
 	{ "key": "a", "command": "kb-macro.wrap", "args": { "command": "explorer.newFile" },
 		"when": "kb-macro.recording && filesExplorerFocus && !inputFocus" },
 	{ "key": "shift+a", "command": "kb-macro.wrap", "args": { "command": "explorer.newFolder" },

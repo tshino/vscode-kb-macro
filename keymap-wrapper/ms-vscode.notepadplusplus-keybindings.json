@@ -1,6 +1,8 @@
 [
 	// Keymap wrapper for Notepad++ keymap v1.0.7
 	// (required by Keyboard Macro Beta)
+	// The latest version can be found at:
+	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
 	{ "key": "f11", "command": "kb-macro.wrap", "args": { "command": "workbench.action.toggleFullScreen" },
 		"when": "kb-macro.recording && !inDebugMode" },
 	{ "key": "alt+0", "command": "kb-macro.wrap", "args": { "command": "editor.foldAll" },

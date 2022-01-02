@@ -1,6 +1,8 @@
 [
 	// Keymap wrapper for Vz Keymap v0.18.0
 	// (required by Keyboard Macro Beta)
+	// The latest version can be found at:
+	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
 	{ "key": "ctrl+s", "command": "",
 		"when": "kb-macro.recording && editorFocus" },
 	{ "key": "ctrl+s", "command": "kb-macro.wrap", "args": { "command": "vz.cursorLeft", "await": "selection" },
