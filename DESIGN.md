@@ -59,6 +59,12 @@ The script also performs some optimization work to reduce the amount of wrapper 
 
 The `default-keybindings-*.json` files are taken from the `Open Default Keyboard Shortcuts (JSON)` command.
 
+Following command updates the default wrapper keybindings in the `package.json`.
+
+```
+npm run gen-wrapper
+```
+
 ## Capturing typed characters
 
 On VS Code, typed characters in text editors are treated differently than other keystrokes. We don't put every possible character in the keybindings. When you type characters in a text editor, for each character, the `type` built-in command is invoked internally. The `type` command performs inserting each character into the document.
