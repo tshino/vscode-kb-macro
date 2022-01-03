@@ -79,27 +79,33 @@
 		"commands": [
 			{
 				"command": "kb-macro.startRecording",
-				"title": "Keyboard Macro: Start Recording"
+				"title": "Start Recording",
+				"category": "Keyboard Macro"
 			},
 			{
 				"command": "kb-macro.finishRecording",
-				"title": "Keyboard Macro: Finish Recording"
+				"title": "Finish Recording",
+				"category": "Keyboard Macro"
 			},
 			{
 				"command": "kb-macro.cancelRecording",
-				"title": "Keyboard Macro: Cancel Recording"
+				"title": "Cancel Recording",
+				"category": "Keyboard Macro"
 			},
 			{
 				"command": "kb-macro.playback",
-				"title": "Keyboard Macro: Playback"
+				"title": "Playback",
+				"category": "Keyboard Macro"
 			},
 			{
 				"command": "kb-macro.abortPlayback",
-				"title": "Keyboard Macro: Abort Playback"
+				"title": "Abort Playback",
+				"category": "Keyboard Macro"
 			},
 			{
 				"command": "kb-macro.repeatPlayback",
-				"title": "Keyboard Macro: Repeat Playback"
+				"title": "Repeat Playback",
+				"category": "Keyboard Macro"
 			}
 		],
 		"keybindings": [
