@@ -25,7 +25,7 @@ const KeyboardMacro = function({ awaitController }) {
     const sequence = CommandSequence();
     const internalCommands = new Map();
 
-    const makeGuardedCommand = function(body, teardown) {
+    const makeGuardedCommand = function(body) {
         return async function(args) {
             if (locked) {
                 return;
@@ -36,9 +36,6 @@ const KeyboardMacro = function({ awaitController }) {
             } catch (error) {
                 console.error(error);
                 console.info('kb-macro: Exception in guarded command');
-            }
-            if (teardown) {
-                teardown();
             }
             locked = false;
         };
@@ -140,7 +137,10 @@ const KeyboardMacro = function({ awaitController }) {
     };
 
     const playback = makeGuardedCommand(async function(args) {
-        if (!recording) {
+        if (recording) {
+            return;
+        }
+        try {
             changePlaybackState(true, PlaybackStateReason.Start);
             shouldAbortPlayback = false;
             args = (args && typeof(args) === 'object') ? args : {};
@@ -155,13 +155,13 @@ const KeyboardMacro = function({ awaitController }) {
                     }
                 }
             }
-        }
-    }, function teardown() {
-        if (shouldAbortPlayback) {
-            changePlaybackState(false, PlaybackStateReason.Abort);
-            shouldAbortPlayback = false;
-        } else {
-            changePlaybackState(false, PlaybackStateReason.Finish);
+        } finally {
+            if (shouldAbortPlayback) {
+                changePlaybackState(false, PlaybackStateReason.Abort);
+                shouldAbortPlayback = false;
+            } else {
+                changePlaybackState(false, PlaybackStateReason.Finish);
+            }
         }
     });
 

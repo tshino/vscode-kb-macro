@@ -319,6 +319,17 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.playback({ repeat: 5 });
             assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
         });
+        it('should do nothing when recording is ongoing', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            await keyboardMacro.playback();
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(logs, []);
+        });
         it('should prevent reentry', async () => {
             keyboardMacro.startRecording();
             keyboardMacro.push({ command: 'internal:log' });
