@@ -172,17 +172,18 @@ const KeyboardMacro = function({ awaitController }) {
         }
     };
 
+    const validatePositiveIntegerInput = function(value) {
+        if (value !== '' && !/^[1-9]\d*$/.test(value)) {
+            return 'Input a positive integer number';
+        }
+    };
     const repeatPlayback = makeGuardedCommand(async function() {
         if (recording) {
             return;
         }
         const input = await vscode.window.showInputBox({
             prompt: 'Input the number of times to repeat the macro',
-            validateInput: function(value) {
-                if (value !== '' && !/^[1-9]\d*$/.test(value)) {
-                    return 'Input a positive integer number';
-                }
-            }
+            validateInput: validatePositiveIntegerInput
         });
         if (input) {
             await playbackImpl({
@@ -240,6 +241,7 @@ const KeyboardMacro = function({ awaitController }) {
         push,
         playback,
         abortPlayback,
+        validatePositiveIntegerInput,
         repeatPlayback,
         wrap,
 
