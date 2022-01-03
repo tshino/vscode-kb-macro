@@ -414,6 +414,27 @@ describe('KeybaordMacro', () => {
             assert.strictEqual(logs.length < 2 * 3 * 3, true);
         });
     });
+    describe('validatePositiveIntegerInput', () => {
+        const validatePositiveIntegerInput = keyboardMacro.validatePositiveIntegerInput;
+        it('should return undefined if input is a valid string representing positive integer', () => {
+            assert.strictEqual(validatePositiveIntegerInput('1'), undefined);
+            assert.strictEqual(validatePositiveIntegerInput('42'), undefined);
+            assert.strictEqual(validatePositiveIntegerInput('9999'), undefined);
+        });
+        it('should return undefined if input is empty', () => {
+            assert.strictEqual(validatePositiveIntegerInput(''), undefined);
+        });
+        it('should return diagnostic message if input does not reprensent an integer', () => {
+            assert.strictEqual(typeof validatePositiveIntegerInput('abc'), 'string');
+            assert.strictEqual(typeof validatePositiveIntegerInput('123m'), 'string');
+            assert.strictEqual(typeof validatePositiveIntegerInput('1.5'), 'string');
+            assert.strictEqual(typeof validatePositiveIntegerInput('1e7'), 'string');
+            assert.strictEqual(typeof validatePositiveIntegerInput(' '), 'string');
+        });
+        it('should return diagnostic message if input reprensents a negative integer', () => {
+            assert.strictEqual(typeof validatePositiveIntegerInput('-123'), 'string');
+        });
+    });
     describe('wrap', () => {
         const logs = [];
         beforeEach(async () => {

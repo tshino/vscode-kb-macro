@@ -33,6 +33,7 @@ function activate(context) {
     registerCommand('finishRecording', keyboardMacro.finishRecording);
     registerCommand('playback', keyboardMacro.playback);
     registerCommand('abortPlayback', keyboardMacro.abortPlayback);
+    registerCommand('repeatPlayback', keyboardMacro.repeatPlayback);
     registerCommand('wrap', keyboardMacro.wrap);
 
     keyboardMacro.registerInternalCommand('internal:performType', internalCommands.performType);
