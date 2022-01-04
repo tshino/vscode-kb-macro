@@ -10,6 +10,7 @@ describe('Recording and Playback: Typing', () => {
     let textEditor;
     const Cmd = CommandsToTest;
     const Type = text => ({ command: 'internal:performType', args: { text } });
+    const ReplaceRight = (deleteRight, text) => ({ command: 'internal:performType', args: { deleteRight, text } });
     const DefaultType = text => ({ command: 'default:type', args: { text } });
     const MoveLeft = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: -delta } });
     const MoveRight = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: delta } });
@@ -279,7 +280,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: '10' });
             await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('10'), MoveRight(1) ]);
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('10'), ReplaceRight(1, ')') ]);
             assert.strictEqual(textEditor.document.lineAt(5).text, '(10)');
             assert.deepStrictEqual(getSelections(), [[5, 4]]);
 
@@ -295,7 +296,7 @@ describe('Recording and Playback: Typing', () => {
             await vscode.commands.executeCommand('type', { text: '10' });
             await vscode.commands.executeCommand('type', { text: ')' }); // This overwrites the closing bracket.
             keyboardMacro.finishRecording();
-            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('10'), MoveRight(1) ]);
+            assert.deepStrictEqual(getSequence(), [ Type('()'), MoveLeft(1), Type('10'), ReplaceRight(1, ')') ]);
             assert.strictEqual(textEditor.document.lineAt(5).text, '(10)');
             assert.strictEqual(textEditor.document.lineAt(6).text, '(10)');
             assert.deepStrictEqual(getSelections(), [[5, 4], [6, 4]]);
