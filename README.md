@@ -130,6 +130,34 @@ This is the default keybinding set for recording/playback of this extension. Cop
     }
 ```
 
+## Commands
+### For recording
+| Command name | Command ID | Function |
+| ------------ | ---------- | -------- |
+| `Keyboard Macro: Start Recording` | `kb-macro.startRecording` | Start recording |
+| `Keyboard Macro: Finish Recording` | `kb-macro.finishRecording` | Stop recording |
+| `Keyboard Macro: Cancel Recording` | `kb-macro.cancelRecording` | Stop recording and discard the recorded sequence |
+
+### For playback
+| Command name | Command ID | Function |
+| ------------ | ---------- | -------- |
+| `Keyboard Macro: Playback` | `kb-macro.playback` | Perform playback of the last recorded sequence |
+| `Keyboard Macro: Abort Playback` | `kb-macro.abortPlayback` | Abort currently-running playback |
+| `Keyboard Macro: Repeat Playback` | `kb-macro.repeatPlayback` | Perform playback specified number of times |
+
+The `kb-macro.repeatPlayback` command shows an input box to specify the number of times.
+
+The `kb-macro.playback` command has an optional `repeat` argument to specify the number of times to repeat. For example,
+```json
+{
+    "key": "ctrl+alt+5",
+    "command": "kb-macro.playback",
+    "args": { "repeat": 5 }
+}
+```
+this keyboard shortcut performs playback 5 times.
+
+
 ## Known issues
 - Keyboard shortcuts that VS Code newly introduced may not be supported by this extension. Because this extension is configured with a fixed set of wrapper keybindings based on a particular version of VS Code for Windows, Linux, and macOS.
 - This extension is intended to work with VS Code on Windows, Linux, and macOS, but is tested mainly on Windows at this moment.
