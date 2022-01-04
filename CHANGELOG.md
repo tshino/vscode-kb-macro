@@ -8,6 +8,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - Update
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.37.1).
 - Fix
+  - Some types of code completion were not being reproduced correctly. [#30](https://github.com/tshino/vscode-kb-macro/pull/30)
   - Reenabled running tests with macOS runners on GitHub Actions. [#28](https://github.com/tshino/vscode-kb-macro/pull/28)
 
 ### [0.8.0] - 2022-01-01
