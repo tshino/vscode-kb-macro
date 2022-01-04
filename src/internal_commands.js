@@ -14,18 +14,25 @@ const internalCommands = (function() {
         }
         const indices = util.makeIndexOfSortedSelections(textEditor.selections);
         const text = (args && args.text) || '';
-        const numDeleteLeft = (args && args.deleteLeft) || 0;
+        const numDeleteLeft = Math.max(0, (args && args.deleteLeft) || 0);
+        const numDeleteRight = Math.max(0, (args && args.deleteRight) || 0);
         const newSelections = [];
         await textEditor.edit(edit => {
             const changes = [];
             for (let i = 0; i < indices.length; i++) {
                 const selection = textEditor.selections[indices[i]];
-                const range = (0 < numDeleteLeft) ? new vscode.Range(
-                    selection.active.line,
-                    Math.max(0, selection.active.character - numDeleteLeft),
-                    selection.active.line,
-                    selection.active.character
-                ) : new vscode.Range(selection.start, selection.end);
+                const range = (function() {
+                    if (0 < numDeleteLeft || 0 < numDeleteRight) {
+                        return new vscode.Range(
+                            selection.active.line,
+                            Math.max(0, selection.active.character - numDeleteLeft),
+                            selection.active.line,
+                            selection.active.character + numDeleteRight
+                        );
+                    } else {
+                        return new vscode.Range(selection.start, selection.end);
+                    }
+                })();
                 if (!range.isEmpty) {
                     edit.delete(range);
                 }

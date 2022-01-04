@@ -161,12 +161,19 @@ describe('internalCommands', () => {
                 '    efgh\n'.repeat(10)
             ));
         });
-        it('should delete left-hand side characters and insert a text', async () => {
+        it('should delete left-hand side characters and insert a text (1)', async () => {
             setSelections([[10, 4]]);
             await internalCommands.performType({ deleteLeft: 2, text: 'CDEFG' });
 
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abCDEFG');
             assert.deepStrictEqual(getSelections(), [[10, 7]]);
+        });
+        it('should delete left-hand side characters and insert a text (2)', async () => {
+            setSelections([[10, 4]]);
+            await internalCommands.performType({ deleteLeft: 2, text: 'CD' });
+
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'abCD');
+            assert.deepStrictEqual(getSelections(), [[10, 4]]);
         });
         it('should delete left-hand side characters and insert a text with multi-cursor (1)', async () => {
             setSelections([[10, 4], [11, 4]]);
@@ -189,6 +196,30 @@ describe('internalCommands', () => {
 
             assert.strictEqual(textEditor.document.lineAt(10).text, 'ABcd');
             assert.deepStrictEqual(getSelections(), [[10, 2]]);
+        });
+    });
+
+    describe('performType (with deleteLeft and deleteRight)', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                '\n'.repeat(10) +
+                'abcd\n'.repeat(10) +
+                '    efgh\n'.repeat(10)
+            ));
+        });
+        it('should replace characters around the cursor with a text', async () => {
+            setSelections([[10, 1]]);
+            await internalCommands.performType({ deleteLeft: 1, deleteRight: 3, text: 'aXXXbcd' });
+
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'aXXXbcd');
+            assert.deepStrictEqual(getSelections(), [[10, 7]]);
+        });
+        it('should stop deleting at the end of the line', async () => {
+            setSelections([[10, 1]]);
+            await internalCommands.performType({ deleteLeft: 99, deleteRight: 99, text: 'aXXXbcd' });
+
+            assert.strictEqual(textEditor.document.lineAt(10).text, 'aXXXbcd');
+            assert.deepStrictEqual(getSelections(), [[10, 7]]);
         });
     });
 
