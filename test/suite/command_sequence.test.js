@@ -69,7 +69,7 @@ describe('CommandSequence', () => {
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ TYPE123 ]);
         });
-        it('should not concatenate direct typing commands with deleting', () => {
+        it('should not concatenate direct typing commands with deleting (1)', () => {
             const TYPE1 = {
                 command: 'internal:performType',
                 args: { text: 'X' }
@@ -84,7 +84,22 @@ describe('CommandSequence', () => {
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ TYPE1, TYPE2 ]);
         });
-        it('should concatenate direct typing followed by another typing with deleting', () => {
+        it('should not concatenate direct typing commands with deleting (2)', () => {
+            const TYPE1 = {
+                command: 'internal:performType',
+                args: { text: 'X' }
+            };
+            const TYPE2 = {
+                command: 'internal:performType',
+                args: { deleteRight: 2, text: 'ABC' }
+            };
+            const seq = CommandSequence();
+            seq.push(TYPE1);
+            seq.push(TYPE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ TYPE1, TYPE2 ]);
+        });
+        it('should concatenate direct typing followed by another typing with deleting to the left', () => {
             const TYPE1 = {
                 command: 'internal:performType',
                 args: { text: 'a' }
@@ -108,7 +123,7 @@ describe('CommandSequence', () => {
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ TYPE123 ]);
         });
-        it('should concatenate direct typing with deleting followed by another typing without deleting', () => {
+        it('should concatenate direct typing with deleting followed by another typing without deleting (1)', () => {
             const TYPE1 = {
                 command: 'internal:performType',
                 args: { deleteLeft: 1, text: 'a' }
@@ -120,6 +135,25 @@ describe('CommandSequence', () => {
             const TYPE12 = {
                 command: 'internal:performType',
                 args: { deleteLeft: 1, text: 'ab' }
+            };
+            const seq = CommandSequence();
+            seq.push(TYPE1);
+            seq.push(TYPE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ TYPE12 ]);
+        });
+        it('should concatenate direct typing with deleting followed by another typing without deleting (2)', () => {
+            const TYPE1 = {
+                command: 'internal:performType',
+                args: { deleteRight: 1, text: 'a' }
+            };
+            const TYPE2 = {
+                command: 'internal:performType',
+                args: { text: 'b' }
+            };
+            const TYPE12 = {
+                command: 'internal:performType',
+                args: { deleteRight: 1, text: 'ab' }
             };
             const seq = CommandSequence();
             seq.push(TYPE1);
@@ -201,6 +235,25 @@ describe('CommandSequence', () => {
             seq.push(MOVE2);
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ MOVE1, MOVE2 ]);
+        });
+        it('should combine cursor motion to the left and successive typing with deleting to the right', () => {
+            const TYPE1 = {
+                command: 'internal:performCursorMotion',
+                args: { characterDelta: -1 }
+            };
+            const TYPE2 = {
+                command: 'internal:performType',
+                args: { deleteRight: 1, text: 'a' }
+            };
+            const TYPE12 = {
+                command: 'internal:performType',
+                args: { deleteLeft: 1, text: 'a' }
+            };
+            const seq = CommandSequence();
+            seq.push(TYPE1);
+            seq.push(TYPE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ TYPE12 ]);
         });
     });
 });

@@ -66,11 +66,29 @@ const TypingDetector = function() {
         // every change replaces the text of the respective selection
         return changes.every((chg, i) => selections[i].isEqual(chg.range));
     };
-    const deletesLeftAndInserts = function(changes, selections) {
+    const isInsertingWithDeleting = function(changes, selections) {
         const emptySelection = selections.every(sel => sel.isEmpty);
+        if (!emptySelection) {
+            return false;
+        }
         const uniformRangeLength = changes.every(chg => chg.rangeLength === changes[0].rangeLength);
-        const cursorAtEndOfRange = selections.every((sel, i) => sel.active.isEqual(changes[i].range.end));
-        return emptySelection && uniformRangeLength && cursorAtEndOfRange;
+        if (!uniformRangeLength) {
+            return false;
+        }
+        const sameLine = selections.every((sel, i) => sel.active.line === changes[i].range.start.line);
+        if (!sameLine) {
+            return false;
+        }
+        const deleteLeft = selections[0].active.character - changes[0].range.start.character;
+        const deleteRight = changes[0].range.end.character - selections[0].active.character;
+        if (deleteLeft < 0 || deleteRight < 0) {
+            return false;
+        }
+        const uniformDeletingLength = selections.every((sel, i) => (
+            deleteLeft === sel.active.character - changes[i].range.start.character &&
+            deleteRight === changes[i].range.end.character - sel.active.character
+        ));
+        return uniformDeletingLength;
     };
     const isBracketCompletionWithSelection = function(selections, changes) {
         let uniformPairedText = changes.every(
@@ -100,7 +118,7 @@ const TypingDetector = function() {
                 notifyDetectedTyping(TypingType.Direct, { text: changes[0].text });
                 return true;
             }
-            if (deletesLeftAndInserts(changes, selections)) {
+            if (isInsertingWithDeleting(changes, selections)) {
                 // Every change (in possible multi-cursor) is a combination of deleting
                 // common number of characters to the left and inserting a common text.
                 // This happens when a code completion occurs.
@@ -109,12 +127,20 @@ const TypingDetector = function() {
                 //  2. type 'r', 'Array' is suggested
                 //  3. accept the suggestion
                 //  4. then edit event happens, that replaces 'ar' with 'Array'
-                const deleteLeft = changes[0].rangeLength;
+                const deleteLeft = selections[0].active.character - changes[0].range.start.character;
+                const deleteRight = changes[0].range.end.character - selections[0].active.character;
                 const prediction = util.makeSelectionsAfterTyping(changes);
                 if (!util.isEqualSelections(selections, prediction)) {
                     cursorMotionDetector.setPrediction(textEditor, prediction);
                 }
-                notifyDetectedTyping(TypingType.Direct, { deleteLeft, text: changes[0].text });
+                const args = { text: changes[0].text };
+                if (0 < deleteLeft) {
+                    args.deleteLeft = deleteLeft;
+                }
+                if (0 < deleteRight) {
+                    args.deleteRight = deleteRight;
+                }
+                notifyDetectedTyping(TypingType.Direct, args);
                 return true;
             }
         }

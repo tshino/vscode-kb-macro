@@ -285,6 +285,13 @@ describe('TypingDetector', () => {
             expectedLogs: [[0, {text:'EFGHI', deleteLeft:4}]],
             expectedPrediction: [[20, 9]] });
         });
+        it('should process events, detect code completion and invoke the callback function (3)', async () => {
+            testDetection({ changes: [
+                makeContentChange(new vscode.Range(20, 4, 20, 6), '"key": ""')
+            ], precond: [[20, 5]],
+            expectedLogs: [[0, {text:'"key": ""', deleteLeft:1, deleteRight:1}]],
+            expectedPrediction: [[20, 13]] });
+        });
         it('should not make prediction if no change is expected', async () => {
             testDetection({ changes: [
                 makeContentChange(new vscode.Range(10, 0, 10, 4), 'Abcd')
