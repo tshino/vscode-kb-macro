@@ -156,12 +156,11 @@ const KeyboardMacro = function({ awaitController }) {
                 }
             }
         } finally {
-            if (shouldAbortPlayback) {
-                changePlaybackState(false, PlaybackStateReason.Abort);
-                shouldAbortPlayback = false;
-            } else {
-                changePlaybackState(false, PlaybackStateReason.Finish);
-            }
+            const reason = shouldAbortPlayback ?
+                PlaybackStateReason.Abort :
+                PlaybackStateReason.Finish;
+            changePlaybackState(false, reason);
+            shouldAbortPlayback = false;
         }
     };
     const playback = makeGuardedCommand(playbackImpl);
