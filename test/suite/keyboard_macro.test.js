@@ -435,6 +435,71 @@ describe('KeybaordMacro', () => {
             assert.strictEqual(typeof validatePositiveIntegerInput('-123'), 'string');
         });
     });
+    describe('repeatPlayback', () => {
+        const logs = [];
+        let spyInputBoxInvoked = false;
+        let spyInputBoxValue = '';
+        let orgShowInputBox = null;
+        before(() => {
+            keyboardMacro.registerInternalCommand('internal:log', async () => {
+                logs.push('invoked');
+            });
+            orgShowInputBox = keyboardMacro.setShowInputBox(async () => {
+                spyInputBoxInvoked = true;
+                return spyInputBoxValue;
+            });
+        });
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+            spyInputBoxInvoked = false;
+            logs.length = 0;
+        });
+        after(() => {
+            keyboardMacro.setShowInputBox(orgShowInputBox);
+        });
+        it('should invoke showInputBox', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            spyInputBoxValue = '1';
+            await keyboardMacro.repeatPlayback();
+
+            assert.strictEqual(spyInputBoxInvoked, true);
+            assert.deepStrictEqual(logs, [ 'invoked' ]);
+        });
+        it('should perform playback specified number of times', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            spyInputBoxValue = '4';
+            await keyboardMacro.repeatPlayback();
+
+            assert.strictEqual(spyInputBoxInvoked, true);
+            assert.deepStrictEqual(logs, [ 'invoked', 'invoked', 'invoked', 'invoked' ]);
+        });
+        it('should do nothing if recording is ongoing', async () => {
+            spyInputBoxValue = '1';
+            keyboardMacro.startRecording();
+            await keyboardMacro.repeatPlayback();
+
+            assert.strictEqual(spyInputBoxInvoked, false);
+            assert.deepStrictEqual(logs, []);
+        });
+        it('should not perform playback if the number input is canceled', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            spyInputBoxValue = undefined;
+            await keyboardMacro.repeatPlayback();
+
+            assert.strictEqual(spyInputBoxInvoked, true);
+            assert.deepStrictEqual(logs, []);
+        });
+    });
     describe('wrap', () => {
         const logs = [];
         beforeEach(async () => {

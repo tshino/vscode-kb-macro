@@ -18,6 +18,7 @@ const KeyboardMacro = function({ awaitController }) {
     let onChangePlaybackStateCallback = null;
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
+    let showInputBox = vscode.window.showInputBox;
     let recording = false;
     let locked = false;
     let playing = false;
@@ -79,6 +80,12 @@ const KeyboardMacro = function({ awaitController }) {
     };
     const onEndWrappedCommand = function(callback) {
         onEndWrappedCommandCallback = callback;
+    };
+
+    const setShowInputBox = function(showInputBoxImpl) {
+        const old = showInputBox;
+        showInputBox = showInputBoxImpl;
+        return old;
     };
 
     const registerInternalCommand = function(name, func) {
@@ -180,7 +187,7 @@ const KeyboardMacro = function({ awaitController }) {
         if (recording) {
             return;
         }
-        const input = await vscode.window.showInputBox({
+        const input = await showInputBox({
             prompt: 'Input the number of times to repeat the macro',
             validateInput: validatePositiveIntegerInput
         });
@@ -247,7 +254,8 @@ const KeyboardMacro = function({ awaitController }) {
         // testing purpose only
         isRecording: () => { return recording; },
         isPlaying: () => { return playing; },
-        getCurrentSequence: () => { return sequence.get(); }
+        getCurrentSequence: () => { return sequence.get(); },
+        setShowInputBox // testing purpose only
     };
 };
 
