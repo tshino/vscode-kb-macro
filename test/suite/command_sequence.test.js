@@ -255,5 +255,33 @@ describe('CommandSequence', () => {
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ TYPE12 ]);
         });
+        it('should shrink three commands into one', () => {
+            const INPUT = [
+                {
+                    command: 'internal:performType',
+                    args: { text: '()' }
+                },
+                {
+                    command: 'internal:performCursorMotion',
+                    args: { characterDelta: -1 }
+                },
+                {
+                    command: 'internal:performType',
+                    args: { deleteRight: 1, text: ')' }
+                }
+            ];
+            const EXPECTED = [
+                {
+                    command: 'internal:performType',
+                    args: { text: '()' }
+                }
+            ];
+            const seq = CommandSequence();
+            for (const cmd of INPUT) {
+                seq.push(cmd);
+            }
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), EXPECTED);
+        });
     });
 });
