@@ -1,6 +1,7 @@
 'use strict';
 const vscode = require('vscode');
 const { CommandSequence } = require('./command_sequence.js');
+const util = require('./util.js');
 
 const KeyboardMacro = function({ awaitController }) {
     const RecordingStateReason = {
@@ -20,42 +21,10 @@ const KeyboardMacro = function({ awaitController }) {
     let onEndWrappedCommandCallback = null;
     let showInputBox = vscode.window.showInputBox;
     let recording = false;
-    let locked = false;
     let playing = false;
     let shouldAbortPlayback = false;
     const sequence = CommandSequence();
     const internalCommands = new Map();
-
-    const makeGuardedCommand = function(body) {
-        return async function(args) {
-            if (locked) {
-                return;
-            }
-            locked = true;
-            try {
-                await body(args);
-            } catch (error) {
-                console.error(error);
-                console.info('kb-macro: Exception in guarded command');
-            }
-            locked = false;
-        };
-    };
-    const makeGuardedCommandSync = function(func) {
-        return function(args) {
-            if (locked) {
-                return;
-            }
-            locked = true;
-            try {
-                func(args);
-            } catch (error) {
-                console.error(error);
-                console.info('kb-macro: Exception in guarded command');
-            }
-            locked = false;
-        };
-    };
 
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
@@ -92,19 +61,19 @@ const KeyboardMacro = function({ awaitController }) {
         internalCommands[name] = func;
     };
 
-    const startRecording = makeGuardedCommandSync(function() {
+    const startRecording = util.makeGuardedCommandSync(function() {
         if (!recording) {
             sequence.clear();
             changeRecordingState(true, RecordingStateReason.Start);
         }
     });
-    const cancelRecording = makeGuardedCommandSync(function() {
+    const cancelRecording = util.makeGuardedCommandSync(function() {
         if (recording) {
             sequence.clear();
             changeRecordingState(false, RecordingStateReason.Cancel);
         }
     });
-    const finishRecording = makeGuardedCommandSync(function() {
+    const finishRecording = util.makeGuardedCommandSync(function() {
         if (recording) {
             sequence.optimize();
             changeRecordingState(false, RecordingStateReason.Finish);
@@ -170,7 +139,7 @@ const KeyboardMacro = function({ awaitController }) {
             shouldAbortPlayback = false;
         }
     };
-    const playback = makeGuardedCommand(playbackImpl);
+    const playback = util.makeGuardedCommand(playbackImpl);
 
     const abortPlayback = async function() {
         if (playing) {
@@ -183,7 +152,7 @@ const KeyboardMacro = function({ awaitController }) {
             return 'Input a positive integer number';
         }
     };
-    const repeatPlayback = makeGuardedCommand(async function() {
+    const repeatPlayback = util.makeGuardedCommand(async function() {
         if (recording) {
             return;
         }
@@ -214,7 +183,7 @@ const KeyboardMacro = function({ awaitController }) {
         return spec;
     };
 
-    const wrap = makeGuardedCommand(async function(args) {
+    const wrap = util.makeGuardedCommand(async function(args) {
         if (recording) {
             const spec = makeCommandSpec(args);
             if (!spec) {

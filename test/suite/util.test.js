@@ -7,6 +7,8 @@ describe('util', () => {
     const Selection = (l1,c1,l2,c2) => new vscode.Selection(l1,c1,l2,c2);
     const Range = (l1,c1,l2,c2) => new vscode.Range(l1,c1,l2,c2);
 
+    // TODO: add test for makeGuardedCommand
+    // TODO: add test for makeGuardedCommandSync
     describe('isEqualSelections', () => {
         it('should return true if two selections are equal (1)', async () => {
             const sel1 = [ Selection(0, 1, 2, 3) ];
