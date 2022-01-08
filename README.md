@@ -130,6 +130,12 @@ This is the default keybinding set for recording/playback of this extension. Cop
     }
 ```
 
+## Tips
+| Task | Recordable ways to do it |
+| ---- | ------------------------ |
+| Move focus to editor | Instead of mouse, use `ctrl+1` (mac: `cmd+1`) |
+| Switch to another tab | Instead of `ctrl+tab`, use `ctrl+pageup`/`ctrl+pagedown` (mac: `alt+cmd+left`/`alt+cmd+right`) |
+
 ## Commands
 ### For recording
 | Command name | Command ID | Function |

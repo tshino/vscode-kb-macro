@@ -2,9 +2,15 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Documentation
+  - Added 'Tips' section to the README.
+
 ### [0.9.0] - 2022-01-6
 - New
   - Added a new `Keybaord Macro: Repeat Playback` command, which lets the user input a number and then repeats the macro specified times. [#29](https://github.com/tshino/vscode-kb-macro/pull/29)
+- Documentation
+  - Added 'Commands' section to the README.
 - Update
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.37.1).
 - Fix
