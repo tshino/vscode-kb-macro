@@ -75,7 +75,7 @@ describe('reentrantGuard', () => {
                 'after third call'
             ]);
         });
-        it('should prevent different functions from calling concurrently', async () => {
+        it('should prevent other functions from calling concurrently', async () => {
             const asyncTarget1 = async function() {
                 logs.push('hello 1');
                 await TestUtil.sleep(10);
@@ -126,6 +126,86 @@ describe('reentrantGuard', () => {
                 'after call'
             ]);
         });
+        // TODO: add tests for printing error message
     });
-    // TODO: add test for makeGuardedCommandSync
+    describe('makeGuardedCommandSync', () => {
+        const makeGuardedCommandSync = reentrantGuard.makeGuardedCommandSync;
+        const logs = [];
+        beforeEach(() => {
+            logs.length = 0;
+        });
+        it('should return a non-async function', async () => {
+            const func = makeGuardedCommandSync(() => {});
+            assert.strictEqual(typeof func, 'function');
+            assert.strictEqual(func.constructor.name, 'Function');
+        });
+        it('should return a function that invokes the given function', async () => {
+            const target = function() {
+                logs.push('hello');
+            };
+            const func = makeGuardedCommandSync(target);
+            assert.deepStrictEqual(logs, []);
+            func();
+            assert.deepStrictEqual(logs, [ 'hello' ]);
+            func();
+            assert.deepStrictEqual(logs, [ 'hello', 'hello' ]);
+        });
+        it('should return a function that passes arguments to the given function', async () => {
+            const target = function(arg) {
+                logs.push('hello ' + arg);
+            };
+            const func = makeGuardedCommandSync(target);
+            func('world');
+            assert.deepStrictEqual(logs, [ 'hello world' ]);
+        });
+        it('should prevent the function from interrupting other guarded functions', async () => {
+            const asyncTarget = async function() {
+                logs.push('hello async');
+                await TestUtil.sleep(10);
+                logs.push('bye async');
+            };
+            const syncTarget = async function() {
+                logs.push('hello sync');
+            };
+            const func1 = reentrantGuard.makeGuardedCommand(asyncTarget);
+            const func2 = makeGuardedCommandSync(syncTarget);
+            logs.push('before concurrent call');
+            const promise1 = func1();
+            func2();
+            await promise1;
+            logs.push('after concurrent call');
+            func2();
+            logs.push('after third call');
+            assert.deepStrictEqual(logs, [
+                'before concurrent call',
+                'hello async',
+                'bye async',
+                'after concurrent call',
+                'hello sync',
+                'after third call'
+            ]);
+        });
+        it('should prevent the function from leaking exceptions', async () => {
+            const target = function(arg) {
+                if (arg === 0) {
+                    logs.push('will throw');
+                    throw 'error';
+                } else {
+                    logs.push('will not throw');
+                }
+            };
+            const func = makeGuardedCommandSync(target);
+            logs.push('before call');
+            func(0);
+            func(1);
+            logs.push('after call');
+            assert.deepStrictEqual(logs, [
+                'before call',
+                'will throw',
+                'will not throw',
+                'after call'
+            ]);
+        });
+        // TODO: add tests for printing error message
+    });
 });
