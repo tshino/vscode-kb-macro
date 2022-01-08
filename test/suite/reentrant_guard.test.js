@@ -126,7 +126,29 @@ describe('reentrantGuard', () => {
                 'after call'
             ]);
         });
-        // TODO: add tests for printing error message
+        it('should print error message on exception', async () => {
+            const target = function() {
+                logs.push('will throw');
+                throw 'error!';
+            };
+            const old = reentrantGuard.setPrintError(error => {
+                logs.push('error: ' + error);
+            });
+            try {
+                const func = makeGuardedCommand(target);
+                logs.push('before call');
+                await func();
+                logs.push('after call');
+                assert.deepStrictEqual(logs, [
+                    'before call',
+                    'will throw',
+                    'error: error!',
+                    'after call'
+                ]);
+            } finally {
+                reentrantGuard.setPrintError(old);
+            }
+        });
     });
     describe('makeGuardedCommandSync', () => {
         const makeGuardedCommandSync = reentrantGuard.makeGuardedCommandSync;
@@ -206,6 +228,28 @@ describe('reentrantGuard', () => {
                 'after call'
             ]);
         });
-        // TODO: add tests for printing error message
+        it('should print error message on exception', async () => {
+            const target = function() {
+                logs.push('will throw');
+                throw 'error!';
+            };
+            const old = reentrantGuard.setPrintError(error => {
+                logs.push('error: ' + error);
+            });
+            try {
+                const func = makeGuardedCommandSync(target);
+                logs.push('before call');
+                func();
+                logs.push('after call');
+                assert.deepStrictEqual(logs, [
+                    'before call',
+                    'will throw',
+                    'error: error!',
+                    'after call'
+                ]);
+            } finally {
+                reentrantGuard.setPrintError(old);
+            }
+        });
     });
 });

@@ -4,6 +4,17 @@ const reentrantGuard = (function() {
 
     let locked = false;
 
+    let printError = defaultPrintError;
+    function defaultPrintError(error) {
+        console.error(error);
+        console.info('kb-macro: Exception in guarded command');
+    };
+    const setPrintError = function(printErrorImpl) {
+        const old = printError;
+        printError = printErrorImpl;
+        return old;
+    };
+
     const makeGuardedCommand = function(body) {
         return async function(args) {
             if (locked) {
@@ -13,8 +24,7 @@ const reentrantGuard = (function() {
             try {
                 await body(args);
             } catch (error) {
-                console.error(error);
-                console.info('kb-macro: Exception in guarded command');
+                printError(error);
             }
             locked = false;
         };
@@ -28,8 +38,7 @@ const reentrantGuard = (function() {
             try {
                 func(args);
             } catch (error) {
-                console.error(error);
-                console.info('kb-macro: Exception in guarded command');
+                printError(error);
             }
             locked = false;
         };
@@ -38,6 +47,9 @@ const reentrantGuard = (function() {
     return {
         makeGuardedCommand,
         makeGuardedCommandSync,
+
+        // testing purpose only
+        setPrintError
     };
 })();
 
