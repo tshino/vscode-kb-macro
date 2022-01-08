@@ -1,7 +1,7 @@
 'use strict';
 const vscode = require('vscode');
 const { CommandSequence } = require('./command_sequence.js');
-const util = require('./util.js');
+const reentrantGuard = require('./reentrant_guard.js');
 
 const KeyboardMacro = function({ awaitController }) {
     const RecordingStateReason = {
@@ -61,19 +61,19 @@ const KeyboardMacro = function({ awaitController }) {
         internalCommands[name] = func;
     };
 
-    const startRecording = util.makeGuardedCommandSync(function() {
+    const startRecording = reentrantGuard.makeGuardedCommandSync(function() {
         if (!recording) {
             sequence.clear();
             changeRecordingState(true, RecordingStateReason.Start);
         }
     });
-    const cancelRecording = util.makeGuardedCommandSync(function() {
+    const cancelRecording = reentrantGuard.makeGuardedCommandSync(function() {
         if (recording) {
             sequence.clear();
             changeRecordingState(false, RecordingStateReason.Cancel);
         }
     });
-    const finishRecording = util.makeGuardedCommandSync(function() {
+    const finishRecording = reentrantGuard.makeGuardedCommandSync(function() {
         if (recording) {
             sequence.optimize();
             changeRecordingState(false, RecordingStateReason.Finish);
@@ -139,7 +139,7 @@ const KeyboardMacro = function({ awaitController }) {
             shouldAbortPlayback = false;
         }
     };
-    const playback = util.makeGuardedCommand(playbackImpl);
+    const playback = reentrantGuard.makeGuardedCommand(playbackImpl);
 
     const abortPlayback = async function() {
         if (playing) {
@@ -152,7 +152,7 @@ const KeyboardMacro = function({ awaitController }) {
             return 'Input a positive integer number';
         }
     };
-    const repeatPlayback = util.makeGuardedCommand(async function() {
+    const repeatPlayback = reentrantGuard.makeGuardedCommand(async function() {
         if (recording) {
             return;
         }
@@ -183,7 +183,7 @@ const KeyboardMacro = function({ awaitController }) {
         return spec;
     };
 
-    const wrap = util.makeGuardedCommand(async function(args) {
+    const wrap = reentrantGuard.makeGuardedCommand(async function(args) {
         if (recording) {
             const spec = makeCommandSpec(args);
             if (!spec) {
