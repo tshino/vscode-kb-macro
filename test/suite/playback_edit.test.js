@@ -31,15 +31,17 @@ describe('Recording and Playback: Edit', () => {
         }
         keyboardMacro.finishRecording();
     };
-    const testRecording = async function(sequence, precond, expected) {
-        await setSelections(precond.s);
+    const setupPrecond = async function(precond) {
+        if ('s' in precond) {
+            await setSelections(precond.s);
+        }
         if ('c' in precond) {
             await vscode.env.clipboard.writeText(precond.c);
         }
-        await record(sequence);
-        assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), sequence);
+    };
+    const checkResult = async function(expected) {
         // check for text document
-        if (expected.d) {
+        if ('d' in expected) {
             for (let i = 0; i < expected.d.length; i++) {
                 const line = expected.d[i][0];
                 const text = expected.d[i][1];
@@ -47,13 +49,24 @@ describe('Recording and Playback: Edit', () => {
             }
         }
         // check for text selections
-        if (expected.s) {
+        if ('s' in expected) {
             assert.deepStrictEqual(getSelections(), expected.s);
         }
         // check for clipboard text
         if ('c' in expected) {
             assert.strictEqual(await TestUtil.readClipboard(), expected.c);
         }
+    };
+    const testRecording = async function(sequence, precond, expected) {
+        await setupPrecond(precond);
+        await record(sequence);
+        assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), sequence);
+        await checkResult(expected);
+    };
+    const testPlayback = async function(precond, expected) {
+        await setupPrecond(precond);
+        await keyboardMacro.playback();
+        await checkResult(expected);
     };
 
     before(async () => {
@@ -73,54 +86,36 @@ describe('Recording and Playback: Edit', () => {
             const seq = [ Cmd.DeleteLeft ];
             it('should delete one character to the left', async () => {
                 await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 2]], d: [[0, 'abde']]  });
-
-                await setSelections([[1, 6]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(1).text, '    fhij');
-                assert.deepStrictEqual(getSelections(), [[1, 5]]);
+                await testPlayback({ s: [[1, 6]] }, { s: [[1, 5]], d: [[1, '    fhij']] });
             });
             it('should connect current line and the previous line', async () => {
                 await testRecording(seq, { s: [[1, 0]] }, { s: [[0, 5]], d: [[0, 'abcde    fghij']]  });
-
-                await setSelections([[1, 0]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij    klmno pqrstu vwxyz');
-                assert.deepStrictEqual(getSelections(), [[0, 14]]);
+                await testPlayback({ s: [[1, 0]] }, { s: [[0, 14]], d: [
+                    [0, 'abcde    fghij    klmno pqrstu vwxyz']
+                ]});
             });
             it('should do nothing if cursor is at the top of the document', async () => {
                 await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]], d: [[0, 'abcde']]  });
-
-                await setSelections([[0, 0]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde');
-                assert.deepStrictEqual(getSelections(), [[0, 0]]);
+                await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]], d: [[0, 'abcde']] });
             });
         });
         describe('deleteRight', () => {
             const seq = [ Cmd.DeleteRight ];
             it('should delete one character to the right', async () => {
                 await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 3]], d: [[0, 'abce']]  });
-
-                await setSelections([[1, 6]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(1).text, '    fgij');
-                assert.deepStrictEqual(getSelections(), [[1, 6]]);
+                await testPlayback({ s: [[1, 6]] }, { s: [[1, 6]], d: [[1, '    fgij']] });
             });
             it('should connect current line and the next line', async () => {
                 await testRecording(seq, { s: [[0, 5]] }, { s: [[0, 5]], d: [[0, 'abcde    fghij']]  });
-
-                await setSelections([[0, 14]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'abcde    fghij    klmno pqrstu vwxyz');
-                assert.deepStrictEqual(getSelections(), [[0, 14]]);
+                await testPlayback({ s: [[0, 14]] }, { s: [[0, 14]], d: [
+                    [0, 'abcde    fghij    klmno pqrstu vwxyz']
+                ] });
             });
             it('should do nothing if cursor is at the top of the document', async () => {
                 await testRecording(seq, { s: [[2, 22]] }, { s: [[2, 22]], d: [[2, '    klmno pqrstu vwxyz']]  });
-
-                await setSelections([[2, 22]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(2).text, '    klmno pqrstu vwxyz');
-                assert.deepStrictEqual(getSelections(), [[2, 22]]);
+                await testPlayback({ s: [[2, 22]] }, { s: [[2, 22]], d: [
+                    [2, '    klmno pqrstu vwxyz']
+                ] });
             });
         });
         describe('deleteWordLeft', () => {
@@ -221,28 +216,20 @@ describe('Recording and Playback: Edit', () => {
             const seq = [ Cmd.CommentLine ];
             it('should add line comment', async () => {
                 await testRecording(seq, { s: [[5, 5]] }, { s: [[5, 8]], d: [[5, '// hello("Code");']]  });
-
-                await setSelections([[1, 0]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(1).text, '    // console.log("Hello, " + name);');
-                assert.deepStrictEqual(getSelections(), [[1, 0]]);
+                await testPlayback({ s: [[1, 0]] }, { s: [[1, 0]], d: [
+                    [1, '    // console.log("Hello, " + name);']
+                ] });
             });
             it('should remove line comment', async () => {
                 await testRecording(seq, { s: [[3, 5]] }, { s: [[3, 2]], d: [[3, 'hello("world");']]  });
-
-                await setSelections([[4, 0]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'hello("vscode");');
-                assert.deepStrictEqual(getSelections(), [[4, 0]]);
+                await testPlayback({ s: [[4, 0]] }, { s: [[4, 0]], d: [[4, 'hello("vscode");']] });
             });
             it('should add and remove line comment', async () => {
                 const seq = [ Cmd.CommentLine, Cmd.CommentLine ];
                 await testRecording(seq, { s: [[5, 5]] }, { s: [[5, 5]], d: [[5, 'hello("Code");']]  });
-
-                await setSelections([[1, 0]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(1).text, '    console.log("Hello, " + name);');
-                assert.deepStrictEqual(getSelections(), [[1, 0]]);
+                await testPlayback({ s: [[1, 0]] }, { s: [[1, 0]], d: [
+                    [1, '    console.log("Hello, " + name);']
+                ] });
             });
             it('should add/remove line comments on multiple lines', async () => {
                 await testRecording(seq, { s: [[0, 0, 3, 0]] }, { s: [[0, 3, 3, 0]], d: [
@@ -250,22 +237,18 @@ describe('Recording and Playback: Edit', () => {
                     [1, '//     console.log("Hello, " + name);' ],
                     [2, '// }' ]
                 ]  });
-
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'function hello(name) {');
-                assert.strictEqual(textEditor.document.lineAt(1).text, '    console.log("Hello, " + name);');
-                assert.strictEqual(textEditor.document.lineAt(2).text, '}');
-                assert.deepStrictEqual(getSelections(), [[0, 0, 3, 0]]);
+                await testPlayback({}, { s: [[0, 0, 3, 0]], d: [
+                    [0, 'function hello(name) {' ],
+                    [1, '    console.log("Hello, " + name);' ],
+                    [2, '}' ]
+                ]  });
             });
         });
         describe('addCommentLine', () => {
             const seq = [ Cmd.AddCommentLine ];
             it('should add line comment', async () => {
                 await testRecording(seq, { s: [[5, 5]] }, { s: [[5, 8]], d: [[5, '// hello("Code");']]  });
-
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(5).text, '// // hello("Code");');
-                assert.deepStrictEqual(getSelections(), [[5, 11]]);
+                await testPlayback({}, { s: [[5, 11]], d: [[5, '// // hello("Code");']] });
             });
             it('should add line comments on multiple lines', async () => {
                 await testRecording(seq, { s: [[0, 0, 3, 0]] }, { s: [[0, 3, 3, 0]], d: [
@@ -273,34 +256,28 @@ describe('Recording and Playback: Edit', () => {
                     [1, '//     console.log("Hello, " + name);' ],
                     [2, '// }' ]
                 ]  });
-
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(0).text, '// // function hello(name) {');
-                assert.strictEqual(textEditor.document.lineAt(1).text, '// //     console.log("Hello, " + name);');
-                assert.strictEqual(textEditor.document.lineAt(2).text, '// // }');
-                assert.deepStrictEqual(getSelections(), [[0, 6, 3, 0]]);
+                await testPlayback({}, { s: [[0, 6, 3, 0]], d: [
+                    [0, '// // function hello(name) {'],
+                    [1, '// //     console.log("Hello, " + name);'],
+                    [2, '// // }']
+                ] });
             });
         });
         describe('removeCommentLine', () => {
             const seq = [ Cmd.RemoveCommentLine ];
             it('should remove line comment', async () => {
                 await testRecording(seq, { s: [[3, 5]] }, { s: [[3, 2]], d: [[3, 'hello("world");']]  });
-
-                await setSelections([[4, 0]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'hello("vscode");');
-                assert.deepStrictEqual(getSelections(), [[4, 0]]);
+                await testPlayback({ s: [[4, 0]] }, { s: [[4, 0]], d: [[4, 'hello("vscode");']] });
             });
             it('should remove line comments on multiple lines', async () => {
                 await testRecording(seq, { s: [[3, 0, 5, 0]] }, { s: [[3, 0, 5, 0]], d: [
                     [3, 'hello("world");' ],
                     [4, 'hello("vscode");' ]
                 ] });
-
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'hello("world");');
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'hello("vscode");');
-                assert.deepStrictEqual(getSelections(), [[3, 0, 5, 0]]);
+                await testPlayback({}, { s: [[3, 0, 5, 0]], d: [
+                    [3, 'hello("world");'],
+                    [4, 'hello("vscode");']
+                ] });
             });
         });
     });
@@ -325,20 +302,12 @@ describe('Recording and Playback: Edit', () => {
             it('should copy one line', async () => {
                 const seq = [ Cmd.ClipboardCopy ];
                 await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 3]], c: 'fghij\n' });
-
-                await setSelections([[2, 4]]);
-                await keyboardMacro.playback();
-                assert.deepStrictEqual(getSelections(), [[2, 4]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'klmno\n');
+                await testPlayback({ s: [[2, 4]] }, { s: [[2, 4]], c: 'klmno\n' });
             });
             it('should copy selected range', async () => {
                 const seq = [ Cmd.ClipboardCopy ];
                 await testRecording(seq, { s: [[0, 3, 1, 2]] }, { s: [[0, 3, 1, 2]], c: 'de\nfg' });
-
-                await setSelections([[1, 2, 3, 4]]);
-                await keyboardMacro.playback();
-                assert.deepStrictEqual(getSelections(), [[1, 2, 3, 4]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'hij\nklmno\npqrs');
+                await testPlayback({ s: [[1, 2, 3, 4]] }, { s: [[1, 2, 3, 4]], c: 'hij\nklmno\npqrs' });
             });
         });
         describe('clipboardCutAction', () => {

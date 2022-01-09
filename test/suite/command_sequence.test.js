@@ -237,23 +237,25 @@ describe('CommandSequence', () => {
             assert.deepStrictEqual(seq.get(), [ MOVE1, MOVE2 ]);
         });
         it('should combine cursor motion to the left and successive typing with deleting to the right', () => {
-            const TYPE1 = {
-                command: 'internal:performCursorMotion',
-                args: { characterDelta: -1 }
-            };
-            const TYPE2 = {
-                command: 'internal:performType',
-                args: { deleteRight: 1, text: 'a' }
-            };
-            const TYPE12 = {
+            const INPUT = [
+                {
+                    command: 'internal:performCursorMotion',
+                    args: { characterDelta: -1 }
+                },
+                {
+                    command: 'internal:performType',
+                    args: { deleteRight: 1, text: 'a' }
+                }
+            ];
+            const EXPECTED = {
                 command: 'internal:performType',
                 args: { deleteLeft: 1, text: 'a' }
             };
             const seq = CommandSequence();
-            seq.push(TYPE1);
-            seq.push(TYPE2);
+            seq.push(INPUT[0]);
+            seq.push(INPUT[1]);
             seq.optimize();
-            assert.deepStrictEqual(seq.get(), [ TYPE12 ]);
+            assert.deepStrictEqual(seq.get(), [ EXPECTED ]);
         });
         it('should shrink three commands into one', () => {
             const INPUT = [
