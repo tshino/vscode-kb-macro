@@ -25,8 +25,9 @@ const reentrantGuard = (function() {
                 await body(args);
             } catch (error) {
                 printError(error);
+            } finally {
+                locked = false;
             }
-            locked = false;
         };
     };
     const makeGuardedCommandSync = function(func) {
@@ -39,8 +40,9 @@ const reentrantGuard = (function() {
                 func(args);
             } catch (error) {
                 printError(error);
+            } finally {
+                locked = false;
             }
-            locked = false;
         };
     };
 
