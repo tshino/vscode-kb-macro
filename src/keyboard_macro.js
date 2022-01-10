@@ -107,8 +107,9 @@ const KeyboardMacro = function({ awaitController }) {
             ok = false;
             console.error(error);
             console.info('kb-macro: Error in ' + context + ': ' + JSON.stringify(spec));
+        } finally {
+            await promise;
         }
-        await promise;
         return ok;
     };
 
@@ -192,12 +193,15 @@ const KeyboardMacro = function({ awaitController }) {
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
             }
-            const ok = await invokeCommandSync(spec, 'wrap');
-            if (ok) {
-                push(spec);
-            }
-            if (onEndWrappedCommandCallback) {
-                onEndWrappedCommandCallback();
+            try {
+                const ok = await invokeCommandSync(spec, 'wrap');
+                if (ok) {
+                    push(spec);
+                }
+            } finally {
+                if (onEndWrappedCommandCallback) {
+                    onEndWrappedCommandCallback();
+                }
             }
         }
     });
