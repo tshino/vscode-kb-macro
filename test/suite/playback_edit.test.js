@@ -316,24 +316,18 @@ describe('Recording and Playback: Edit', () => {
                 await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]], d: [
                     [ 0, 'fghij' ]
                 ], c: 'abcde\n' });
-
-                await setSelections([[2, 0]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'vwxyz');
-                assert.deepStrictEqual(getSelections(), [[2, 0]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'pqrstu\n');
+                await testPlayback({ s: [[2, 0]] }, { s: [[2, 0]], d: [
+                    [2, 'vwxyz']
+                ], c: 'pqrstu\n' });
             });
             it('should cut one line (2)', async () => {
                 const seq = [ Cmd.ClipboardCut_NotHOL ];
                 await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 0]], d: [
                     [ 0, 'fghij' ]
                 ], c: 'abcde\n' });
-
-                await setSelections([[2, 2]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'vwxyz');
-                assert.deepStrictEqual(getSelections(), [[2, 0]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'pqrstu\n');
+                await testPlayback({ s: [[2, 2]] }, { s: [[2, 0]], d: [
+                    [2, 'vwxyz']
+                ], c: 'pqrstu\n' });
             });
             it('should cut multiple lines', async () => {
                 const seq = [ Cmd.ClipboardCut_HOL, Cmd.ClipboardCut_HOL ];
@@ -341,24 +335,18 @@ describe('Recording and Playback: Edit', () => {
                     [ 1, 'pqrstu' ],
                     [ 2, 'vwxyz' ]
                 ], c: 'klmno\n' });
-
-                await setSelections([[0, 0]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'vwxyz');
-                assert.deepStrictEqual(getSelections(), [[0, 0]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'pqrstu\n');
+                await testPlayback({ s: [[0, 0]] }, { s: [[0, 0]], d: [
+                    [0, 'vwxyz']
+                ], c: 'pqrstu\n' });
             });
             it('should cut selected range', async () => {
                 const seq = [ Cmd.ClipboardCut_NotHOL ];
                 await testRecording(seq, { s: [[0, 3, 1, 2]] }, { s: [[0, 3]], d: [
                     [ 0, 'abchij' ],
                 ], c: 'de\nfg' });
-
-                await setSelections([[1, 2, 3, 4]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'klz');
-                assert.deepStrictEqual(getSelections(), [[1, 2]]);
-                assert.strictEqual(await TestUtil.readClipboard(), 'mno\npqrstu\nvwxy');
+                await testPlayback({ s: [[1, 2, 3, 4]] }, { s: [[1, 2]], d: [
+                    [1, 'klz']
+                ], c: 'mno\npqrstu\nvwxy' });
             });
         });
         describe('clipboardPasteAction', () => {
@@ -368,13 +356,10 @@ describe('Recording and Playback: Edit', () => {
                     [ 0, 'ABCDE' ],
                     [ 1, 'abcde' ],
                 ] });
-
-                await setSelections([[2, 0]]);
-                await vscode.env.clipboard.writeText('FGHIJ\n');
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'FGHIJ');
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'fghij');
-                assert.deepStrictEqual(getSelections(), [[3, 0]]);
+                await testPlayback({ s: [[2, 0]], c: 'FGHIJ\n' }, { s: [[3, 0]], d: [
+                    [2, 'FGHIJ'],
+                    [3, 'fghij']
+                ]});
             });
             it('should insert one line multiple times', async () => {
                 const seq = [ Cmd.ClipboardPaste, Cmd.ClipboardPaste ];
@@ -383,26 +368,20 @@ describe('Recording and Playback: Edit', () => {
                     [ 2, 'ABCDE' ],
                     [ 3, 'fghij' ]
                 ] });
-
-                await setSelections([[0, 0]]);
-                await vscode.env.clipboard.writeText('FGHIJ\n');
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(0).text, 'FGHIJ');
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'FGHIJ');
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'abcde');
-                assert.deepStrictEqual(getSelections(), [[2, 0]]);
+                await testPlayback({ s: [[0, 0]], c: 'FGHIJ\n' }, { s: [[2, 0]], d: [
+                    [0, 'FGHIJ'],
+                    [1, 'FGHIJ'],
+                    [2, 'abcde']
+                ] });
             });
             it('should replace selected range', async () => {
                 const seq = [ Cmd.ClipboardPaste ];
                 await testRecording(seq, { s: [[0, 3, 1, 2]], c: 'ABCDE' }, { s: [[0, 8]], d: [
                     [ 0, 'abcABCDEhij' ]
                 ] });
-
-                await setSelections([[1, 2, 3, 4]]);
-                await vscode.env.clipboard.writeText('FGHIJ');
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(1).text, 'klFGHIJz');
-                assert.deepStrictEqual(getSelections(), [[1, 7]]);
+                await testPlayback({ s: [[1, 2, 3, 4]], c: 'FGHIJ' }, { s: [[1, 7]], d: [
+                    [1, 'klFGHIJz']
+                ] });
             });
         });
     });
@@ -423,12 +402,10 @@ describe('Recording and Playback: Edit', () => {
                     [1, 'fghij'],
                     [2, 'fghij']
                 ] });
-
-                await setSelections([[4, 4]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'pqrstu');
-                assert.strictEqual(textEditor.document.lineAt(5).text, 'pqrstu');
-                assert.deepStrictEqual(getSelections(), [[5, 4]]);
+                await testPlayback({ s: [[4, 4]] }, { s: [[5, 4]], d: [
+                    [4, 'pqrstu'],
+                    [5, 'pqrstu']
+                ] });
             });
             it('should duplicate selected lines', async () => {
                 const seq = [ Cmd.CopyLinesDown ];
@@ -438,14 +415,12 @@ describe('Recording and Playback: Edit', () => {
                     [3, 'fghij'],
                     [4, 'klmno']
                 ] });
-
-                await setSelections([[4, 3, 5, 2]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(5).text, 'pqrstu');
-                assert.strictEqual(textEditor.document.lineAt(6).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(7).text, 'pqrstu');
-                assert.deepStrictEqual(getSelections(), [[6, 3, 7, 2]]);
+                await testPlayback({ s: [[4, 3, 5, 2]] }, { s: [[6, 3, 7, 2]], d: [
+                    [4, 'klmno'],
+                    [5, 'pqrstu'],
+                    [6, 'klmno'],
+                    [7, 'pqrstu']
+                ] });
             });
         });
         describe('copyLinesUpAction', () => {
@@ -455,12 +430,10 @@ describe('Recording and Playback: Edit', () => {
                     [1, 'fghij'],
                     [2, 'fghij']
                 ] });
-
-                await setSelections([[4, 4]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'pqrstu');
-                assert.strictEqual(textEditor.document.lineAt(5).text, 'pqrstu');
-                assert.deepStrictEqual(getSelections(), [[4, 4]]);
+                await testPlayback({ s: [[4, 4]] }, { s: [[4, 4]], d: [
+                    [4, 'pqrstu'],
+                    [5, 'pqrstu']
+                ] });
             });
             it('should duplicate selected lines', async () => {
                 const seq = [ Cmd.CopyLinesUp ];
@@ -470,14 +443,12 @@ describe('Recording and Playback: Edit', () => {
                     [3, 'fghij'],
                     [4, 'klmno']
                 ] });
-
-                await setSelections([[4, 3, 5, 2]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(5).text, 'pqrstu');
-                assert.strictEqual(textEditor.document.lineAt(6).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(7).text, 'pqrstu');
-                assert.deepStrictEqual(getSelections(), [[4, 3, 5, 2]]);
+                await testPlayback({ s: [[4, 3, 5, 2]] }, { s: [[4, 3, 5, 2]], d: [
+                    [4, 'klmno'],
+                    [5, 'pqrstu'],
+                    [6, 'klmno'],
+                    [7, 'pqrstu']
+                ] });
             });
         });
     });
@@ -498,12 +469,10 @@ describe('Recording and Playback: Edit', () => {
                     [1, 'klmno'],
                     [2, 'fghij']
                 ] });
-
-                await setSelections([[3, 4]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'vwxyz');
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'pqrstu');
-                assert.deepStrictEqual(getSelections(), [[4, 4]]);
+                await testPlayback({ s: [[3, 4]] }, { s: [[4, 4]], d: [
+                    [3, 'vwxyz'],
+                    [4, 'pqrstu']
+                ] });
             });
             it('should move selected lines down', async () => {
                 const seq = [ Cmd.MoveLinesDown ];
@@ -512,13 +481,11 @@ describe('Recording and Playback: Edit', () => {
                     [2, 'fghij'],
                     [3, 'klmno']
                 ] });
-
-                await setSelections([[3, 3, 4, 2]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(3).text, '');
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'klmno');
-                assert.strictEqual(textEditor.document.lineAt(5).text, 'vwxyz');
-                assert.deepStrictEqual(getSelections(), [[4, 3, 5, 2]]);
+                await testPlayback({ s: [[3, 3, 4, 2]] }, { s: [[4, 3, 5, 2]], d: [
+                    [3, ''],
+                    [4, 'klmno'],
+                    [5, 'vwxyz']
+                ] });
             });
         });
         describe('moveLinesUpAction', () => {
@@ -528,12 +495,10 @@ describe('Recording and Playback: Edit', () => {
                     [0, 'fghij'],
                     [1, 'abcde']
                 ] });
-
-                await setSelections([[3, 4]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'pqrstu');
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'klmno');
-                assert.deepStrictEqual(getSelections(), [[2, 4]]);
+                await testPlayback({ s: [[3, 4]] }, { s: [[2, 4]], d: [
+                    [2, 'pqrstu'],
+                    [3, 'klmno']
+                ] });
             });
             it('should move selected lines down', async () => {
                 const seq = [ Cmd.MoveLinesUp ];
@@ -542,13 +507,11 @@ describe('Recording and Playback: Edit', () => {
                     [1, 'klmno'],
                     [2, 'abcde']
                 ] });
-
-                await setSelections([[3, 3, 4, 2]]);
-                await keyboardMacro.playback();
-                assert.strictEqual(textEditor.document.lineAt(2).text, 'pqrstu');
-                assert.strictEqual(textEditor.document.lineAt(3).text, 'vwxyz');
-                assert.strictEqual(textEditor.document.lineAt(4).text, 'abcde');
-                assert.deepStrictEqual(getSelections(), [[2, 3, 3, 2]]);
+                await testPlayback({ s: [[3, 3, 4, 2]] }, { s: [[2, 3, 3, 2]], d: [
+                    [2, 'pqrstu'],
+                    [3, 'vwxyz'],
+                    [4, 'abcde']
+                ] });
             });
         });
     });
