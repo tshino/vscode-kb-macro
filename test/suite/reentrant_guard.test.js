@@ -252,4 +252,258 @@ describe('reentrantGuard', () => {
             }
         });
     });
+    describe('makeQueueableCommand', () => {
+        const makeQueueableCommand = reentrantGuard.makeQueueableCommand;
+        const logs = [];
+        beforeEach(() => {
+            logs.length = 0;
+        });
+        it('should return an async function', async () => {
+            const func = makeQueueableCommand(() => {});
+            assert.strictEqual(typeof func, 'function');
+            assert.strictEqual(func.constructor.name, 'AsyncFunction');
+        });
+        it('should return a function that invokes the given function', async () => {
+            const target = function() {
+                logs.push('hello');
+            };
+            const func = makeQueueableCommand(target);
+            assert.deepStrictEqual(logs, []);
+            await func();
+            assert.deepStrictEqual(logs, [ 'hello' ]);
+            await func();
+            assert.deepStrictEqual(logs, [ 'hello', 'hello' ]);
+        });
+        it('should return a function that passes arguments to the given function', async () => {
+            const target = function(arg) {
+                logs.push('hello ' + arg);
+            };
+            const func = makeQueueableCommand(target);
+            await func('world');
+            assert.deepStrictEqual(logs, [ 'hello world' ]);
+        });
+        it('should return a function that invokes the given async function', async () => {
+            const asyncTarget = async function() {
+                logs.push('hello');
+                await TestUtil.sleep(10);
+                logs.push('bye');
+            };
+            const func = makeQueueableCommand(asyncTarget);
+            logs.push('before call');
+            await func();
+            logs.push('after call');
+            assert.deepStrictEqual(logs, [
+                'before call',
+                'hello',
+                'bye',
+                'after call'
+            ]);
+        });
+        it('should enqueue and serialize invocation of the function', async () => {
+            const asyncTarget = async function(arg) {
+                logs.push('hello ' + arg);
+                await TestUtil.sleep(10);
+                logs.push('bye');
+            };
+            const func = makeQueueableCommand(asyncTarget);
+            logs.push('before concurrent call');
+            const promise1 = func('1');
+            const promise2 = func('2');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 1);
+            await Promise.all([promise1, promise2]);
+            logs.push('after concurrent call');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 0);
+            await func('3');
+            logs.push('after third call');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 0);
+            assert.deepStrictEqual(logs, [
+                'before concurrent call',
+                'hello 1',
+                'bye',
+                'hello 2',
+                'bye',
+                'after concurrent call',
+                'hello 3',
+                'bye',
+                'after third call'
+            ]);
+        });
+        it('should not enqueue over queueSize if specified', async () => {
+            const asyncTarget = async function(arg) {
+                logs.push('hello ' + arg);
+                await TestUtil.sleep(10);
+                logs.push('bye');
+            };
+            const func = makeQueueableCommand(asyncTarget, { queueSize: 3 });
+            logs.push('before concurrent call');
+            const promise1 = func('1');
+            const promise2 = func('2');
+            const promise3 = func('3');
+            const promise4 = func('4');
+            const promise5 = func('5');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 3);
+            await Promise.all([promise1, promise2, promise3, promise4, promise5]);
+            logs.push('after concurrent call');
+            await func('6');
+            logs.push('after last call');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 0);
+            assert.deepStrictEqual(logs, [
+                'before concurrent call',
+                'hello 1',
+                'bye',
+                'hello 2',
+                'bye',
+                'hello 3',
+                'bye',
+                'hello 4',
+                'bye',
+                'after concurrent call',
+                'hello 6',
+                'bye',
+                'after last call'
+            ]);
+        });
+        it('should prevent queueable function from interrupting guarded functions', async () => {
+            const asyncTarget = async function(arg) {
+                logs.push('hello ' + arg);
+                await TestUtil.sleep(10);
+                logs.push('bye');
+            };
+            const guarded = reentrantGuard.makeGuardedCommand(asyncTarget);
+            const queueable = makeQueueableCommand(asyncTarget);
+            logs.push('before concurrent call');
+            const promise1 = guarded('guarded');
+            const promise2 = queueable('queueable');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 0);
+            await Promise.all([promise1, promise2]);
+            logs.push('after concurrent call');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 0);
+            assert.deepStrictEqual(logs, [
+                'before concurrent call',
+                'hello guarded',
+                'bye',
+                'after concurrent call'
+            ]);
+        });
+        it('should prevent guarded function from interrupting queueable functions', async () => {
+            const asyncTarget = async function(arg) {
+                logs.push('hello ' + arg);
+                await TestUtil.sleep(10);
+                logs.push('bye');
+            };
+            const guarded = reentrantGuard.makeGuardedCommand(asyncTarget);
+            const queueable = makeQueueableCommand(asyncTarget);
+            logs.push('before concurrent call');
+            const promise1 = queueable('queueable');
+            const promise2 = guarded('guarded');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 0);
+            await Promise.all([promise1, promise2]);
+            logs.push('after concurrent call');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 0);
+            assert.deepStrictEqual(logs, [
+                'before concurrent call',
+                'hello queueable',
+                'bye',
+                'after concurrent call'
+            ]);
+        });
+        it('should prevent the function from leaking exceptions', async () => {
+            const old = reentrantGuard.setPrintError(error => {
+                logs.push('error: ' + error);
+            });
+            try {
+                const willThrow = makeQueueableCommand(function() {
+                    logs.push('will throw');
+                    throw 'error';
+                });
+                const wontThrow = makeQueueableCommand(function() {
+                    logs.push('will not throw');
+                });
+                logs.push('before call');
+                await willThrow();
+                await wontThrow();
+                logs.push('after call');
+                assert.deepStrictEqual(logs, [
+                    'before call',
+                    'will throw',
+                    'error: error',
+                    'will not throw',
+                    'after call'
+                ]);
+            } finally {
+                reentrantGuard.setPrintError(old);
+            }
+        });
+        it('should invoke queued function even if another queued function threw exception (1)', async () => {
+            const old = reentrantGuard.setPrintError(error => {
+                logs.push('error: ' + error);
+            });
+            try {
+                const willThrow = makeQueueableCommand(async function() {
+                    logs.push('will throw...');
+                    await TestUtil.sleep(10);
+                    logs.push('will throw now');
+                    throw 'error';
+                });
+                const wontThrow = makeQueueableCommand(async function() {
+                    logs.push('will not throw');
+                });
+                logs.push('before concurrent call');
+                const promise1 = willThrow();
+                const promise2 = wontThrow();
+                await Promise.all([promise1, promise2]);
+                logs.push('after concurrent call');
+                assert.deepStrictEqual(logs, [
+                    'before concurrent call',
+                    'will throw...',
+                    'will throw now',
+                    'error: error',
+                    'will not throw',
+                    'after concurrent call'
+                ]);
+            } finally {
+                reentrantGuard.setPrintError(old);
+            }
+        })
+        it('should invoke queued function even if another queued function threw exception (2)', async () => {
+            const old = reentrantGuard.setPrintError(error => {
+                logs.push('error: ' + error);
+            });
+            try {
+                const wontThrow1 = makeQueueableCommand(async function() {
+                    logs.push('will not throw (1) begin');
+                    await TestUtil.sleep(10);
+                    logs.push('will not throw (1) end');
+                });
+                const willThrow = makeQueueableCommand(async function() {
+                    logs.push('will throw...');
+                    await TestUtil.sleep(10);
+                    logs.push('will throw now');
+                    throw 'error';
+                });
+                const wontThrow2 = makeQueueableCommand(async function() {
+                    logs.push('will not throw (2)');
+                });
+                logs.push('before concurrent call');
+                const promise1 = wontThrow1();
+                const promise2 = willThrow();
+                await promise1;
+                const promise3 = wontThrow2();
+                await Promise.all([promise2, promise3]);
+                logs.push('after concurrent call');
+                assert.deepStrictEqual(logs, [
+                    'before concurrent call',
+                    'will not throw (1) begin',
+                    'will not throw (1) end',
+                    'will throw...',
+                    'will throw now',
+                    'error: error',
+                    'will not throw (2)',
+                    'after concurrent call'
+                ]);
+            } finally {
+                reentrantGuard.setPrintError(old);
+            }
+        })
+    });
 });

@@ -2,7 +2,11 @@
 
 const reentrantGuard = (function() {
 
-    let locked = false;
+    const state = {
+        locked: false,
+        queueable: false
+    };
+    const queue = [];
 
     let printError = defaultPrintError;
     function defaultPrintError(error) {
@@ -17,31 +21,64 @@ const reentrantGuard = (function() {
 
     const makeGuardedCommand = function(body) {
         return async function(args) {
-            if (locked) {
+            if (state.locked) {
                 return;
             }
-            locked = true;
+            state.locked = true;
             try {
                 await body(args);
             } catch (error) {
                 printError(error);
             } finally {
-                locked = false;
+                state.locked = false;
             }
         };
     };
     const makeGuardedCommandSync = function(func) {
         return function(args) {
-            if (locked) {
+            if (state.locked) {
                 return;
             }
-            locked = true;
+            state.locked = true;
             try {
                 func(args);
             } catch (error) {
                 printError(error);
             } finally {
-                locked = false;
+                state.locked = false;
+            }
+        };
+    };
+    const makeQueueableCommand = function(body, { queueSize = 0 } = {}) {
+        return async function(args) {
+            if (state.locked) {
+                if (state.queueable) {
+                    if (!queueSize || queue.length < queueSize) {
+                        queue.push([body, args]);
+                    }
+                }
+                return;
+            }
+            state.locked = true;
+            state.queueable = true;
+            try {
+                try {
+                    await body(args);
+                } catch (error) {
+                    printError(error);
+                }
+                while (0 < queue.length) {
+                    try {
+                        const [body, args] = queue[0];
+                        queue.splice(0, 1);
+                        await body(args);
+                    } catch (error) {
+                        printError(error);
+                    }
+                }
+            } finally {
+                state.locked = false;
+                state.queueable = false;
             }
         };
     };
@@ -49,9 +86,11 @@ const reentrantGuard = (function() {
     return {
         makeGuardedCommand,
         makeGuardedCommandSync,
+        makeQueueableCommand,
 
         // testing purpose only
-        setPrintError
+        setPrintError,
+        getQueueLength: function() { return queue.length; }
     };
 })();
 
