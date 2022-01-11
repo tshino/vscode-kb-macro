@@ -551,7 +551,7 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log', args: { test: '1' } }
             ]);
         });
-        it('should enqueue and serialize concurrent call', async () => {
+        it('should enqueue and serialize concurrent calls', async () => {
             keyboardMacro.startRecording();
             const promise1 = keyboardMacro.wrap({ command: 'internal:log' });
             const promise2 = keyboardMacro.wrap({ command: 'internal:log' });
