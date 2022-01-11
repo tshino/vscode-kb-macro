@@ -184,7 +184,13 @@ const KeyboardMacro = function({ awaitController }) {
         return spec;
     };
 
-    const wrap = reentrantGuard.makeGuardedCommand(async function(args) {
+    // WrapQueueSize
+    // independently adjustable value.
+    // min value is 1.
+    // greater value reduces input rejection. 2 or 3 is enough.
+    // greater value leads to too many queued and delayed command execution.
+    const WrapQueueSize = 2;
+    const wrap = reentrantGuard.makeQueueableCommand(async function(args) {
         if (recording) {
             const spec = makeCommandSpec(args);
             if (!spec) {
@@ -204,7 +210,7 @@ const KeyboardMacro = function({ awaitController }) {
                 }
             }
         }
-    });
+    }, { queueSize: WrapQueueSize });
 
     return {
         RecordingStateReason,
@@ -228,7 +234,8 @@ const KeyboardMacro = function({ awaitController }) {
         isRecording: () => { return recording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
-        setShowInputBox // testing purpose only
+        setShowInputBox,
+        WrapQueueSize
     };
 };
 
