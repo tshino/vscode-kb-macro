@@ -3,6 +3,8 @@
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
 ### [Unreleased]
+- Feature
+  - Made the `kb-macro.wrap` command queueable to reduce input misses during recording. [#32](https://github.com/tshino/vscode-kb-macro/pull/32)
 - Documentation
   - Added 'Tips' section to the README.
 
