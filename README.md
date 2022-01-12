@@ -140,16 +140,16 @@ This is the default keybinding set for recording/playback of this extension. Cop
 ### For recording
 | Command name | Command ID | Function |
 | ------------ | ---------- | -------- |
-| `Keyboard Macro: Start Recording` | `kb-macro.startRecording` | Start recording |
-| `Keyboard Macro: Finish Recording` | `kb-macro.finishRecording` | Stop recording |
-| `Keyboard Macro: Cancel Recording` | `kb-macro.cancelRecording` | Stop recording and discard the recorded sequence |
+| `Start Recording` | `kb-macro.startRecording` | Start recording |
+| `Finish Recording` | `kb-macro.finishRecording` | Stop recording |
+| `Cancel Recording` | `kb-macro.cancelRecording` | Stop recording and discard the recorded sequence |
 
 ### For playback
 | Command name | Command ID | Function |
 | ------------ | ---------- | -------- |
-| `Keyboard Macro: Playback` | `kb-macro.playback` | Perform playback of the last recorded sequence |
-| `Keyboard Macro: Abort Playback` | `kb-macro.abortPlayback` | Abort currently-running playback |
-| `Keyboard Macro: Repeat Playback` | `kb-macro.repeatPlayback` | Perform playback specified number of times |
+| `Playback` | `kb-macro.playback` | Perform playback of the last recorded sequence |
+| `Abort Playback` | `kb-macro.abortPlayback` | Abort currently-running playback |
+| `Repeat Playback` | `kb-macro.repeatPlayback` | Perform playback specified number of times |
 
 The `kb-macro.repeatPlayback` command shows an input box to specify the number of times.
 
