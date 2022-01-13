@@ -140,7 +140,7 @@ const KeyboardMacro = function({ awaitController }) {
             shouldAbortPlayback = false;
         }
     };
-    const playback = reentrantGuard.makeGuardedCommand(playbackImpl);
+    const playback = reentrantGuard.makeGuardedCommand(args => playbackImpl(args));
 
     const abortPlayback = async function() {
         if (playing) {
@@ -162,9 +162,10 @@ const KeyboardMacro = function({ awaitController }) {
             validateInput: validatePositiveIntegerInput
         });
         if (input) {
-            await playbackImpl({
+            const args = {
                 repeat: Number(input)
-            });
+            };
+            await playbackImpl(args);
         }
     });
 
