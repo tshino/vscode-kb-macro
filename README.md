@@ -13,7 +13,7 @@ With this Visual Studio Code extension, you can record and playback your keyboar
 ```
 
 **IMPORTANT NOTE**
-  - If you are using any other keymap extension or have custom keybindings in the `keybindings.json`, unfortunately, likely keystrokes in them won't be recorded. See the section below to enable them.
+  - If you are using any other keymap extension or you have custom keybindings in the `keybindings.json`, unfortunately, likely keystrokes in them won't be recorded. See the section below to enable them.
 
 **YOU CAN RECORD** (basically):
   - Characters that you type in a text editor
@@ -165,6 +165,7 @@ this keyboard shortcut performs playback 5 times.
 
 
 ## Known issues
+- Typing in the search input box during recording may cause unexpected cursor movements during playback. [#33](https://github.com/tshino/vscode-kb-macro/issues/33)
 - Keyboard shortcuts that VS Code newly introduced may not be supported by this extension. Because this extension is configured with a fixed set of wrapper keybindings based on a particular version of VS Code for Windows, Linux, and macOS.
 - This extension is intended to work with VS Code on Windows, Linux, and macOS, but is tested mainly on Windows at this moment.
 
