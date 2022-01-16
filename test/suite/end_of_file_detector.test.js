@@ -158,13 +158,5 @@ describe('EndOfFileDetector', () => {
             setSelections([[3, 8]]);
             assert.strictEqual(detector.reachedEndOfFile(), true);
         });
-        it('should return true if it reaches the last line of the document', async () => {
-            setSelections([[3, 0]]);
-            const detector = EndOfFileDetector(textEditor);
-            setSelections([[4, 0]]);
-            assert.strictEqual(detector.reachedEndOfFile(), false);
-            setSelections([[5, 0]]);
-            assert.strictEqual(detector.reachedEndOfFile(), true);
-        });
     });
 });
