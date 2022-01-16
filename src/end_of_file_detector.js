@@ -37,6 +37,47 @@ const endOfFileDetectorUtil = (function() {
     };
 })();
 
+const EndOfFileDetector = function(textEditor) {
+    let lastDistanceBelow = endOfFileDetectorUtil.calculateDistanceBelow(textEditor);
+
+    // whether distanceBelow[0] is predicted to decline or not
+    let belowLinesDeclines = null;
+
+    const reachedEndOfFile = function() {
+        const distanceBelow = endOfFileDetectorUtil.calculateDistanceBelow(textEditor);
+        const compBelow = endOfFileDetectorUtil.compareDistance(distanceBelow, lastDistanceBelow);
+        if (distanceBelow[0] === 0 && distanceBelow[1] === 0) {
+            // it reached the end of the document
+            return true;
+        }
+        if (compBelow >= 0) {
+            // distance to the bottom of the document should always decline, otherwise we stop
+            return true;
+        }
+        if (belowLinesDeclines === null) {
+            belowLinesDeclines = distanceBelow[0] < lastDistanceBelow[0];
+        } else if (belowLinesDeclines) {
+            if (distanceBelow[0] >= lastDistanceBelow[0]) {
+                // rest lines below the cursor should decline consistently, otherwise, we stop
+                return true;
+            }
+            if (distanceBelow[0] === 0) {
+                // it reached the last line of the document
+                return true;
+            }
+        }
+        lastDistanceBelow = distanceBelow;
+        return false;
+    };
+
+    return {
+        reachedEndOfFile
+    };
+};
+
 module.exports = {
+    EndOfFileDetector,
+
+    // testing purpose only
     endOfFileDetectorUtil
 };
