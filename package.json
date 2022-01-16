@@ -28,6 +28,7 @@
 		"onCommand:kb-macro.playback",
 		"onCommand:kb-macro.abortPlayback",
 		"onCommand:kb-macro.repeatPlayback",
+		"onCommand:kb-macro.repeatPlaybackTillEndOfFile",
 		"onCommand:kb-macro.wrap"
 	],
 	"main": "./src/extension.js",
@@ -105,6 +106,11 @@
 			{
 				"command": "kb-macro.repeatPlayback",
 				"title": "Repeat Playback",
+				"category": "Keyboard Macro"
+			},
+			{
+				"command": "kb-macro.repeatPlaybackTillEndOfFile",
+				"title": "Repeat Playback Till End of File",
 				"category": "Keyboard Macro"
 			}
 		],

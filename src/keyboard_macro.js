@@ -1,6 +1,7 @@
 'use strict';
 const vscode = require('vscode');
 const { CommandSequence } = require('./command_sequence.js');
+const { EndOfFileDetector } = require('./end_of_file_detector.js');
 const reentrantGuard = require('./reentrant_guard.js');
 
 const KeyboardMacro = function({ awaitController }) {
@@ -113,7 +114,7 @@ const KeyboardMacro = function({ awaitController }) {
         return ok;
     };
 
-    const playbackImpl = async function(args) {
+    const playbackImpl = async function(args, { tillEndOfFile = false } = {}) {
         if (recording) {
             return;
         }
@@ -123,11 +124,23 @@ const KeyboardMacro = function({ awaitController }) {
             args = (args && typeof(args) === 'object') ? args : {};
             const repeat = typeof(args.repeat) === 'number' ? args.repeat : 1;
             const commands = sequence.get();
+            let endOfFileDetector;
+            if (tillEndOfFile) {
+                endOfFileDetector = EndOfFileDetector(vscode.window.activeTextEditor);
+            }
             let ok = true;
-            for (let k = 0; k < repeat && ok && !shouldAbortPlayback; k++) {
+            for (let k = 0; k < repeat || tillEndOfFile; k++) {
                 for (const spec of commands) {
                     ok = await invokeCommandSync(spec, 'playback');
                     if (!ok || shouldAbortPlayback) {
+                        break;
+                    }
+                }
+                if (!ok || shouldAbortPlayback) {
+                    break;
+                }
+                if (tillEndOfFile) {
+                    if (endOfFileDetector.reachedEndOfFile()) {
                         break;
                     }
                 }
@@ -167,6 +180,12 @@ const KeyboardMacro = function({ awaitController }) {
             };
             await playbackImpl(args);
         }
+    });
+
+    const repeatPlaybackTillEndOfFile = reentrantGuard.makeGuardedCommand(async function() {
+        const args = {};
+        const option = { tillEndOfFile: true };
+        await playbackImpl(args, option);
     });
 
     const makeCommandSpec = function(args) {
@@ -230,6 +249,7 @@ const KeyboardMacro = function({ awaitController }) {
         abortPlayback,
         validatePositiveIntegerInput,
         repeatPlayback,
+        repeatPlaybackTillEndOfFile,
         wrap,
 
         // testing purpose only

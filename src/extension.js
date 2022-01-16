@@ -34,6 +34,7 @@ function activate(context) {
     registerCommand('playback', keyboardMacro.playback);
     registerCommand('abortPlayback', keyboardMacro.abortPlayback);
     registerCommand('repeatPlayback', keyboardMacro.repeatPlayback);
+    registerCommand('repeatPlaybackTillEndOfFile', keyboardMacro.repeatPlaybackTillEndOfFile);
     registerCommand('wrap', keyboardMacro.wrap);
 
     keyboardMacro.registerInternalCommand('internal:performType', internalCommands.performType);
