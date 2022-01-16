@@ -10,7 +10,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [0.9.0] - 2022-01-6
 - New
-  - Added a new `Keybaord Macro: Repeat Playback` command, which lets the user input a number and then repeats the macro specified times. [#29](https://github.com/tshino/vscode-kb-macro/pull/29)
+  - Added a new `Keyboard Macro: Repeat Playback` command, which lets the user input a number and then repeats the macro specified times. [#29](https://github.com/tshino/vscode-kb-macro/pull/29)
 - Documentation
   - Added 'Commands' section to the README.
 - Update
