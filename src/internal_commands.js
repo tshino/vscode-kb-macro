@@ -56,7 +56,7 @@ const internalCommands = (function() {
             const character = Math.max(0, lineLength + Math.min(characterDelta, 0));
             return new vscode.Position(line, character);
         } else if (0 < lineDelta) {
-            const line = Math.min(position.line + lineDelta, document.lineCount);
+            const line = Math.min(position.line + lineDelta, document.lineCount - 1);
             const lineLength = document.lineAt(line).text.length;
             const character = Math.min(Math.max(0, characterDelta), lineLength);
             return new vscode.Position(line, character);
