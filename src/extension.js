@@ -36,7 +36,7 @@ function activate(context) {
     registerCommand('repeatPlayback', keyboardMacro.repeatPlayback);
     registerCommand('wrap', keyboardMacro.wrap);
 
-    keyboardMacro.registerInternalCommand('internal:performType', internalCommands.performType);
+    keyboardMacro.registerInternalCommand('$type', internalCommands.performType);
     keyboardMacro.registerInternalCommand('internal:performCursorMotion', internalCommands.performCursorMotion);
 
     const modeIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 110);
@@ -124,7 +124,7 @@ function activate(context) {
         function(type, args) {
             if (type === typingDetector.TypingType.Direct) {
                 keyboardMacro.push({
-                    command: 'internal:performType',
+                    command: '$type',
                     args: args
                 });
             } else if (type === typingDetector.TypingType.Default) {

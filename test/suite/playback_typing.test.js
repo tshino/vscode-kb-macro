@@ -9,8 +9,8 @@ const { keyboardMacro, awaitController } = require('../../src/extension.js');
 describe('Recording and Playback: Typing', () => {
     let textEditor;
     const Cmd = CommandsToTest;
-    const Type = text => ({ command: 'internal:performType', args: { text } });
-    const ReplaceRight = (deleteRight, text) => ({ command: 'internal:performType', args: { deleteRight, text } });
+    const Type = text => ({ command: '$type', args: { text } });
+    const ReplaceRight = (deleteRight, text) => ({ command: '$type', args: { deleteRight, text } });
     const DefaultType = text => ({ command: 'default:type', args: { text } });
     const MoveLeft = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: -delta } });
     const MoveRight = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: delta } });

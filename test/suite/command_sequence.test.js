@@ -47,19 +47,19 @@ describe('CommandSequence', () => {
         });
         it('should concatenate consecutive direct typing commands', () => {
             const TYPE1 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'A' }
             };
             const TYPE2 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'B' }
             };
             const TYPE3 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'C' }
             };
             const TYPE123 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'ABC' }
             };
             const seq = CommandSequence();
@@ -71,11 +71,11 @@ describe('CommandSequence', () => {
         });
         it('should not concatenate direct typing commands with deleting (1)', () => {
             const TYPE1 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'X' }
             };
             const TYPE2 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { deleteLeft: 2, text: 'ABC' }
             };
             const seq = CommandSequence();
@@ -86,11 +86,11 @@ describe('CommandSequence', () => {
         });
         it('should not concatenate direct typing commands with deleting (2)', () => {
             const TYPE1 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'X' }
             };
             const TYPE2 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { deleteRight: 2, text: 'ABC' }
             };
             const seq = CommandSequence();
@@ -101,19 +101,19 @@ describe('CommandSequence', () => {
         });
         it('should concatenate direct typing followed by another typing with deleting to the left', () => {
             const TYPE1 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'a' }
             };
             const TYPE2 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'b' }
             };
             const TYPE3 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { deleteLeft: 2, text: 'ABC' }
             };
             const TYPE123 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'ABC' }
             };
             const seq = CommandSequence();
@@ -125,15 +125,15 @@ describe('CommandSequence', () => {
         });
         it('should concatenate direct typing with deleting followed by another typing without deleting (1)', () => {
             const TYPE1 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { deleteLeft: 1, text: 'a' }
             };
             const TYPE2 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'b' }
             };
             const TYPE12 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { deleteLeft: 1, text: 'ab' }
             };
             const seq = CommandSequence();
@@ -144,15 +144,15 @@ describe('CommandSequence', () => {
         });
         it('should concatenate direct typing with deleting followed by another typing without deleting (2)', () => {
             const TYPE1 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { deleteRight: 1, text: 'a' }
             };
             const TYPE2 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { text: 'b' }
             };
             const TYPE12 = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { deleteRight: 1, text: 'ab' }
             };
             const seq = CommandSequence();
@@ -243,12 +243,12 @@ describe('CommandSequence', () => {
                     args: { characterDelta: -1 }
                 },
                 {
-                    command: 'internal:performType',
+                    command: '$type',
                     args: { deleteRight: 1, text: 'a' }
                 }
             ];
             const EXPECTED = {
-                command: 'internal:performType',
+                command: '$type',
                 args: { deleteLeft: 1, text: 'a' }
             };
             const seq = CommandSequence();
@@ -260,7 +260,7 @@ describe('CommandSequence', () => {
         it('should shrink three commands into one', () => {
             const INPUT = [
                 {
-                    command: 'internal:performType',
+                    command: '$type',
                     args: { text: '()' }
                 },
                 {
@@ -268,13 +268,13 @@ describe('CommandSequence', () => {
                     args: { characterDelta: -1 }
                 },
                 {
-                    command: 'internal:performType',
+                    command: '$type',
                     args: { deleteRight: 1, text: ')' }
                 }
             ];
             const EXPECTED = [
                 {
-                    command: 'internal:performType',
+                    command: '$type',
                     args: { text: '()' }
                 }
             ];
