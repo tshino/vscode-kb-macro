@@ -12,22 +12,22 @@ describe('Recording and Playback: Typing', () => {
     const Type = text => ({ command: '$type', args: { text } });
     const ReplaceRight = (deleteRight, text) => ({ command: '$type', args: { deleteRight, text } });
     const DefaultType = text => ({ command: 'default:type', args: { text } });
-    const MoveLeft = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: -delta } });
-    const MoveRight = delta => ({ command: 'internal:performCursorMotion', args: { characterDelta: delta } });
+    const MoveLeft = delta => ({ command: '$moveCursor', args: { characterDelta: -delta } });
+    const MoveRight = delta => ({ command: '$moveCursor', args: { characterDelta: delta } });
     const MoveLeftSelect = (delta, select) => ({
-        command: 'internal:performCursorMotion',
+        command: '$moveCursor',
         args: { characterDelta: -delta, selectionLength: select }
     });
     const MoveRightSelect = (delta, select) => ({
-        command: 'internal:performCursorMotion',
+        command: '$moveCursor',
         args: { characterDelta: delta, selectionLength: select }
     });
     const MoveUpSelect = (up, delta, select) => ({
-        command: 'internal:performCursorMotion',
+        command: '$moveCursor',
         args: { lineDelta: -up, characterDelta: delta, selectionLength: select }
     });
     const MoveDown = (down, delta) => ({
-        command: 'internal:performCursorMotion',
+        command: '$moveCursor',
         args: { lineDelta: down, characterDelta: delta }
     });
     const SplitMotion = (ch, ln, sel) => {
@@ -35,7 +35,7 @@ describe('Recording and Playback: Typing', () => {
         if (ln) motion.lineDelta = ln;
         if (sel) motion.selectionLength = sel;
         return {
-            command: 'internal:performCursorMotion',
+            command: '$moveCursor',
             args: motion
         };
     };

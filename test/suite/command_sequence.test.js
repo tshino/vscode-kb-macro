@@ -163,11 +163,11 @@ describe('CommandSequence', () => {
         });
         it('should remove a pair of cursor motion that results no effect', () => {
             const MOVE1 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: -3 }
             };
             const MOVE2 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: 3 }
             };
             const seq = CommandSequence();
@@ -178,11 +178,11 @@ describe('CommandSequence', () => {
         });
         it('should retain consecutive cursor motions that have vertical motion', () => {
             const MOVE1 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: -3, lineDelta: -1 }
             };
             const MOVE2 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: 3, lineDelta: 1 }
             };
             const seq = CommandSequence();
@@ -193,11 +193,11 @@ describe('CommandSequence', () => {
         });
         it('should retain consecutive cursor motions that have selectionLength', () => {
             const MOVE1 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: -3 }
             };
             const MOVE2 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: 3, selectionLength: 5 }
             };
             const seq = CommandSequence();
@@ -208,11 +208,11 @@ describe('CommandSequence', () => {
         });
         it('should retain consecutive cursor motions that include splitting motion', () => {
             const MOVE1 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: [ 1, 2 ] }
             };
             const MOVE2 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: -1 }
             };
             const seq = CommandSequence();
@@ -223,11 +223,11 @@ describe('CommandSequence', () => {
         });
         it('should retain consecutive cursor motions that include group motion', () => {
             const MOVE1 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: 2, groupSize: 2 }
             };
             const MOVE2 = {
-                command: 'internal:performCursorMotion',
+                command: '$moveCursor',
                 args: { characterDelta: -2 }
             };
             const seq = CommandSequence();
@@ -239,7 +239,7 @@ describe('CommandSequence', () => {
         it('should combine cursor motion to the left and successive typing with deleting to the right', () => {
             const INPUT = [
                 {
-                    command: 'internal:performCursorMotion',
+                    command: '$moveCursor',
                     args: { characterDelta: -1 }
                 },
                 {
@@ -264,7 +264,7 @@ describe('CommandSequence', () => {
                     args: { text: '()' }
                 },
                 {
-                    command: 'internal:performCursorMotion',
+                    command: '$moveCursor',
                     args: { characterDelta: -1 }
                 },
                 {
