@@ -13,8 +13,8 @@ const CommandSequence = function() {
         for (let i = 0; i < sequence.length; i++) {
             // Remove a pair of cursor movement that results nothing
             if (i + 1 < sequence.length &&
-                sequence[i].command === 'internal:performCursorMotion' &&
-                sequence[i + 1].command === 'internal:performCursorMotion') {
+                sequence[i].command === '$moveCursor' &&
+                sequence[i + 1].command === '$moveCursor') {
                 const args1 = sequence[i].args || {};
                 const args2 = sequence[i + 1].args || {};
                 const characterDelta1 = args1.characterDelta || 0;
@@ -37,8 +37,8 @@ const CommandSequence = function() {
             }
             // Combine cursor motion to the left and successive typing with deleting to the right
             if (i + 1 < sequence.length &&
-                sequence[i].command === 'internal:performCursorMotion' &&
-                sequence[i + 1].command === 'internal:performType') {
+                sequence[i].command === '$moveCursor' &&
+                sequence[i + 1].command === '$type') {
                 const args1 = sequence[i].args || {};
                 const args2 = sequence[i + 1].args || {};
                 const characterDelta1 = args1.characterDelta || 0;
@@ -61,8 +61,8 @@ const CommandSequence = function() {
             }
             // Concatenate consecutive direct typing
             if (0 < i &&
-                sequence[i - 1].command === 'internal:performType' &&
-                sequence[i].command === 'internal:performType'
+                sequence[i - 1].command === '$type' &&
+                sequence[i].command === '$type'
             ) {
                 const args1 = sequence[i - 1].args || {};
                 const args2 = sequence[i].args || {};
