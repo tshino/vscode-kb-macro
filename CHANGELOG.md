@@ -7,6 +7,10 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Made the `kb-macro.wrap` command queueable to reduce input misses during recording. [#32](https://github.com/tshino/vscode-kb-macro/pull/32)
 - Documentation
   - Added 'Tips' section to the README.
+- Internal
+  - Renamed internal commands. [#39](https://github.com/tshino/vscode-kb-macro/pull/39)
+    - `internal:performType` -> `$type`
+    - `internal:performCursorMotion` -> `$moveCursor`
 
 ### [0.9.0] - 2022-01-6
 - New
