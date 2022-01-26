@@ -9,7 +9,7 @@ const { keyboardMacro, awaitController } = require('../../src/extension.js');
 describe('Recording and Playback with Repeat', () => {
     let textEditor;
     const Cmd = CommandsToTest;
-    const Type = text => ({ command: 'internal:performType', args: { text } });
+    const Type = text => ({ command: '$type', args: { text } });
 
     const setSelections = async function(array) {
         await awaitController.waitFor('selection', 1).catch(() => {});
