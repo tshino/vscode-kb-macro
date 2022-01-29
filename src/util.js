@@ -57,12 +57,32 @@ const util = (function() {
         }
     };
 
+    const makeCommandSpec = function(args) {
+        if (!args || !args.command || typeof(args.command) !== 'string') {
+            return null;
+        }
+        const spec = {
+            command: args.command
+        };
+        if ('args' in args) {
+            spec.args = args.args;
+        }
+        if ('await' in args) {
+            if (typeof(args['await']) !== 'string') {
+                return null;
+            }
+            spec['await'] = args['await'];
+        }
+        return spec;
+    };
+
     return {
         isEqualSelections,
         sortSelections,
         makeIndexOfSortedSelections,
         makeSelectionsAfterTyping,
-        validatePositiveIntegerInput
+        validatePositiveIntegerInput,
+        makeCommandSpec
     };
 })();
 

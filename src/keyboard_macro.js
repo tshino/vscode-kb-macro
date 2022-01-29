@@ -184,22 +184,6 @@ const KeyboardMacro = function({ awaitController }) {
         await playbackImpl(args, option);
     });
 
-    const makeCommandSpec = function(args) {
-        if (!args || !args.command) {
-            return null;
-        }
-        const spec = {
-            command: args.command
-        };
-        if ('args' in args) {
-            spec.args = args.args;
-        }
-        if ('await' in args) {
-            spec['await'] = args['await'];
-        }
-        return spec;
-    };
-
     // WrapQueueSize
     // independently adjustable value.
     // min value is 1.
@@ -209,7 +193,7 @@ const KeyboardMacro = function({ awaitController }) {
     const WrapQueueSize = 2;
     const wrap = reentrantGuard.makeQueueableCommand(async function(args) {
         if (recording) {
-            const spec = makeCommandSpec(args);
+            const spec = util.makeCommandSpec(args);
             if (!spec) {
                 return;
             }

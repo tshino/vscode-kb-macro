@@ -199,4 +199,51 @@ describe('util', () => {
             assert.strictEqual(typeof validatePositiveIntegerInput('-123'), 'string');
         });
     });
+    describe('makeCommandSpec', () => {
+        const makeCommandSpec = util.makeCommandSpec;
+        it('should return null if not a valid command spec object', () => {
+            assert.strictEqual(makeCommandSpec({}), null);
+            assert.strictEqual(makeCommandSpec([]), null);
+            assert.strictEqual(makeCommandSpec('x'), null);
+            assert.strictEqual(makeCommandSpec(null), null);
+            assert.strictEqual(makeCommandSpec(undefined), null);
+            assert.strictEqual(makeCommandSpec({ foo: 'foo' }), null);
+            assert.strictEqual(makeCommandSpec({ command: 123 }), null);
+            assert.strictEqual(makeCommandSpec({ command: 'aaa', 'await': 123  }), null);
+        });
+        it('should return a new Object', () => {
+            const input = { command: 'foo' };
+            const result = makeCommandSpec(input);
+            assert.notStrictEqual(result, input);
+            assert.strictEqual(typeof(result), 'object');
+        });
+        it('should return a command spec that is exactly the same as the input', () => {
+            assert.deepStrictEqual(
+                makeCommandSpec({ command: 'a' }),
+                { command: 'a' }
+            );
+            assert.deepStrictEqual(
+                makeCommandSpec({ command: 'a', args: {} }),
+                { command: 'a', args: {} }
+            );
+            assert.deepStrictEqual(
+                makeCommandSpec({ command: 'a', args: [ 1, 2, 3 ] }),
+                { command: 'a', args: [ 1, 2, 3 ] }
+            );
+            assert.deepStrictEqual(
+                makeCommandSpec({ command: 'a', args: { x: 4, y: 5, z: 6 } }),
+                { command: 'a', args: { x: 4, y: 5, z: 6 } }
+            );
+            assert.deepStrictEqual(
+                makeCommandSpec({ command: 'a', args: { b: 42 }, 'await': 'ccc' }),
+                { command: 'a', args: { b: 42 }, 'await': 'ccc' }
+            );
+        });
+        it('should drop properties that are not relevant to a command spec', () => {
+            assert.deepStrictEqual(
+                makeCommandSpec({ command: 'a', foo: 'bar', baz: 'zoo' }),
+                { command: 'a' }
+            );
+        });
+    });
 });
