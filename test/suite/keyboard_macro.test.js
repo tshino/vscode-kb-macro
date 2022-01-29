@@ -243,6 +243,23 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
     });
+    describe('validatePlaybackArgs', () => {
+        const validatePlaybackArgs = keyboardMacro.validatePlaybackArgs;
+        it('should return a valid args for playback command', () => {
+            assert.deepStrictEqual(validatePlaybackArgs(), { repeat: 1 });
+            assert.deepStrictEqual(validatePlaybackArgs({}), { repeat: 1 });
+            assert.deepStrictEqual(validatePlaybackArgs([]), { repeat: 1 });
+            assert.deepStrictEqual(validatePlaybackArgs(''), { repeat: 1 });
+            assert.deepStrictEqual(validatePlaybackArgs(123), { repeat: 1 });
+            assert.deepStrictEqual(validatePlaybackArgs(null), { repeat: 1 });
+            assert.deepStrictEqual(validatePlaybackArgs(undefined), { repeat: 1 });
+            assert.deepStrictEqual(validatePlaybackArgs({ repeat: '123' }), { repeat: 1 });
+        });
+        it('should return a valid args that is exactly the same as the input', () => {
+            assert.deepStrictEqual(validatePlaybackArgs({ repeat: 5 }), { repeat: 5 });
+            assert.deepStrictEqual(validatePlaybackArgs({ repeat: 0 }), { repeat: 0 });
+        });
+    });
     describe('playback', () => {
         const logs = [];
         beforeEach(async () => {
@@ -357,6 +374,17 @@ describe('KeybaordMacro', () => {
                 'end'
             ]);
             assert.strictEqual(keyboardMacro.isRecording(), false);
+        });
+        it('should ignore invalid args', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.playback({ repeat: '123' }); // repeat option should not be a string
+            assert.deepStrictEqual(logs, [
+                'begin',
+                'end'
+            ]);
         });
     });
     describe('isPlaying', () => {
