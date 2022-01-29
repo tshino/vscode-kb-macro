@@ -51,11 +51,18 @@ const util = (function() {
         return newSelections;
     };
 
+    const validatePositiveIntegerInput = function(value) {
+        if (value !== '' && !/^[1-9]\d*$/.test(value)) {
+            return 'Input a positive integer number';
+        }
+    };
+
     return {
         isEqualSelections,
         sortSelections,
         makeIndexOfSortedSelections,
-        makeSelectionsAfterTyping
+        makeSelectionsAfterTyping,
+        validatePositiveIntegerInput
     };
 })();
 

@@ -3,6 +3,7 @@ const vscode = require('vscode');
 const { CommandSequence } = require('./command_sequence.js');
 const { EndOfFileDetector } = require('./end_of_file_detector.js');
 const reentrantGuard = require('./reentrant_guard.js');
+const util = require('./util.js');
 
 const KeyboardMacro = function({ awaitController }) {
     const RecordingStateReason = {
@@ -20,7 +21,7 @@ const KeyboardMacro = function({ awaitController }) {
     let onChangePlaybackStateCallback = null;
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
-    let showInputBox = vscode.window.showInputBox;
+    let showInputBox = vscode.window.showInputBox; // replaceable for testing
     let recording = false;
     let playing = false;
     let shouldAbortPlayback = false;
@@ -161,18 +162,13 @@ const KeyboardMacro = function({ awaitController }) {
         }
     };
 
-    const validatePositiveIntegerInput = function(value) {
-        if (value !== '' && !/^[1-9]\d*$/.test(value)) {
-            return 'Input a positive integer number';
-        }
-    };
     const repeatPlayback = reentrantGuard.makeGuardedCommand(async function() {
         if (recording) {
             return;
         }
         const input = await showInputBox({
             prompt: 'Input the number of times to repeat the macro',
-            validateInput: validatePositiveIntegerInput
+            validateInput: util.validatePositiveIntegerInput
         });
         if (input) {
             const args = {
@@ -247,7 +243,6 @@ const KeyboardMacro = function({ awaitController }) {
         push,
         playback,
         abortPlayback,
-        validatePositiveIntegerInput,
         repeatPlayback,
         repeatPlaybackTillEndOfFile,
         wrap,
