@@ -1,7 +1,7 @@
 {
     "base": {
         "type": "url",
-        "url": "https://github.com/whitphx/vscode-emacs-mcx/raw/v0.37.1/package.json"
+        "url": "https://github.com/whitphx/vscode-emacs-mcx/raw/v0.39.0/package.json"
     },
     "awaitOptions": [
         [ "emacs-mcx.forwardChar", "selection" ],
@@ -40,7 +40,9 @@
 
         [ "emacs-mcx.paredit.forwardSexp", "selection" ],
         [ "emacs-mcx.paredit.backwardSexp", "selection" ],
+        [ "emacs-mcx.paredit.markSexp", "selection" ],
         [ "emacs-mcx.paredit.killSexp", "document selection clipboard" ],
+        [ "emacs-mcx.paredit.backwardKillSexp", "document selection clipboard" ],
 
         [ "emacs-mcx.kill*", "document selection clipboard" ],
         [ "emacs-mcx.killWord", "document clipboard" ],
