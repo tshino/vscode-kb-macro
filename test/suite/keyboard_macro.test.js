@@ -256,11 +256,24 @@ describe('KeybaordMacro', () => {
         });
         it('should drop invalid properties', () => {
             assert.deepStrictEqual(validatePlaybackArgs({ hello: 5 }), {});
-            assert.deepStrictEqual(validatePlaybackArgs({ repeat: '123' }), {});
         });
-        it('should return a valid args that express the same as the input', () => {
+        it('should return an args that express the same as the input', () => {
             assert.deepStrictEqual(validatePlaybackArgs({ repeat: 5 }), { repeat: 5 });
             assert.deepStrictEqual(validatePlaybackArgs({ repeat: 0 }), { repeat: 0 });
+        });
+        it('should drop invalid repeat option', () => {
+            assert.deepStrictEqual(validatePlaybackArgs({ repeat: '123' }), {});
+        });
+        it('should accept sequence option', () => {
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: [] }), { sequence: [] });
+            const s1 = [ { command: 'foo' } ];
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: s1 }), { sequence: s1 });
+            const s2 = [ { command: 'foo' }, { command: 'bar', args: 'baz' } ];
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: s2 }), { sequence: s2 });
+        });
+        it('should drop invalid sequence option', () => {
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: '123' }), {});
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: [ 3, 4 ] }), {});
         });
     });
     describe('playback', () => {
@@ -388,6 +401,32 @@ describe('KeybaordMacro', () => {
                 'begin',
                 'end'
             ]);
+        });
+    });
+    describe('playback with sequence option', () => {
+        const logs = [];
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+            logs.length = 0;
+            keyboardMacro.registerInternalCommand('internal:log', async args => {
+                logs.push('begin' + (args ? ':' + JSON.stringify(args) : ''));
+                await TestUtil.sleep(50);
+                logs.push('end');
+            });
+            keyboardMacro.startRecording();
+            keyboardMacro.finishRecording();
+        });
+        it('should invoke commands according to the specified sequence option', async () => {
+            keyboardMacro.registerInternalCommand('internal:log1', () => logs.push('1'));
+            keyboardMacro.registerInternalCommand('internal:log2', () => logs.push('2'));
+            const sequence = [
+                { command: 'internal:log1' },
+                { command: 'internal:log', args: 'hello' },
+                { command: 'internal:log2' }
+            ];
+            await keyboardMacro.playback({ sequence });
+            assert.deepStrictEqual(logs, [ '1', 'begin:"hello"', 'end', '2' ]);
         });
     });
     describe('isPlaying', () => {

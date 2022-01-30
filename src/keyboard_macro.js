@@ -121,6 +121,14 @@ const KeyboardMacro = function({ awaitController }) {
         if ('repeat' in args && typeof(args.repeat) === 'number') {
             validArgs.repeat = args.repeat;
         }
+        if ('sequence' in args && Array.isArray(args.sequence)) {
+            const sequence = args.sequence.map(spec => util.makeCommandSpec(spec));
+            if (sequence.includes(null)) {
+                console.error('kb-macro: Invalid sequence option: ' + JSON.stringify(args.sequence));
+            } else {
+                validArgs.sequence = sequence;
+            }
+        }
         return validArgs;
     };
 
@@ -133,7 +141,7 @@ const KeyboardMacro = function({ awaitController }) {
             shouldAbortPlayback = false;
             args = validatePlaybackArgs(args);
             const repeat = 'repeat' in args ? args.repeat : 1;
-            const commands = sequence.get();
+            const commands = 'sequence' in args ? args.sequence : sequence.get();
             let endOfFileDetector;
             if (tillEndOfFile) {
                 endOfFileDetector = EndOfFileDetector(vscode.window.activeTextEditor);
