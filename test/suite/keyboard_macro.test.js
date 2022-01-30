@@ -256,11 +256,24 @@ describe('KeybaordMacro', () => {
         });
         it('should drop invalid properties', () => {
             assert.deepStrictEqual(validatePlaybackArgs({ hello: 5 }), {});
-            assert.deepStrictEqual(validatePlaybackArgs({ repeat: '123' }), {});
         });
-        it('should return a valid args that express the same as the input', () => {
+        it('should return an args that express the same as the input', () => {
             assert.deepStrictEqual(validatePlaybackArgs({ repeat: 5 }), { repeat: 5 });
             assert.deepStrictEqual(validatePlaybackArgs({ repeat: 0 }), { repeat: 0 });
+        });
+        it('should drop invalid repeat option', () => {
+            assert.deepStrictEqual(validatePlaybackArgs({ repeat: '123' }), {});
+        });
+        it('should accept sequence option', () => {
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: [] }), { sequence: [] });
+            const s1 = [ { command: 'foo' } ];
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: s1 }), { sequence: s1 });
+            const s2 = [ { command: 'foo' }, { command: 'bar', args: 'baz' } ];
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: s2 }), { sequence: s2 });
+        });
+        it('should drop invalid sequence option', () => {
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: '123' }), {});
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: [ 3, 4 ] }), {});
         });
     });
     describe('playback', () => {
