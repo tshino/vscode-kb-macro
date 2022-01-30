@@ -25,6 +25,7 @@
 		"onCommand:kb-macro.startRecording",
 		"onCommand:kb-macro.finishRecording",
 		"onCommand:kb-macro.cancelRecording",
+		"onCommand:kb-macro.copyMacroAsKeybinding",
 		"onCommand:kb-macro.playback",
 		"onCommand:kb-macro.abortPlayback",
 		"onCommand:kb-macro.repeatPlayback",
@@ -91,6 +92,11 @@
 			{
 				"command": "kb-macro.cancelRecording",
 				"title": "Cancel Recording",
+				"category": "Keyboard Macro"
+			},
+			{
+				"command": "kb-macro.copyMacroAsKeybinding",
+				"title": "Copy Macro as Keybinding",
 				"category": "Keyboard Macro"
 			},
 			{
