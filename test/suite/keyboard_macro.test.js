@@ -245,17 +245,20 @@ describe('KeybaordMacro', () => {
     });
     describe('validatePlaybackArgs', () => {
         const validatePlaybackArgs = keyboardMacro.validatePlaybackArgs;
-        it('should return a valid args for playback command', () => {
-            assert.deepStrictEqual(validatePlaybackArgs(), { repeat: 1 });
-            assert.deepStrictEqual(validatePlaybackArgs({}), { repeat: 1 });
-            assert.deepStrictEqual(validatePlaybackArgs([]), { repeat: 1 });
-            assert.deepStrictEqual(validatePlaybackArgs(''), { repeat: 1 });
-            assert.deepStrictEqual(validatePlaybackArgs(123), { repeat: 1 });
-            assert.deepStrictEqual(validatePlaybackArgs(null), { repeat: 1 });
-            assert.deepStrictEqual(validatePlaybackArgs(undefined), { repeat: 1 });
-            assert.deepStrictEqual(validatePlaybackArgs({ repeat: '123' }), { repeat: 1 });
+        it('should return an args valid for playback command', () => {
+            assert.deepStrictEqual(validatePlaybackArgs(), {});
+            assert.deepStrictEqual(validatePlaybackArgs({}), {});
+            assert.deepStrictEqual(validatePlaybackArgs([]), {});
+            assert.deepStrictEqual(validatePlaybackArgs(''), {});
+            assert.deepStrictEqual(validatePlaybackArgs(123), {});
+            assert.deepStrictEqual(validatePlaybackArgs(null), {});
+            assert.deepStrictEqual(validatePlaybackArgs(undefined), {});
         });
-        it('should return a valid args that is exactly the same as the input', () => {
+        it('should drop invalid properties', () => {
+            assert.deepStrictEqual(validatePlaybackArgs({ hello: 5 }), {});
+            assert.deepStrictEqual(validatePlaybackArgs({ repeat: '123' }), {});
+        });
+        it('should return a valid args that express the same as the input', () => {
             assert.deepStrictEqual(validatePlaybackArgs({ repeat: 5 }), { repeat: 5 });
             assert.deepStrictEqual(validatePlaybackArgs({ repeat: 0 }), { repeat: 0 });
         });

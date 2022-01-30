@@ -117,10 +117,11 @@ const KeyboardMacro = function({ awaitController }) {
 
     const validatePlaybackArgs = function(args) {
         args = (args && typeof(args) === 'object') ? args : {};
-        const repeat = typeof(args.repeat) === 'number' ? args.repeat : 1;
-        return {
-            repeat: repeat
-        };
+        const validArgs = {};
+        if ('repeat' in args && typeof(args.repeat) === 'number') {
+            validArgs.repeat = args.repeat;
+        }
+        return validArgs;
     };
 
     const playbackImpl = async function(args, { tillEndOfFile = false } = {}) {
@@ -131,13 +132,14 @@ const KeyboardMacro = function({ awaitController }) {
             changePlaybackState(true, PlaybackStateReason.Start);
             shouldAbortPlayback = false;
             args = validatePlaybackArgs(args);
+            const repeat = 'repeat' in args ? args.repeat : 1;
             const commands = sequence.get();
             let endOfFileDetector;
             if (tillEndOfFile) {
                 endOfFileDetector = EndOfFileDetector(vscode.window.activeTextEditor);
             }
             let ok = true;
-            for (let k = 0; k < args.repeat || tillEndOfFile; k++) {
+            for (let k = 0; k < repeat || tillEndOfFile; k++) {
                 for (const spec of commands) {
                     ok = await invokeCommandSync(spec, 'playback');
                     if (!ok || shouldAbortPlayback) {
