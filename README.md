@@ -143,6 +143,7 @@ This is the default keybinding set for recording/playback of this extension. Cop
 | `Start Recording` | `kb-macro.startRecording` | Start recording |
 | `Finish Recording` | `kb-macro.finishRecording` | Stop recording |
 | `Cancel Recording` | `kb-macro.cancelRecording` | Stop recording and discard the recorded sequence |
+| `Copy Macro as Keybinding` | `kb-macro.copyMacroAsKeybinding` | Copy the last recorded macro as keybinding JSON format to the clipboard |
 
 ### For playback
 | Command name | Command ID | Function |
