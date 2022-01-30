@@ -403,6 +403,32 @@ describe('KeybaordMacro', () => {
             ]);
         });
     });
+    describe('playback with sequence option', () => {
+        const logs = [];
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+            logs.length = 0;
+            keyboardMacro.registerInternalCommand('internal:log', async args => {
+                logs.push('begin' + (args ? ':' + JSON.stringify(args) : ''));
+                await TestUtil.sleep(50);
+                logs.push('end');
+            });
+            keyboardMacro.startRecording();
+            keyboardMacro.finishRecording();
+        });
+        it('should invoke commands according to the specified sequence option', async () => {
+            keyboardMacro.registerInternalCommand('internal:log1', () => logs.push('1'));
+            keyboardMacro.registerInternalCommand('internal:log2', () => logs.push('2'));
+            const sequence = [
+                { command: 'internal:log1' },
+                { command: 'internal:log', args: 'hello' },
+                { command: 'internal:log2' }
+            ];
+            await keyboardMacro.playback({ sequence });
+            assert.deepStrictEqual(logs, [ '1', 'begin:"hello"', 'end', '2' ]);
+        });
+    });
     describe('isPlaying', () => {
         beforeEach(async () => {
             keyboardMacro.onChangeRecordingState(null);

@@ -141,7 +141,7 @@ const KeyboardMacro = function({ awaitController }) {
             shouldAbortPlayback = false;
             args = validatePlaybackArgs(args);
             const repeat = 'repeat' in args ? args.repeat : 1;
-            const commands = sequence.get();
+            const commands = 'sequence' in args ? args.sequence : sequence.get();
             let endOfFileDetector;
             if (tillEndOfFile) {
                 endOfFileDetector = EndOfFileDetector(vscode.window.activeTextEditor);
