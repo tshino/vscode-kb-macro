@@ -154,15 +154,33 @@ This is the default keybinding set for recording/playback of this extension. Cop
 
 The `kb-macro.repeatPlayback` command shows an input box to specify the number of times.
 
-The `kb-macro.playback` command has an optional `repeat` argument to specify the number of times to repeat. For example,
-```json
+The `kb-macro.playback` command has an optional `repeat` argument to specify the number of times to repeat.
+```jsonc
 {
+    // Example: Repeat playback 5 times.
     "key": "ctrl+alt+5",
     "command": "kb-macro.playback",
-    "args": { "repeat": 5 }
+    "args": {
+        "repeat": 5
+    }
 }
 ```
-this keyboard shortcut performs playback 5 times.
+
+The `kb-macro.playback` command has an optional `sequence` argument to specify a command sequence to playback instead of the last recorded sequence.
+```jsonc
+{
+    // Example: Duplicate current line as a comment
+    "key": "ctrl+alt+up",
+    "command": "kb-macro.playback",
+    "args": {
+        "sequence": [
+            { "command": "editor.action.addCommentLine" },
+            { "command": "editor.action.copyLinesUpAction" },
+            { "command": "editor.action.removeCommentLine" }
+        ]
+    }
+}
+```
 
 
 ## Known issues
