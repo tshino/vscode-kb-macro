@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Feature
+  - Added `sequence` argument support to the playback command. [#41](https://github.com/tshino/vscode-kb-macro/pull/41)
+
 ### [0.10.0] - 2022-01-28
 - Feature
   - Added a new `Keyboard Macro: Repeat Playback Till End of File` command. [#34](https://github.com/tshino/vscode-kb-macro/issues/34)
@@ -49,7 +53,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [0.6.0] - 2021-12-19
 - New
   - Added Sublime Text Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#18](https://github.com/tshino/vscode-kb-macro/issues/18)
-  - Added 'repeat' argument support to the playback command. [#19](https://github.com/tshino/vscode-kb-macro/pull/19)
+  - Added `repeat` argument support to the playback command. [#19](https://github.com/tshino/vscode-kb-macro/pull/19)
 - Update
   - Updated keymap wrapper for Vz Keymap; Removed unnecessary wrappers for Vz Keymap's built-in macro feature.
 - Fix
