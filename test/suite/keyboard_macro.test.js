@@ -243,6 +243,35 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
     });
+    describe('copyMacroAsKeybinding', () => {
+        beforeEach(async () => {
+            keyboardMacro.onChangeRecordingState(null);
+            keyboardMacro.cancelRecording();
+        });
+        it('should write the recorded macro to the clipboard', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'command1' });
+            keyboardMacro.push({ command: 'command2', args: 'arg2' });
+            keyboardMacro.push({ command: 'command3', args: 'arg3', 'await': 'await3' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.copyMacroAsKeybinding();
+            assert.strictEqual(
+                await vscode.env.clipboard.readText(),
+                '{\n' +
+                '    "key": "",\n' +
+                '    "command": "kb-macro.playback",\n' +
+                '    "args": {\n' +
+                '        "sequence": [\n' +
+                '            { "command": "command1" },\n' +
+                '            { "command": "command2", "args": "arg2" },\n' +
+                '            { "command": "command3", "args": "arg3", "await": "await3" }\n' +
+                '        ]\n' +
+                '    }\n' +
+                '}'
+            );
+        });
+    });
     describe('validatePlaybackArgs', () => {
         const validatePlaybackArgs = keyboardMacro.validatePlaybackArgs;
         it('should return an args valid for playback command', () => {

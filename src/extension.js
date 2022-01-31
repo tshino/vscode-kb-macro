@@ -31,6 +31,7 @@ function activate(context) {
     registerCommand('startRecording', keyboardMacro.startRecording);
     registerCommand('cancelRecording', keyboardMacro.cancelRecording);
     registerCommand('finishRecording', keyboardMacro.finishRecording);
+    registerCommand('copyMacroAsKeybinding', keyboardMacro.copyMacroAsKeybinding);
     registerCommand('playback', keyboardMacro.playback);
     registerCommand('abortPlayback', keyboardMacro.abortPlayback);
     registerCommand('repeatPlayback', keyboardMacro.repeatPlayback);

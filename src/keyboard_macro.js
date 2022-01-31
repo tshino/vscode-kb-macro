@@ -88,6 +88,23 @@ const KeyboardMacro = function({ awaitController }) {
         }
     };
 
+    const copyMacroAsKeybinding = reentrantGuard.makeGuardedCommand(async function() {
+        const commands = sequence.get();
+        const macro =
+        '{\n' +
+        '    "key": "",\n' +
+        '    "command": "kb-macro.playback",\n' +
+        '    "args": {\n' +
+        '        "sequence": [\n' +
+        commands.map(
+            spec => `            ${JSON.stringify(spec, null, 1).replace(/\n\s*/g, ' ')}`
+        ).join(',\n') + (commands.length === 0 ? '' : '\n') +
+        '        ]\n' +
+        '    }\n' +
+        '}';
+        await vscode.env.clipboard.writeText(macro);
+    });
+
     const invokeCommand = async function(spec) {
         const func = internalCommands[spec.command];
         if (func !== undefined) {
@@ -242,6 +259,7 @@ const KeyboardMacro = function({ awaitController }) {
         cancelRecording,
         finishRecording,
         push,
+        copyMacroAsKeybinding,
         validatePlaybackArgs,
         playback,
         abortPlayback,
