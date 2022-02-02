@@ -244,9 +244,18 @@ describe('KeybaordMacro', () => {
         });
     });
     describe('copyMacroAsKeybinding', () => {
+        const logs = [];
+        let old;
         beforeEach(async () => {
             keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
+            logs.length = 0;
+            old = keyboardMacro.setShowMessage(message => {
+                logs.push(message);
+            });
+        });
+        afterEach(() => {
+            keyboardMacro.setShowMessage(old);
         });
         it('should write the recorded macro to the clipboard', async () => {
             keyboardMacro.startRecording();
@@ -270,6 +279,16 @@ describe('KeybaordMacro', () => {
                 '    }\n' +
                 '}'
             );
+            assert.deepStrictEqual(logs, [ 'Copied the recorded macro to the clipboard!' ]);
+        });
+        it('should show a message if no recorded macro', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.finishRecording();
+
+            await vscode.env.clipboard.writeText('should_not_modified');
+            await keyboardMacro.copyMacroAsKeybinding();
+            assert.strictEqual(await vscode.env.clipboard.readText(), 'should_not_modified');
+            assert.deepStrictEqual(logs, [ 'There\'s no recorded macro.' ]);
         });
     });
     describe('validatePlaybackArgs', () => {
