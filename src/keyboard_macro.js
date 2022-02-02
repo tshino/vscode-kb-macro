@@ -113,7 +113,14 @@ const KeyboardMacro = function({ awaitController }) {
         '    }\n' +
         '}';
         await vscode.env.clipboard.writeText(macro);
-        showMessage('Copied the recorded macro to the clipboard!');
+        showMessage(
+            'Copied the recorded macro to the clipboard!',
+            'Open Keyboard Shortcuts (JSON)'
+        ).then(response => {
+            if (response === 'Open Keyboard Shortcuts (JSON)') {
+                vscode.commands.executeCommand('workbench.action.openGlobalKeybindingsFile');
+            }
+        }, () => {});
     });
 
     const invokeCommand = async function(spec) {
