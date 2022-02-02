@@ -22,6 +22,7 @@ const KeyboardMacro = function({ awaitController }) {
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
     let showInputBox = vscode.window.showInputBox; // replaceable for testing
+    let showMessage = vscode.window.showInformationMessage; // replaceable for testing
     let recording = false;
     let playing = false;
     let shouldAbortPlayback = false;
@@ -58,6 +59,11 @@ const KeyboardMacro = function({ awaitController }) {
         showInputBox = showInputBoxImpl;
         return old;
     };
+    const setShowMessage = function(showMessageImpl) {
+        const old = showMessage;
+        showMessage = showMessageImpl;
+        return old;
+    };
 
     const registerInternalCommand = function(name, func) {
         internalCommands[name] = func;
@@ -90,6 +96,10 @@ const KeyboardMacro = function({ awaitController }) {
 
     const copyMacroAsKeybinding = reentrantGuard.makeGuardedCommand(async function() {
         const commands = sequence.get();
+        if (commands.length === 0) {
+            showMessage('There\'s no recorded macro.');
+            return;
+        }
         const macro =
         '{\n' +
         '    "key": "",\n' +
@@ -103,6 +113,7 @@ const KeyboardMacro = function({ awaitController }) {
         '    }\n' +
         '}';
         await vscode.env.clipboard.writeText(macro);
+        showMessage('Copied the recorded macro to the clipboard!');
     });
 
     const invokeCommand = async function(spec) {
@@ -272,6 +283,7 @@ const KeyboardMacro = function({ awaitController }) {
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
         setShowInputBox,
+        setShowMessage,
         WrapQueueSize
     };
 };
