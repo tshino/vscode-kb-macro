@@ -250,7 +250,7 @@ describe('KeybaordMacro', () => {
             keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
             logs.length = 0;
-            old = keyboardMacro.setShowMessage(message => {
+            old = keyboardMacro.setShowMessage(async (message) => {
                 logs.push(message);
             });
         });
