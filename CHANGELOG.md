@@ -8,6 +8,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Added `sequence` argument support to the playback command. [#41](https://github.com/tshino/vscode-kb-macro/pull/41)
 - Update
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.39.0).
+- Fix
+  - Fixed uncaught errors 'Cannot read property 'textEditor' of undefined'. [#47](https://github.com/tshino/vscode-kb-macro/pull/47)
 
 ### [0.10.0] - 2022-01-28
 - Feature
