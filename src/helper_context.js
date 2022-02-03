@@ -33,8 +33,8 @@ const HelperContext = function() {
     const reset = function(textEditor) {
         update(textEditor);
     };
-    const processActiveTextEditorChangeEvent = function(event) {
-        update(event.textEditor);
+    const processActiveTextEditorChangeEvent = function(textEditor) {
+        update(textEditor);
     };
     const processSelectionChangeEvent = function(event) {
         update(event.textEditor);

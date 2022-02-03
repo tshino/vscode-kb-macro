@@ -117,8 +117,8 @@ function activate(context) {
     );
     addEventListener(
         vscode.window.onDidChangeActiveTextEditor,
-        function(event) {
-            helperContext.processActiveTextEditorChangeEvent(event);
+        function(textEditor) {
+            helperContext.processActiveTextEditorChangeEvent(textEditor);
         }
     );
     addEventListener(

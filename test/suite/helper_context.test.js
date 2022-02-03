@@ -30,8 +30,7 @@ describe('HelperContext', () => {
             const textEditor1 = { selections: [ new vscode.Selection(2, 4, 2, 4) ] };
             const textEditor2 = { selections: [ new vscode.Selection(3, 0, 3, 0) ] };
             helperContext.reset(textEditor1);
-            const event = { textEditor: textEditor2 };
-            helperContext.processActiveTextEditorChangeEvent(event);
+            helperContext.processActiveTextEditorChangeEvent(textEditor2);
             assert.strictEqual(helperContext.getContext(HeadOfLine), true);
         });
     });
