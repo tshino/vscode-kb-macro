@@ -367,6 +367,14 @@
                                      "when": "editorTextFocus && hasSnippetCompletions && !editorTabMovesFocus && !inSnippetMode" },
 { "key": "ctrl+enter",            "command": "interactive.execute",
                                      "when": "resourceScheme == 'vscode-interactive'" },
+{ "key": "pagedown",              "command": "notebook.cell.cursorPageDown",
+                                     "when": "editorTextFocus && inputFocus && notebookEditorFocused" },
+{ "key": "shift+pagedown",        "command": "notebook.cell.cursorPageDownSelect",
+                                     "when": "editorTextFocus && inputFocus && notebookEditorFocused" },
+{ "key": "pageup",                "command": "notebook.cell.cursorPageUp",
+                                     "when": "editorTextFocus && inputFocus && notebookEditorFocused" },
+{ "key": "shift+pageup",          "command": "notebook.cell.cursorPageUpSelect",
+                                     "when": "editorTextFocus && inputFocus && notebookEditorFocused" },
 { "key": "ctrl+alt+enter",        "command": "notebook.cell.execute",
                                      "when": "notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0" },
 { "key": "alt+enter",             "command": "notebook.cell.executeAndInsertBelow",
@@ -382,7 +390,7 @@
 { "key": "shift+alt+f",           "command": "notebook.formatCell",
                                      "when": "editorHasDocumentFormattingProvider && editorTextFocus && inCompositeEditor && notebookEditable && !editorReadonly && activeEditor == 'workbench.editor.notebook'" },
 { "key": "ctrl+enter",            "command": "openReferenceToSide",
-                                     "when": "listFocus && referenceSearchVisible && !inputFocus" },
+                                     "when": "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand" },
 { "key": "enter",                 "command": "repl.action.acceptInput",
                                      "when": "inDebugRepl && textInputFocus" },
 { "key": "ctrl+f",                "command": "repl.action.filter",
@@ -620,7 +628,7 @@
 { "key": "escape",                "command": "keybindings.editor.clearSearchResults",
                                      "when": "inKeybindings && inKeybindingsSearch" },
 { "key": "ctrl+c",                "command": "keybindings.editor.copyKeybindingEntry",
-                                     "when": "inKeybindings && keybindingFocus" },
+                                     "when": "inKeybindings && keybindingFocus && !whenFocus" },
 { "key": "enter",                 "command": "keybindings.editor.defineKeybinding",
                                      "when": "inKeybindings && keybindingFocus" },
 { "key": "ctrl+k ctrl+e",         "command": "keybindings.editor.defineWhenExpression",
@@ -772,7 +780,7 @@
 { "key": "shift+alt+r",           "command": "revealFileInOS",
                                      "when": "!editorFocus" },
 { "key": "enter",                 "command": "revealReference",
-                                     "when": "listFocus && referenceSearchVisible && !inputFocus" },
+                                     "when": "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand" },
 { "key": "ctrl+k s",              "command": "saveAll" },
 { "key": "ctrl+enter",            "command": "scm.acceptInput",
                                      "when": "scmRepository" },
@@ -845,6 +853,8 @@
 { "key": "ctrl+oem_1 m",          "command": "testing.openOutputPeek" },
 { "key": "ctrl+oem_1 e",          "command": "testing.reRunFailTests" },
 { "key": "ctrl+oem_1 l",          "command": "testing.reRunLastRun" },
+{ "key": "ctrl+oem_1 r",          "command": "testing.refreshTests",
+                                     "when": "testing.canRefresh" },
 { "key": "ctrl+oem_1 a",          "command": "testing.runAll" },
 { "key": "ctrl+oem_1 c",          "command": "testing.runAtCursor",
                                      "when": "editorTextFocus" },
@@ -1000,8 +1010,10 @@
 { "key": "ctrl+k ctrl+pageup",    "command": "workbench.action.previousEditorInGroup" },
 { "key": "ctrl+e",                "command": "workbench.action.quickOpen" },
 { "key": "ctrl+p",                "command": "workbench.action.quickOpen" },
-{ "key": "ctrl+shift+tab",        "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup" },
-{ "key": "ctrl+tab",              "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup" },
+{ "key": "ctrl+shift+tab",        "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+                                     "when": "!activeEditorGroupEmpty" },
+{ "key": "ctrl+tab",              "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+                                     "when": "!activeEditorGroupEmpty" },
 { "key": "ctrl+q",                "command": "workbench.action.quickOpenView" },
 { "key": "ctrl+shift+t",          "command": "workbench.action.reopenClosedEditor" },
 { "key": "ctrl+shift+h",          "command": "workbench.action.replaceInFiles" },
@@ -1026,11 +1038,11 @@
 { "key": "f3",                    "command": "workbench.action.terminal.findNext",
                                      "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
 { "key": "shift+enter",           "command": "workbench.action.terminal.findNext",
-                                     "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported" },
+                                     "when": "terminalFindInputFocused && terminalHasBeenCreated || terminalFindInputFocused && terminalProcessSupported" },
 { "key": "shift+f3",              "command": "workbench.action.terminal.findPrevious",
                                      "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
 { "key": "enter",                 "command": "workbench.action.terminal.findPrevious",
-                                     "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported" },
+                                     "when": "terminalFindInputFocused && terminalHasBeenCreated || terminalFindInputFocused && terminalProcessSupported" },
 { "key": "ctrl+f",                "command": "workbench.action.terminal.focusFind",
                                      "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
 { "key": "ctrl+pagedown",         "command": "workbench.action.terminal.focusNext",
@@ -1500,6 +1512,11 @@
 // - extension.bisect.start
 // - extension.bisect.stop
 // - extension.js-debug.addCustomBreakpoints
+// - extension.js-debug.callers.add
+// - extension.js-debug.callers.goToCaller
+// - extension.js-debug.callers.gotToTarget
+// - extension.js-debug.callers.remove
+// - extension.js-debug.callers.removeAll
 // - extension.js-debug.createDebuggerTerminal
 // - extension.js-debug.createDiagnostics
 // - extension.js-debug.debugLink
@@ -1590,7 +1607,6 @@
 // - git.merge
 // - git.openAllChanges
 // - git.openChange
-// - git.openChangeEditor
 // - git.openFile
 // - git.openFile2
 // - git.openHEADFile
@@ -1628,6 +1644,7 @@
 // - git.stashApply
 // - git.stashApplyLatest
 // - git.stashDrop
+// - git.stashDropAll
 // - git.stashIncludeUntracked
 // - git.stashPop
 // - git.stashPopLatest
@@ -1653,6 +1670,9 @@
 // - javascript.reloadProjects
 // - jsBrowserBreakpoints.focus
 // - jsBrowserBreakpoints.resetViewLocation
+// - jsExcludedCallers.focus
+// - jsExcludedCallers.resetViewLocation
+// - json.clearCache
 // - keybindings.editor.copyCommandKeybindingEntry
 // - keybindings.editor.copyCommandTitle
 // - keybindings.editor.resetKeybinding
@@ -1720,6 +1740,7 @@
 // - notebook.execute
 // - notebook.inspectLayout
 // - notebook.renderAllMarkdownCells
+// - notebook.revealRunningCell
 // - notebook.saveMimeTypeOrder
 // - notebook.setProfile
 // - notebook.toggleCellToolbarPosition
@@ -1837,6 +1858,7 @@
 // - terminal.resetViewContainerLocation
 // - terminal.resetViewLocation
 // - terminal.toggleVisibility
+// - testing.cancelTestRefresh
 // - testing.clearTestResults
 // - testing.collapseAll
 // - testing.configureProfile
@@ -1884,6 +1906,10 @@
 // - workbench.action.acceptSelectedQuickOpenItem
 // - workbench.action.addComment
 // - workbench.action.addRootFolder
+// - workbench.action.alignPanelCenter
+// - workbench.action.alignPanelJustify
+// - workbench.action.alignPanelLeft
+// - workbench.action.alignPanelRight
 // - workbench.action.alternativeAcceptSelectedQuickOpenItem
 // - workbench.action.blur
 // - workbench.action.clearCommandHistory
@@ -1906,6 +1932,7 @@
 // - workbench.action.configureRuntimeArguments
 // - workbench.action.createTerminalEditor
 // - workbench.action.createTerminalEditorSide
+// - workbench.action.customizeLayout
 // - workbench.action.debug.configure
 // - workbench.action.debug.focusProcess
 // - workbench.action.debug.restartFrame
@@ -1979,6 +2006,10 @@
 // - workbench.action.moveEditorToLeftGroup
 // - workbench.action.moveEditorToRightGroup
 // - workbench.action.moveFocusedView
+// - workbench.action.movePanelToSidePanel
+// - workbench.action.moveSideBarLeft
+// - workbench.action.moveSideBarRight
+// - workbench.action.moveSidePanelToPanel
 // - workbench.action.moveView
 // - workbench.action.navigateDown
 // - workbench.action.navigateEditorGroups
@@ -2126,6 +2157,7 @@
 // - workbench.action.terminal.focusAtIndex7
 // - workbench.action.terminal.focusAtIndex8
 // - workbench.action.terminal.focusAtIndex9
+// - workbench.action.terminal.goToRecentDirectory
 // - workbench.action.terminal.join
 // - workbench.action.terminal.joinInstance
 // - workbench.action.terminal.kill
@@ -2135,7 +2167,10 @@
 // - workbench.action.terminal.moveToTerminalPanel
 // - workbench.action.terminal.newInActiveWorkspace
 // - workbench.action.terminal.newWithProfile
+// - workbench.action.terminal.openDetectedLink
+// - workbench.action.terminal.openFileLink
 // - workbench.action.terminal.openSettings
+// - workbench.action.terminal.openWebLink
 // - workbench.action.terminal.relaunch
 // - workbench.action.terminal.rename
 // - workbench.action.terminal.renamePanel
@@ -2144,6 +2179,7 @@
 // - workbench.action.terminal.resizePaneRight
 // - workbench.action.terminal.resizePaneUp
 // - workbench.action.terminal.runActiveFile
+// - workbench.action.terminal.runRecentCommand
 // - workbench.action.terminal.runSelectedText
 // - workbench.action.terminal.scrollToNextCommand
 // - workbench.action.terminal.scrollToPreviousCommand
@@ -2197,6 +2233,8 @@
 // - workbench.actions.syncData.reset
 // - workbench.actions.treeView.jsBrowserBreakpoints.collapseAll
 // - workbench.actions.treeView.jsBrowserBreakpoints.refresh
+// - workbench.actions.treeView.jsExcludedCallers.collapseAll
+// - workbench.actions.treeView.jsExcludedCallers.refresh
 // - workbench.actions.treeView.npm.collapseAll
 // - workbench.actions.treeView.npm.refresh
 // - workbench.actions.treeView.references-view.tree.collapseAll
@@ -2238,6 +2276,7 @@
 // - workbench.debug.viewlet.action.removeAllWatchExpressions
 // - workbench.debug.viewlet.action.removeBreakpoint
 // - workbench.debug.viewlet.action.toggleBreakpointsActivatedAction
+// - workbench.debug.viewlet.action.viewMemory
 // - workbench.debug.watchExpressionsView.resetViewLocation
 // - workbench.debug.welcome.focus
 // - workbench.debug.welcome.removeView
@@ -2286,6 +2325,9 @@
 // - workbench.extensions.action.reinstall
 // - workbench.extensions.action.removeExtensionFromWorkspaceRecommendations
 // - workbench.extensions.action.saveExtensionHostProfile
+// - workbench.extensions.action.setColorTheme
+// - workbench.extensions.action.setFileIconTheme
+// - workbench.extensions.action.setProductIconTheme
 // - workbench.extensions.action.showDisabledExtensions
 // - workbench.extensions.action.showEnabledExtensions
 // - workbench.extensions.action.showExtensionsForLanguage
@@ -2363,6 +2405,7 @@
 // - workbench.userDataSync.actions.resolveKeybindingsConflicts
 // - workbench.userDataSync.actions.resolveSettingsConflicts
 // - workbench.userDataSync.actions.resolveSnippetsConflicts
+// - workbench.userDataSync.actions.resolveTasksConflicts
 // - workbench.userDataSync.actions.settings
 // - workbench.userDataSync.actions.showLog
 // - workbench.userDataSync.actions.showSyncedData
@@ -2398,8 +2441,6 @@
 // - workbench.views.extensions.disabled.resetViewLocation
 // - workbench.views.extensions.enabled.focus
 // - workbench.views.extensions.enabled.resetViewLocation
-// - workbench.views.extensions.installed.empty.focus
-// - workbench.views.extensions.installed.empty.resetViewLocation
 // - workbench.views.extensions.installed.focus
 // - workbench.views.extensions.installed.resetViewLocation
 // - workbench.views.extensions.marketplace.focus
