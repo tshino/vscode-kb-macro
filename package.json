@@ -1074,6 +1074,14 @@
 			},
 			{
 				"key": "pagedown",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notebook.cell.cursorPageDown"
+				},
+				"when": "kb-macro.recording && !isMac && editorTextFocus && inputFocus && notebookEditorFocused"
+			},
+			{
+				"key": "pagedown",
 				"command": "selectNextPageSuggestion",
 				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
@@ -1121,6 +1129,14 @@
 				"key": "shift+pagedown",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "notebook.cell.cursorPageDownSelect"
+				},
+				"when": "kb-macro.recording && !isMac && editorTextFocus && inputFocus && notebookEditorFocused"
+			},
+			{
+				"key": "shift+pagedown",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.terminal.scrollDownPage"
 				},
 				"when": "kb-macro.recording && !isMac && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && !isMac && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
@@ -1132,6 +1148,14 @@
 					"command": "cursorPageUp"
 				},
 				"when": "kb-macro.recording && textInputFocus"
+			},
+			{
+				"key": "pageup",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notebook.cell.cursorPageUp"
+				},
+				"when": "kb-macro.recording && !isMac && editorTextFocus && inputFocus && notebookEditorFocused"
 			},
 			{
 				"key": "pageup",
@@ -1177,6 +1201,14 @@
 					"command": "cursorColumnSelectPageUp"
 				},
 				"when": "kb-macro.recording && editorColumnSelection && textInputFocus"
+			},
+			{
+				"key": "shift+pageup",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notebook.cell.cursorPageUpSelect"
+				},
+				"when": "kb-macro.recording && !isMac && editorTextFocus && inputFocus && notebookEditorFocused"
 			},
 			{
 				"key": "shift+pageup",
@@ -2068,7 +2100,7 @@
 				"args": {
 					"command": "workbench.action.terminal.findNext"
 				},
-				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFindInputFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindInputFocused && terminalProcessSupported"
 			},
 			{
 				"key": "alt+enter",
@@ -2412,7 +2444,15 @@
 				"args": {
 					"command": "revealReference"
 				},
-				"when": "kb-macro.recording && listFocus && referenceSearchVisible && !inputFocus"
+				"when": "kb-macro.recording && !isMac && listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand"
+			},
+			{
+				"key": "enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "revealReference"
+				},
+				"when": "kb-macro.recording && isMac && listFocus && referenceSearchVisible && !inputFocus"
 			},
 			{
 				"key": "enter",
@@ -2444,7 +2484,7 @@
 				"args": {
 					"command": "workbench.action.terminal.findPrevious"
 				},
-				"when": "kb-macro.recording && !isMac && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindFocused && terminalProcessSupported"
+				"when": "kb-macro.recording && !isMac && terminalFindInputFocused && terminalHasBeenCreated || kb-macro.recording && !isMac && terminalFindInputFocused && terminalProcessSupported"
 			},
 			{
 				"key": "cmd+down",
@@ -2658,12 +2698,11 @@
 			},
 			{
 				"key": "ctrl+c",
-				"mac": "cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "keybindings.editor.copyKeybindingEntry"
 				},
-				"when": "kb-macro.recording && inKeybindings && keybindingFocus"
+				"when": "kb-macro.recording && !isMac && inKeybindings && keybindingFocus && !whenFocus"
 			},
 			{
 				"key": "ctrl+c",
@@ -2672,6 +2711,14 @@
 					"command": "problems.action.copy"
 				},
 				"when": "kb-macro.recording && !isMac && problemsVisibility && !relatedInformationFocus && focusedView == 'workbench.panel.markers.view'"
+			},
+			{
+				"key": "cmd+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "keybindings.editor.copyKeybindingEntry"
+				},
+				"when": "kb-macro.recording && inKeybindings && keybindingFocus"
 			},
 			{
 				"key": "cmd+c",
@@ -3068,17 +3115,9 @@
 				"key": "ctrl+enter",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "notebook.cell.execute"
-				},
-				"when": "kb-macro.recording && isMac && notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || kb-macro.recording && isMac && notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0"
-			},
-			{
-				"key": "ctrl+enter",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "openReferenceToSide"
 				},
-				"when": "kb-macro.recording && listFocus && referenceSearchVisible && !inputFocus"
+				"when": "kb-macro.recording && !isMac && listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand"
 			},
 			{
 				"key": "ctrl+enter",
@@ -3111,6 +3150,22 @@
 					"command": "debug.openBreakpointToSide"
 				},
 				"when": "kb-macro.recording && !isMac && breakpointsFocused"
+			},
+			{
+				"key": "ctrl+enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notebook.cell.execute"
+				},
+				"when": "kb-macro.recording && isMac && notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || kb-macro.recording && isMac && notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0"
+			},
+			{
+				"key": "ctrl+enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "openReferenceToSide"
+				},
+				"when": "kb-macro.recording && isMac && listFocus && referenceSearchVisible && !inputFocus"
 			},
 			{
 				"key": "ctrl+enter",
@@ -5270,7 +5325,15 @@
 				"args": {
 					"command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup"
 				},
-				"when": "kb-macro.recording"
+				"when": "kb-macro.recording && !isMac && !activeEditorGroupEmpty"
+			},
+			{
+				"key": "ctrl+shift+tab",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup"
+				},
+				"when": "kb-macro.recording && isMac"
 			},
 			{
 				"key": "ctrl+shift+tab",
@@ -5286,7 +5349,15 @@
 				"args": {
 					"command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"
 				},
-				"when": "kb-macro.recording"
+				"when": "kb-macro.recording && !isMac && !activeEditorGroupEmpty"
+			},
+			{
+				"key": "ctrl+tab",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"
+				},
+				"when": "kb-macro.recording && isMac"
 			},
 			{
 				"key": "ctrl+tab",
@@ -6558,6 +6629,14 @@
 				"when": "kb-macro.recording && isWindows"
 			},
 			{
+				"key": "ctrl+oem_1 r",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "testing.refreshTests"
+				},
+				"when": "kb-macro.recording && isWindows && testing.canRefresh"
+			},
+			{
 				"key": "ctrl+oem_1 a",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7376,6 +7455,14 @@
 					"command": "testing.reRunLastRun"
 				},
 				"when": "kb-macro.recording && isLinux"
+			},
+			{
+				"key": "ctrl+[Semicolon] r",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "testing.refreshTests"
+				},
+				"when": "kb-macro.recording && isLinux && testing.canRefresh"
 			},
 			{
 				"key": "ctrl+[Semicolon] a",
