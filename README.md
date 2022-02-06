@@ -98,7 +98,7 @@ If multiple keywords are specified in an `args.await` parameter, it means all of
 
 If a target command does not always reproduce the specified side effects, it is okay since the playback mechanism has a timeout, which is 300 milliseconds.
 
-## How to use custom shortcut keys for recording and playback
+## How to customize shortcut keys for recording and playback
 
 This is the default keybinding set for recording/playback of this extension. Copy and paste this into your `keybindings.json` and modify it as you like.
 
@@ -130,11 +130,22 @@ This is the default keybinding set for recording/playback of this extension. Cop
     }
 ```
 
+## How to save the recorded sequence for future use
+
+After you have successfully recorded a sequence, you may also save it for future use in another VS Code session.
+
+1. Open the Command Palette by `ctrl+shift+p` (`cmd+shift+p` for Mac).
+2. Search for the command `Keyboard Macro: Copy Macro as Keybinding` and execute it. It copies the sequence in keybinding JSON format to the clipboard.
+3. Open your `keybindings.json` (Keyboard Shortcuts JSON).
+4. Paste the JSON at the appropriate location.
+5. Fill the `key` property which is left blank with your favorite keystroke.
+
 ## Tips
+
 | Task | Recordable ways to do it |
 | ---- | ------------------------ |
-| Move focus to editor | Instead of mouse, use `ctrl+1` (mac: `cmd+1`) |
-| Switch to another tab | Instead of `ctrl+tab`, use `ctrl+pageup`/`ctrl+pagedown` (mac: `alt+cmd+left`/`alt+cmd+right`) |
+| Move focus to editor | Instead of mouse, use `ctrl+1` (`cmd+1` for Mac) |
+| Switch to another tab | Instead of `ctrl+tab`, use `ctrl+pageup`/`ctrl+pagedown` (`alt+cmd+left`/`alt+cmd+right` for Mac) |
 
 ## Commands
 ### For recording
