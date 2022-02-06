@@ -2,7 +2,7 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.11.0] - 2022-02-06
 - Feature
   - Added a new `Keyboard Macro: Copy Macro as Keybinding` command. [#42](https://github.com/tshino/vscode-kb-macro/pull/42)
   - Added `sequence` argument support to the playback command. [#41](https://github.com/tshino/vscode-kb-macro/pull/41)
@@ -23,7 +23,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
     - `internal:performType` -> `$type`
     - `internal:performCursorMotion` -> `$moveCursor`
 
-### [0.9.0] - 2022-01-6
+### [0.9.0] - 2022-01-06
 - New
   - Added a new `Keyboard Macro: Repeat Playback` command, which lets the user input a number and then repeats the macro specified times. [#29](https://github.com/tshino/vscode-kb-macro/pull/29)
 - Documentation
