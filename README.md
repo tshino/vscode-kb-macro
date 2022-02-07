@@ -138,7 +138,7 @@ After you have successfully recorded a sequence, you may also save it for future
 2. Search for the command `Keyboard Macro: Copy Macro as Keybinding` and execute it. It copies the sequence in keybinding JSON format to the clipboard.
 3. Open your `keybindings.json` (Keyboard Shortcuts JSON).
 4. Paste the JSON at the appropriate location.
-5. Fill the `key` property which is left blank with your favorite keystroke.
+5. Fill the `key` property which is left blank with a new keystroke (e.g. `"key": "ctrl+alt+z"`).
 
 ## Tips
 
