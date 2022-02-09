@@ -40,5 +40,5 @@ jobs:
     - name: Upload the output file
       uses: actions/upload-artifact@v2
       with:
-        name: default-keybindings
+        name: default-keybindings-${{ matrix.os }}
         path: default-keybindings.json
