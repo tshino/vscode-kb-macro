@@ -38,6 +38,7 @@
 		"lint": "eslint .",
 		"pretest": "npm run lint",
 		"test": "node ./test/runTest.js",
+		"get-default-keybindings": "node ./generator/_get_default_keybindings.js",
 		"gen-wrapper": "node ./generator/gen_wrapper.js",
 		"postgen-wrapper": "npm run verify-wrapper",
 		"verify-wrapper": "node ./generator/verify_wrapper.js",
