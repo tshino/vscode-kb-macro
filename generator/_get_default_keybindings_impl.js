@@ -16,11 +16,13 @@ async function openDefaultKeybindingsFile() {
                 }
             }
         });
-        vscode.commands.executeCommand('workbench.action.openDefaultKeybindingsFile');
-        setTimeout(() => {
-            listener.dispose();
-            reject();
-        }, 3000);
+        vscode.commands.executeCommand('workbench.action.openDefaultKeybindingsFile').then(() => {
+            setTimeout(() => {
+                console.error('timeout');
+                listener.dispose();
+                reject();
+            }, 10 * 1000);
+        });
     });
 }
 
