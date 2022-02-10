@@ -12,6 +12,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - Feature
   - Added a new `Keyboard Macro: Copy Macro as Keybinding` command. [#42](https://github.com/tshino/vscode-kb-macro/pull/42)
   - Added `sequence` argument support to the playback command. [#41](https://github.com/tshino/vscode-kb-macro/pull/41)
+- Documentation
+  - Added 'How to save the recorded sequence for future use' section to the README.
 - Update
   - Updated default keybindings based on VS Code 1.64.0 (Windows, Linux).
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.39.0).
