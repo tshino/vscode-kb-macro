@@ -3,10 +3,9 @@
 name: Get Default Keybindings
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    # weekly
+    - cron: '38 16 * * 6'
 
 jobs:
   get-default-keybindings:
