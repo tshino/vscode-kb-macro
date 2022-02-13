@@ -1,4 +1,5 @@
 'use strict';
+const os = require('os');
 const path = require('path');
 const fsPromises = require('fs/promises');
 const vscode = require('vscode');
@@ -26,13 +27,35 @@ async function openDefaultKeybindingsFile() {
     });
 }
 
+function makeHeader(platform) {
+    const target = (
+        platform === 'win32' ? 'Windows' :
+        platform === 'darwin' ? 'macOS' :
+        'Linux'
+    );
+    const signature = `${vscode.env.appName} ${vscode.version} for ${target}`;
+    const header = `// Default Keybindings of ${signature}\n`;
+    return header;
+}
+
+function makeOutputFilePath(platform) {
+    const suffix = (
+        platform === 'win32' ? 'win' :
+        platform === 'darwin' ? 'mac' :
+        'linux'
+    );
+    const outputPath = path.resolve(__dirname, `../default-keybindings-${suffix}.json`);
+    return outputPath;
+}
+
 async function run() {
     await sleep(2000);
     const document = await openDefaultKeybindingsFile();
     const json = document.getText();
-    const signature = `// Default Keybindings of ${vscode.env.appName} ${vscode.version}\n`
-    const outputPath = path.resolve(__dirname, '../default-keybindings.json');
-    await fsPromises.writeFile(outputPath, signature + json);
+    const platform = os.platform();
+    const header = makeHeader(platform);
+    const outputPath = makeOutputFilePath(platform);
+    await fsPromises.writeFile(outputPath, header + json);
     console.log(`The default keybindings JSON has been successfully saved to ${outputPath}.`);
 }
 
