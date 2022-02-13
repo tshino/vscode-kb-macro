@@ -464,7 +464,7 @@ describe('reentrantGuard', () => {
             } finally {
                 reentrantGuard.setPrintError(old);
             }
-        })
+        });
         it('should invoke queued function even if another queued function threw exception (2)', async () => {
             const old = reentrantGuard.setPrintError(error => {
                 logs.push('error: ' + error);
@@ -504,6 +504,40 @@ describe('reentrantGuard', () => {
             } finally {
                 reentrantGuard.setPrintError(old);
             }
-        })
+        });
+        // TODO:
+        /*it('should finish each call when it ends its actual execution', async () => {
+            const asyncTarget = async function(arg) {
+                await TestUtil.sleep(10);
+                logs.push('hello ' + arg);
+                await TestUtil.sleep(10);
+                logs.push('bye');
+            };
+            const func = makeQueueableCommand(asyncTarget);
+            logs.push('before concurrent call');
+            const promise1 = func('1');
+            const promise2 = func('2');
+            const promise3 = func('3');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 2);
+            await promise1;
+            logs.push('after await 1');
+            await promise2;
+            logs.push('after await 2');
+            await promise3;
+            logs.push('after await 3');
+            assert.strictEqual(reentrantGuard.getQueueLength(), 0);
+            assert.deepStrictEqual(logs, [
+                'before concurrent call',
+                'hello 1',
+                'bye',
+                'after await 1',
+                'hello 2',
+                'bye',
+                'after await 2',
+                'hello 3',
+                'bye',
+                'after await 3'
+            ]);
+        });*/
     });
 });
