@@ -3,6 +3,8 @@
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
 ### [Unreleased]
+- Update
+  - Updated default keybindings based on VS Code 1.64.2 (Windows, Linux, macOS). [#53](https://github.com/tshino/vscode-kb-macro/pull/53)
 - Fix
   - The latest recorded sequence is played back if the 'sequence' argument has a syntax error. [#52](https://github.com/tshino/vscode-kb-macro/issues/52)
 
