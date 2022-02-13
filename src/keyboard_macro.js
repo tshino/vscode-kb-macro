@@ -156,12 +156,18 @@ const KeyboardMacro = function({ awaitController }) {
         if ('repeat' in args && typeof(args.repeat) === 'number') {
             validArgs.repeat = args.repeat;
         }
-        if ('sequence' in args && Array.isArray(args.sequence)) {
-            const sequence = args.sequence.map(spec => util.makeCommandSpec(spec));
-            if (sequence.includes(null)) {
-                console.error('kb-macro: Invalid sequence option: ' + JSON.stringify(args.sequence));
+        if ('sequence' in args) {
+            if (!Array.isArray(args.sequence)) {
+                showMessage('Invalid \'sequence\' argument: ' + JSON.stringify(args.sequence));
+                validArgs.sequence = [];
             } else {
-                validArgs.sequence = sequence;
+                const sequence = args.sequence.map(spec => util.makeCommandSpec(spec));
+                if (sequence.includes(null)) {
+                    showMessage('Invalid \'sequence\' argument: ' + JSON.stringify(args.sequence));
+                    validArgs.sequence = [];
+                } else {
+                    validArgs.sequence = sequence;
+                }
             }
         }
         return validArgs;

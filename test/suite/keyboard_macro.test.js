@@ -293,6 +293,17 @@ describe('KeybaordMacro', () => {
     });
     describe('validatePlaybackArgs', () => {
         const validatePlaybackArgs = keyboardMacro.validatePlaybackArgs;
+        const logs = [];
+        let old;
+        beforeEach(async () => {
+            logs.length = 0;
+            old = keyboardMacro.setShowMessage(async (message) => {
+                logs.push(message);
+            });
+        });
+        afterEach(() => {
+            keyboardMacro.setShowMessage(old);
+        });
         it('should return an args valid for playback command', () => {
             assert.deepStrictEqual(validatePlaybackArgs(), {});
             assert.deepStrictEqual(validatePlaybackArgs({}), {});
@@ -301,9 +312,11 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(validatePlaybackArgs(123), {});
             assert.deepStrictEqual(validatePlaybackArgs(null), {});
             assert.deepStrictEqual(validatePlaybackArgs(undefined), {});
+            assert.deepStrictEqual(logs, []);
         });
         it('should drop invalid properties', () => {
             assert.deepStrictEqual(validatePlaybackArgs({ hello: 5 }), {});
+            assert.deepStrictEqual(logs, []);
         });
         it('should return an args that express the same as the input', () => {
             assert.deepStrictEqual(validatePlaybackArgs({ repeat: 5 }), { repeat: 5 });
@@ -318,10 +331,26 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(validatePlaybackArgs({ sequence: s1 }), { sequence: s1 });
             const s2 = [ { command: 'foo' }, { command: 'bar', args: 'baz' } ];
             assert.deepStrictEqual(validatePlaybackArgs({ sequence: s2 }), { sequence: s2 });
+            assert.deepStrictEqual(logs, []);
         });
-        it('should drop invalid sequence option', () => {
-            assert.deepStrictEqual(validatePlaybackArgs({ sequence: '123' }), {});
-            assert.deepStrictEqual(validatePlaybackArgs({ sequence: [ 3, 4 ] }), {});
+        it('should treat an invalid sequence option as an empty', () => {
+            // see: https://github.com/tshino/vscode-kb-macro/issues/52
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: '123' }), { sequence: [] });
+            assert.deepStrictEqual(logs, [ 'Invalid \'sequence\' argument: "123"' ]);
+
+            logs.length = 0;
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: [ 3, 4 ] }), { sequence: [] });
+            assert.deepStrictEqual(logs, [ 'Invalid \'sequence\' argument: [3,4]' ]);
+
+            logs.length = 0;
+            const invalid1 = [
+                { 'command': 'valid' },
+                { 'COMMAND': 'invalid' }
+            ];
+            assert.deepStrictEqual(validatePlaybackArgs({ sequence: invalid1 }), { sequence: [] });
+            assert.deepStrictEqual(logs, [
+                'Invalid \'sequence\' argument: [{"command":"valid"},{"COMMAND":"invalid"}]'
+            ]);
         });
     });
     describe('playback', () => {
