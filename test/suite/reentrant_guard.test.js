@@ -506,7 +506,7 @@ describe('reentrantGuard', () => {
             }
         });
         // TODO:
-        /*it('should finish each call when it ends its actual execution', async () => {
+        it('should finish each call when it ends its actual execution', async () => {
             const asyncTarget = async function(arg) {
                 await TestUtil.sleep(10);
                 logs.push('hello ' + arg);
@@ -538,6 +538,6 @@ describe('reentrantGuard', () => {
                 'bye',
                 'after await 3'
             ]);
-        });*/
+        });
     });
 });

@@ -52,33 +52,32 @@ const reentrantGuard = (function() {
     const makeQueueableCommand = function(body, { queueSize = 0 } = {}) {
         return async function(args) {
             if (state.locked) {
-                if (state.queueable) {
-                    if (!queueSize || queue.length < queueSize) {
-                        queue.push([body, args]);
-                    }
+                if (!state.queueable) {
+                    return;
                 }
-                return;
+                if (queueSize && queue.length >= queueSize) {
+                    return;
+                }
+                await new Promise(resolve => {
+                    queue.push(resolve);
+                });
+            } else {
+                state.locked = true;
+                state.queueable = true;
             }
-            state.locked = true;
-            state.queueable = true;
             try {
-                try {
-                    await body(args);
-                } catch (error) {
-                    printError(error);
-                }
-                while (0 < queue.length) {
-                    try {
-                        const [body, args] = queue[0];
-                        queue.splice(0, 1);
-                        await body(args);
-                    } catch (error) {
-                        printError(error);
-                    }
-                }
+                await body(args);
+            } catch (error) {
+                printError(error);
             } finally {
-                state.locked = false;
-                state.queueable = false;
+                if (0 < queue.length) {
+                    const resolve = queue[0];
+                    queue.splice(0, 1);
+                    resolve();
+                } else {
+                    state.locked = false;
+                    state.queueable = false;
+                }
             }
         };
     };
