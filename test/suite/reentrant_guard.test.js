@@ -505,7 +505,6 @@ describe('reentrantGuard', () => {
                 reentrantGuard.setPrintError(old);
             }
         });
-        // TODO:
         it('should finish each call when it ends its actual execution', async () => {
             const asyncTarget = async function(arg) {
                 await TestUtil.sleep(10);
