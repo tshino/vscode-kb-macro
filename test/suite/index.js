@@ -40,6 +40,8 @@ function run() {
                 e(err);
             }
         });
+    }).finally(() => {
+        return vscode.commands.executeCommand('workbench.action.closeAllEditors');
     });
 }
 
