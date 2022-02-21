@@ -6,6 +6,7 @@ on:
   schedule:
     # weekly
     - cron: '38 16 * * 6'
+  workflow_dispatch:
 
 jobs:
   get-default-keybindings:
@@ -41,3 +42,16 @@ jobs:
       with:
         name: default-keybindings-${{ matrix.os }}
         path: default-keybindings-*.json
+
+  check-for-diff:
+    needs: get-default-keybindings
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download three JSON files
+        uses: actions/download-artifact@v2
+      - shell: bash
+        run: |
+          cp default-keybindings-*.json generator/
+          git diff
