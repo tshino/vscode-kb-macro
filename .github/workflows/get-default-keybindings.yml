@@ -53,7 +53,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Download three JSON files
         uses: actions/download-artifact@v2
-      - shell: bash
+      - name: Check for the diff
+        shell: bash
         run: |
           cp default-keybindings-ubuntu-latest/default-keybindings-linux.json generator/
           cp default-keybindings-macos-latest/default-keybindings-mac.json generator/
