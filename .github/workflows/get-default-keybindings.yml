@@ -55,5 +55,7 @@ jobs:
         uses: actions/download-artifact@v2
       - shell: bash
         run: |
-          cp default-keybindings-*.json generator/
+          cp default-keybindings-ubuntu-latest/default-keybindings-linux.json generator/
+          cp default-keybindings-macos-latest/default-keybindings-mac.json generator/
+          cp default-keybindings-windows-latest/default-keybindings-win.json generator/
           git diff
