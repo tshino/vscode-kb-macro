@@ -60,8 +60,8 @@ jobs:
           cp default-keybindings-ubuntu-latest/default-keybindings-linux.json generator/
           cp default-keybindings-macos-latest/default-keybindings-mac.json generator/
           cp default-keybindings-windows-latest/default-keybindings-win.json generator/
-          git diff --exit-code && echo "::set-output name=has-diff::false" || echo "::set-output name=has-diff::true"
-      - if: steps.diff.outputs.has-diff == true
+          git diff --exit-code ; echo "::set-output name=has-diff::$?"
+      - if: steps.diff.outputs.has-diff == '1'
         run: echo "has diff!"
-      - if: steps.diff.outputs.has-diff == false
+      - if: steps.diff.outputs.has-diff == '0'
         run: echo "no diff!"
