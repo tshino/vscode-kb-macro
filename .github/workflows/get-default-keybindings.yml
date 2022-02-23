@@ -53,13 +53,18 @@ jobs:
       - uses: actions/checkout@v2
       - name: Download three JSON files
         uses: actions/download-artifact@v2
-      - name: Check for the diff
-        id: diff
+      - name: Copy JSON files
         shell: bash
         run: |
           cp default-keybindings-ubuntu-latest/default-keybindings-linux.json generator/
           cp default-keybindings-macos-latest/default-keybindings-mac.json generator/
           cp default-keybindings-windows-latest/default-keybindings-win.json generator/
+      - name: Generate wrapper
+        run: npm run gen-wrapper
+      - name: Check for the diff
+        id: diff
+        shell: bash
+        run: |
           git diff --exit-code && echo "::set-output name=has-diff::false" || echo "::set-output name=has-diff::true"
       - if: steps.diff.outputs.has-diff == 'true'
         run: echo "has diff!"
