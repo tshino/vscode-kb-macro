@@ -282,12 +282,7 @@ async function verifyWrapper() {
     }
 }
 
-async function main() {
-    try {
-        await verifyWrapper();
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-main();
+verifyWrapper().catch(error => {
+    console.error(error);
+    process.exit(1);
+});
