@@ -65,4 +65,7 @@ async function main() {
     await genWrapperUtil.writeJSON(PackageJsonPath, packageJson);
 }
 
-main();
+main().catch(error => {
+    console.error(error);
+    process.exit(1);
+});
