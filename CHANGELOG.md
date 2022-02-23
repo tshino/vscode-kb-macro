@@ -3,6 +3,8 @@
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
 ### [Unreleased]
+- Documentation:
+  - Updated [DESIGN.md](./DESIGN.md).
 - Internal
   - Fixed: Editors remain open after testing [#55](https://github.com/tshino/vscode-kb-macro/issues/55)
 
