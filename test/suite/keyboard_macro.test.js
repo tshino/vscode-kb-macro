@@ -749,5 +749,16 @@ describe('KeybaordMacro', () => {
             ]);
             assert.strictEqual(keyboardMacro.isRecording(), true);
         });
+        it('should prevent recursive calls', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrap({
+                command: 'kb-macro.wrap',
+                args: { command: 'internal:log' }
+            });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, []);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
     });
 });
