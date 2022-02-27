@@ -67,6 +67,11 @@ jobs:
         run: |
           git diff --exit-code && echo "::set-output name=has-diff::false" || echo "::set-output name=has-diff::true"
       - if: steps.diff.outputs.has-diff == 'true'
-        run: echo "has diff!"
-      - if: steps.diff.outputs.has-diff == 'false'
-        run: echo "no diff!"
+        run: |
+          echo "has diff!"
+          git status
+          git chekcout -b update-default-keybindings
+          git add generator package.json
+          git commit -m "Update default keybindings and wrappers"
+          git status
+          echo "made a commit successfully"
