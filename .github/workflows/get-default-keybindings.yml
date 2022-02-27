@@ -77,8 +77,9 @@ jobs:
           echo "extracted branch name: ${{ steps.extract_branch.outputs.branch }}"
           git status
           git branch
-          # git checkout ${{ steps.extract_branch.outputs.branch }}
           git checkout -b update-default-keybindings
+          git config user.name "gh-workflow"
+          git config user.email "tshino.ssr+gh-workflow@gmail.com"
           git add generator package.json
           git commit -m "Update default keybindings and wrappers"
           git status
