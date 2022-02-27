@@ -66,21 +66,15 @@ jobs:
         shell: bash
         run: |
           git diff --exit-code && echo "::set-output name=has-diff::false" || echo "::set-output name=has-diff::true"
-      - name: Extract branch name
-        id: extract_branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      - if: steps.diff.outputs.has-diff == 'true'
+      - name: Make a commit and push a branch
+        if: steps.diff.outputs.has-diff == 'true'
         run: |
-          echo "has diff!"
-          echo "GITHUB_REF: ${GITHUB_REF}"
-          echo "extracted branch name: ${{ steps.extract_branch.outputs.branch }}"
-          git status
-          git branch
+          echo "Has diff!"
           git checkout -b update-default-keybindings
           git config user.name "gh-workflow"
           git config user.email "tshino.ssr+gh-workflow@gmail.com"
           git add generator package.json
           git commit -m "Update default keybindings and wrappers"
-          git status
-          echo "made a commit successfully"
+          echo "Made a commit successfully"
+          git push origin update-default-keybindings
+          echo "Pushed a branch successfully"
