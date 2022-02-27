@@ -70,7 +70,8 @@ jobs:
         run: |
           echo "has diff!"
           git status
-          git chekcout -b update-default-keybindings
+          git checkout main
+          git checkout -b update-default-keybindings
           git add generator package.json
           git commit -m "Update default keybindings and wrappers"
           git status
