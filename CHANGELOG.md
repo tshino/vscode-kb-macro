@@ -5,6 +5,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [Unreleased]
 - Documentation:
   - Updated [DESIGN.md](./DESIGN.md).
+- Fix
+  - Fixed: Deadlock happens if wrap invokes wrap [#63](https://github.com/tshino/vscode-kb-macro/issues/63)
 - Internal
   - Fixed: Editors remain open after testing [#55](https://github.com/tshino/vscode-kb-macro/issues/55)
   - Fixed: gen_wrapper.js and verify_wrapper.js end with exit code 0 even when it fails [#61](https://github.com/tshino/vscode-kb-macro/issues/61)

@@ -18,7 +18,7 @@ describe('Recording and Playback: Cursor', () => {
     const record = async function(sequence) {
         keyboardMacro.startRecording();
         for (let i = 0; i < sequence.length; i++) {
-            await keyboardMacro.wrap(sequence[i]);
+            await keyboardMacro.wrapSync(sequence[i]);
         }
         keyboardMacro.finishRecording();
     };
