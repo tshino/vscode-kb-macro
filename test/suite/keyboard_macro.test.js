@@ -80,7 +80,7 @@ describe('KeybaordMacro', () => {
             keyboardMacro.onEndWrappedCommand(() => { logs.push('end'); });
 
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap({ command: 'internal:log' });
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
             keyboardMacro.finishRecording();
 
             assert.deepStrictEqual(logs, [ 'begin', 'invoked', 'end' ]);
@@ -640,7 +640,7 @@ describe('KeybaordMacro', () => {
         });
         it('should invoke and record specified command', async () => {
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap({ command: 'internal:log' });
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
             keyboardMacro.finishRecording();
 
             assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
@@ -649,16 +649,16 @@ describe('KeybaordMacro', () => {
             ]);
         });
         it('should not invoke specified command if not recording', async () => {
-            await keyboardMacro.wrap({ command: 'internal:log' });
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
 
             assert.deepStrictEqual(logs, []);
         });
         it('should not crash even if the argument is invalid', async () => {
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap({ command: '' });
-            await keyboardMacro.wrap({ command: 'INVALID' });
-            await keyboardMacro.wrap({ });
-            await keyboardMacro.wrap();
+            await keyboardMacro.wrapSync({ command: '' });
+            await keyboardMacro.wrapSync({ command: 'INVALID' });
+            await keyboardMacro.wrapSync({ });
+            await keyboardMacro.wrapSync();
             keyboardMacro.finishRecording();
 
             assert.deepStrictEqual(logs, []);
@@ -667,8 +667,8 @@ describe('KeybaordMacro', () => {
         });
         it('should invoke and record specified command synchronously', async () => {
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap({ command: 'internal:log' });
-            await keyboardMacro.wrap({ command: 'internal:log', args: { test: '1' } });
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.wrapSync({ command: 'internal:log', args: { test: '1' } });
             keyboardMacro.finishRecording();
 
             assert.deepStrictEqual(logs, [ 'begin', 'end', 'begin', 'end' ]);
@@ -679,8 +679,8 @@ describe('KeybaordMacro', () => {
         });
         it('should enqueue and serialize concurrent calls', async () => {
             keyboardMacro.startRecording();
-            const promise1 = keyboardMacro.wrap({ command: 'internal:log' });
-            const promise2 = keyboardMacro.wrap({ command: 'internal:log' });
+            const promise1 = keyboardMacro.wrapSync({ command: 'internal:log' });
+            const promise2 = keyboardMacro.wrapSync({ command: 'internal:log' });
             await Promise.all([promise1, promise2]);
             keyboardMacro.finishRecording();
 
@@ -696,12 +696,12 @@ describe('KeybaordMacro', () => {
         it('should be able to enqueue and serialize concurrent call up to WrapQueueSize', async () => {
             keyboardMacro.startRecording();
             const promises = [];
-            promises.push(keyboardMacro.wrap({ command: 'internal:log' })); // (1)
+            promises.push(keyboardMacro.wrapSync({ command: 'internal:log' })); // (1)
             for (let i = 0; i < keyboardMacro.WrapQueueSize; i++) {
-                promises.push(keyboardMacro.wrap({ command: 'internal:log' })); // (2) to (WrapQueueSize + 1)
+                promises.push(keyboardMacro.wrapSync({ command: 'internal:log' })); // (2) to (WrapQueueSize + 1)
             }
             await Promise.all(promises);
-            await keyboardMacro.wrap({ command: 'internal:log' }); // (WrapQueueSize + 2)
+            await keyboardMacro.wrapSync({ command: 'internal:log' }); // (WrapQueueSize + 2)
             keyboardMacro.finishRecording();
 
             const expectedLog = Array(keyboardMacro.WrapQueueSize + 2).fill(['begin', 'end']).flat();
@@ -712,12 +712,12 @@ describe('KeybaordMacro', () => {
         it('should overflow when over WrapQueueSize concurrent calls made', async () => {
             keyboardMacro.startRecording();
             const promises = [];
-            promises.push(keyboardMacro.wrap({ command: 'internal:log' })); // (1)
+            promises.push(keyboardMacro.wrapSync({ command: 'internal:log' })); // (1)
             for (let i = 0; i < keyboardMacro.WrapQueueSize + 1; i++) { // <-- PLUS ONE!
-                promises.push(keyboardMacro.wrap({ command: 'internal:log' })); // (2) to (WrapQueueSize + 2)
+                promises.push(keyboardMacro.wrapSync({ command: 'internal:log' })); // (2) to (WrapQueueSize + 2)
             }
             await Promise.all(promises);
-            await keyboardMacro.wrap({ command: 'internal:log' }); // (WrapQueueSize + 3)
+            await keyboardMacro.wrapSync({ command: 'internal:log' }); // (WrapQueueSize + 3)
             keyboardMacro.finishRecording();
 
             const expectedLog = Array(keyboardMacro.WrapQueueSize + 2).fill(['begin', 'end']).flat();
@@ -727,7 +727,7 @@ describe('KeybaordMacro', () => {
         });
         it('should prevent other commands from interrupting wrap command (cancelRecording)', async () => {
             keyboardMacro.startRecording();
-            const promise1 = keyboardMacro.wrap({ command: 'internal:log' });
+            const promise1 = keyboardMacro.wrapSync({ command: 'internal:log' });
             keyboardMacro.cancelRecording(); // <--
             await promise1;
 
@@ -739,7 +739,7 @@ describe('KeybaordMacro', () => {
         });
         it('should prevent other commands from interrupting wrap command (finishRecording)', async () => {
             keyboardMacro.startRecording();
-            const promise1 = keyboardMacro.wrap({ command: 'internal:log' });
+            const promise1 = keyboardMacro.wrapSync({ command: 'internal:log' });
             keyboardMacro.finishRecording(); // <--
             await promise1;
 
@@ -749,9 +749,9 @@ describe('KeybaordMacro', () => {
             ]);
             assert.strictEqual(keyboardMacro.isRecording(), true);
         });
-        it('should prevent recursive calls', async () => {
+        it('should prevent direct recursive calls', async () => {
             keyboardMacro.startRecording();
-            await keyboardMacro.wrap({
+            await keyboardMacro.wrapSync({
                 command: 'kb-macro.wrap',
                 args: { command: 'internal:log' }
             });
@@ -759,6 +759,24 @@ describe('KeybaordMacro', () => {
 
             assert.deepStrictEqual(logs, []);
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
+        it('should prevent indirect recursive calls', async () => {
+            // For design details, see https://github.com/tshino/vscode-kb-macro/issues/63
+            keyboardMacro.registerInternalCommand('internal:indirectWrap', async () => {
+                await vscode.commands.executeCommand('kb-macro.wrap', {
+                    command: 'internal:log'
+                });
+            });
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({
+                command: 'internal:indirectWrap'
+            });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, []);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:indirectWrap' }
+            ]);
         });
     });
 });

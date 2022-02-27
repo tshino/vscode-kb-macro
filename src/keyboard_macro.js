@@ -249,7 +249,7 @@ const KeyboardMacro = function({ awaitController }) {
     // greater value leads to too many queued and delayed command execution.
     // See: https://github.com/tshino/vscode-kb-macro/pull/32
     const WrapQueueSize = 2;
-    const wrap = reentrantGuard.makeQueueableCommand(async function(args) {
+    const wrapSync = reentrantGuard.makeQueueableCommand(async function(args) {
         if (recording) {
             const spec = util.makeCommandSpec(args);
             if (!spec) {
@@ -274,6 +274,12 @@ const KeyboardMacro = function({ awaitController }) {
         }
     }, { queueSize: WrapQueueSize });
 
+    const wrap = function(args) {
+        // Discard the returned Promise.
+        // See https://github.com/tshino/vscode-kb-macro/issues/63
+        wrapSync(args);
+    };
+
     return {
         RecordingStateReason,
         PlaybackStateReason,
@@ -292,6 +298,7 @@ const KeyboardMacro = function({ awaitController }) {
         abortPlayback,
         repeatPlayback,
         repeatPlaybackTillEndOfFile,
+        wrapSync,
         wrap,
 
         // testing purpose only
