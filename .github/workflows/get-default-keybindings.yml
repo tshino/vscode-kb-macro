@@ -73,9 +73,11 @@ jobs:
       - if: steps.diff.outputs.has-diff == 'true'
         run: |
           echo "has diff!"
+          echo "GITHUB_REF: ${GITHUB_REF}"
+          echo "extracted branch name: ${{ steps.extract_branch.outputs.branch }}"
           git status
           git branch
-          git checkout ${{ steps.extract_branch.outputs.branch }}
+          # git checkout ${{ steps.extract_branch.outputs.branch }}
           git checkout -b update-default-keybindings
           git add generator package.json
           git commit -m "Update default keybindings and wrappers"
