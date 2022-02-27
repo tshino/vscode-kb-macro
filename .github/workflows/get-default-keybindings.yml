@@ -66,11 +66,16 @@ jobs:
         shell: bash
         run: |
           git diff --exit-code && echo "::set-output name=has-diff::false" || echo "::set-output name=has-diff::true"
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       - if: steps.diff.outputs.has-diff == 'true'
         run: |
           echo "has diff!"
           git status
-          git checkout main
+          git branch
+          git checkout ${{ steps.extract_branch.outputs.branch }}
           git checkout -b update-default-keybindings
           git add generator package.json
           git commit -m "Update default keybindings and wrappers"
