@@ -7,8 +7,6 @@ on:
     # weekly
     - cron: '38 16 * * 6'
   workflow_dispatch:
-  pull_request:
-    branches: [ main ]
 
 jobs:
   get-default-keybindings:
@@ -66,7 +64,15 @@ jobs:
         shell: bash
         run: |
           git diff --exit-code && echo "::set-output name=has-diff::false" || echo "::set-output name=has-diff::true"
-      - if: steps.diff.outputs.has-diff == 'true'
-        run: echo "has diff!"
-      - if: steps.diff.outputs.has-diff == 'false'
-        run: echo "no diff!"
+      - name: Make a commit and push a branch
+        if: steps.diff.outputs.has-diff == 'true'
+        run: |
+          echo "Has diff!"
+          git checkout -b update-default-keybindings
+          git config user.name "gh-workflow"
+          git config user.email "tshino.ssr+gh-workflow@gmail.com"
+          git add generator package.json
+          git commit -m "Update default keybindings and wrappers"
+          echo "Made a commit successfully"
+          git push origin update-default-keybindings
+          echo "Pushed a branch successfully"
