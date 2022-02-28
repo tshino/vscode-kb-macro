@@ -64,15 +64,21 @@ jobs:
         shell: bash
         run: |
           git diff --exit-code && echo "::set-output name=has-diff::false" || echo "::set-output name=has-diff::true"
+      - name: Make a unique branch name
+        id: branch-name
+        shell: bash
+        run: |
+          datetime=$(date +'%Y-%m-%d-%H-%M')
+          echo "::set-output name=branch-name::update-default-keybinding-${datetime}"
       - name: Make a commit and push a branch
         if: steps.diff.outputs.has-diff == 'true'
         run: |
           echo "Has diff!"
-          git checkout -b update-default-keybindings
+          git checkout -b ${{ steps.branch-name.outputs.branch-name }}
           git config user.name "gh-workflow"
           git config user.email "tshino.ssr+gh-workflow@gmail.com"
           git add generator package.json
           git commit -m "Update default keybindings and wrappers"
           echo "Made a commit successfully"
-          git push origin update-default-keybindings
+          git push origin ${{ steps.branch-name.outputs.branch-name }}
           echo "Pushed a branch successfully"
