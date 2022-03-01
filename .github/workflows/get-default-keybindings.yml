@@ -72,6 +72,7 @@ jobs:
           echo "::set-output name=branch-name::update-default-keybinding-${datetime}"
       - name: Make a commit and push a branch
         if: steps.diff.outputs.has-diff == 'true'
+        shell: bash
         run: |
           echo "Has diff!"
           git checkout -b ${{ steps.branch-name.outputs.branch-name }}
@@ -82,3 +83,13 @@ jobs:
           echo "Made a commit successfully"
           git push origin ${{ steps.branch-name.outputs.branch-name }}
           echo "Pushed a branch successfully"
+      - name: Make a PR
+        if: steps.diff.outputs.has-diff == 'true'
+        shell: bash
+        run: |
+          head=${{ steps.branch-name.outputs.branch-name }}
+          version=$(head -n 1 generator/default-keybindings-win.json | sed -E "s/.*(([0-9]+\.){2}[0-9]+).*/\1/")
+          title="[TEST] Update wrappers based on vscode ${version}"
+          gh pr create --base main --head ${head} --title "${title}" --body ""
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
