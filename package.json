@@ -371,6 +371,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "inlayHints.stopReadingLineWithHint"
+				},
+				"when": "kb-macro.recording && isReadingLineWithInlayHints"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "search.action.focusQueryEditorWidget"
 				},
 				"when": "kb-macro.recording && inSearchEditor"
@@ -3729,6 +3737,15 @@
 				"when": "kb-macro.recording && editorTextFocus && inDebugMode"
 			},
 			{
+				"key": "ctrl+k ctrl+i",
+				"mac": "cmd+k cmd+i",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.showTreeHover"
+				},
+				"when": "kb-macro.recording && customTreeView && listFocus && !inputFocus"
+			},
+			{
 				"key": "shift+alt+right",
 				"mac": "ctrl+shift+right",
 				"command": "kb-macro.wrap",
@@ -4988,6 +5005,15 @@
 					"command": "workbench.action.files.openFileFolder"
 				},
 				"when": "kb-macro.recording && isMacNative && openFolderWorkspaceSupport"
+			},
+			{
+				"key": "ctrl+o",
+				"mac": "cmd+o",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.files.openFolderViaWorkspace"
+				},
+				"when": "kb-macro.recording && !openFolderWorkspaceSupport && workbenchState == 'workspace'"
 			},
 			{
 				"key": "ctrl+o",
