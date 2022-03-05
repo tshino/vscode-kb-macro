@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.64.2 for macOS
+// Default Keybindings of Visual Studio Code 1.65.0 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -428,6 +428,8 @@
                                      "when": "editorTextFocus && foldingEnabled" },
 { "key": "cmd+k cmd+]",           "command": "editor.unfoldRecursively",
                                      "when": "editorTextFocus && foldingEnabled" },
+{ "key": "escape",                "command": "inlayHints.stopReadingLineWithHint",
+                                     "when": "isReadingLineWithInlayHints" },
 { "key": "tab",                   "command": "insertSnippet",
                                      "when": "editorTextFocus && hasSnippetCompletions && !editorTabMovesFocus && !inSnippetMode" },
 { "key": "ctrl+enter",            "command": "interactive.execute",
@@ -1016,6 +1018,8 @@
                                      "when": "false" },
 { "key": "cmd+o",                 "command": "workbench.action.files.openFileFolder",
                                      "when": "isMacNative && openFolderWorkspaceSupport" },
+{ "key": "cmd+o",                 "command": "workbench.action.files.openFolderViaWorkspace",
+                                     "when": "!openFolderWorkspaceSupport && workbenchState == 'workspace'" },
 { "key": "cmd+o",                 "command": "workbench.action.files.openLocalFileFolder",
                                      "when": "remoteFileDialogVisible" },
 { "key": "cmd+k r",               "command": "workbench.action.files.revealActiveFileInWindows" },
@@ -1112,6 +1116,8 @@
 { "key": "cmd+t",                 "command": "workbench.action.showAllSymbols" },
 { "key": "f1",                    "command": "workbench.action.showCommands" },
 { "key": "shift+cmd+p",           "command": "workbench.action.showCommands" },
+{ "key": "cmd+k cmd+i",           "command": "workbench.action.showTreeHover",
+                                     "when": "customTreeView && listFocus && !inputFocus" },
 { "key": "cmd+\\",                "command": "workbench.action.splitEditor" },
 { "key": "cmd+k shift+cmd+\\",    "command": "workbench.action.splitEditorInGroup",
                                      "when": "activeEditorCanSplitInGroup" },
@@ -1442,6 +1448,7 @@
 // - acceptSelectedSuggestionOnEnter
 // - acceptSnippet
 // - addRootFolder
+// - audioCues.help
 // - breadcrumbs.toggle
 // - breadcrumbs.toggleFromEditorTitle
 // - callStack.collapse
@@ -1561,6 +1568,7 @@
 // - editor.action.sortLinesDescending
 // - editor.action.sourceAction
 // - editor.action.startDebugTextMate
+// - editor.action.surroundWithSnippet
 // - editor.action.toggleColumnSelection
 // - editor.action.toggleMinimap
 // - editor.action.toggleRenderControlCharacter
@@ -1689,6 +1697,7 @@
 // - git.clone
 // - git.cloneRecursive
 // - git.close
+// - git.closeAllDiffEditors
 // - git.commit
 // - git.commitAll
 // - git.commitAllAmend
@@ -1774,7 +1783,10 @@
 // - help.tweetFeedback
 // - imagePreview.zoomIn
 // - imagePreview.zoomOut
+// - inlayHints.startReadingLineWithHint
 // - interactive.input.clear
+// - ipynb.newUntitledIpynb
+// - ipynb.openIpynbInNotebookEditor
 // - javascript.goToProjectConfig
 // - javascript.reloadProjects
 // - jsBrowserBreakpoints.focus
@@ -1951,6 +1963,7 @@
 // - selectForCompare
 // - selectLastSuggestion
 // - setContext
+// - setRootFolder
 // - setSelection
 // - settings.filterByModified
 // - settings.filterByOnline
@@ -1998,9 +2011,12 @@
 // - update.checkForVSCodeUpdate
 // - update.checking
 // - update.downloadNow
+// - update.downloadUpdate
 // - update.downloading
 // - update.install
+// - update.installUpdate
 // - update.restart
+// - update.restartToUpdate
 // - update.showCurrentReleaseNotes
 // - update.updating
 // - variables.collapse
@@ -2022,6 +2038,7 @@
 // - workbench.action.clearEditorHistory
 // - workbench.action.clearRecentFiles
 // - workbench.action.closeActivePinnedEditor
+// - workbench.action.closeAuxiliaryBar
 // - workbench.action.closeEditorInAllGroups
 // - workbench.action.closeEditorsAndGroup
 // - workbench.action.closeEditorsInOtherGroups
@@ -2120,11 +2137,18 @@
 // - workbench.action.moveSidePanelToPanel
 // - workbench.action.moveView
 // - workbench.action.moveWindowTabToNewWindow
+// - workbench.action.navigateBackInEditLocations
+// - workbench.action.navigateBackInNavigationLocations
 // - workbench.action.navigateDown
 // - workbench.action.navigateEditorGroups
+// - workbench.action.navigateForwardInEditLocations
+// - workbench.action.navigateForwardInNavigationLocations
 // - workbench.action.navigateLast
 // - workbench.action.navigateLeft
+// - workbench.action.navigatePreviousInEditLocations
+// - workbench.action.navigatePreviousInNavigationLocations
 // - workbench.action.navigateRight
+// - workbench.action.navigateToLastNavigationLocation
 // - workbench.action.navigateUp
 // - workbench.action.newGroupAbove
 // - workbench.action.newGroupBelow
@@ -2252,6 +2276,7 @@
 // - workbench.action.terminal.changeIcon
 // - workbench.action.terminal.changeIconInstance
 // - workbench.action.terminal.changeIconPanel
+// - workbench.action.terminal.clearCommandHistory
 // - workbench.action.terminal.createProfileButton
 // - workbench.action.terminal.detachSession
 // - workbench.action.terminal.focus
@@ -2277,7 +2302,7 @@
 // - workbench.action.terminal.openDetectedLink
 // - workbench.action.terminal.openFileLink
 // - workbench.action.terminal.openSettings
-// - workbench.action.terminal.openWebLink
+// - workbench.action.terminal.openUrlLink
 // - workbench.action.terminal.relaunch
 // - workbench.action.terminal.rename
 // - workbench.action.terminal.renamePanel
