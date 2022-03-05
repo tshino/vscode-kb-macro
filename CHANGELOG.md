@@ -3,7 +3,8 @@
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
 ### [Unreleased]
-- Documentation:
+- Update
+  - Updated default keybindings based on VS Code 1.65.0. [#71](https://github.com/tshino/vscode-kb-macro/pull/71)
   - Updated [DESIGN.md](./DESIGN.md).
 - Fix
   - Fixed: Deadlock happens if wrap invokes wrap [#63](https://github.com/tshino/vscode-kb-macro/issues/63)
