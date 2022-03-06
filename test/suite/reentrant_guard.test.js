@@ -7,8 +7,15 @@ describe('reentrantGuard', () => {
     describe('makeGuardedCommand', () => {
         const makeGuardedCommand = reentrantGuard.makeGuardedCommand;
         const logs = [];
+        let oldPrintError;
         beforeEach(() => {
             logs.length = 0;
+            oldPrintError = reentrantGuard.setPrintError(error => {
+                logs.push('error: ' + error);
+            });
+        });
+        afterEach(() => {
+            reentrantGuard.setPrintError(oldPrintError);
         });
         it('should return an async function', async () => {
             const func = makeGuardedCommand(() => {});
@@ -122,39 +129,24 @@ describe('reentrantGuard', () => {
             assert.deepStrictEqual(logs, [
                 'before call',
                 'will throw',
+                'error: error',
                 'will not throw',
                 'after call'
             ]);
-        });
-        it('should print error message on exception', async () => {
-            const target = function() {
-                logs.push('will throw');
-                throw 'error!';
-            };
-            const old = reentrantGuard.setPrintError(error => {
-                logs.push('error: ' + error);
-            });
-            try {
-                const func = makeGuardedCommand(target);
-                logs.push('before call');
-                await func();
-                logs.push('after call');
-                assert.deepStrictEqual(logs, [
-                    'before call',
-                    'will throw',
-                    'error: error!',
-                    'after call'
-                ]);
-            } finally {
-                reentrantGuard.setPrintError(old);
-            }
         });
     });
     describe('makeGuardedCommandSync', () => {
         const makeGuardedCommandSync = reentrantGuard.makeGuardedCommandSync;
         const logs = [];
+        let oldPrintError;
         beforeEach(() => {
             logs.length = 0;
+            oldPrintError = reentrantGuard.setPrintError(error => {
+                logs.push('error: ' + error);
+            });
+        });
+        afterEach(() => {
+            reentrantGuard.setPrintError(oldPrintError);
         });
         it('should return a non-async function', async () => {
             const func = makeGuardedCommandSync(() => {});
@@ -224,32 +216,10 @@ describe('reentrantGuard', () => {
             assert.deepStrictEqual(logs, [
                 'before call',
                 'will throw',
+                'error: error',
                 'will not throw',
                 'after call'
             ]);
-        });
-        it('should print error message on exception', async () => {
-            const target = function() {
-                logs.push('will throw');
-                throw 'error!';
-            };
-            const old = reentrantGuard.setPrintError(error => {
-                logs.push('error: ' + error);
-            });
-            try {
-                const func = makeGuardedCommandSync(target);
-                logs.push('before call');
-                func();
-                logs.push('after call');
-                assert.deepStrictEqual(logs, [
-                    'before call',
-                    'will throw',
-                    'error: error!',
-                    'after call'
-                ]);
-            } finally {
-                reentrantGuard.setPrintError(old);
-            }
         });
     });
     describe('makeQueueableCommand', () => {
