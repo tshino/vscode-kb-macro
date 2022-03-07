@@ -29,6 +29,16 @@ const KeyboardMacro = function({ awaitController }) {
     const sequence = CommandSequence();
     const internalCommands = new Map();
 
+    let printError = defaultPrintError;
+    function defaultPrintError(error) {
+        console.error(error);
+    };
+    const setPrintError = function(printErrorImpl) {
+        const old = printError;
+        printError = printErrorImpl;
+        return old;
+    };
+
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
     };
@@ -142,8 +152,7 @@ const KeyboardMacro = function({ awaitController }) {
             await invokeCommand(spec);
         } catch(error) {
             ok = false;
-            console.error(error);
-            console.info('kb-macro: Error in ' + context + ': ' + JSON.stringify(spec));
+            printError(`'kb-macro: ${error.message} - Error in ${context}: ${JSON.stringify(spec)}`);
         } finally {
             await promise;
         }
@@ -283,6 +292,7 @@ const KeyboardMacro = function({ awaitController }) {
     return {
         RecordingStateReason,
         PlaybackStateReason,
+        setPrintError,
         onChangeRecordingState,
         onChangePlaybackState,
         onBeginWrappedCommand,

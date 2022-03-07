@@ -355,6 +355,7 @@ describe('KeybaordMacro', () => {
     });
     describe('playback', () => {
         const logs = [];
+        let oldPrintError;
         beforeEach(async () => {
             keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
@@ -364,6 +365,12 @@ describe('KeybaordMacro', () => {
                 await TestUtil.sleep(50);
                 logs.push('end');
             });
+            oldPrintError = keyboardMacro.setPrintError(() => {
+                logs.push('error');
+            });
+        });
+        afterEach(() => {
+            keyboardMacro.setPrintError(oldPrintError);
         });
         it('should invoke recorded command', async () => {
             const logs = [];
@@ -418,7 +425,7 @@ describe('KeybaordMacro', () => {
             keyboardMacro.finishRecording();
 
             await keyboardMacro.playback();
-            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            assert.deepStrictEqual(logs, [ 'begin', 'end', 'error' ]);
         });
         it('should abort playback with repeat argument if command execution failed', async () => {
             keyboardMacro.startRecording();
@@ -427,7 +434,7 @@ describe('KeybaordMacro', () => {
             keyboardMacro.finishRecording();
 
             await keyboardMacro.playback({ repeat: 5 });
-            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            assert.deepStrictEqual(logs, [ 'begin', 'end', 'error' ]);
         });
         it('should do nothing when recording is ongoing', async () => {
             keyboardMacro.startRecording();
@@ -628,6 +635,7 @@ describe('KeybaordMacro', () => {
     });
     describe('wrap', () => {
         const logs = [];
+        let oldPrintError;
         beforeEach(async () => {
             keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
@@ -637,6 +645,12 @@ describe('KeybaordMacro', () => {
                 await TestUtil.sleep(10);
                 logs.push('end');
             });
+            oldPrintError = keyboardMacro.setPrintError(() => {
+                logs.push('error');
+            });
+        });
+        afterEach(() => {
+            keyboardMacro.setPrintError(oldPrintError);
         });
         it('should invoke and record specified command', async () => {
             keyboardMacro.startRecording();
@@ -661,7 +675,7 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.wrapSync();
             keyboardMacro.finishRecording();
 
-            assert.deepStrictEqual(logs, []);
+            assert.deepStrictEqual(logs, [ 'error' ]);
             assert.strictEqual(keyboardMacro.isRecording(), false);
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
