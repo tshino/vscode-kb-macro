@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Documentation:
+  - Added 'When clause context' section to the README.
+
 ### [0.11.3] - 2022-03-06
 - Update
   - Updated default keybindings based on VS Code 1.65.0. [#71](https://github.com/tshino/vscode-kb-macro/pull/71)

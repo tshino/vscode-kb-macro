@@ -192,6 +192,12 @@ The `kb-macro.playback` command has an optional `sequence` argument to specify a
 }
 ```
 
+## When clause context
+
+| `when` clause context | True when |
+| --------------------- | --------- |
+| `kb-macro.recording`  | The macro recording is ongoing |
+| `kb-macro.playing`    | The macro playback is ongoing |
 
 ## Known issues
 - Typing in the search input box during recording may cause unexpected cursor movements during playback. [#33](https://github.com/tshino/vscode-kb-macro/issues/33)
