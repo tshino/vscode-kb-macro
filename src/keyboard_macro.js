@@ -193,6 +193,9 @@ const KeyboardMacro = function({ awaitController }) {
             }
         }
         try {
+            if (wrapMode && onBeginWrappedCommandCallback) {
+                onBeginWrappedCommandCallback();
+            }
             changePlaybackState(true, PlaybackStateReason.Start);
             shouldAbortPlayback = false;
             let endOfFileDetector;
@@ -225,6 +228,9 @@ const KeyboardMacro = function({ awaitController }) {
                 PlaybackStateReason.Finish;
             changePlaybackState(false, reason);
             shouldAbortPlayback = false;
+            if (wrapMode && onEndWrappedCommandCallback) {
+                onEndWrappedCommandCallback();
+            }
         }
     };
     const playback = reentrantGuard.makeGuardedCommand(args => playbackImpl(args));
