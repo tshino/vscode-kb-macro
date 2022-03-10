@@ -532,7 +532,26 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log', args: 'world' }
             ]);
         });
-        // TODO: add test: failed command should not been recorded
+        it('should not record commands that failed to invoke', async () => {
+            const sequence = [
+                { command: 'internal:log', args: 'hello' },
+                { command: 'INVALID' },
+                { command: 'internal:log', args: 'world' }
+            ];
+            keyboardMacro.startRecording();
+            await keyboardMacro.playback({ sequence });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [
+                'begin:"hello"',
+                'end'
+            ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log', args: 'hello' }
+            ]);
+        });
+        // TODO: test for playback with 'sequence' during recording where it produces document changes
+        // TODO: test for playback with 'sequence' and 'repeat' during recording
     });
     describe('isPlaying', () => {
         beforeEach(async () => {

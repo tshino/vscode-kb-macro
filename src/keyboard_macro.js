@@ -186,12 +186,11 @@ const KeyboardMacro = function({ awaitController }) {
         args = validatePlaybackArgs(args);
         const repeat = 'repeat' in args ? args.repeat : 1;
         const commands = 'sequence' in args ? args.sequence : sequence.get();
+        const wrapMode = recording;
         if (recording) {
             if (!('sequence' in args)) {
                 return;
             }
-            // FIXME: push AFTER its successful invocation.
-            commands.forEach(spec => push(spec));
         }
         try {
             changePlaybackState(true, PlaybackStateReason.Start);
@@ -206,6 +205,9 @@ const KeyboardMacro = function({ awaitController }) {
                     ok = await invokeCommandSync(spec, 'playback');
                     if (!ok || shouldAbortPlayback) {
                         break;
+                    }
+                    if (wrapMode) {
+                        push(spec);
                     }
                 }
                 if (!ok || shouldAbortPlayback) {
