@@ -512,6 +512,27 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.playback({ sequence });
             assert.deepStrictEqual(logs, [ '1', 'begin:"hello"', 'end', '2' ]);
         });
+        it('should record the commands if it called during recording', async () => {
+            const sequence = [
+                { command: 'internal:log', args: 'hello' },
+                { command: 'internal:log', args: 'world' }
+            ];
+            keyboardMacro.startRecording();
+            await keyboardMacro.playback({ sequence });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [
+                'begin:"hello"',
+                'end',
+                'begin:"world"',
+                'end'
+            ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log', args: 'hello' },
+                { command: 'internal:log', args: 'world' }
+            ]);
+        });
+        // TODO: add test: failed command should not been recorded
     });
     describe('isPlaying', () => {
         beforeEach(async () => {

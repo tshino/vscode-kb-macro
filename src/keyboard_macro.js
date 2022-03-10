@@ -183,15 +183,19 @@ const KeyboardMacro = function({ awaitController }) {
     };
 
     const playbackImpl = async function(args, { tillEndOfFile = false } = {}) {
+        args = validatePlaybackArgs(args);
+        const repeat = 'repeat' in args ? args.repeat : 1;
+        const commands = 'sequence' in args ? args.sequence : sequence.get();
         if (recording) {
-            return;
+            if (!('sequence' in args)) {
+                return;
+            }
+            // FIXME: push AFTER its successful invocation.
+            commands.forEach(spec => push(spec));
         }
         try {
             changePlaybackState(true, PlaybackStateReason.Start);
             shouldAbortPlayback = false;
-            args = validatePlaybackArgs(args);
-            const repeat = 'repeat' in args ? args.repeat : 1;
-            const commands = 'sequence' in args ? args.sequence : sequence.get();
             let endOfFileDetector;
             if (tillEndOfFile) {
                 endOfFileDetector = EndOfFileDetector(vscode.window.activeTextEditor);
