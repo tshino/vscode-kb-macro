@@ -609,9 +609,6 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log', args: 'hello' }
             ]);
         });
-        // TODO: test for playback with 'sequence' during recording where it produces document changes
-        // TODO: test for playback with 'sequence' during recording where the sequence includes $type
-        // TODO: test for playback with 'sequence' during recording where the sequence includes $moveCursor
     });
     describe('isPlaying', () => {
         beforeEach(async () => {
