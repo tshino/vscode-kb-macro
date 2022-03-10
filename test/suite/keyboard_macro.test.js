@@ -586,10 +586,32 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log', args: 'hello' }
             ]);
         });
+        it('should record the commands specified times if repeat option specified', async () => {
+            const sequence = [
+                { command: 'internal:log', args: 'hello' }
+            ];
+            const repeat = 3;
+            keyboardMacro.startRecording();
+            await keyboardMacro.playback({ sequence, repeat });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [
+                'begin:"hello"',
+                'end',
+                'begin:"hello"',
+                'end',
+                'begin:"hello"',
+                'end'
+            ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log', args: 'hello' },
+                { command: 'internal:log', args: 'hello' },
+                { command: 'internal:log', args: 'hello' }
+            ]);
+        });
         // TODO: test for playback with 'sequence' during recording where it produces document changes
         // TODO: test for playback with 'sequence' during recording where the sequence includes $type
         // TODO: test for playback with 'sequence' during recording where the sequence includes $moveCursor
-        // TODO: test for playback with 'sequence' and 'repeat' during recording
     });
     describe('isPlaying', () => {
         beforeEach(async () => {
