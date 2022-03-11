@@ -9,6 +9,8 @@ const { keyboardMacro, awaitController } = require('../../src/extension.js');
 describe('Recording and Playback with Nested Playback', () => {
     let textEditor;
     const Cmd = CommandsToTest;
+    const Type = text => ({ command: '$type', args: { text } });
+    const Move = delta => ({ command: '$moveCursor', args: { characterDelta: delta } });
 
     const setSelections = async function(array) {
         await awaitController.waitFor('selection', 1).catch(() => {});
@@ -38,7 +40,7 @@ describe('Recording and Playback with Nested Playback', () => {
                 'two\n' +
                 'three\n' +
                 'four\n' +
-                'five'
+                'five\n'
             ));
         });
         it('should record whole sequence', async () => {
@@ -57,7 +59,61 @@ describe('Recording and Playback with Nested Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(1).text, 'on');
             assert.deepStrictEqual(getSelections(), [[2, 0]]);
         });
-        // TODO: test for playback during recording where the sequence includes $type
-        // TODO: test for playback during recording where the sequence includes $moveCursor
+        it('should record whole sequence and repeat option', async () => {
+            const sequence = [ Cmd.CursorEnd, Cmd.DeleteLeft, Cmd.CursorRight ];
+            const repeat = 3;
+            await setSelections([[0, 0]]);
+            keyboardMacro.startRecording();
+            await keyboardMacro.playback({ sequence, repeat });
+            keyboardMacro.finishRecording();
+
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'zer');
+            assert.strictEqual(textEditor.document.lineAt(1).text, 'on');
+            assert.strictEqual(textEditor.document.lineAt(2).text, 'tw');
+            assert.deepStrictEqual(getSelections(), [[3, 0]]);
+            assert.deepStrictEqual(
+                keyboardMacro.getCurrentSequence(),
+                [].concat(sequence).concat(sequence).concat(sequence)
+            );
+
+            await keyboardMacro.playback();
+
+            assert.strictEqual(textEditor.document.lineAt(3).text, 'thre');
+            assert.strictEqual(textEditor.document.lineAt(4).text, 'fou');
+            assert.strictEqual(textEditor.document.lineAt(5).text, 'fiv');
+            assert.deepStrictEqual(getSelections(), [[6, 0]]);
+        });
+        it('should record sequence with $type command', async () => {
+            const sequence = [ Cmd.CursorEnd, Type('!!'), Cmd.CursorRight ];
+            await setSelections([[0, 0]]);
+            keyboardMacro.startRecording();
+            await keyboardMacro.playback({ sequence });
+            keyboardMacro.finishRecording();
+
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'zero!!');
+            assert.deepStrictEqual(getSelections(), [[1, 0]]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), sequence);
+
+            await keyboardMacro.playback();
+
+            assert.strictEqual(textEditor.document.lineAt(1).text, 'one!!');
+            assert.deepStrictEqual(getSelections(), [[2, 0]]);
+        });
+        it('should record sequence with $moveCursor command', async () => {
+            const sequence = [ Cmd.CursorEnd, Type('()'), Move(-1), Type('!!'), Cmd.CursorEnd, Cmd.CursorRight ];
+            await setSelections([[0, 0]]);
+            keyboardMacro.startRecording();
+            await keyboardMacro.playback({ sequence });
+            keyboardMacro.finishRecording();
+
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'zero(!!)');
+            assert.deepStrictEqual(getSelections(), [[1, 0]]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), sequence);
+
+            await keyboardMacro.playback();
+
+            assert.strictEqual(textEditor.document.lineAt(1).text, 'one(!!)');
+            assert.deepStrictEqual(getSelections(), [[2, 0]]);
+        });
     });
 });
