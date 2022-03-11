@@ -183,15 +183,21 @@ const KeyboardMacro = function({ awaitController }) {
     };
 
     const playbackImpl = async function(args, { tillEndOfFile = false } = {}) {
+        args = validatePlaybackArgs(args);
+        const repeat = 'repeat' in args ? args.repeat : 1;
+        const commands = 'sequence' in args ? args.sequence : sequence.get();
+        const wrapMode = recording;
         if (recording) {
-            return;
+            if (!('sequence' in args)) {
+                return;
+            }
         }
         try {
+            if (wrapMode && onBeginWrappedCommandCallback) {
+                onBeginWrappedCommandCallback();
+            }
             changePlaybackState(true, PlaybackStateReason.Start);
             shouldAbortPlayback = false;
-            args = validatePlaybackArgs(args);
-            const repeat = 'repeat' in args ? args.repeat : 1;
-            const commands = 'sequence' in args ? args.sequence : sequence.get();
             let endOfFileDetector;
             if (tillEndOfFile) {
                 endOfFileDetector = EndOfFileDetector(vscode.window.activeTextEditor);
@@ -202,6 +208,9 @@ const KeyboardMacro = function({ awaitController }) {
                     ok = await invokeCommandSync(spec, 'playback');
                     if (!ok || shouldAbortPlayback) {
                         break;
+                    }
+                    if (wrapMode) {
+                        push(spec);
                     }
                 }
                 if (!ok || shouldAbortPlayback) {
@@ -219,6 +228,9 @@ const KeyboardMacro = function({ awaitController }) {
                 PlaybackStateReason.Finish;
             changePlaybackState(false, reason);
             shouldAbortPlayback = false;
+            if (wrapMode && onEndWrappedCommandCallback) {
+                onEndWrappedCommandCallback();
+            }
         }
     };
     const playback = reentrantGuard.makeGuardedCommand(args => playbackImpl(args));
