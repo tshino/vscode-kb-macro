@@ -7,6 +7,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Enabled to use of saved macro during recording. [#72](https://github.com/tshino/vscode-kb-macro/issues/72)
 - Documentation:
   - Added 'When clause context' section to the README.
+- Update
+  - Updated default keybindings based on VS Code 1.65.2. [#74](https://github.com/tshino/vscode-kb-macro/pull/74)
 
 ### [0.11.3] - 2022-03-06
 - Update
