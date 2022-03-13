@@ -279,6 +279,10 @@ const KeyboardMacro = function({ awaitController }) {
             if (spec.command === 'kb-macro.wrap') {
                 return;
             }
+            if (spec.command === 'kb-macro.playback') {
+                await playbackImpl(spec.args);
+                return;
+            }
             if (onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
             }

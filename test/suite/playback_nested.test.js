@@ -59,7 +59,26 @@ describe('Recording and Playback with Nested Playback', () => {
             assert.strictEqual(textEditor.document.lineAt(1).text, 'on');
             assert.deepStrictEqual(getSelections(), [[2, 0]]);
         });
-        it('should record whole sequence and repeat option', async () => {
+        it('should record whole sequence when it called within wrap', async () => {
+            const sequence = [ Cmd.CursorEnd, Cmd.DeleteLeft, Cmd.CursorRight ];
+            await setSelections([[0, 0]]);
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({
+                command: 'kb-macro.playback',
+                args: { sequence }
+            });
+            keyboardMacro.finishRecording();
+
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'zer');
+            assert.deepStrictEqual(getSelections(), [[1, 0]]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), sequence);
+
+            await keyboardMacro.playback();
+
+            assert.strictEqual(textEditor.document.lineAt(1).text, 'on');
+            assert.deepStrictEqual(getSelections(), [[2, 0]]);
+        });
+        it('should record whole sequence with repeat', async () => {
             const sequence = [ Cmd.CursorEnd, Cmd.DeleteLeft, Cmd.CursorRight ];
             const repeat = 3;
             await setSelections([[0, 0]]);
