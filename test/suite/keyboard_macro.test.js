@@ -493,6 +493,7 @@ describe('KeybaordMacro', () => {
     });
     describe('playback with sequence option', () => {
         const logs = [];
+        let oldPrintError;
         beforeEach(async () => {
             keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
@@ -504,10 +505,14 @@ describe('KeybaordMacro', () => {
             });
             keyboardMacro.startRecording();
             keyboardMacro.finishRecording();
+            oldPrintError = keyboardMacro.setPrintError(() => {
+                logs.push('error');
+            });
         });
         afterEach(async () => {
             keyboardMacro.onBeginWrappedCommand(null);
             keyboardMacro.onEndWrappedCommand(null);
+            keyboardMacro.setPrintError(oldPrintError);
         });
         it('should invoke commands according to the specified sequence option', async () => {
             keyboardMacro.registerInternalCommand('internal:log1', () => logs.push('1'));
@@ -580,6 +585,7 @@ describe('KeybaordMacro', () => {
                 'onbeginwrap',
                 'begin:"hello"',
                 'end',
+                'error',
                 'onendwrap'
             ]);
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
