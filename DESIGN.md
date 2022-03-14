@@ -71,7 +71,7 @@ The following command updates the default keybindings wrappers in the `package.j
 npm run gen-wrapper
 ```
 
-This script also performs some optimization work to reduce the amount of wrapper keybinding rules.
+This script also performs some optimizations, something like tree shaking, to reduce the number of keybinding rules in the `package.json`.
 
 
 ## Capturing typed characters
