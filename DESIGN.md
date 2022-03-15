@@ -73,6 +73,23 @@ npm run gen-wrapper
 
 This script also performs some optimizations, something like tree shaking, to reduce the number of keybinding rules in the `package.json`.
 
+## Keymap wrappers
+
+Many people use their favorite keymap on VS Code by using keymap extensions, such as one for Emacs keybindings. So this extension should work together with those keymap extensions.
+
+A keymap extension defines its keybindings in the `package.json`.
+
+To enable those keybindings to be recorded by this extension, we need to define corresponding wrapper keybindings for each keybinding in the keymap extension. So we did it for some popular keymap extensions. See [Keymap wrappers](keymap-wrapper/README.md).
+
+Making the wrapper keybindings for a keymap extension is not a trivial task, because some of them may require custom `await` options. So we made a configuration file for each keymap extension to customize the generation of the wrappers.
+
+The following command generates the keymap wrappers for all the keymap extensions we support.
+
+```
+npm run update-keymap-wrapper
+```
+
+This script needs to be run on Bash. Each keymap wrapper is generated based on the latest `package.json` of the keymap extension.
 
 ## Capturing typed characters
 
