@@ -91,6 +91,26 @@ npm run update-keymap-wrapper
 
 This script needs to be run on Bash. Each keymap wrapper is generated based on the latest `package.json` of the keymap extension.
 
+### Why keymap wrappers should be in the user's `keybindings.json` instead of in extensions
+
+A wrapper keybinding should override the original keybinding during recording. If it fails, the keystrokes can't be recorded.
+
+Keybindings in VS Code are defined in at least three different types of sources.
+
+  1. Default keybindings that are built in VS Code
+  2. Extensions
+  3. User keybindings (`keybindings.json`)
+
+User keybindings have priority over any extensions. And any extensions have priority over the default keybindings.
+
+But as far as I know, it is not defined which extension has priority over other extensions. We don't have even a way to specify which one should have priority over other ones.
+
+This extension defines default keybindings wrappers. They override the default keybindings correctly during recording.
+
+A keymap extension defines its keybindings. They override the default keybindings of VS Code. This is also important.
+
+A keymap wrapper defines wrapper keybindings for the target keymap extension. It should override the keymap extension during recording. It should override the default keybindings wrappers as well. So it can't be defined in any extensions. Consequently, it must be defined in the user keybindings.
+
 ## Capturing typed characters
 
 On VS Code, typed characters in text editors are treated differently than other keystrokes. We don't put every possible character in the keybindings. When you type characters in a text editor, for each character, the `type` built-in command is invoked internally. The `type` command performs inserting each character into the document.
