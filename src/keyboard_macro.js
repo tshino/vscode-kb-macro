@@ -287,7 +287,8 @@ const KeyboardMacro = function({ awaitController }) {
                 await playbackImpl(spec.args);
                 return;
             }
-            if (onBeginWrappedCommandCallback) {
+            const sideEffectMode = spec.record === 'side-effect';
+            if (!sideEffectMode && onBeginWrappedCommandCallback) {
                 onBeginWrappedCommandCallback();
             }
             try {
@@ -296,7 +297,7 @@ const KeyboardMacro = function({ awaitController }) {
                     push(spec);
                 }
             } finally {
-                if (onEndWrappedCommandCallback) {
+                if (!sideEffectMode && onEndWrappedCommandCallback) {
                     onEndWrappedCommandCallback();
                 }
             }
