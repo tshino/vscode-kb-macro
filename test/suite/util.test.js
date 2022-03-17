@@ -210,6 +210,9 @@ describe('util', () => {
             assert.strictEqual(makeCommandSpec({ foo: 'foo' }), null);
             assert.strictEqual(makeCommandSpec({ command: 123 }), null);
             assert.strictEqual(makeCommandSpec({ command: 'aaa', 'await': 123  }), null);
+            assert.strictEqual(makeCommandSpec({ command: 'aaa', 'await': [ 'xxx' ]  }), null);
+            assert.strictEqual(makeCommandSpec({ command: 'aaa', record: 123  }), null);
+            assert.strictEqual(makeCommandSpec({ command: 'aaa', record: [ 'xxx' ]  }), null);
         });
         it('should return a new Object', () => {
             const input = { command: 'foo' };
@@ -237,6 +240,12 @@ describe('util', () => {
             assert.deepStrictEqual(
                 makeCommandSpec({ command: 'a', args: { b: 42 }, 'await': 'ccc' }),
                 { command: 'a', args: { b: 42 }, 'await': 'ccc' }
+            );
+        });
+        it('should accept \'record\' properties as well', () => {
+            assert.deepStrictEqual(
+                makeCommandSpec({ command: 'a', record: 'side-effect' }),
+                { command: 'a', record: 'side-effect' }
             );
         });
         it('should drop properties that are not relevant to a command spec', () => {

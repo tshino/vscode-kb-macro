@@ -230,6 +230,9 @@ describe('KeybaordMacro', () => {
             keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
         });
+        afterEach(async () => {
+            keyboardMacro.cancelRecording();
+        });
         it('should add specified command to sequence', async () => {
             keyboardMacro.startRecording();
             keyboardMacro.push({ command: 'example:command1' });
@@ -243,6 +246,13 @@ describe('KeybaordMacro', () => {
         it('should do nothing if not recording', async () => {
             keyboardMacro.push({ command: 'example:command1' });
             keyboardMacro.push({ command: 'example:command2', args: { opt1: 'opt1' } });
+
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
+        it('should do nothing if side-effect mode', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'example:command1', record: 'side-effect' });
+            keyboardMacro.push({ command: 'example:command2', record: 'side-effect', args: { opt1: 'opt1' } });
 
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
@@ -963,5 +973,14 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:indirectWrap' }
             ]);
         });
+        it('should invoke but not record the target command if side-effect mode', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log', record: 'side-effect' });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
+        // TODO: test for side-effect mode not to invoke onBegin/EndWrappedCommand
     });
 });

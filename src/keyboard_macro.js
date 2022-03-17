@@ -100,6 +100,10 @@ const KeyboardMacro = function({ awaitController }) {
 
     const push = function(spec) {
         if (recording) {
+            if (spec.record === 'side-effect') {
+                // side-effect mode
+                return;
+            }
             sequence.push(spec);
         }
     };
