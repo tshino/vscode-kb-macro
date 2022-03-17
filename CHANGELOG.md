@@ -10,6 +10,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Added 'Keymap wrappers' section to [DESIGN.md](./DESIGN.md).
 - Update
   - Updated default keybindings based on VS Code 1.65.2. [#74](https://github.com/tshino/vscode-kb-macro/pull/74)
+- Internal
+  - Added `record` option to the `kb-macro.wrap` command. [#76](https://github.com/tshino/vscode-kb-macro/pull/76)
 
 ### [0.11.3] - 2022-03-06
 - Update

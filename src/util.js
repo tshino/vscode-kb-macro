@@ -73,6 +73,12 @@ const util = (function() {
             }
             spec['await'] = args['await'];
         }
+        if ('record' in args) {
+            if (typeof(args.record) !== 'string') {
+                return null;
+            }
+            spec.record = args.record;
+        }
         return spec;
     };
 

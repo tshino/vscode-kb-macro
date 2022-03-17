@@ -230,6 +230,9 @@ describe('KeybaordMacro', () => {
             keyboardMacro.onChangeRecordingState(null);
             keyboardMacro.cancelRecording();
         });
+        afterEach(async () => {
+            keyboardMacro.cancelRecording();
+        });
         it('should add specified command to sequence', async () => {
             keyboardMacro.startRecording();
             keyboardMacro.push({ command: 'example:command1' });
@@ -243,6 +246,13 @@ describe('KeybaordMacro', () => {
         it('should do nothing if not recording', async () => {
             keyboardMacro.push({ command: 'example:command1' });
             keyboardMacro.push({ command: 'example:command2', args: { opt1: 'opt1' } });
+
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
+        it('should do nothing if side-effect mode', async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.push({ command: 'example:command1', record: 'side-effect' });
+            keyboardMacro.push({ command: 'example:command2', record: 'side-effect', args: { opt1: 'opt1' } });
 
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
@@ -545,7 +555,7 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log', args: 'world' }
             ]);
         });
-        it('should call onBegin/EndWrappedCommand callback if it called during recording', async () => {
+        it('should call onBegin/EndWrappedCommand callback if called during recording', async () => {
             keyboardMacro.onBeginWrappedCommand(() => { logs.push('onbeginwrap'); });
             keyboardMacro.onEndWrappedCommand(() => { logs.push('onendwrap'); });
             const sequence = [
@@ -821,6 +831,8 @@ describe('KeybaordMacro', () => {
             });
         });
         afterEach(() => {
+            keyboardMacro.onBeginWrappedCommand(null);
+            keyboardMacro.onEndWrappedCommand(null);
             keyboardMacro.setPrintError(oldPrintError);
         });
         it('should invoke and record specified command', async () => {
@@ -837,6 +849,23 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.wrapSync({ command: 'internal:log' });
 
             assert.deepStrictEqual(logs, []);
+        });
+        it('should call onBegin/EndWrappedCommand callback', async () => {
+            keyboardMacro.onBeginWrappedCommand(() => { logs.push('onbeginwrap'); });
+            keyboardMacro.onEndWrappedCommand(() => { logs.push('onendwrap'); });
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [
+                'onbeginwrap',
+                'begin',
+                'end',
+                'onendwrap'
+            ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: 'internal:log' },
+            ]);
         });
         it('should not crash even if the argument is invalid', async () => {
             keyboardMacro.startRecording();
@@ -962,6 +991,27 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
                 { command: 'internal:indirectWrap' }
             ]);
+        });
+        it('should invoke but not record the target command if side-effect mode', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log', record: 'side-effect' });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
+        it('should not call onBegin/EndWrappedCommand callback if side-effect mode', async () => {
+            keyboardMacro.onBeginWrappedCommand(() => { logs.push('onbeginwrap'); });
+            keyboardMacro.onEndWrappedCommand(() => { logs.push('onendwrap'); });
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log', record: 'side-effect' });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [
+                'begin',
+                'end'
+            ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
     });
 });
