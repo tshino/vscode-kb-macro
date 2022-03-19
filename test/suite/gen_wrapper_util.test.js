@@ -268,6 +268,18 @@ describe('gen_wrapper_util', () => {
             ];
             assert.deepStrictEqual(decomposeAwaitOption(input), expected);
         });
+        it('should throw an error when there are multiple conditions', () => {
+            const input = '[cond1]await1 [cond2]await2';
+            assert.throws(
+                () => {
+                    decomposeAwaitOption(input);
+                },
+                err => {
+                    assert.strictEqual(err, 'Using multiple conditional await options is not supported');
+                    return true;
+                }
+            );
+        });
     });
     describe('makeWrapperWhen', () => {
         const makeWrapperWhen = genWrapperUtil.makeWrapperWhen;

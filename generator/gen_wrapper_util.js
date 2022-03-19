@@ -196,8 +196,7 @@ function decomposeAwaitOption(awaitOption) {
     const awaitList = parseAwaitOption(awaitOption);
     const conditionals = awaitList.filter(a => a.condition);
     if (1 < conditionals.length) {
-        error('Using multiple conditional await options is not supported');
-        throw 'error';
+        throw 'Using multiple conditional await options is not supported';
     } else if (0 < conditionals.length) {
         return [
             {
