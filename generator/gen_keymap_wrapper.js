@@ -6,22 +6,12 @@ const genWrapperUtil = require('./gen_wrapper_util');
 const CommonConfigPath = 'generator/config.json';
 const KeymapWrapperPath = 'keymap-wrapper/';
 
-const error = genWrapperUtil.error;
 const warn = genWrapperUtil.warn;
 
 function checkCommandPresence(list, commands) {
     for (const command of list) {
         if (!commands.has(command)) {
             warn('No matching command:', command);
-        }
-    }
-}
-
-function checkAwaitOptions(awaitOptions) {
-    for (const awaitOption of awaitOptions.values()) {
-        if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
-            error('Invalid awaitOption found:', awaitOption);
-            process.exit(1);
         }
     }
 }
@@ -86,7 +76,7 @@ async function makeKeymapWrapper(configPath, commonConfig) {
         const resolved = resolveWildcardInAwaitOptions(rawAwaitOptions, commands);
         resolved.forEach((val, key) => awaitOptions.set(key, val));
     }
-    checkAwaitOptions(awaitOptions);
+    genWrapperUtil.checkAwaitOptions(awaitOptions);
 
     const wrappers = baseKeybindings.filter(
         keybinding => !ignore.has(keybinding.command)

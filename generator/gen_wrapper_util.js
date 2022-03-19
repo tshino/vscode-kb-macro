@@ -175,6 +175,14 @@ function isValidAwaitOption(awaitOption) {
     );
 }
 
+function checkAwaitOptions(awaitOptions) {
+    for (const awaitOption of awaitOptions.values()) {
+        if (!isValidAwaitOption(awaitOption)) {
+            throw `Invalid awaitOption found: ${JSON.stringify(awaitOption)}`;
+        }
+    }
+}
+
 function parseAwaitOption(awaitOption) {
     awaitOption = awaitOption || '';
     const awaitList = (
@@ -268,6 +276,7 @@ module.exports = {
     keybindingsContains,
     extractOSSpecificKeys,
     isValidAwaitOption,
+    checkAwaitOptions,
     parseAwaitOption,
     decomposeAwaitOption,
     makeWrapperWhen,

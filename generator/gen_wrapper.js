@@ -5,7 +5,6 @@ const defaultKeybindingsLoader = require('./default_keybindings_loader');
 const PackageJsonPath = './package.json';
 const ConfigPath = 'generator/config.json';
 
-const error = genWrapperUtil.error;
 const warn = genWrapperUtil.warn;
 
 function checkExclusion(exclusion, commands) {
@@ -16,22 +15,13 @@ function checkExclusion(exclusion, commands) {
     }
 }
 
-function checkAwaitOptions(awaitOptions) {
-    for (const awaitOption of awaitOptions.values()) {
-        if (!genWrapperUtil.isValidAwaitOption(awaitOption)) {
-            error('Invalid awaitOption found:', awaitOption);
-            process.exit(1);
-        }
-    }
-}
-
 async function main() {
     const packageJson = await genWrapperUtil.readJSON(PackageJsonPath);
     const config = await genWrapperUtil.readJSON(ConfigPath);
 
     const exclusion = new Set(config['exclusion'] || []);
     const awaitOptions = new Map(config['awaitOptions'] || []);
-    checkAwaitOptions(awaitOptions);
+    genWrapperUtil.checkAwaitOptions(awaitOptions);
 
     const baseKeybindings = await defaultKeybindingsLoader.loadBaseKeybindings(config['baseKeybindings'] || []);
     const commands = new Set(baseKeybindings.flatMap(item => item.keybindings).map(keybinding => keybinding.command));

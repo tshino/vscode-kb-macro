@@ -228,6 +228,33 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(isValidAwaitOption('[condition]document selection'), true);
         });
     });
+    describe('checkAwaitOptions', () => {
+        const checkAwaitOptions = genWrapperUtil.checkAwaitOptions;
+        it('should not throw if all the values in the map are valid await option', () => {
+            assert.doesNotThrow(
+                () => {
+                    checkAwaitOptions(new Map([
+                        [ 'command1', '' ],
+                        [ 'command2', 'selection' ],
+                        [ 'command3', 'document selection' ]
+                    ]));
+                }
+            );
+        });
+        it('should throw if the map contains invalid await option', () => {
+            assert.throws(
+                () => {
+                    checkAwaitOptions(new Map([
+                        [ 'command1', '123' ]
+                    ]));
+                },
+                err => {
+                    assert.strictEqual(err, 'Invalid awaitOption found: "123"');
+                    return true;
+                }
+            );
+        });
+    });
     describe('parseAwaitOption', () => {
         const parseAwaitOption = genWrapperUtil.parseAwaitOption;
         it('should return empty array for falsy input', () => {
