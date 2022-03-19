@@ -147,4 +147,7 @@ async function main() {
     }
 }
 
-main();
+main().catch(error => {
+    genWrapperUtil.error(error);
+    process.exit(1);
+});
