@@ -66,6 +66,6 @@ async function main() {
 }
 
 main().catch(error => {
-    console.error(error);
+    genWrapperUtil.error(error);
     process.exit(1);
 });

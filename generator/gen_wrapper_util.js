@@ -4,12 +4,12 @@ const util = require('util');
 
 function error(...msg) {
     msg = [ '\u001b[31mError:' ].concat(msg).concat([ '\u001b[0m' ]);
-    console.log.apply(null, msg);
+    console.error.apply(null, msg);
 }
 
 function warn(...msg) {
     msg = [ '\u001b[33mWarning:' ].concat(msg).concat([ '\u001b[0m' ]);
-    console.log.apply(null, msg);
+    console.warn.apply(null, msg);
 }
 
 async function readJSON(path, options = {}) {
