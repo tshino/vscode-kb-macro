@@ -183,6 +183,7 @@ async function verifyWrapper() {
 
     const exclusion = new Set(config['exclusion'] || []);
     const awaitOptions = new Map(config['awaitOptions'] || []);
+    const recordOptions = new Map(config['recordOptions'] || []);
 
     const baseKeybindings = await defaultKeybindingsLoader.loadBaseKeybindings(config['baseKeybindings'] || []);
 
@@ -270,6 +271,19 @@ async function verifyWrapper() {
                     'await' in wrapper.args,
                     false,
                     'a command that is not included in the awaitOptions list should not have await option'
+                );
+            }
+            if (recordOptions.has(wrapper.args.command)) {
+                assert.deepStrictEqual(
+                    wrapper.args.record,
+                    recordOptions.get(wrapper.args.command),
+                    'a command included in the recordOptions list should have the record option specified in the list'
+                );
+            } else {
+                assert.strictEqual(
+                    'record' in wrapper.args,
+                    false,
+                    'a command that is not included in the recordOptions list should not have record option'
                 );
             }
         } else {

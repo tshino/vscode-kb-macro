@@ -175,10 +175,27 @@ function isValidAwaitOption(awaitOption) {
     );
 }
 
+function isValidRecordOption(recordOption) {
+    if (typeof recordOption !== 'string') {
+        return false;
+    }
+    return (
+        recordOption === 'command' || recordOption === 'side-effect'
+    );
+}
+
 function checkAwaitOptions(awaitOptions) {
     for (const awaitOption of awaitOptions.values()) {
         if (!isValidAwaitOption(awaitOption)) {
-            throw `Invalid awaitOption found: ${JSON.stringify(awaitOption)}`;
+            throw `Invalid await option found: ${JSON.stringify(awaitOption)}`;
+        }
+    }
+}
+
+function checkRecordOptions(recordOptions) {
+    for (const recordOption of recordOptions.values()) {
+        if (!isValidRecordOption(recordOption)) {
+            throw `Invalid record option found: ${JSON.stringify(recordOption)}`;
         }
     }
 }
@@ -240,7 +257,7 @@ function makeWrapperWhen(keybinding) {
     return addWhenContext(keybinding.when, 'kb-macro.recording');
 }
 
-function makeWrapper(keybinding, awaitOption) {
+function makeWrapper(keybinding, awaitOption, recordOption = '') {
     const awaitList = decomposeAwaitOption(awaitOption);
     const wrappers = awaitList.map(awaitItem => {
         const when = addWhenContext(keybinding.when, awaitItem.context);
@@ -256,6 +273,9 @@ function makeWrapper(keybinding, awaitOption) {
         }
         if (awaitItem['await']) {
             wrapped.args['await'] = awaitItem['await'];
+        }
+        if (recordOption) {
+            wrapped.args['record'] = recordOption;
         }
         return wrapped;
     });
@@ -276,7 +296,9 @@ module.exports = {
     keybindingsContains,
     extractOSSpecificKeys,
     isValidAwaitOption,
+    isValidRecordOption,
     checkAwaitOptions,
+    checkRecordOptions,
     parseAwaitOption,
     decomposeAwaitOption,
     makeWrapperWhen,
