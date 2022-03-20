@@ -4,7 +4,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [Unreleased]
 - Feature
-  - Enabled to use of saved macros during recording. [#72](https://github.com/tshino/vscode-kb-macro/issues/72)
+  - Enabled using saved macros during recording. [#72](https://github.com/tshino/vscode-kb-macro/issues/72)
 - Documentation:
   - Added 'When clause context' section to the README.
   - Added 'Keymap wrappers' section to [DESIGN.md](./DESIGN.md).
