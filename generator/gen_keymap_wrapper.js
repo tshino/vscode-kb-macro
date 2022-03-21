@@ -78,6 +78,9 @@ async function makeKeymapWrapper(configPath, commonConfig) {
     }
     genWrapperUtil.checkAwaitOptions(awaitOptions);
 
+    const recordOptions = new Map(commonConfig['recordOptions'] || []);
+    genWrapperUtil.checkRecordOptions(recordOptions);
+
     const wrappers = baseKeybindings.filter(
         keybinding => !ignore.has(keybinding.command)
     ).flatMap(
@@ -91,7 +94,8 @@ async function makeKeymapWrapper(configPath, commonConfig) {
             } else {
                 // make a wrapper keybinding (indirect call) to enable recording of the command
                 const awaitOption = awaitOptions.get(keybinding.command) || '';
-                const wrappers = genWrapperUtil.makeWrapper(keybinding, awaitOption);
+                const recordOption = recordOptions.get(keybinding.command);
+                const wrappers = genWrapperUtil.makeWrapper(keybinding, awaitOption, recordOption);
                 return wrappers;
             }
         }

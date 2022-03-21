@@ -22,6 +22,8 @@ async function main() {
     const exclusion = new Set(config['exclusion'] || []);
     const awaitOptions = new Map(config['awaitOptions'] || []);
     genWrapperUtil.checkAwaitOptions(awaitOptions);
+    const recordOptions = new Map(config['recordOptions'] || []);
+    genWrapperUtil.checkRecordOptions(recordOptions);
 
     const baseKeybindings = await defaultKeybindingsLoader.loadBaseKeybindings(config['baseKeybindings'] || []);
     const commands = new Set(baseKeybindings.flatMap(item => item.keybindings).map(keybinding => keybinding.command));
@@ -39,7 +41,8 @@ async function main() {
             } else {
                 // make a wrapper keybinding (indirect call) to enable recording of the command
                 const awaitOption = awaitOptions.get(keybinding.command) || '';
-                const wrappers = genWrapperUtil.makeWrapper(keybinding, awaitOption);
+                const recordOption = recordOptions.get(keybinding.command);
+                const wrappers = genWrapperUtil.makeWrapper(keybinding, awaitOption, recordOption);
                 return wrappers;
             }
         }

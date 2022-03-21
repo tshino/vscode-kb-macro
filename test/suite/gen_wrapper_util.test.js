@@ -228,6 +228,22 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(isValidAwaitOption('[condition]document selection'), true);
         });
     });
+    describe('isValidRecordOption', () => {
+        const isValidRecordOption = genWrapperUtil.isValidRecordOption;
+        it('should return true if passed string is a valid record option for a wrapper', () => {
+            assert.strictEqual(isValidRecordOption('side-effect'), true);
+            assert.strictEqual(isValidRecordOption('command'), true);
+        });
+        it('should return false on string with invalid record target', () => {
+            assert.strictEqual(isValidRecordOption('hello'), false);
+            assert.strictEqual(isValidRecordOption(''), false);
+        });
+        it('should return false on any value of types other than string', () => {
+            assert.strictEqual(isValidRecordOption(null), false);
+            assert.strictEqual(isValidRecordOption(), false);
+            assert.strictEqual(isValidRecordOption([]), false);
+        });
+    });
     describe('checkAwaitOptions', () => {
         const checkAwaitOptions = genWrapperUtil.checkAwaitOptions;
         it('should not throw if all the values in the map are valid await option', () => {
@@ -249,7 +265,33 @@ describe('gen_wrapper_util', () => {
                     ]));
                 },
                 err => {
-                    assert.strictEqual(err, 'Invalid awaitOption found: "123"');
+                    assert.strictEqual(err, 'Invalid await option found: "123"');
+                    return true;
+                }
+            );
+        });
+    });
+    describe('checkRecordOptions', () => {
+        const checkRecordOptions = genWrapperUtil.checkRecordOptions;
+        it('should not throw if all the values in the map are valid record option', () => {
+            assert.doesNotThrow(
+                () => {
+                    checkRecordOptions(new Map([
+                        [ 'command1', 'command' ],
+                        [ 'command2', 'side-effect' ]
+                    ]));
+                }
+            );
+        });
+        it('should throw if the map contains invalid record option', () => {
+            assert.throws(
+                () => {
+                    checkRecordOptions(new Map([
+                        [ 'command1', '123' ]
+                    ]));
+                },
+                err => {
+                    assert.strictEqual(err, 'Invalid record option found: "123"');
                     return true;
                 }
             );
@@ -473,6 +515,25 @@ describe('gen_wrapper_util', () => {
                 }
             ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
+        });
+        it('should make wrapper keybinding (8) (with recordOption)', () => {
+            const input = {
+                key: 'key1',
+                command: 'command1',
+                when: 'context1'
+            };
+            const awaitOption = '';
+            const recordOption = 'side-effect';
+            const expected = [ {
+                key: 'key1',
+                command: 'kb-macro.wrap',
+                args: {
+                    command: 'command1',
+                    record: 'side-effect'
+                },
+                when: 'kb-macro.recording && context1'
+            } ];
+            assert.deepStrictEqual(makeWrapper(input, awaitOption, recordOption), expected);
         });
     });
 });
