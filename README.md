@@ -23,7 +23,7 @@ With this Visual Studio Code extension, you can record and playback your keyboar
   - Mouse inputs
   - Command execution via Command Palette
   - Menu navigation (even if you use acceralator keys)
-  - Widget/Popup UI navigation (e.g. Find and replace widget, IntelliSence popup)
+  - Widget/Popup UI navigation (e.g. Find and replace widget, IntelliSense popup)
     - Typing on the find/replace input box is not recorded, but shortcut keys like Enter/F3 (Find Next) hit on the widget are recorded.
     - Selecting items on suggest widget (even with arrow keys) are not recorded, however, once you accept one of the items and the text is inserted into the document, that is recorded as if you typed it directly.
   - IME nagivation
