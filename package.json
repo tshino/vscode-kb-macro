@@ -191,7 +191,11 @@
 			},
 			{
 				"key": "shift+escape",
-				"command": "leaveSnippet",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "leaveSnippet",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && editorTextFocus && inSnippetMode"
 			},
 			{
@@ -220,7 +224,11 @@
 			},
 			{
 				"key": "shift+escape",
-				"command": "hideSuggestWidget",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "hideSuggestWidget",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -331,7 +339,8 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "editor.action.inlineSuggest.hide"
+					"command": "editor.action.inlineSuggest.hide",
+					"record": "side-effect"
 				},
 				"when": "kb-macro.recording && inlineSuggestionVisible"
 			},
@@ -425,7 +434,11 @@
 			},
 			{
 				"key": "escape",
-				"command": "leaveSnippet",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "leaveSnippet",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && editorTextFocus && inSnippetMode"
 			},
 			{
@@ -462,7 +475,11 @@
 			},
 			{
 				"key": "escape",
-				"command": "hideSuggestWidget",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "hideSuggestWidget",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -668,7 +685,11 @@
 			},
 			{
 				"key": "cmd+down",
-				"command": "selectNextSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectNextSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -753,7 +774,11 @@
 			},
 			{
 				"key": "down",
-				"command": "selectNextSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectNextSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -1101,7 +1126,11 @@
 			},
 			{
 				"key": "pagedown",
-				"command": "selectNextPageSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectNextPageSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -1179,7 +1208,11 @@
 			},
 			{
 				"key": "pageup",
-				"command": "selectPrevPageSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectPrevPageSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -1330,7 +1363,11 @@
 			},
 			{
 				"key": "cmd+up",
-				"command": "selectPrevSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectPrevSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -1399,7 +1436,11 @@
 			},
 			{
 				"key": "up",
-				"command": "selectPrevSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectPrevSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -1714,19 +1755,28 @@
 			},
 			{
 				"key": "shift+tab",
-				"command": "jumpToPrevSnippetPlaceholder",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "jumpToPrevSnippetPlaceholder",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && editorTextFocus && hasPrevTabstop && inSnippetMode"
 			},
 			{
 				"key": "shift+tab",
-				"command": "acceptAlternativeSelectedSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "acceptAlternativeSelectedSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
 			},
 			{
 				"key": "shift+tab",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "insertPrevSuggestion"
+					"command": "insertPrevSuggestion",
+					"record": "side-effect"
 				},
 				"when": "kb-macro.recording && hasOtherSuggestions && textInputFocus && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
 			},
@@ -1757,7 +1807,11 @@
 			},
 			{
 				"key": "ctrl+down",
-				"command": "selectNextSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectNextSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && !isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -1864,7 +1918,11 @@
 			},
 			{
 				"key": "ctrl+up",
-				"command": "selectPrevSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectPrevSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && !isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -1956,17 +2014,29 @@
 			},
 			{
 				"key": "tab",
-				"command": "insertSnippet",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "insertSnippet",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && editorTextFocus && hasSnippetCompletions && !editorTabMovesFocus && !inSnippetMode"
 			},
 			{
 				"key": "tab",
-				"command": "jumpToNextSnippetPlaceholder",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "jumpToNextSnippetPlaceholder",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && editorTextFocus && hasNextTabstop && inSnippetMode"
 			},
 			{
 				"key": "tab",
-				"command": "acceptSelectedSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "acceptSelectedSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -1981,7 +2051,8 @@
 				"key": "tab",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "insertNextSuggestion"
+					"command": "insertNextSuggestion",
+					"record": "side-effect"
 				},
 				"when": "kb-macro.recording && hasOtherSuggestions && textInputFocus && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
 			},
@@ -1989,7 +2060,8 @@
 				"key": "tab",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "editor.action.inlineSuggest.commit"
+					"command": "editor.action.inlineSuggest.commit",
+					"record": "side-effect"
 				},
 				"when": "kb-macro.recording && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorTabMovesFocus"
 			},
@@ -2132,7 +2204,11 @@
 			},
 			{
 				"key": "shift+enter",
-				"command": "acceptAlternativeSelectedSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "acceptAlternativeSelectedSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -2437,7 +2513,11 @@
 			},
 			{
 				"key": "enter",
-				"command": "acceptSelectedSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "acceptSelectedSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && acceptSuggestionOnEnter && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus"
 			},
 			{
@@ -2945,9 +3025,13 @@
 			},
 			{
 				"key": "ctrl+/",
-				"command": "toggleExplainMode",
-				"when": "kb-macro.recording && suggestWidgetVisible",
-				"mac": "cmd+/"
+				"mac": "cmd+/",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "toggleExplainMode",
+					"record": "side-effect"
+				},
+				"when": "kb-macro.recording && suggestWidgetVisible"
 			},
 			{
 				"key": "ctrl+/",
@@ -3190,7 +3274,8 @@
 				"key": "alt+]",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "editor.action.inlineSuggest.showNext"
+					"command": "editor.action.inlineSuggest.showNext",
+					"record": "side-effect"
 				},
 				"when": "kb-macro.recording && inlineSuggestionVisible && !editorReadonly"
 			},
@@ -3198,7 +3283,8 @@
 				"key": "alt+[",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "editor.action.inlineSuggest.showPrevious"
+					"command": "editor.action.inlineSuggest.showPrevious",
+					"record": "side-effect"
 				},
 				"when": "kb-macro.recording && inlineSuggestionVisible && !editorReadonly"
 			},
@@ -3914,24 +4000,40 @@
 			},
 			{
 				"key": "ctrl+i",
-				"command": "editor.action.triggerSuggest",
-				"when": "kb-macro.recording && editorHasCompletionItemProvider && textInputFocus && !editorReadonly",
-				"mac": "cmd+i"
+				"mac": "cmd+i",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.triggerSuggest",
+					"record": "side-effect"
+				},
+				"when": "kb-macro.recording && editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
 			},
 			{
 				"key": "ctrl+i",
-				"command": "toggleSuggestionDetails",
-				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus",
-				"mac": "cmd+i"
+				"mac": "cmd+i",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "toggleSuggestionDetails",
+					"record": "side-effect"
+				},
+				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
 			},
 			{
 				"key": "ctrl+space",
-				"command": "editor.action.triggerSuggest",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.triggerSuggest",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
 			},
 			{
 				"key": "ctrl+space",
-				"command": "toggleSuggestionDetails",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "toggleSuggestionDetails",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -4438,9 +4540,13 @@
 			},
 			{
 				"key": "ctrl+pagedown",
-				"command": "selectNextPageSuggestion",
-				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus",
-				"mac": "cmd+pagedown"
+				"mac": "cmd+pagedown",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectNextPageSuggestion",
+					"record": "side-effect"
+				},
+				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
 				"key": "ctrl+pagedown",
@@ -4462,9 +4568,13 @@
 			},
 			{
 				"key": "ctrl+pageup",
-				"command": "selectPrevPageSuggestion",
-				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus",
-				"mac": "cmd+pageup"
+				"mac": "cmd+pageup",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectPrevPageSuggestion",
+					"record": "side-effect"
+				},
+				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
 				"key": "ctrl+pageup",
@@ -4486,7 +4596,11 @@
 			},
 			{
 				"key": "ctrl+alt+space",
-				"command": "toggleSuggestionFocus",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "toggleSuggestionFocus",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -6737,7 +6851,11 @@
 			},
 			{
 				"key": "ctrl+n",
-				"command": "selectNextSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectNextSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -6875,7 +6993,11 @@
 			},
 			{
 				"key": "ctrl+p",
-				"command": "selectPrevSuggestion",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectPrevSuggestion",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
 			},
 			{
@@ -7407,7 +7529,11 @@
 			},
 			{
 				"key": "alt+escape",
-				"command": "editor.action.triggerSuggest",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.triggerSuggest",
+					"record": "side-effect"
+				},
 				"when": "kb-macro.recording && isMac && editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
 			},
 			{
