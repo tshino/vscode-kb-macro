@@ -44,7 +44,11 @@ const CommandsToTest = {
     MoveLinesUp: { command: "editor.action.moveLinesUpAction" },
     CommentLine: { command: "editor.action.commentLine" },
     AddCommentLine: { command: "editor.action.addCommentLine" },
-    RemoveCommentLine: { command: "editor.action.removeCommentLine" }
+    RemoveCommentLine: { command: "editor.action.removeCommentLine" },
+
+    TriggerSuggest: { command: "editor.action.triggerSuggest", record: "side-effect" },
+    AcceptSuggestion: { command: "acceptSelectedSuggestion", record: "side-effect" },
+    NetSnippetPlaceholder: { command: "jumpToNextSnippetPlaceholder", record: "side-effect" }
 };
 
 module.exports = { CommandsToTest };
