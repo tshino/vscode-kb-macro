@@ -1,7 +1,7 @@
 {
     "base": {
         "type": "url",
-        "url": "https://github.com/whitphx/vscode-emacs-mcx/raw/v0.40.1/package.json"
+        "url": "https://github.com/whitphx/vscode-emacs-mcx/raw/v0.41.1/package.json"
     },
     "awaitOptions": [
         [ "emacs-mcx.forwardChar", "selection" ],
@@ -19,6 +19,13 @@
         [ "emacs-mcx.forwardParagraph", "selection" ],
         [ "emacs-mcx.endOfBuffer", "selection" ],
         [ "emacs-mcx.beginningOfBuffer", "selection" ],
+
+        [ "emacs-mcx.isearchForward", "" ],
+        [ "emacs-mcx.isearchBackward", "" ],
+        [ "emacs-mcx.isearchForwardRegexp", "" ],
+        [ "emacs-mcx.isearchBackwardRegexp", "" ],
+        [ "emacs-mcx.queryReplace", "" ],
+        [ "emacs-mcx.queryReplaceRegexp", "" ],
 
         [ "emacs-mcx.recenterTopBottom", "" ],
 
