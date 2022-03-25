@@ -35,6 +35,7 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
             } else {
                 await vscode.commands.executeCommand(command, args);
             }
+            await TestUtil.sleep(100);
         }
         keyboardMacro.finishRecording();
     };
@@ -59,7 +60,7 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
             const seq = [
                 { command: "default:type", args: { text: "forof" } },
                 { command: "$wrap", args: Cmd.TriggerSuggest },
-                { command: "$delay", args: { msec: 300 } },
+                { command: "$delay", args: { msec: 1000 } },
                 { command: "$wrap", args: Cmd.AcceptSuggestion },
                 { command: "default:type", args: { text: "iter" } },
                 { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
@@ -84,7 +85,7 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
             const seq = [
                 { command: "default:type", args: { text: "forin" } },
                 { command: "$wrap", args: Cmd.TriggerSuggest },
-                { command: "$delay", args: { msec: 300 } },
+                { command: "$delay", args: { msec: 1000 } },
                 { command: "$wrap", args: Cmd.AcceptSuggestion },
                 { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
                 { command: "default:type", args: { text: "obj" } },
