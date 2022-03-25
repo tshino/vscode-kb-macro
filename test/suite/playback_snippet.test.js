@@ -62,9 +62,9 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
                 { command: "$delay", args: { msec: 300 } },
                 { command: "$wrap", args: Cmd.AcceptSuggestion },
                 { command: "default:type", args: { text: "iter" } },
-                { command: "$wrap", args: Cmd.NetSnippetPlaceholder },
+                { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
                 { command: "default:type", args: { text: "obj" } },
-                { command: "$wrap", args: Cmd.NetSnippetPlaceholder },
+                { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
                 { command: "$wrap", args: Cmd.CursorDown },
                 { command: "$wrap", args: Cmd.Enter }
             ];
@@ -86,9 +86,14 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
                 { command: "$wrap", args: Cmd.TriggerSuggest },
                 { command: "$delay", args: { msec: 300 } },
                 { command: "$wrap", args: Cmd.AcceptSuggestion },
-                { command: "$wrap", args: Cmd.NetSnippetPlaceholder },
-                { command: "$wrap", args: Cmd.NetSnippetPlaceholder },
-                { command: "$wrap", args: Cmd.NetSnippetPlaceholder },
+                { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
+                { command: "default:type", args: { text: "obj" } },
+                { command: "$wrap", args: Cmd.PrevSnippetPlaceholder },
+                { command: "default:type", args: { text: "prop" } },
+                { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
+                { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
+                { command: "default:type", args: { text: "val" } },
+                { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
                 { command: "$wrap", args: Cmd.CursorDown },
                 { command: "$wrap", args: Cmd.CursorDown },
                 { command: "$wrap", args: Cmd.Enter }
@@ -96,15 +101,17 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
 
             await setSelections([[0, 0]]);
             await record(seq);
-            assert.strictEqual(textEditor.document.lineAt(0).text, 'for (const key in object) {');
-            assert.strictEqual(textEditor.document.lineAt(1).text, '    if (Object.hasOwnProperty.call(object, key)) {');
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'for (const prop in obj) {');
+            assert.strictEqual(textEditor.document.lineAt(1).text, '    if (Object.hasOwnProperty.call(obj, prop)) {');
+            assert.strictEqual(textEditor.document.lineAt(2).text, '        const val = obj[prop];');
             assert.strictEqual(textEditor.document.lineAt(4).text, '    }');
             assert.strictEqual(textEditor.document.lineAt(5).text, '}');
             assert.deepStrictEqual(getSelections(), [[6, 0]]);
 
             await keyboardMacro.playback();
-            assert.strictEqual(textEditor.document.lineAt(6).text, 'for (const key in object) {');
-            assert.strictEqual(textEditor.document.lineAt(7).text, '    if (Object.hasOwnProperty.call(object, key)) {');
+            assert.strictEqual(textEditor.document.lineAt(6).text, 'for (const prop in obj) {');
+            assert.strictEqual(textEditor.document.lineAt(7).text, '    if (Object.hasOwnProperty.call(obj, prop)) {');
+            assert.strictEqual(textEditor.document.lineAt(8).text, '        const val = obj[prop];');
             assert.strictEqual(textEditor.document.lineAt(10).text, '    }');
             assert.strictEqual(textEditor.document.lineAt(11).text, '}');
             assert.deepStrictEqual(getSelections(), [[12, 0]]);

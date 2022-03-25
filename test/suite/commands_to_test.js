@@ -48,7 +48,8 @@ const CommandsToTest = {
 
     TriggerSuggest: { command: "editor.action.triggerSuggest", record: "side-effect" },
     AcceptSuggestion: { command: "acceptSelectedSuggestion", record: "side-effect" },
-    NetSnippetPlaceholder: { command: "jumpToNextSnippetPlaceholder", record: "side-effect" }
+    NextSnippetPlaceholder: { command: "jumpToNextSnippetPlaceholder", record: "side-effect" },
+    PrevSnippetPlaceholder: { command: "jumpToPrevSnippetPlaceholder", record: "side-effect" }
 };
 
 module.exports = { CommandsToTest };
