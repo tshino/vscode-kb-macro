@@ -14,6 +14,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - Internal
   - Added `record` option to the `kb-macro.wrap` command. [#76](https://github.com/tshino/vscode-kb-macro/pull/76)
   - Fixed: gen_keymap_wrapper.js end with exit code 0 even when it fails [#77](https://github.com/tshino/vscode-kb-macro/pull/77)
+  - Added real snippets insertion tests instead of tests based on simulating cursor movements and edits. [#82](https://github.com/tshino/vscode-kb-macro/pull/82)
 
 ### [0.11.3] - 2022-03-06
 - Update
