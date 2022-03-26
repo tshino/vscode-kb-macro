@@ -28,14 +28,11 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
         keyboardMacro.startRecording();
         for (let i = 0; i < sequence.length; i++) {
             const { command, args } = sequence[i];
-            if (command === '$delay') {
-                await TestUtil.sleep(args.msec);
-            } else if (command === '$wrap') {
+            if (command === '$wrap') {
                 await keyboardMacro.wrapSync(args);
             } else {
                 await vscode.commands.executeCommand(command, args);
             }
-            await TestUtil.sleep(100);
         }
         keyboardMacro.finishRecording();
     };
@@ -58,10 +55,16 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
         });
         it('forof', async () => {
             const seq = [
-                { command: "default:type", args: { text: "forof" } },
-                { command: "$wrap", args: Cmd.TriggerSuggest },
-                { command: "$delay", args: { msec: 1000 } },
-                { command: "$wrap", args: Cmd.AcceptSuggestion },
+                { command: "$wrap", args: {
+                    command: "editor.action.insertSnippet",
+                    args: {
+                        snippet:
+                            "for (const ${1:element} of ${2:array}) {\n" +
+                            "\t$0\n" +
+                            "}"
+                    },
+                    record: "side-effect"
+                } },
                 { command: "default:type", args: { text: "iter" } },
                 { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
                 { command: "default:type", args: { text: "obj" } },
@@ -83,10 +86,19 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
         });
         it('forin', async () => {
             const seq = [
-                { command: "default:type", args: { text: "forin" } },
-                { command: "$wrap", args: Cmd.TriggerSuggest },
-                { command: "$delay", args: { msec: 1000 } },
-                { command: "$wrap", args: Cmd.AcceptSuggestion },
+                { command: "$wrap", args: {
+                    command: "editor.action.insertSnippet",
+                    args: {
+                        snippet:
+                            "for (const ${1:key} in ${2:object}) {\n" +
+                            "\tif (Object.hasOwnProperty.call(${2}, ${1})) {\n" +
+                            "\t\tconst ${3:element} = ${2}[${1}];\n" +
+                            "\t\t$0\n" +
+                            "\t}\n" +
+                            "}"
+                    },
+                    record: "side-effect"
+                } },
                 { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
                 { command: "default:type", args: { text: "obj" } },
                 { command: "$wrap", args: Cmd.PrevSnippetPlaceholder },
