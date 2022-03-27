@@ -9,6 +9,21 @@ const { keyboardMacro, awaitController } = require('../../src/extension.js');
 describe('Recording and Playback: Real Snippet Insertion', () => {
     let textEditor;
     const Cmd = CommandsToTest;
+    const Type = text => ({ command: '$type', args: { text } });
+    const Move = (ch, ln, sel) => {
+        const motion = { characterDelta: ch };
+        if (ln) motion.lineDelta = ln;
+        if (sel) motion.selectionLength = sel;
+        return {
+            command: '$moveCursor',
+            args: motion
+        };
+    };
+    const GroupMotion = (size, ch, ln, sel) => {
+        const m = Move(ch, ln, sel);
+        m.args.groupSize = size;
+        return m;
+    };
 
     const setSelections = async function(array) {
         await awaitController.waitFor('selection', 1).catch(() => {});
@@ -65,7 +80,7 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
                     },
                     record: "side-effect"
                 } },
-                { command: "default:type", args: { text: "iter" } },
+                { command: "default:type", args: { text: "elem" } },
                 { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
                 { command: "default:type", args: { text: "obj" } },
                 { command: "$wrap", args: Cmd.NextSnippetPlaceholder },
@@ -75,12 +90,24 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
 
             await setSelections([[0, 0]]);
             await record(seq);
-            assert.strictEqual(textEditor.document.lineAt(0).text, 'for (const iter of obj) {');
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'for (const elem of obj) {');
             assert.strictEqual(textEditor.document.lineAt(2).text, '}');
             assert.deepStrictEqual(getSelections(), [[3, 0]]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                Type('for (const element of array) {\n' +
+                '    \n' +
+                '}'),
+                Move(-19, -2, 7),
+                Type('elem'),
+                Move(4, 0, 5),
+                Type('obj'),
+                Move(4, 1),
+                Cmd.CursorDown,
+                Cmd.Enter
+            ]);
 
             await keyboardMacro.playback();
-            assert.strictEqual(textEditor.document.lineAt(3).text, 'for (const iter of obj) {');
+            assert.strictEqual(textEditor.document.lineAt(3).text, 'for (const elem of obj) {');
             assert.strictEqual(textEditor.document.lineAt(5).text, '}');
             assert.deepStrictEqual(getSelections(), [[6, 0]]);
         });
@@ -120,6 +147,28 @@ describe('Recording and Playback: Real Snippet Insertion', () => {
             assert.strictEqual(textEditor.document.lineAt(4).text, '    }');
             assert.strictEqual(textEditor.document.lineAt(5).text, '}');
             assert.deepStrictEqual(getSelections(), [[6, 0]]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                Type(
+                    'for (const key in object) {\n' +
+                    '    if (Object.hasOwnProperty.call(object, key)) {\n' +
+                    '        const element = object[key];\n' +
+                    '        \n' +
+                    '    }\n' +
+                    '}'
+                ),
+                Move([-16, -7, -5], [-5, -4, -3], 3),
+                GroupMotion(3, [7, 35, 24], [0, 1, 2], 6),
+                Type('obj'),
+                GroupMotion(3, [-10, 40, 28], [0, 1, 2], 3),
+                Type('prop'),
+                GroupMotion(3, [4, 35, 24], [0, 1, 2], 3),
+                GroupMotion(3, 14, 2, 7),
+                Type('val'),
+                Move(8, 1),
+                Cmd.CursorDown,
+                Cmd.CursorDown,
+                Cmd.Enter
+            ]);
 
             await keyboardMacro.playback();
             assert.strictEqual(textEditor.document.lineAt(6).text, 'for (const prop in obj) {');
