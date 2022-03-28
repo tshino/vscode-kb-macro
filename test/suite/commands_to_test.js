@@ -46,6 +46,9 @@ const CommandsToTest = {
     AddCommentLine: { command: "editor.action.addCommentLine" },
     RemoveCommentLine: { command: "editor.action.removeCommentLine" },
 
+    Find: { command: 'actions.find' },
+    NextMatchFind: { command: 'editor.action.nextMatchFindAction' },
+
     NextSnippetPlaceholder: { command: "jumpToNextSnippetPlaceholder", record: "side-effect" },
     PrevSnippetPlaceholder: { command: "jumpToPrevSnippetPlaceholder", record: "side-effect" }
 };
