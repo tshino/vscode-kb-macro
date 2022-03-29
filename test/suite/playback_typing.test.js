@@ -398,10 +398,7 @@ describe('Recording and Playback: Typing', () => {
             keyboardMacro.startRecording();
             await vscode.commands.executeCommand('type', { text: 'a' });
             await vscode.commands.executeCommand('type', { text: 'b' });
-            await textEditor.edit(edit => {
-                edit.replace(new vscode.Selection(1, 0, 1, 2), 'Abcde');
-            });
-            await setSelections([[1, 5]]);
+            await vscode.commands.executeCommand('replacePreviousChar', { text: 'Abcde', replaceCharCnt: 2 });
             await vscode.commands.executeCommand('type', { text: '.' });
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
