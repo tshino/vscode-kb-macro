@@ -414,6 +414,19 @@ describe('Recording and Playback: Typing', () => {
     });
 
     describe('snippet insertion', () => {
+        keyboardMacro.registerInternalCommand('internal:setSelections', async function(args) {
+            if (args && args.selections) {
+                textEditor.selections = TestUtil.arrayToSelections(args.selections);
+            }
+        });
+        const jumpToPlaceholder = async function(selections) {
+            await keyboardMacro.wrapSync({
+                command: 'internal:setSelections',
+                args: { selections },
+                'await': 'selection',
+                record: 'side-effect'
+            });
+        };
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
                 '\n'.repeat(10) +
@@ -429,9 +442,9 @@ describe('Recording and Playback: Typing', () => {
                 text: 'console.log();',
                 replaceCharCnt: 3
             });
-            await setSelections([[2, 12]]); // in the parentheses
+            await jumpToPlaceholder([[2, 12]]); // inside the parentheses
             await vscode.commands.executeCommand('type', { text: 'msg' });
-            await setSelections([[2, 17]]); // end of the line (moved by hitting TAB key)
+            await jumpToPlaceholder([[2, 17]]); // end of the line (moved by hitting TAB key)
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
                 Type('console.log();'),
@@ -454,13 +467,13 @@ describe('Recording and Playback: Typing', () => {
                 text: 'const name = new type(arguments);',
                 replaceCharCnt: 3
             });
-            await setSelections([[5, 6, 5, 10]]); // placeholder 'name'
+            await jumpToPlaceholder([[5, 6, 5, 10]]); // placeholder 'name'
             await vscode.commands.executeCommand('type', { text: 'a' });
-            await setSelections([[5, 14, 5, 18]]); // placeholder 'type'
+            await jumpToPlaceholder([[5, 14, 5, 18]]); // placeholder 'type'
             await vscode.commands.executeCommand('type', { text: 'Array' });
-            await setSelections([[5, 20, 5, 29]]); // placeholder 'arguments'
+            await jumpToPlaceholder([[5, 20, 5, 29]]); // placeholder 'arguments'
             await vscode.commands.executeCommand('type', { text: '5' });
-            await setSelections([[5, 23]]);
+            await jumpToPlaceholder([[5, 23]]);
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
                 Type('const name = new type(arguments);'),
@@ -487,11 +500,11 @@ describe('Recording and Playback: Typing', () => {
                 text: 'function name(params) {\n    \n}',
                 replaceCharCnt: 3
             });
-            await setSelections([[4, 9, 4, 13]]); // placeholder 'name'
+            await jumpToPlaceholder([[4, 9, 4, 13]]); // placeholder 'name'
             await vscode.commands.executeCommand('type', { text: 'say' });
-            await setSelections([[4, 13, 4, 19]]); // placeholder 'params'
+            await jumpToPlaceholder([[4, 13, 4, 19]]); // placeholder 'params'
             await vscode.commands.executeCommand('type', { text: 'name' });
-            await setSelections([[5, 4]]); // inside the function block
+            await jumpToPlaceholder([[5, 4]]); // inside the function block
             await vscode.commands.executeCommand('type', { text: 'console.log(' }); // triggers bracket completion
             await vscode.commands.executeCommand('type', { text: 'name' });
             await vscode.commands.executeCommand('type', { text: ')' }); // overwrite closing bracket
@@ -532,15 +545,15 @@ describe('Recording and Playback: Typing', () => {
                     '}',
                 replaceCharCnt: 3
             });
-            await setSelections([
+            await jumpToPlaceholder([
                 [4, 9, 4, 14], [4, 20, 4, 25], [4, 42, 4, 47], [5, 26, 5, 31]
             ]); // placeholder 'index'
             await vscode.commands.executeCommand('type', { text: 'idx' });
-            await setSelections([[4, 24, 4, 29], [5, 20, 5, 25]]); // placeholder 'array'
+            await jumpToPlaceholder([[4, 24, 4, 29], [5, 20, 5, 25]]); // placeholder 'array'
             await vscode.commands.executeCommand('type', { text: 'ary' });
-            await setSelections([[5, 10, 5, 17]]); // placeholder 'element'
+            await jumpToPlaceholder([[5, 10, 5, 17]]); // placeholder 'element'
             await vscode.commands.executeCommand('type', { text: 'el' });
-            await setSelections([[6, 4]]); // the blank line in the block
+            await jumpToPlaceholder([[6, 4]]); // the blank line in the block
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
                 Type('for (let index = 0; index < array.length; index++) {\n' +
