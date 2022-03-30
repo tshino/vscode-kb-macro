@@ -492,10 +492,9 @@ describe('Recording and Playback: Typing', () => {
             await setSelections([[4, 13, 4, 19]]); // placeholder 'params'
             await vscode.commands.executeCommand('type', { text: 'name' });
             await setSelections([[5, 4]]); // inside the function block
-            await vscode.commands.executeCommand('type', { text: 'console.log(' });
-            await setSelections([[5, 16]]); // bracket completion
+            await vscode.commands.executeCommand('type', { text: 'console.log(' }); // triggers bracket completion
             await vscode.commands.executeCommand('type', { text: 'name' });
-            await setSelections([[5, 21]]);
+            await vscode.commands.executeCommand('type', { text: ')' }); // overwrite closing bracket
             await vscode.commands.executeCommand('type', { text: ';' });
             keyboardMacro.finishRecording();
             assert.deepStrictEqual(getSequence(), [
@@ -508,8 +507,7 @@ describe('Recording and Playback: Typing', () => {
                 Type('console.log()'),
                 MoveLeft(1),
                 Type('name'),
-                MoveRight(1),
-                Type(';')
+                ReplaceRight(1, ');')
             ]);
             assert.strictEqual(textEditor.document.lineAt(4).text, 'function say(name) {');
             assert.strictEqual(textEditor.document.lineAt(5).text, '    console.log(name);');
