@@ -274,7 +274,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 5, 3, 5) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, MoveLeft(1) ]]
+                expectedLogs: [[ CursorMotionType.Alone, MoveLeft(1) ]]
             });
         });
         it('should detect the unexpected motion of cursor (move to right)', async () => {
@@ -283,7 +283,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 7, 3, 7) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, MoveRight(1) ]]
+                expectedLogs: [[ CursorMotionType.Alone, MoveRight(1) ]]
             });
         });
         it('should detect the unexpected motion of multi-cursor', async () => {
@@ -292,7 +292,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, MoveRight(1) ]]
+                expectedLogs: [[ CursorMotionType.Alone, MoveRight(1) ]]
             });
         });
 
@@ -302,7 +302,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 10, 3, 10), new vscode.Selection(3, 12, 3, 12) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, Split([ 3, 5 ]) ]]
+                expectedLogs: [[ CursorMotionType.Alone, Split([ 3, 5 ]) ]]
             });
         });
         it('should detect implicit motion (split multi to multi)', async () => {
@@ -317,7 +317,7 @@ describe('CursorMotionDetector', () => {
                         new vscode.Selection(6, 10, 6, 10), new vscode.Selection(6, 12, 6, 12)
                     ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, Split([ 3, 5 ]) ]]
+                expectedLogs: [[ CursorMotionType.Alone, Split([ 3, 5 ]) ]]
             });
         });
         it('should detect implicit motion (split into multi-cursor on different lines) (1)', async () => {
@@ -326,7 +326,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 10, 3, 10), new vscode.Selection(5, 2, 5, 2) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, Split2([ 3, 2 ], [0, 2]) ]]
+                expectedLogs: [[ CursorMotionType.Alone, Split2([ 3, 2 ], [0, 2]) ]]
             });
         });
         it('should detect implicit motion (split into multi-cursor on different lines) (2)', async () => {
@@ -341,7 +341,7 @@ describe('CursorMotionDetector', () => {
                         new vscode.Selection(7, 2, 7, 2), new vscode.Selection(8, 7, 8, 7),
                     ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, Split2([ 2, 7 ], [ 1, 2 ]) ]]
+                expectedLogs: [[ CursorMotionType.Alone, Split2([ 2, 7 ], [ 1, 2 ]) ]]
             });
         });
         it('should detect implicit motion (split into multi-cursor with selection)', async () => {
@@ -350,7 +350,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 10, 3, 13), new vscode.Selection(3, 12, 3, 15) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, SplitSelect([ 3, 5 ], 3) ]]
+                expectedLogs: [[ CursorMotionType.Alone, SplitSelect([ 3, 5 ], 3) ]]
             });
         });
         it('should ignore implicit motion with splitting to non-uniform selection length', async () => {
@@ -369,7 +369,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 8, 3, 8), new vscode.Selection(4, 9, 4, 9) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, GroupMotion(2, [1, 9], [0, 1]) ]]
+                expectedLogs: [[ CursorMotionType.Alone, GroupMotion(2, [1, 9], [0, 1]) ]]
             });
         });
         it('should detect grouped cursor motion (2)', async () => {
@@ -378,7 +378,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 8, 3, 8), new vscode.Selection(5, 8, 5, 8) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, GroupMotion(2, [1, 8], [0, 2]) ]]
+                expectedLogs: [[ CursorMotionType.Alone, GroupMotion(2, [1, 8], [0, 2]) ]]
             });
         });
         it('should detect grouped cursor motion (3)', async () => {
@@ -387,7 +387,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(3, 8, 3, 8) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, GroupMotion(2, 1) ]]
+                expectedLogs: [[ CursorMotionType.Alone, GroupMotion(2, 1) ]]
             });
         });
         it('should detect grouped cursor motion (4)', async () => {
@@ -396,7 +396,7 @@ describe('CursorMotionDetector', () => {
                 inputs: [
                     { changed: [ new vscode.Selection(4, 3, 4, 3), new vscode.Selection(6, 3, 6, 3) ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, GroupMotion(2, [3, 3], [1, 3]) ]]
+                expectedLogs: [[ CursorMotionType.Alone, GroupMotion(2, [3, 3], [1, 3]) ]]
             });
         });
         it('should detect grouped cursor motion (5)', async () => {
@@ -408,7 +408,7 @@ describe('CursorMotionDetector', () => {
                         new vscode.Selection(6, 10, 6, 10), new vscode.Selection(6, 11, 6, 11)  // <= not match non-grouped pure split
                     ] }
                 ],
-                expectedLogs: [[ CursorMotionType.Trailing, GroupMotion(2, [3, 5, 10, 11], [0, 0, 3, 3]) ]]
+                expectedLogs: [[ CursorMotionType.Alone, GroupMotion(2, [3, 5, 10, 11], [0, 0, 3, 3]) ]]
             });
         });
     });

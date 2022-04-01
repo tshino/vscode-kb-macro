@@ -187,9 +187,12 @@ const CursorMotionDetector = function() {
             const motion = detectImplicitMotion(document, current, lastSelections);
             if (motion) {
                 // Here, the occurence of this cursor change event is unexpected.
+                // This type of events includes:
+                //   - cursor movement that happen with snippet insertion related commands
+                //   - cursor movement that happen when the user types in the find input box
                 // We consider it an implicit cursor motion.
                 // We notify it so that it will be recorded to be able to playback.
-                notifyDetectedMotion(CursorMotionType.Trailing, motion);
+                notifyDetectedMotion(CursorMotionType.Alone, motion);
                 // console.log('motion without prediction');
             } else {
                 // console.log('skip');
@@ -207,6 +210,8 @@ const CursorMotionDetector = function() {
                 const motion = detectImplicitMotion(document, current, predicted);
                 if (motion) {
                     // Here, the current cursor position is different from the one predicted.
+                    // This type of events includes:
+                    //   - cursor movement happens right after bracket completion
                     // We consider it an implicit cursor motion.
                     // We notify it so that it will be recorded to be able to playback.
                     notifyDetectedMotion(CursorMotionType.Trailing, motion);
