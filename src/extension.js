@@ -140,7 +140,7 @@ function activate(context) {
     addEventListener(
         typingDetector.onDetectCursorMotion,
         function(type, args) {
-            if (type === typingDetector.CursorMotionType.Direct) {
+            if (type === typingDetector.CursorMotionType.Trailing) {
                 keyboardMacro.push({
                     command: '$moveCursor',
                     args: args

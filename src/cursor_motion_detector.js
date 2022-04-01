@@ -3,7 +3,8 @@ const util = require('./util.js');
 
 const CursorMotionDetector = function() {
     const CursorMotionType = {
-        Direct: 0
+        Trailing: 0,
+        Alone: 1
     };
     let onDetectCursorMotionCallback = null;
     let enabled = false;
@@ -15,9 +16,9 @@ const CursorMotionDetector = function() {
     const onDetectCursorMotion = function(callback) {
         onDetectCursorMotionCallback = callback;
     };
-    const notifyDetectedMotion = function(motion) {
+    const notifyDetectedMotion = function(type, motion) {
         if (onDetectCursorMotionCallback) {
-            onDetectCursorMotionCallback(CursorMotionType.Direct, motion);
+            onDetectCursorMotionCallback(type, motion);
         }
     };
 
@@ -188,7 +189,7 @@ const CursorMotionDetector = function() {
                 // Here, the occurence of this cursor change event is unexpected.
                 // We consider it an implicit cursor motion.
                 // We notify it so that it will be recorded to be able to playback.
-                notifyDetectedMotion(motion);
+                notifyDetectedMotion(CursorMotionType.Trailing, motion);
                 // console.log('motion without prediction');
             } else {
                 // console.log('skip');
@@ -208,7 +209,7 @@ const CursorMotionDetector = function() {
                     // Here, the current cursor position is different from the one predicted.
                     // We consider it an implicit cursor motion.
                     // We notify it so that it will be recorded to be able to playback.
-                    notifyDetectedMotion(motion);
+                    notifyDetectedMotion(CursorMotionType.Trailing, motion);
                     predictions.splice(0, 1);
                     // console.log('motion with prediction');
                 } else {
