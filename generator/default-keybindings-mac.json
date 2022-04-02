@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.65.2 for macOS
+// Default Keybindings of Visual Studio Code 1.66.0 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -293,6 +293,8 @@
                                      "when": "editorTextFocus && !editorReadonly" },
 { "key": "cmd+k cmd+d",           "command": "editor.action.moveSelectionToNextFindMatch",
                                      "when": "editorFocus" },
+{ "key": "alt+f9",                "command": "editor.action.nextCommentThreadAction",
+                                     "when": "editorFocus" },
 { "key": "f3",                    "command": "editor.action.nextMatchFindAction",
                                      "when": "editorFocus" },
 { "key": "cmd+g",                 "command": "editor.action.nextMatchFindAction",
@@ -309,6 +311,8 @@
                                      "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" },
 { "key": "shift+cmd+f12",         "command": "editor.action.peekImplementation",
                                      "when": "editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" },
+{ "key": "shift+alt+f9",          "command": "editor.action.previousCommentThreadAction",
+                                     "when": "editorFocus" },
 { "key": "shift+f3",              "command": "editor.action.previousMatchFindAction",
                                      "when": "editorFocus" },
 { "key": "shift+cmd+g",           "command": "editor.action.previousMatchFindAction",
@@ -850,6 +854,8 @@
                                      "when": "notificationFocus && notificationToastsVisible" },
 { "key": "up",                    "command": "notifications.focusPreviousToast",
                                      "when": "notificationFocus && notificationToastsVisible" },
+{ "key": "escape",                "command": "problems.action.clearFilterText",
+                                     "when": "problemsFilterFocus" },
 { "key": "cmd+c",                 "command": "problems.action.copy",
                                      "when": "problemsVisibility && !relatedInformationFocus && focusedView == 'workbench.panel.markers.view'" },
 { "key": "cmd+f",                 "command": "problems.action.focusFilter",
@@ -943,10 +949,10 @@
                                      "when": "editorTextFocus" },
 { "key": "cmd+; cmd+e",           "command": "testing.debugFailTests" },
 { "key": "cmd+; cmd+l",           "command": "testing.debugLastRun" },
-{ "key": "cmd+; m",               "command": "testing.openOutputPeek" },
+{ "key": "cmd+; cmd+m",           "command": "testing.openOutputPeek" },
 { "key": "cmd+; e",               "command": "testing.reRunFailTests" },
 { "key": "cmd+; l",               "command": "testing.reRunLastRun" },
-{ "key": "cmd+; r",               "command": "testing.refreshTests",
+{ "key": "cmd+; cmd+r",           "command": "testing.refreshTests",
                                      "when": "testing.canRefresh" },
 { "key": "cmd+; a",               "command": "testing.runAll" },
 { "key": "cmd+; c",               "command": "testing.runAtCursor",
@@ -956,7 +962,7 @@
 { "key": "cmd+; cmd+o",           "command": "testing.showMostRecentOutput",
                                      "when": "testing.hasAnyResults" },
 { "key": "cmd+; cmd+i",           "command": "testing.toggleInlineTestOutput" },
-{ "key": "cmd+h",                 "command": "testing.toggleTestingPeekHistory",
+{ "key": "alt+h",                 "command": "testing.toggleTestingPeekHistory",
                                      "when": "testing.isPeekVisible" },
 { "key": "alt+cmd+c",             "command": "toggleSearchCaseSensitive",
                                      "when": "searchViewletFocus && !fileMatchOrFolderMatchFocus" },
@@ -1547,7 +1553,6 @@
 // - editor.action.moveCarretLeftAction
 // - editor.action.moveCarretRightAction
 // - editor.action.moveSelectionToPreviousFindMatch
-// - editor.action.nextCommentThreadAction
 // - editor.action.openDeclarationToTheSide
 // - editor.action.openLink
 // - editor.action.peekDeclaration
@@ -1776,7 +1781,6 @@
 // - git.undoCommit
 // - git.unstage
 // - git.unstageAll
-// - github.provide-manually
 // - github.publish
 // - goToNextReferenceFromEmbeddedEditor
 // - goToPreviousReferenceFromEmbeddedEditor
@@ -1784,7 +1788,9 @@
 // - imagePreview.zoomIn
 // - imagePreview.zoomOut
 // - inlayHints.startReadingLineWithHint
+// - interactive.history.focus
 // - interactive.input.clear
+// - interactive.input.focus
 // - ipynb.newUntitledIpynb
 // - ipynb.openIpynbInNotebookEditor
 // - javascript.goToProjectConfig
@@ -1898,7 +1904,6 @@
 // - outline.toggleVisibility
 // - paste
 // - perfview.show
-// - problems.action.clearFilterText
 // - problems.action.copyMessage
 // - problems.action.copyRelatedInformationMessage
 // - problems.action.showMultilineMessage
@@ -1997,7 +2002,9 @@
 // - testing.viewAsList
 // - testing.viewAsTree
 // - timeline.focus
+// - timeline.removeView
 // - timeline.resetViewLocation
+// - timeline.toggleVisibility
 // - toggle.diff.ignoreTrimWhitespace
 // - toggle.diff.renderSideBySide
 // - toggleEscapeSequenceLogging
@@ -2119,6 +2126,19 @@
 // - workbench.action.installCommandLine
 // - workbench.action.joinAllGroups
 // - workbench.action.joinTwoGroups
+// - workbench.action.localHistory.compareWithFile
+// - workbench.action.localHistory.compareWithPrevious
+// - workbench.action.localHistory.compareWithSelected
+// - workbench.action.localHistory.create
+// - workbench.action.localHistory.delete
+// - workbench.action.localHistory.deleteAll
+// - workbench.action.localHistory.open
+// - workbench.action.localHistory.rename
+// - workbench.action.localHistory.restore
+// - workbench.action.localHistory.restoreViaEditor
+// - workbench.action.localHistory.restoreViaPicker
+// - workbench.action.localHistory.revealInOS
+// - workbench.action.localHistory.selectForCompare
 // - workbench.action.lockEditorGroup
 // - workbench.action.logStorage
 // - workbench.action.logWorkingCopies
@@ -2131,7 +2151,9 @@
 // - workbench.action.moveEditorToLeftGroup
 // - workbench.action.moveEditorToRightGroup
 // - workbench.action.moveFocusedView
+// - workbench.action.movePanelToSecondarySideBar
 // - workbench.action.movePanelToSidePanel
+// - workbench.action.moveSecondarySideBarToPanel
 // - workbench.action.moveSideBarLeft
 // - workbench.action.moveSideBarRight
 // - workbench.action.moveSidePanelToPanel
@@ -2277,6 +2299,7 @@
 // - workbench.action.terminal.changeIconInstance
 // - workbench.action.terminal.changeIconPanel
 // - workbench.action.terminal.clearCommandHistory
+// - workbench.action.terminal.copySelectionAsHtml
 // - workbench.action.terminal.createProfileButton
 // - workbench.action.terminal.detachSession
 // - workbench.action.terminal.focus

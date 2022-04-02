@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.65.2 for Windows
+// Default Keybindings of Visual Studio Code 1.66.0 for Windows
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -241,6 +241,8 @@
                                      "when": "editorTextFocus && !editorReadonly" },
 { "key": "ctrl+k ctrl+d",         "command": "editor.action.moveSelectionToNextFindMatch",
                                      "when": "editorFocus" },
+{ "key": "alt+f9",                "command": "editor.action.nextCommentThreadAction",
+                                     "when": "editorFocus" },
 { "key": "f3",                    "command": "editor.action.nextMatchFindAction",
                                      "when": "editorFocus" },
 { "key": "enter",                 "command": "editor.action.nextMatchFindAction",
@@ -255,6 +257,8 @@
                                      "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" },
 { "key": "ctrl+shift+f12",        "command": "editor.action.peekImplementation",
                                      "when": "editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" },
+{ "key": "shift+alt+f9",          "command": "editor.action.previousCommentThreadAction",
+                                     "when": "editorFocus" },
 { "key": "shift+f3",              "command": "editor.action.previousMatchFindAction",
                                      "when": "editorFocus" },
 { "key": "shift+enter",           "command": "editor.action.previousMatchFindAction",
@@ -766,6 +770,8 @@
                                      "when": "notificationFocus && notificationToastsVisible" },
 { "key": "up",                    "command": "notifications.focusPreviousToast",
                                      "when": "notificationFocus && notificationToastsVisible" },
+{ "key": "escape",                "command": "problems.action.clearFilterText",
+                                     "when": "problemsFilterFocus" },
 { "key": "ctrl+c",                "command": "problems.action.copy",
                                      "when": "problemsVisibility && !relatedInformationFocus && focusedView == 'workbench.panel.markers.view'" },
 { "key": "ctrl+f",                "command": "problems.action.focusFilter",
@@ -853,10 +859,10 @@
                                      "when": "editorTextFocus" },
 { "key": "ctrl+; ctrl+e",         "command": "testing.debugFailTests" },
 { "key": "ctrl+; ctrl+l",         "command": "testing.debugLastRun" },
-{ "key": "ctrl+; m",              "command": "testing.openOutputPeek" },
+{ "key": "ctrl+; ctrl+m",         "command": "testing.openOutputPeek" },
 { "key": "ctrl+; e",              "command": "testing.reRunFailTests" },
 { "key": "ctrl+; l",              "command": "testing.reRunLastRun" },
-{ "key": "ctrl+; r",              "command": "testing.refreshTests",
+{ "key": "ctrl+; ctrl+r",         "command": "testing.refreshTests",
                                      "when": "testing.canRefresh" },
 { "key": "ctrl+; a",              "command": "testing.runAll" },
 { "key": "ctrl+; c",              "command": "testing.runAtCursor",
@@ -866,7 +872,7 @@
 { "key": "ctrl+; ctrl+o",         "command": "testing.showMostRecentOutput",
                                      "when": "testing.hasAnyResults" },
 { "key": "ctrl+; ctrl+i",         "command": "testing.toggleInlineTestOutput" },
-{ "key": "ctrl+h",                "command": "testing.toggleTestingPeekHistory",
+{ "key": "alt+h",                 "command": "testing.toggleTestingPeekHistory",
                                      "when": "testing.isPeekVisible" },
 { "key": "alt+c",                 "command": "toggleSearchCaseSensitive",
                                      "when": "searchViewletFocus" },
@@ -1098,12 +1104,20 @@
                                      "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive" },
 { "key": "ctrl+end",              "command": "workbench.action.terminal.scrollToBottom",
                                      "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive" },
+{ "key": "ctrl+down",             "command": "workbench.action.terminal.scrollToNextCommand",
+                                     "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled" },
+{ "key": "ctrl+up",               "command": "workbench.action.terminal.scrollToPreviousCommand",
+                                     "when": "terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || terminalFocus && terminalProcessSupported && !accessibilityModeEnabled" },
 { "key": "ctrl+home",             "command": "workbench.action.terminal.scrollToTop",
                                      "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive" },
 { "key": "ctrl+alt+pageup",       "command": "workbench.action.terminal.scrollUp",
                                      "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive" },
 { "key": "shift+pageup",          "command": "workbench.action.terminal.scrollUpPage",
                                      "when": "terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || terminalFocus && terminalProcessSupported && !terminalAltBufferActive" },
+{ "key": "ctrl+shift+down",       "command": "workbench.action.terminal.selectToNextCommand",
+                                     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
+{ "key": "ctrl+shift+up",         "command": "workbench.action.terminal.selectToPreviousCommand",
+                                     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
 { "key": "ctrl+v",                "command": "workbench.action.terminal.sendSequence",
                                      "when": "terminalFocus && !accessibilityModeEnabled && terminalShellType == 'pwsh'",
                                      "args": {"text":"\u0016"} },
@@ -1438,7 +1452,6 @@
 // - editor.action.moveCarretLeftAction
 // - editor.action.moveCarretRightAction
 // - editor.action.moveSelectionToPreviousFindMatch
-// - editor.action.nextCommentThreadAction
 // - editor.action.openDeclarationToTheSide
 // - editor.action.openLink
 // - editor.action.peekDeclaration
@@ -1668,7 +1681,6 @@
 // - git.undoCommit
 // - git.unstage
 // - git.unstageAll
-// - github.provide-manually
 // - github.publish
 // - goToNextReferenceFromEmbeddedEditor
 // - goToPreviousReferenceFromEmbeddedEditor
@@ -1676,7 +1688,9 @@
 // - imagePreview.zoomIn
 // - imagePreview.zoomOut
 // - inlayHints.startReadingLineWithHint
+// - interactive.history.focus
 // - interactive.input.clear
+// - interactive.input.focus
 // - ipynb.newUntitledIpynb
 // - ipynb.openIpynbInNotebookEditor
 // - javascript.goToProjectConfig
@@ -1791,7 +1805,6 @@
 // - outline.toggleVisibility
 // - paste
 // - perfview.show
-// - problems.action.clearFilterText
 // - problems.action.copyMessage
 // - problems.action.copyRelatedInformationMessage
 // - problems.action.showMultilineMessage
@@ -1892,7 +1905,9 @@
 // - testing.viewAsList
 // - testing.viewAsTree
 // - timeline.focus
+// - timeline.removeView
 // - timeline.resetViewLocation
+// - timeline.toggleVisibility
 // - toggle.diff.ignoreTrimWhitespace
 // - toggle.diff.renderSideBySide
 // - toggleEscapeSequenceLogging
@@ -2013,6 +2028,19 @@
 // - workbench.action.inspectKeyMappingsJSON
 // - workbench.action.joinAllGroups
 // - workbench.action.joinTwoGroups
+// - workbench.action.localHistory.compareWithFile
+// - workbench.action.localHistory.compareWithPrevious
+// - workbench.action.localHistory.compareWithSelected
+// - workbench.action.localHistory.create
+// - workbench.action.localHistory.delete
+// - workbench.action.localHistory.deleteAll
+// - workbench.action.localHistory.open
+// - workbench.action.localHistory.rename
+// - workbench.action.localHistory.restore
+// - workbench.action.localHistory.restoreViaEditor
+// - workbench.action.localHistory.restoreViaPicker
+// - workbench.action.localHistory.revealInOS
+// - workbench.action.localHistory.selectForCompare
 // - workbench.action.lockEditorGroup
 // - workbench.action.logStorage
 // - workbench.action.logWorkingCopies
@@ -2024,7 +2052,9 @@
 // - workbench.action.moveEditorToLeftGroup
 // - workbench.action.moveEditorToRightGroup
 // - workbench.action.moveFocusedView
+// - workbench.action.movePanelToSecondarySideBar
 // - workbench.action.movePanelToSidePanel
+// - workbench.action.moveSecondarySideBarToPanel
 // - workbench.action.moveSideBarLeft
 // - workbench.action.moveSideBarRight
 // - workbench.action.moveSidePanelToPanel
@@ -2171,6 +2201,7 @@
 // - workbench.action.terminal.changeIconPanel
 // - workbench.action.terminal.clear
 // - workbench.action.terminal.clearCommandHistory
+// - workbench.action.terminal.copySelectionAsHtml
 // - workbench.action.terminal.createProfileButton
 // - workbench.action.terminal.detachSession
 // - workbench.action.terminal.focus
@@ -2207,13 +2238,9 @@
 // - workbench.action.terminal.runActiveFile
 // - workbench.action.terminal.runRecentCommand
 // - workbench.action.terminal.runSelectedText
-// - workbench.action.terminal.scrollToNextCommand
-// - workbench.action.terminal.scrollToPreviousCommand
 // - workbench.action.terminal.selectAll
 // - workbench.action.terminal.selectDefaultShell
-// - workbench.action.terminal.selectToNextCommand
 // - workbench.action.terminal.selectToNextLine
-// - workbench.action.terminal.selectToPreviousCommand
 // - workbench.action.terminal.selectToPreviousLine
 // - workbench.action.terminal.setDimensions
 // - workbench.action.terminal.showEnvironmentInformation
