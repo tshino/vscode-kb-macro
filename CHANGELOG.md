@@ -12,6 +12,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Updated default keybindings based on VS Code 1.66.0. [#87](https://github.com/tshino/vscode-kb-macro/pull/87)
   - Updated default keybindings based on VS Code 1.65.2. [#74](https://github.com/tshino/vscode-kb-macro/pull/74)
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.41.1). [#81](https://github.com/tshino/vscode-kb-macro/pull/81)
+  - Updated Keymap wrapper for Delphi Keymap (v9.5.0). [#90](https://github.com/tshino/vscode-kb-macro/pull/90)
 - Internal
   - Added `record` option to the `kb-macro.wrap` command. [#76](https://github.com/tshino/vscode-kb-macro/pull/76)
   - Fixed: gen_keymap_wrapper.js end with exit code 0 even when it fails [#77](https://github.com/tshino/vscode-kb-macro/pull/77)
