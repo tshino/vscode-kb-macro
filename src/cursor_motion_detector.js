@@ -8,7 +8,7 @@ const CursorMotionDetector = function() {
     };
     let onDetectCursorMotionCallback = null;
     let enabled = false;
-    let aloneEnabled = true;
+    let aloneEnabled = false;
     let lastSelections = null;
     let lastTextEditor = null;
     const predictions = [];

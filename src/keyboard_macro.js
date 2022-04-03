@@ -190,7 +190,7 @@ const KeyboardMacro = function({ awaitController }) {
         args = validatePlaybackArgs(args);
         const repeat = 'repeat' in args ? args.repeat : 1;
         const commands = 'sequence' in args ? args.sequence : sequence.get();
-        const wrapMode = recording;
+        const wrapMode = recording ? 'command' : null;
         if (recording) {
             if (!('sequence' in args)) {
                 return;
@@ -198,7 +198,7 @@ const KeyboardMacro = function({ awaitController }) {
         }
         try {
             if (wrapMode && onBeginWrappedCommandCallback) {
-                onBeginWrappedCommandCallback();
+                onBeginWrappedCommandCallback(wrapMode);
             }
             changePlaybackState(true, PlaybackStateReason.Start);
             shouldAbortPlayback = false;
@@ -233,7 +233,7 @@ const KeyboardMacro = function({ awaitController }) {
             changePlaybackState(false, reason);
             shouldAbortPlayback = false;
             if (wrapMode && onEndWrappedCommandCallback) {
-                onEndWrappedCommandCallback();
+                onEndWrappedCommandCallback(wrapMode);
             }
         }
     };
@@ -287,9 +287,9 @@ const KeyboardMacro = function({ awaitController }) {
                 await playbackImpl(spec.args);
                 return;
             }
-            const sideEffectMode = spec.record === 'side-effect';
-            if (!sideEffectMode && onBeginWrappedCommandCallback) {
-                onBeginWrappedCommandCallback();
+            const wrapMode = spec.record || 'command';
+            if (onBeginWrappedCommandCallback) {
+                onBeginWrappedCommandCallback(wrapMode);
             }
             try {
                 const ok = await invokeCommandSync(spec, 'wrap');
@@ -297,8 +297,8 @@ const KeyboardMacro = function({ awaitController }) {
                     push(spec);
                 }
             } finally {
-                if (!sideEffectMode && onEndWrappedCommandCallback) {
-                    onEndWrappedCommandCallback();
+                if (onEndWrappedCommandCallback) {
+                    onEndWrappedCommandCallback(wrapMode);
                 }
             }
         }
