@@ -90,14 +90,22 @@ function activate(context) {
     );
     addEventListener(
         keyboardMacro.onBeginWrappedCommand,
-        function() {
-            typingDetector.suspend();
+        function(wrapMode) {
+            if (wrapMode === 'side-effect') {
+                typingDetector.setAloneEnabled(true);
+            } else {
+                typingDetector.suspend();
+            }
         }
     );
     addEventListener(
         keyboardMacro.onEndWrappedCommand,
-        function() {
-            typingDetector.resume();
+        function(wrapMode) {
+            if (wrapMode === 'side-effect') {
+                typingDetector.setAloneEnabled(false);
+            } else {
+                typingDetector.resume();
+            }
         }
     );
     addEventListener(

@@ -56,12 +56,13 @@ describe('CursorMotionDetector', () => {
             assert.ok(cursorMotionDetector.getPrediction(textEditor1));
         });
     });
-    const testDetection = function({ init, lineLength = null, inputs, expectedLogs }) {
+    const testDetection = function({ init, lineLength = null, inputs, expectedLogs, enableAlone = false }) {
         const logs = [];
         const cursorMotionDetector = CursorMotionDetector();
         cursorMotionDetector.onDetectCursorMotion((type, args) => {
             logs.push([ type, args ]);
         });
+        cursorMotionDetector.setAloneEnabled(enableAlone);
         const textEditor = {
             selections: init
         };
@@ -270,6 +271,7 @@ describe('CursorMotionDetector', () => {
     describe('implicit motion without prediction', () => {
         it('should detect the unexpected motion of cursor (move to left)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 6, 3, 6) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 5, 3, 5) ] }
@@ -279,6 +281,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect the unexpected motion of cursor (move to right)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 6, 3, 6) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 7, 3, 7) ] }
@@ -288,6 +291,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect the unexpected motion of multi-cursor', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 6, 3, 6), new vscode.Selection(4, 6, 4, 6) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ] }
@@ -298,6 +302,7 @@ describe('CursorMotionDetector', () => {
 
         it('should detect implicit motion (split into multi-cursor)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 10, 3, 10), new vscode.Selection(3, 12, 3, 12) ] }
@@ -307,6 +312,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect implicit motion (split multi to multi)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [
                     new vscode.Selection(3, 7, 3, 7),
                     new vscode.Selection(6, 7, 6, 7)
@@ -322,6 +328,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect implicit motion (split into multi-cursor on different lines) (1)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 10, 3, 10), new vscode.Selection(5, 2, 5, 2) ] }
@@ -331,6 +338,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect implicit motion (split into multi-cursor on different lines) (2)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [
                     new vscode.Selection(3, 7, 3, 7),
                     new vscode.Selection(6, 7, 6, 7)
@@ -346,6 +354,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect implicit motion (split into multi-cursor with selection)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 10, 3, 13), new vscode.Selection(3, 12, 3, 15) ] }
@@ -355,6 +364,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should ignore implicit motion with splitting to non-uniform selection length', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 10, 3, 13), new vscode.Selection(3, 12, 3, 16) ] }
@@ -365,6 +375,7 @@ describe('CursorMotionDetector', () => {
 
         it('should detect grouped cursor motion (1)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 8, 3, 8), new vscode.Selection(4, 9, 4, 9) ] }
@@ -374,6 +385,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect grouped cursor motion (2)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 8, 3, 8), new vscode.Selection(5, 8, 5, 8) ] }
@@ -383,6 +395,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect grouped cursor motion (3)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ],
                 inputs: [
                     { changed: [ new vscode.Selection(3, 8, 3, 8) ] }
@@ -392,6 +405,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect grouped cursor motion (4)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(4, 7, 4, 7) ],
                 inputs: [
                     { changed: [ new vscode.Selection(4, 3, 4, 3), new vscode.Selection(6, 3, 6, 3) ] }
@@ -401,6 +415,7 @@ describe('CursorMotionDetector', () => {
         });
         it('should detect grouped cursor motion (5)', async () => {
             testDetection({
+                enableAlone: true,
                 init: [ new vscode.Selection(3, 7, 3, 7), new vscode.Selection(6, 7, 6, 7) ],
                 inputs: [
                     { changed: [
@@ -409,6 +424,17 @@ describe('CursorMotionDetector', () => {
                     ] }
                 ],
                 expectedLogs: [[ CursorMotionType.Alone, GroupMotion(2, [3, 5, 10, 11], [0, 0, 3, 3]) ]]
+            });
+        });
+
+        it('should ignore unexpected cursor motion if aloneEnabled=false', async () => {
+            testDetection({
+                enableAlone: false,
+                init: [ new vscode.Selection(3, 6, 3, 6) ],
+                inputs: [
+                    { changed: [ new vscode.Selection(3, 7, 3, 7) ] }
+                ],
+                expectedLogs: []
             });
         });
     });

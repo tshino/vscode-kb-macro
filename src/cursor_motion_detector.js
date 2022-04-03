@@ -8,6 +8,7 @@ const CursorMotionDetector = function() {
     };
     let onDetectCursorMotionCallback = null;
     let enabled = false;
+    let aloneEnabled = false;
     let lastSelections = null;
     let lastTextEditor = null;
     const predictions = [];
@@ -44,6 +45,9 @@ const CursorMotionDetector = function() {
     };
     const stop = function() {
         enabled = false;
+    };
+    const setAloneEnabled = function(enabled) {
+        aloneEnabled = enabled;
     };
     const setPrediction = function(textEditor, expected) {
         if (textEditorForPredictions !== textEditor) {
@@ -192,7 +196,9 @@ const CursorMotionDetector = function() {
                 //   - cursor movement that happen when the user types in the find input box
                 // We consider it an implicit cursor motion.
                 // We notify it so that it will be recorded to be able to playback.
-                notifyDetectedMotion(CursorMotionType.Alone, motion);
+                if (aloneEnabled) {
+                    notifyDetectedMotion(CursorMotionType.Alone, motion);
+                }
                 // console.log('motion without prediction');
             } else {
                 // console.log('skip');
@@ -242,6 +248,7 @@ const CursorMotionDetector = function() {
         stop,
         setPrediction,
         getPrediction,
+        setAloneEnabled,
         processSelectionChangeEvent,
 
         isEnabled: function() { return enabled; } // testing purpose only

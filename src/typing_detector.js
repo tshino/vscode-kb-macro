@@ -190,6 +190,7 @@ const TypingDetector = function() {
         stop,
         suspend,
         resume,
+        setAloneEnabled: cursorMotionDetector.setAloneEnabled,
         processDocumentChangeEvent,
         processSelectionChangeEvent : cursorMotionDetector.processSelectionChangeEvent,
         setPrediction: cursorMotionDetector.setPrediction, // testing purpose only
