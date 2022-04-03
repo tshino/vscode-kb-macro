@@ -9,6 +9,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Added 'When clause context' section to the README.
   - Added 'Keymap wrappers' section to [DESIGN.md](./DESIGN.md).
 - Update
+  - Updated default keybindings based on VS Code 1.66.0. [#87](https://github.com/tshino/vscode-kb-macro/pull/87)
   - Updated default keybindings based on VS Code 1.65.2. [#74](https://github.com/tshino/vscode-kb-macro/pull/74)
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.41.1). [#81](https://github.com/tshino/vscode-kb-macro/pull/81)
 - Internal
