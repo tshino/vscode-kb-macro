@@ -1,7 +1,4 @@
 'use strict';
-// This regression test should fail until #33 is fixed.
-// First, we need to pass this test.
-/*
 const assert = require('assert');
 const vscode = require('vscode');
 const util = require('../../src/util.js');
@@ -45,6 +42,7 @@ describe('Recording and Playback: Find', () => {
         textEditor = await TestUtil.setupTextEditor({ content: '', language: 'javascript' });
     });
 
+    // This is a regression test for https://github.com/tshino/vscode-kb-macro/issues/33
     describe('Find', () => {
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
@@ -88,4 +86,3 @@ describe('Recording and Playback: Find', () => {
         });
     });
 });
-*/
