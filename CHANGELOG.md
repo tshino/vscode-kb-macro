@@ -14,6 +14,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.41.1). [#81](https://github.com/tshino/vscode-kb-macro/pull/81)
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.41.2). [#91](https://github.com/tshino/vscode-kb-macro/pull/91)
   - Updated Keymap wrapper for Delphi Keymap (v9.5.0). [#90](https://github.com/tshino/vscode-kb-macro/pull/90)
+- Fix
+  - Fixed: Typing in the find input box during recording may cause unexpected cursor movements during playback. [#33](https://github.com/tshino/vscode-kb-macro/issues/33)
 - Internal
   - Added `record` option to the `kb-macro.wrap` command. [#76](https://github.com/tshino/vscode-kb-macro/pull/76)
   - Fixed: gen_keymap_wrapper.js end with exit code 0 even when it fails [#77](https://github.com/tshino/vscode-kb-macro/pull/77)
