@@ -200,7 +200,6 @@ The `kb-macro.playback` command has an optional `sequence` argument to specify a
 | `kb-macro.playing`    | The macro playback is ongoing |
 
 ## Known issues
-- Typing in the search input box during recording may cause unexpected cursor movements during playback. [#33](https://github.com/tshino/vscode-kb-macro/issues/33)
 - Keyboard shortcuts that VS Code newly introduced may not be supported by this extension. Because this extension is configured with a fixed set of wrapper keybindings based on a particular version of VS Code for Windows, Linux, and macOS.
 - This extension is intended to work with VS Code on Windows, Linux, and macOS, but is tested mainly on Windows at this moment.
 
