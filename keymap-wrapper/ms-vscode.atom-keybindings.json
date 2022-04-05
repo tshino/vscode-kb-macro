@@ -85,7 +85,7 @@
 		"when": "kb-macro.recording && isMac" },
 	{ "key": "ctrl+alt+i", "command": "kb-macro.wrap", "args": { "command": "workbench.action.toggleDevTools" },
 		"when": "kb-macro.recording && !isMac" },
-	{ "key": "alt+shift+s", "command": "kb-macro.wrap", "args": { "command": "editor.action.showSnippets" },
+	{ "key": "alt+shift+s", "command": "kb-macro.wrap", "args": { "command": "editor.action.showSnippets", "record": "side-effect" },
 		"when": "kb-macro.recording" },
 	{ "key": "ctrl+shift+o", "command": "kb-macro.wrap", "args": { "command": "workbench.action.files.openFolder" },
 		"when": "kb-macro.recording" },

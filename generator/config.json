@@ -14,22 +14,6 @@
         }
     ],
     "exclusion": [
-        "editor.action.triggerSuggest",
-        "hideSuggestWidget",
-        "selectNextSuggestion",
-        "selectPrevSuggestion",
-        "selectNextPageSuggestion",
-        "selectPrevPageSuggestion",
-        "toggleExplainMode",
-        "toggleSuggestionDetails",
-        "toggleSuggestionFocus",
-        "acceptSelectedSuggestion",
-        "acceptAlternativeSelectedSuggestion",
-        "insertSnippet",
-        "leaveSnippet",
-        "editor.action.insertSnippet",
-        "jumpToNextSnippetPlaceholder",
-        "jumpToPrevSnippetPlaceholder",
         "workbench.action.showCommands",
         "showPrevParameterHint",
         "showNextParameterHint"
@@ -38,6 +22,39 @@
         [ "editor.action.clipboardCopyAction", "clipboard" ],
         [ "editor.action.clipboardCutAction", "document [!kb-macro.headOfLine]selection clipboard" ],
         [ "editor.action.clipboardPasteAction", "document selection" ]
+    ],
+    "recordOptions": [
+        [ "editor.action.inlineSuggest.showNext", "side-effect" ],
+        [ "editor.action.inlineSuggest.showPrevious", "side-effect" ],
+        [ "editor.action.inlineSuggest.commit", "side-effect" ],
+        [ "editor.action.inlineSuggest.hide", "side-effect" ],
+        [ "editor.action.inlineSuggest.trigger", "side-effect" ],
+
+        [ "editor.action.triggerSuggest", "side-effect" ],
+        [ "hideSuggestWidget", "side-effect" ],
+        [ "insertNextSuggestion", "side-effect" ],
+        [ "insertPrevSuggestion", "side-effect" ],
+        [ "selectFirstSuggestion", "side-effect" ],
+        [ "selectLastSuggestion", "side-effect" ],
+        [ "selectNextSuggestion", "side-effect" ],
+        [ "selectPrevSuggestion", "side-effect" ],
+        [ "selectNextPageSuggestion", "side-effect" ],
+        [ "selectPrevPageSuggestion", "side-effect" ],
+        [ "toggleExplainMode", "side-effect" ],
+        [ "toggleSuggestionDetails", "side-effect" ],
+        [ "toggleSuggestionFocus", "side-effect" ],
+        [ "acceptSelectedSuggestion", "side-effect" ],
+        [ "acceptSelectedSuggestionOnEnter", "side-effect" ],
+        [ "acceptAlternativeSelectedSuggestion", "side-effect" ],
+        [ "editor.action.resetSuggestSize", "side-effect" ],
+
+        [ "insertSnippet", "side-effect" ],
+        [ "acceptSnippet", "side-effect" ],
+        [ "leaveSnippet", "side-effect" ],
+        [ "editor.action.insertSnippet", "side-effect" ],
+        [ "editor.action.showSnippets", "side-effect" ],
+        [ "jumpToNextSnippetPlaceholder", "side-effect" ],
+        [ "jumpToPrevSnippetPlaceholder", "side-effect" ]
     ],
     "header": [
         {
