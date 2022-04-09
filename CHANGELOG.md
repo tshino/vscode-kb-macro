@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Update
+  - Update default keybindings wrappers based on vscode 1.66.1. [#93](https://github.com/tshino/vscode-kb-macro/pull/93)
+
 ### [0.12.0] - 2022-04-05
 - Feature
   - Enabled using saved macros during recording. [#72](https://github.com/tshino/vscode-kb-macro/issues/72)
