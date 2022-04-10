@@ -63,7 +63,7 @@ The list of default keybindings wrappers is defined in the [`package.json` of th
 | `generator/gen_wrapper.js` | a script to generate default keybindings wrappers and write them in `package.json` |
 | `generator/verify_wrapper.js` | a script to verify the output of `gen_wrapper.js` |
 
-The `default-keybindings-*.json` files are retrieved by running the `Open Default Keyboard Shortcuts (JSON)` command on VS Code on each OS. In order to mitigate manual work to retrieve these three files, [an automated workflow on GitHub Actions](https://github.com/tshino/vscode-kb-macro/actions/workflows/get-default-keybindings.yml) is used.
+The `default-keybindings-*.json` files are retrieved by running the `Open Default Keyboard Shortcuts (JSON)` command on VS Code on each OS. In order to mitigate manual work to update these three files for every new release of vscode, [an automated workflow on GitHub Actions](https://github.com/tshino/vscode-kb-macro/actions/workflows/get-default-keybindings.yml) is used. I have made this automated workflow inspired by [this project](https://github.com/codebling/vs-code-default-keybindings). I appreciate the great effort for the project.
 
 The following command updates the default keybindings wrappers in the `package.json` based on the default keybindings files.
 
