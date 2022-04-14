@@ -30,7 +30,7 @@ async function main() {
                 emptyDir1,
                 '--user-data-dir',
                 emptyDir2
-			]
+            ]
         });
     } catch (err) {
         console.error('Failed to run');
