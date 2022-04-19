@@ -5,7 +5,7 @@ name: Update Default Keybindings
 on:
   schedule:
     # weekly
-    - cron: '38 16 * * 6'
+    - cron: '38 16 * * 5'
   workflow_dispatch:
 
 jobs:
