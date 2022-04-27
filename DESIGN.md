@@ -121,3 +121,17 @@ It was not clear whether overriding the `type` command to capture typed characte
 
 So this extension took another way to capture typed characters. That is to listen to the events on changes on the text document. Basically this is possible through the `vscode.workspace.onDidChangeTextDocument` event.
 
+## Testing
+
+This repository has a set of tests for this extension.
+Tests are in `test/suite` directory.
+```
+test/
+    suite/
+        *.test.js
+```
+
+Running the tests:
+```
+$ npm test
+```
