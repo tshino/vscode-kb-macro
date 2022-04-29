@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.41.2
+	// Keymap wrapper for Awesome Emacs Keymap v0.43.1
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -1554,6 +1554,10 @@
 	{ "key": "ctrl+x j", "command": "kb-macro.wrap", "args": { "command": "workbench.action.togglePanel" },
 		"when": "kb-macro.recording && !terminalFocus" },
 	{ "key": "ctrl+i", "command": "kb-macro.wrap", "args": { "command": "tab" },
+		"when": "kb-macro.recording" },
+	{ "key": "ctrl+x left", "command": "kb-macro.wrap", "args": { "command": "workbench.action.previousEditor" },
+		"when": "kb-macro.recording" },
+	{ "key": "ctrl+x right", "command": "kb-macro.wrap", "args": { "command": "workbench.action.nextEditor" },
 		"when": "kb-macro.recording" },
 	{ "key": "ctrl+x shift+9", "command": "kb-macro.startRecording",
 		"when": "!kb-macro.recording" },
