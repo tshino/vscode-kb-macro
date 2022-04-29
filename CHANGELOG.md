@@ -9,6 +9,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Update default keybindings wrappers based on vscode 1.66.1. [#93](https://github.com/tshino/vscode-kb-macro/pull/93)
   - Update default keybindings wrappers based on vscode 1.66.2. [#95](https://github.com/tshino/vscode-kb-macro/pull/95)
   - Updated keymap wrapper for Vz Keymap (v0.19.0). [#96](https://github.com/tshino/vscode-kb-macro/pull/96)
+  - Updated Keymap wrapper for Awesome Emacs Keymap (v0.43.1).
 
 ### [0.12.0] - 2022-04-05
 - Feature
