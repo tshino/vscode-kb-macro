@@ -130,8 +130,9 @@ test/
     suite/
         *.test.js
 ```
+They can be categorized roughly into two types. One is unit tests, and the other is integration tests. A test that has the name `playback_*.test.js` is an integration test, which checks the recording and playback functionality focusing on a certain category of target commands/keybindings or on a functionality of this extension.
 
 Running the tests:
 ```
-$ npm test
+npm test
 ```
