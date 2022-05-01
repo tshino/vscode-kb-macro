@@ -132,7 +132,13 @@ test/
 ```
 They can be categorized roughly into two types. One is unit tests, and the other is integration tests. A test that has the name `playback_*.test.js` is an integration test, which checks the recording and playback functionality focusing on a certain category of target commands/keybindings or on a functionality of this extension.
 
-Running the tests:
+The following command runs the tests:
 ```
 npm test
 ```
+
+Unfortunately, we don't have any end-to-end tests which are critical for this kind of extension. Because we use [`vscode-test`](https://github.com/microsoft/vscode-test) and it doesn't provide UI level testing functionalities such as sending keystrokes to VS Code.
+
+The lack of end-to-end tests means we can't test the validity of the keybdingings defined in the `package.json` through the test based on `vscode-test`.
+
+In order to check the correctness of keybindings itself, we are running the script `generator/verify_wrapper.js` just after the script `generator/gen_wrapper.js` updates the `package.json` in [the automated workflow](https://github.com/tshino/vscode-kb-macro/actions/workflows/get-default-keybindings.yml). See [Default keybindings wrappers](#default-keybindings-wrappers).
