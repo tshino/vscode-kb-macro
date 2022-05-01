@@ -63,7 +63,7 @@ The list of default keybindings wrappers is defined in the [`package.json` of th
 | `generator/gen_wrapper.js` | a script to generate default keybindings wrappers and write them in `package.json` |
 | `generator/verify_wrapper.js` | a script to verify the output of `gen_wrapper.js` |
 
-The `default-keybindings-*.json` files are retrieved by running the `Open Default Keyboard Shortcuts (JSON)` command on VS Code on each OS. In order to mitigate manual work to update these three files for every new release of vscode, [an automated workflow on GitHub Actions](https://github.com/tshino/vscode-kb-macro/actions/workflows/get-default-keybindings.yml) is used. I have made this automated workflow inspired by [this project](https://github.com/codebling/vs-code-default-keybindings). I appreciate the great effort for the project.
+The `default-keybindings-*.json` files are retrieved by running the `Open Default Keyboard Shortcuts (JSON)` command on VS Code on each OS. In order to mitigate manual work to update these three files for every new release of vscode, [an automated workflow on GitHub Actions](https://github.com/tshino/vscode-kb-macro/actions/workflows/get-default-keybindings.yml) is used. I have created this automated workflow inspired by [this project](https://github.com/codebling/vs-code-default-keybindings). The project provided me with the knowledge of how to retrieve the default keybindings JSON without contamination by extensions or user profiles. I appreciate the great effort for the project.
 
 The following command updates the default keybindings wrappers in the `package.json` based on the default keybindings files.
 
@@ -141,4 +141,4 @@ Unfortunately, we don't have any end-to-end tests which are critical for this ki
 
 The lack of end-to-end tests means we can't test the validity of the keybdingings defined in the `package.json` through the test based on `vscode-test`.
 
-In order to check the correctness of keybindings itself, we are running the script `generator/verify_wrapper.js` just after the script `generator/gen_wrapper.js` updates the `package.json` in [the automated workflow](https://github.com/tshino/vscode-kb-macro/actions/workflows/get-default-keybindings.yml). See [Default keybindings wrappers](#default-keybindings-wrappers).
+In order to check the correctness of the keybindings itself, we are running the script `generator/verify_wrapper.js` just after the script `generator/gen_wrapper.js` updates the `package.json` in [the automated workflow](https://github.com/tshino/vscode-kb-macro/actions/workflows/get-default-keybindings.yml). See [Default keybindings wrappers](#default-keybindings-wrappers).
