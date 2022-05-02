@@ -141,6 +141,6 @@ npm test
 
 Unfortunately, we don't have any end-to-end tests which are critical for this kind of extension. Because we use [`vscode-test`](https://github.com/microsoft/vscode-test) and it doesn't provide UI level testing functionalities such as sending keystrokes to VS Code.
 
-The lack of end-to-end tests means we can't test the validity of the keybdingings defined in the `package.json` through the test based on `vscode-test`.
+The lack of end-to-end tests means we can't test the validity of the keybindings defined in the `package.json` through the test based on `vscode-test`.
 
 In order to check the correctness of the keybindings itself, we are running the script `generator/verify_wrapper.js` just after the script `generator/gen_wrapper.js` updates the `package.json` in [the automated workflow](https://github.com/tshino/vscode-kb-macro/actions/workflows/get-default-keybindings.yml). See [Default keybindings wrappers](#default-keybindings-wrappers).
