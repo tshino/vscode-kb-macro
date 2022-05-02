@@ -1,7 +1,7 @@
 'use strict';
 const path = require('path');
 const fsPromises = require('fs/promises');
-const { runTests } = require('vscode-test');
+const { runTests } = require('@vscode/test-electron');
 const { readJSON, writeJSON } = require('./gen_wrapper_util');
 
 async function main() {
