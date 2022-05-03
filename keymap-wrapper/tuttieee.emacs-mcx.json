@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.43.1
+	// Keymap wrapper for Awesome Emacs Keymap v0.44.0
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -1095,6 +1095,8 @@
 		"when": "kb-macro.recording && editorFocus && findWidgetVisible && !isComposing" },
 	{ "key": "enter", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.isearchExit", "await": "document selection" },
 		"when": "kb-macro.recording && editorFocus && findWidgetVisible && !replaceInputFocussed && !isComposing" },
+	{ "key": "ctrl+g", "command": "kb-macro.wrap", "args": { "command": "noop" },
+		"when": "kb-macro.recording && sideBarFocus" },
 	{ "key": "ctrl+g", "command": "kb-macro.wrap", "args": { "command": "closeReferenceSearch" },
 		"when": "kb-macro.recording && inReferenceSearchEditor && !config.editor.stablePeek" },
 	{ "key": "ctrl+g", "command": "kb-macro.wrap", "args": { "command": "editor.closeTestPeek" },
