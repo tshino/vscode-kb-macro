@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.66.2 for Linux
+// Default Keybindings of Visual Studio Code 1.67.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -591,6 +591,8 @@
                                      "when": "inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorTabMovesFocus" },
 { "key": "shift+f9",              "command": "editor.debug.action.toggleInlineBreakpoint",
                                      "when": "editorTextFocus" },
+{ "key": "shift+alt+d",           "command": "editor.detectLanguage",
+                                     "when": "editorTextFocus && !notebookEditable" },
 { "key": "shift+enter",           "command": "editor.refocusCallHierarchy",
                                      "when": "callHierarchyVisible" },
 { "key": "shift+enter",           "command": "editor.refocusTypeHierarchy",
@@ -699,6 +701,8 @@
                                      "when": "notebookEditorFocused && !inputFocus" },
 { "key": "delete",                "command": "notebook.cell.delete",
                                      "when": "notebookEditable && notebookEditorFocused && !inputFocus" },
+{ "key": "shift+alt+d",           "command": "notebook.cell.detectLanguage",
+                                     "when": "notebookCellEditable && notebookEditable" },
 { "key": "enter",                 "command": "notebook.cell.edit",
                                      "when": "notebookCellListFocused && notebookEditable && !inputFocus" },
 { "key": "ctrl+k ctrl+c",         "command": "notebook.cell.expandCellInput",
@@ -1145,7 +1149,6 @@
                                      "when": "!isIOS" },
 { "key": "ctrl+j",                "command": "workbench.action.togglePanel" },
 { "key": "ctrl+b",                "command": "workbench.action.toggleSidebarVisibility" },
-{ "key": "ctrl+meta+w",           "command": "workbench.action.toggleTabsVisibility" },
 { "key": "ctrl+k z",              "command": "workbench.action.toggleZenMode" },
 { "key": "ctrl+k shift+enter",    "command": "workbench.action.unpinEditor",
                                      "when": "activeEditorIsPinned" },
@@ -1412,6 +1415,8 @@
 // - editor.action.duplicateSelection
 // - editor.action.findReferences
 // - editor.action.fixAll
+// - editor.action.focusNextCursor
+// - editor.action.focusPreviousCursor
 // - editor.action.fontZoomIn
 // - editor.action.fontZoomOut
 // - editor.action.fontZoomReset
@@ -1507,6 +1512,7 @@
 // - editor.gotoNextFold
 // - editor.gotoParentFold
 // - editor.gotoPreviousFold
+// - editor.inlayHints.Reset
 // - editor.showTypeHierarchy
 // - emmet.expandAbbreviation
 // - explorer.download
@@ -1702,6 +1708,7 @@
 // - list.selectAndPreserveFocus
 // - list.toggleFilterOnType
 // - list.toggleKeyboardNavigation
+// - markdown.findAllFileReferences
 // - markdown.preview.refresh
 // - markdown.preview.toggleLock
 // - markdown.showLockedPreviewToSide
@@ -1856,7 +1863,6 @@
 // - setContext
 // - setRootFolder
 // - setSelection
-// - settings.filterByModified
 // - settings.filterByOnline
 // - settings.filterByTelemetry
 // - settings.filterUntrusted
@@ -1884,6 +1890,7 @@
 // - testing.sortByDuration
 // - testing.sortByLocation
 // - testing.sortByStatus
+// - testing.unhideAllTests
 // - testing.unhideTest
 // - testing.viewAsList
 // - testing.viewAsTree
@@ -1896,6 +1903,7 @@
 // - toggleEscapeSequenceLogging
 // - typescript.findAllFileReferences
 // - typescript.goToProjectConfig
+// - typescript.goToSourceDefinition
 // - typescript.openTsServerLog
 // - typescript.reloadProjects
 // - typescript.restartTsServer
@@ -1950,6 +1958,7 @@
 // - workbench.action.createTerminalEditorSide
 // - workbench.action.customizeLayout
 // - workbench.action.debug.configure
+// - workbench.action.debug.disconnectAndSuspend
 // - workbench.action.debug.focusProcess
 // - workbench.action.debug.restartFrame
 // - workbench.action.debug.reverseContinue
@@ -2255,6 +2264,7 @@
 // - workbench.action.toggleSplitEditorInGroup
 // - workbench.action.toggleSplitEditorInGroupLayout
 // - workbench.action.toggleStatusbarVisibility
+// - workbench.action.toggleTabsVisibility
 // - workbench.action.triggerReconnect
 // - workbench.action.unlockEditorGroup
 // - workbench.action.url.openUrl
@@ -2415,8 +2425,13 @@
 // - workbench.panel.repl.view.removeView
 // - workbench.panel.repl.view.resetViewLocation
 // - workbench.panel.repl.view.toggleVisibility
+// - workbench.profiles.actions.exportProfile
+// - workbench.profiles.actions.importProfile
 // - workbench.scm.action.collapseAllRepositories
 // - workbench.scm.action.expandAllRepositories
+// - workbench.scm.action.repositories.setSortKey.discoveryTime
+// - workbench.scm.action.repositories.setSortKey.name
+// - workbench.scm.action.repositories.setSortKey.path
 // - workbench.scm.action.setListViewMode
 // - workbench.scm.action.setSortKey.name
 // - workbench.scm.action.setSortKey.path
