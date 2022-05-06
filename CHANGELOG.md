@@ -2,7 +2,7 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.12.1] - 2022-05-07
 - Documentation:
   - Added 'Testing' section to [DESIGN.md](./DESIGN.md).
 - Update
