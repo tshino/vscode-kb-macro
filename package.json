@@ -4726,6 +4726,22 @@
 				"when": "kb-macro.recording && inSettingsEditor"
 			},
 			{
+				"key": "shift+alt+d",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.detectLanguage"
+				},
+				"when": "kb-macro.recording && editorTextFocus && !notebookEditable"
+			},
+			{
+				"key": "shift+alt+d",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notebook.cell.detectLanguage"
+				},
+				"when": "kb-macro.recording && notebookCellEditable && notebookEditable"
+			},
+			{
 				"key": "shift+alt+h",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7281,14 +7297,6 @@
 				"when": "kb-macro.recording && isLinux && workbench.panel.output.active"
 			},
 			{
-				"key": "ctrl+meta+w",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.toggleTabsVisibility"
-				},
-				"when": "kb-macro.recording"
-			},
-			{
 				"key": "shift+alt+cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7695,14 +7703,6 @@
 					"command": "workbench.action.terminal.scrollUp"
 				},
 				"when": "kb-macro.recording && terminalFocus && terminalHasBeenCreated && !terminalAltBufferActive || kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalAltBufferActive"
-			},
-			{
-				"key": "ctrl+cmd+w",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.toggleTabsVisibility"
-				},
-				"when": "kb-macro.recording"
 			},
 			{
 				"key": "cmd+-",
