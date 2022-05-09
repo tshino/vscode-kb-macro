@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Internal
+  - Added summary output for the automated workflow. [#102](https://github.com/tshino/vscode-kb-macro/pull/102)
+
 ### [0.12.1] - 2022-05-07
 - Documentation:
   - Added 'Testing' section to [DESIGN.md](./DESIGN.md).
