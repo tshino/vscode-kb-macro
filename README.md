@@ -11,7 +11,7 @@ With this Visual Studio Code extension, you can record and playback your keyboar
 ```
 
 **IMPORTANT NOTE**
-  - If you are using any other keymap extension or you have custom keybindings in the `keybindings.json`, unfortunately, likely keystrokes in them won't be recorded. See the section below to enable them.
+  - If you are using a keymap extension or any other kind of extension that has keyboard shortcuts or you have custom keybindings in your `keybindings.json`, you will need some additional work to enable them to be recorded. See the sections below.
 
 **YOU CAN RECORD** (basically):
   - Characters that you type in a text editor
@@ -29,11 +29,11 @@ With this Visual Studio Code extension, you can record and playback your keyboar
   - IME nagivation
     - IME navigation is not recorded directly, however, the characters that are inserted into the document as output from IME are recorded as if they are typed directly.
 
-## How to enable your favorite custom keybindings to record
+## How to enable custom keybindings to be recorded
 
-If you found your favorite shortcuts are not supported to record, you could make them recordable by adding corresponding wrappers to your `keybindings.json`.
+If you found your favorite keyboard shortcuts are not supported to be recorded, you could make them recordable by adding corresponding wrappers to your `keybindings.json`.
 
-If you have a keybinding rule like:
+If you have a keyboard shortcut like:
 ```json
     {
         "key": "ctrl+shift+a",
@@ -60,7 +60,7 @@ The followings are the details.
 - If you have an `args` parameter for the target command, you could write it in `args.args`.
 - If the target command is not a built-in command of VS Code, in other words, it is provided by an extension, likely you may need to add an `args.await` parameter in the wrapper. See below.
 
-## How to enable your favorite keymap extension to record
+## How to enable your favorite keymap extension to be recorded
 
 See [Keymap Wrappers](keymap-wrapper/README.md).
 
