@@ -34,6 +34,8 @@ Click the keymap wrapper link in the table below, which opens a JSON file. Copy 
     - The `S-9` (`shift+9`) and `S-0` (`shift+0`) in the table are meant to be `(` and `)` respectively on the US keyboard. We had to write them in such a way because VS Code seems to not allow using `(` or `)` in keybindings. If your keyboard has a different layout, please adjust the keybindings by yourself.
     - You can also use `C-g` to abort the playback.
 
+When you stop using the keymap extension by disabling/uninstalling it, please don't forget to remove also the keymap wrapper from your `keybindings.json`.
+
 ## Making a Keymap Wrapper
 
 1. `git clone` this repository
