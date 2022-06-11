@@ -7,6 +7,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Update default keybindings wrappers based on vscode 1.67.1. [#106](https://github.com/tshino/vscode-kb-macro/pull/106)
   - Update default keybindings wrappers based on vscode 1.67.2. [#108](https://github.com/tshino/vscode-kb-macro/pull/108)
   - Update default keybindings wrappers based on vscode 1.68.0. [#117](https://github.com/tshino/vscode-kb-macro/pull/117)
+  - Updated keymap wrapper for Vz Keymap (v0.19.2). [#118](https://github.com/tshino/vscode-kb-macro/pull/118)
 - Internal
   - Added summary output for the automated workflow. [#102](https://github.com/tshino/vscode-kb-macro/pull/102)
   - Enabled github-actions version updates with Dependabot.
