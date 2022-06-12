@@ -5940,34 +5940,22 @@
 			},
 			{
 				"key": "ctrl+shift+tab",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup"
-				},
+				"command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
 				"when": "kb-macro.recording && !activeEditorGroupEmpty"
 			},
 			{
 				"key": "ctrl+shift+tab",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.quickOpenNavigatePreviousInEditorPicker"
-				},
+				"command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
 				"when": "kb-macro.recording && inEditorsPicker && inQuickOpen"
 			},
 			{
 				"key": "ctrl+tab",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup"
-				},
+				"command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
 				"when": "kb-macro.recording && !activeEditorGroupEmpty"
 			},
 			{
 				"key": "ctrl+tab",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.quickOpenNavigateNextInEditorPicker"
-				},
+				"command": "workbench.action.quickOpenNavigateNextInEditorPicker",
 				"when": "kb-macro.recording && inEditorsPicker && inQuickOpen"
 			},
 			{
