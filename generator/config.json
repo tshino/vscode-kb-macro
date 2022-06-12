@@ -16,7 +16,11 @@
     "exclusion": [
         "workbench.action.showCommands",
         "showPrevParameterHint",
-        "showNextParameterHint"
+        "showNextParameterHint",
+        "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+        "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+        "workbench.action.quickOpenNavigateNextInEditorPicker",
+        "workbench.action.quickOpenNavigatePreviousInEditorPicker"
     ],
     "awaitOptions": [
         [ "editor.action.clipboardCopyAction", "clipboard" ],
