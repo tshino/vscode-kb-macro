@@ -387,7 +387,7 @@
 		"when": "kb-macro.recording && !multipleEditorGroups && groupEditorsCount == 1 && !sideBarFocus && !panelFocus && config.vzKeymap.alt+Y" },
 	{ "key": "alt+y", "command": "kb-macro.wrap", "args": { "command": "workbench.action.joinTwoGroups" },
 		"when": "kb-macro.recording && multipleEditorGroups && !sideBarFocus && !panelFocus && config.vzKeymap.alt+Y" },
-	{ "key": "alt+w", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup" },
+	{ "key": "alt+w", "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
 		"when": "kb-macro.recording && !multipleEditorGroups && !sideBarFocus && !panelFocus && !findWidgetVisible && config.vzKeymap.alt+W" },
 	{ "key": "alt+w", "command": "kb-macro.wrap", "args": { "command": "workbench.action.focusNextGroup" },
 		"when": "kb-macro.recording && multipleEditorGroups && !sideBarFocus && !panelFocus && !findWidgetVisible && config.vzKeymap.alt+W" },
