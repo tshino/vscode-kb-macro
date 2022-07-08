@@ -817,6 +817,14 @@
 				"key": "down",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "notebook.focusNextEditor"
+				},
+				"when": "kb-macro.recording && config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !notebookCellMarkdownEditMode && notebookCellType == 'markup'"
+			},
+			{
+				"key": "down",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "notifications.focusNextToast"
 				},
 				"when": "kb-macro.recording && notificationFocus && notificationToastsVisible"
@@ -844,6 +852,14 @@
 					"command": "workbench.action.interactivePlayground.arrowDown"
 				},
 				"when": "kb-macro.recording && interactivePlaygroundFocus && !editorTextFocus"
+			},
+			{
+				"key": "down",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.navigationModeFocusNext"
+				},
+				"when": "kb-macro.recording && accessibilityModeEnabled && terminalA11yTreeFocus && terminalNavigationModeActive && terminalProcessSupported || kb-macro.recording && accessibilityModeEnabled && terminalFocus && terminalNavigationModeActive && terminalProcessSupported"
 			},
 			{
 				"key": "down",
@@ -1158,6 +1174,14 @@
 				"when": "kb-macro.recording && interactivePlaygroundFocus && !editorTextFocus"
 			},
 			{
+				"key": "pagedown",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.navigationModeFocusNextPage"
+				},
+				"when": "kb-macro.recording && accessibilityModeEnabled && terminalA11yTreeFocus && terminalNavigationModeActive && terminalProcessSupported || kb-macro.recording && accessibilityModeEnabled && terminalFocus && terminalNavigationModeActive && terminalProcessSupported"
+			},
+			{
 				"key": "shift+pagedown",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -1238,6 +1262,14 @@
 					"command": "workbench.action.interactivePlayground.pageUp"
 				},
 				"when": "kb-macro.recording && interactivePlaygroundFocus && !editorTextFocus"
+			},
+			{
+				"key": "pageup",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.navigationModeFocusPreviousPage"
+				},
+				"when": "kb-macro.recording && accessibilityModeEnabled && terminalA11yTreeFocus && terminalNavigationModeActive && terminalProcessSupported || kb-macro.recording && accessibilityModeEnabled && terminalFocus && terminalNavigationModeActive && terminalProcessSupported"
 			},
 			{
 				"key": "shift+pageup",
@@ -1471,6 +1503,14 @@
 				"key": "up",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "notebook.focusPreviousEditor"
+				},
+				"when": "kb-macro.recording && config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !notebookCellMarkdownEditMode && notebookCellType == 'markup'"
+			},
+			{
+				"key": "up",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "notifications.focusPreviousToast"
 				},
 				"when": "kb-macro.recording && notificationFocus && notificationToastsVisible"
@@ -1490,6 +1530,14 @@
 					"command": "workbench.action.interactivePlayground.arrowUp"
 				},
 				"when": "kb-macro.recording && interactivePlaygroundFocus && !editorTextFocus"
+			},
+			{
+				"key": "up",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.navigationModeFocusPrevious"
+				},
+				"when": "kb-macro.recording && accessibilityModeEnabled && terminalA11yTreeFocus && terminalNavigationModeActive && terminalProcessSupported || kb-macro.recording && accessibilityModeEnabled && terminalFocus && terminalNavigationModeActive && terminalProcessSupported"
 			},
 			{
 				"key": "up",
@@ -4567,6 +4615,15 @@
 				"when": "kb-macro.recording && terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
 			},
 			{
+				"key": "ctrl+pagedown",
+				"mac": "shift+cmd+]",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.debug.nextConsole"
+				},
+				"when": "kb-macro.recording && inDebugRepl"
+			},
+			{
 				"key": "ctrl+pageup",
 				"mac": "cmd+pageup",
 				"command": "kb-macro.wrap",
@@ -4593,6 +4650,15 @@
 					"command": "workbench.action.terminal.focusPrevious"
 				},
 				"when": "kb-macro.recording && terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || kb-macro.recording && terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+			},
+			{
+				"key": "ctrl+pageup",
+				"mac": "shift+cmd+[",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.debug.prevConsole"
+				},
+				"when": "kb-macro.recording && inDebugRepl"
 			},
 			{
 				"key": "ctrl+alt+space",
@@ -5167,6 +5233,15 @@
 				"when": "kb-macro.recording && inDebugMode"
 			},
 			{
+				"key": "ctrl+f11",
+				"mac": "cmd+f11",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.debug.stepIntoTarget"
+				},
+				"when": "kb-macro.recording && inDebugMode && stepIntoTargetsSupported && debugState == 'stopped'"
+			},
+			{
 				"key": "shift+f11",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -5682,7 +5757,7 @@
 				"args": {
 					"command": "workbench.action.navigateBack"
 				},
-				"when": "kb-macro.recording && isWindows"
+				"when": "kb-macro.recording && isWindows && canNavigateBack"
 			},
 			{
 				"key": "alt+cmd+left",
@@ -5707,7 +5782,7 @@
 				"args": {
 					"command": "workbench.action.navigateForward"
 				},
-				"when": "kb-macro.recording && isWindows"
+				"when": "kb-macro.recording && isWindows && canNavigateForward"
 			},
 			{
 				"key": "alt+cmd+right",
@@ -6249,7 +6324,7 @@
 				"args": {
 					"command": "workbench.action.navigateForward"
 				},
-				"when": "kb-macro.recording && !isWindows"
+				"when": "kb-macro.recording && !isWindows && canNavigateForward"
 			},
 			{
 				"key": "ctrl+-",
@@ -7082,7 +7157,7 @@
 				"args": {
 					"command": "workbench.action.navigateBack"
 				},
-				"when": "kb-macro.recording && isMac"
+				"when": "kb-macro.recording && isMac && canNavigateBack"
 			},
 			{
 				"key": "ctrl+-",
@@ -7266,7 +7341,7 @@
 				"args": {
 					"command": "workbench.action.navigateBack"
 				},
-				"when": "kb-macro.recording && isLinux"
+				"when": "kb-macro.recording && isLinux && canNavigateBack"
 			},
 			{
 				"key": "ctrl+alt+-",
