@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.68.1 for macOS
+// Default Keybindings of Visual Studio Code 1.69.0 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -820,8 +820,12 @@
                                      "when": "notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'" },
 { "key": "cmd+down",              "command": "notebook.focusBottom",
                                      "when": "notebookEditorFocused && !inputFocus" },
+{ "key": "down",                  "command": "notebook.focusNextEditor",
+                                     "when": "config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !notebookCellMarkdownEditMode && notebookCellType == 'markup'" },
 { "key": "ctrl+cmd+down",         "command": "notebook.focusNextEditor",
                                      "when": "notebookEditorFocused && notebookOutputFocused" },
+{ "key": "up",                    "command": "notebook.focusPreviousEditor",
+                                     "when": "config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !notebookCellMarkdownEditMode && notebookCellType == 'markup'" },
 { "key": "cmd+up",                "command": "notebook.focusTop",
                                      "when": "notebookEditorFocused && !inputFocus" },
 { "key": "left",                  "command": "notebook.fold",
@@ -1014,6 +1018,8 @@
                                      "when": "debuggersAvailable && debugState != 'initializing'" },
 { "key": "f5",                    "command": "workbench.action.debug.start",
                                      "when": "debuggersAvailable && debugState == 'inactive'" },
+{ "key": "cmd+f11",               "command": "workbench.action.debug.stepIntoTarget",
+                                     "when": "inDebugMode && stepIntoTargetsSupported && debugState == 'stopped'" },
 { "key": "shift+f11",             "command": "workbench.action.debug.stepOut",
                                      "when": "debugState == 'stopped'" },
 { "key": "f10",                   "command": "workbench.action.debug.stepOver",
@@ -1084,8 +1090,10 @@
 { "key": "ctrl+cmd+9",            "command": "workbench.action.moveEditorToLastGroup" },
 { "key": "ctrl+cmd+right",        "command": "workbench.action.moveEditorToNextGroup" },
 { "key": "ctrl+cmd+left",         "command": "workbench.action.moveEditorToPreviousGroup" },
-{ "key": "ctrl+-",                "command": "workbench.action.navigateBack" },
-{ "key": "ctrl+shift+-",          "command": "workbench.action.navigateForward" },
+{ "key": "ctrl+-",                "command": "workbench.action.navigateBack",
+                                     "when": "canNavigateBack" },
+{ "key": "ctrl+shift+-",          "command": "workbench.action.navigateForward",
+                                     "when": "canNavigateForward" },
 { "key": "cmd+k cmd+q",           "command": "workbench.action.navigateToLastEditLocation" },
 { "key": "shift+cmd+n",           "command": "workbench.action.newWindow" },
 { "key": "shift+cmd+]",           "command": "workbench.action.nextEditor" },
@@ -1178,10 +1186,18 @@
                                      "when": "terminalHasBeenCreated && terminalTabsFocus || terminalIsOpen && terminalTabsFocus || terminalProcessSupported && terminalTabsFocus" },
 { "key": "escape",                "command": "workbench.action.terminal.navigationModeExit",
                                      "when": "accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported" },
+{ "key": "down",                  "command": "workbench.action.terminal.navigationModeFocusNext",
+                                     "when": "accessibilityModeEnabled && terminalA11yTreeFocus && terminalNavigationModeActive && terminalProcessSupported || accessibilityModeEnabled && terminalFocus && terminalNavigationModeActive && terminalProcessSupported" },
 { "key": "cmd+down",              "command": "workbench.action.terminal.navigationModeFocusNext",
                                      "when": "accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || accessibilityModeEnabled && terminalFocus && terminalProcessSupported" },
+{ "key": "pagedown",              "command": "workbench.action.terminal.navigationModeFocusNextPage",
+                                     "when": "accessibilityModeEnabled && terminalA11yTreeFocus && terminalNavigationModeActive && terminalProcessSupported || accessibilityModeEnabled && terminalFocus && terminalNavigationModeActive && terminalProcessSupported" },
+{ "key": "up",                    "command": "workbench.action.terminal.navigationModeFocusPrevious",
+                                     "when": "accessibilityModeEnabled && terminalA11yTreeFocus && terminalNavigationModeActive && terminalProcessSupported || accessibilityModeEnabled && terminalFocus && terminalNavigationModeActive && terminalProcessSupported" },
 { "key": "cmd+up",                "command": "workbench.action.terminal.navigationModeFocusPrevious",
                                      "when": "accessibilityModeEnabled && terminalA11yTreeFocus && terminalProcessSupported || accessibilityModeEnabled && terminalFocus && terminalProcessSupported" },
+{ "key": "pageup",                "command": "workbench.action.terminal.navigationModeFocusPreviousPage",
+                                     "when": "accessibilityModeEnabled && terminalA11yTreeFocus && terminalNavigationModeActive && terminalProcessSupported || accessibilityModeEnabled && terminalFocus && terminalNavigationModeActive && terminalProcessSupported" },
 { "key": "ctrl+shift+`",          "command": "workbench.action.terminal.new",
                                      "when": "terminalProcessSupported || terminalWebExtensionContributedProfile" },
 { "key": "shift+cmd+c",           "command": "workbench.action.terminal.openNativeConsole",
@@ -1336,6 +1352,10 @@
                                      "when": "focusedView != ''" },
 { "key": "cmd+k up",              "command": "views.moveViewUp",
                                      "when": "focusedView != ''" },
+{ "key": "shift+cmd+]",           "command": "workbench.action.debug.nextConsole",
+                                     "when": "inDebugRepl" },
+{ "key": "shift+cmd+[",           "command": "workbench.action.debug.prevConsole",
+                                     "when": "inDebugRepl" },
 { "key": "cmd+k",                 "command": "workbench.action.terminal.clear",
                                      "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
 { "key": "f6",                    "command": "workbench.action.debug.pause",
@@ -1563,6 +1583,7 @@
 // - editor.action.peekDeclaration
 // - editor.action.peekTypeDefinition
 // - editor.action.previewDeclaration
+// - editor.action.refactor.preview
 // - editor.action.referenceSearch.trigger
 // - editor.action.reindentlines
 // - editor.action.reindentselectedlines
@@ -1583,6 +1604,7 @@
 // - editor.action.toggleMinimap
 // - editor.action.toggleRenderControlCharacter
 // - editor.action.toggleRenderWhitespace
+// - editor.action.transformToKebabcase
 // - editor.action.transformToLowercase
 // - editor.action.transformToSnakecase
 // - editor.action.transformToTitlecase
@@ -1648,6 +1670,9 @@
 // - extension.js-debug.createDebuggerTerminal
 // - extension.js-debug.createDiagnostics
 // - extension.js-debug.debugLink
+// - extension.js-debug.disableSourceMapStepping
+// - extension.js-debug.enableSourceMapStepping
+// - extension.js-debug.getDiagnosticLogs
 // - extension.js-debug.npmScript
 // - extension.js-debug.openEdgeDevTools
 // - extension.js-debug.prettyPrint
@@ -1719,6 +1744,8 @@
 // - git.commitAllSignedNoVerify
 // - git.commitEmpty
 // - git.commitEmptyNoVerify
+// - git.commitMessageAccept
+// - git.commitMessageDiscard
 // - git.commitNoVerify
 // - git.commitStaged
 // - git.commitStagedAmend
@@ -1791,6 +1818,8 @@
 // - git.undoCommit
 // - git.unstage
 // - git.unstageAll
+// - github.copyVscodeDevLink
+// - github.copyVscodeDevLinkFile
 // - github.publish
 // - goToNextReferenceFromEmbeddedEditor
 // - goToPreviousReferenceFromEmbeddedEditor
@@ -1810,6 +1839,7 @@
 // - jsExcludedCallers.focus
 // - jsExcludedCallers.resetViewLocation
 // - json.clearCache
+// - keybindings.editor.clearSearchHistory
 // - keybindings.editor.copyCommandKeybindingEntry
 // - keybindings.editor.copyCommandTitle
 // - keybindings.editor.resetKeybinding
@@ -1843,9 +1873,16 @@
 // - merge-conflict.compare
 // - merge-conflict.next
 // - merge-conflict.previous
+// - merge.columnLayout
 // - merge.dev.copyContents
 // - merge.dev.openContents
-// - merge.toggleLayout
+// - merge.goToNextConflict
+// - merge.goToPreviousConflict
+// - merge.mixedLayout
+// - merge.toggleActiveConflictInput1
+// - merge.toggleActiveConflictInput2
+// - mergeEditor.compareInput1WithBase
+// - mergeEditor.compareInput2WithBase
 // - noop
 // - notebook.cancelExecution
 // - notebook.cell.cancelExecution
@@ -1891,6 +1928,7 @@
 // - notifications.clearAll
 // - notifications.focusToasts
 // - notifications.showList
+// - notifications.toggleDoNotDisturbMode
 // - notifications.toggleList
 // - npm.debugScript
 // - npm.focus
@@ -2083,8 +2121,10 @@
 // - workbench.action.debug.focusProcess
 // - workbench.action.debug.restartFrame
 // - workbench.action.debug.reverseContinue
+// - workbench.action.debug.selectDebugConsole
 // - workbench.action.debug.selectRepl
 // - workbench.action.debug.selectandstart
+// - workbench.action.debug.showLoadedScripts
 // - workbench.action.debug.stepBack
 // - workbench.action.debug.terminateThread
 // - workbench.action.decreaseViewHeight
@@ -2106,7 +2146,6 @@
 // - workbench.action.editorLayoutTwoRows
 // - workbench.action.editorLayoutTwoRowsRight
 // - workbench.action.evenEditorWidths
-// - workbench.action.extensionHostProfiler.stop
 // - workbench.action.files.openFileFolderInNewWindow
 // - workbench.action.files.openFileInNewWindow
 // - workbench.action.files.openFolder
@@ -2360,10 +2399,12 @@
 // - workbench.action.terminal.switchTerminal
 // - workbench.action.terminal.unsplit
 // - workbench.action.terminal.unsplitInstance
+// - workbench.action.terminal.writeDataToTerminal
 // - workbench.action.toggleActivityBarVisibility
 // - workbench.action.toggleAutoSave
 // - workbench.action.toggleAuxiliaryBar
 // - workbench.action.toggleCenteredLayout
+// - workbench.action.toggleCommenting
 // - workbench.action.toggleConfirmBeforeClose
 // - workbench.action.toggleEditorGroupLock
 // - workbench.action.toggleEditorType
@@ -2371,6 +2412,7 @@
 // - workbench.action.toggleEditorWidths
 // - workbench.action.toggleKeepEditors
 // - workbench.action.toggleKeybindingsLog
+// - workbench.action.toggleLightDarkThemes
 // - workbench.action.toggleMaximizedPanel
 // - workbench.action.toggleMultiCursorModifier
 // - workbench.action.toggleNotebookClipboardLog
@@ -2512,7 +2554,6 @@
 // - workbench.extensions.action.undoIgnoredRecommendation
 // - workbench.extensions.action.updateAllExtensions
 // - workbench.extensions.command.installFromVSIX
-// - workbench.extensions.installMissingDependencies
 // - workbench.files.action.acceptLocalChanges
 // - workbench.files.action.collapseExplorerFolders
 // - workbench.files.action.compareFileWith
@@ -2546,8 +2587,13 @@
 // - workbench.panel.repl.view.removeView
 // - workbench.panel.repl.view.resetViewLocation
 // - workbench.panel.repl.view.toggleVisibility
+// - workbench.profiles.actions.cleanupProfiles
+// - workbench.profiles.actions.createFromCurrentProfile
+// - workbench.profiles.actions.createProfile
 // - workbench.profiles.actions.exportProfile
 // - workbench.profiles.actions.importProfile
+// - workbench.profiles.actions.removeProfile
+// - workbench.profiles.actions.switchProfile
 // - workbench.scm.action.collapseAllRepositories
 // - workbench.scm.action.expandAllRepositories
 // - workbench.scm.action.repositories.setSortKey.discoveryTime
@@ -2564,12 +2610,14 @@
 // - workbench.scm.repositories.resetViewLocation
 // - workbench.scm.resetViewLocation
 // - workbench.scm.toggleVisibility
+// - workbench.sessionSync.actions.resetAuth
 // - workbench.trust.configure
 // - workbench.trust.manage
 // - workbench.userData.actions.askToTunrOnAfterInit
 // - workbench.userData.actions.openSyncBackupsFolder
 // - workbench.userData.actions.signin
 // - workbench.userData.actions.turningOn
+// - workbench.userDataSync.actions.acceptMerges
 // - workbench.userDataSync.actions.configure
 // - workbench.userDataSync.actions.help
 // - workbench.userDataSync.actions.manage
@@ -2608,6 +2656,8 @@
 // - workbench.views.extensions.builtinProgrammingLanguageExtensions.resetViewLocation
 // - workbench.views.extensions.builtinThemeExtensions.focus
 // - workbench.views.extensions.builtinThemeExtensions.resetViewLocation
+// - workbench.views.extensions.deprecatedExtensions.focus
+// - workbench.views.extensions.deprecatedExtensions.resetViewLocation
 // - workbench.views.extensions.disabled.focus
 // - workbench.views.extensions.disabled.resetViewLocation
 // - workbench.views.extensions.enabled.focus

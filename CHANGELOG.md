@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Update
+  - Update default keybindings wrappers based on vscode 1.69.0. [#126](https://github.com/tshino/vscode-kb-macro/pull/126)
+
 ### [0.12.2] - 2022-06-12
 - Fix
   - Fixed: `ctrl+tab` doesn't work correctly with this extension installed. [#119](https://github.com/tshino/vscode-kb-macro/issues/119)
