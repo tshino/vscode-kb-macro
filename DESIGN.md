@@ -123,7 +123,7 @@ So this extension took another way to capture typed characters. That is to liste
 
 ## Testing
 
-This repository has a set of tests for this extension.
+This repository contains a set of tests for this extension.
 Tests are in `test/suite` directory.
 ```
 test/
@@ -136,6 +136,7 @@ The following command runs the tests:
 ```
 npm test
 ```
+And it's [running on GitHub Actions](https://github.com/tshino/vscode-kb-macro/actions/workflows/node.js.yml).
 
 ### End-to-end tests
 
