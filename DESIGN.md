@@ -2,7 +2,7 @@
 
 ## Overview
 
-The aim of this extension is to make keyboard macro recording possible on VS Code.
+The aim of this extension is simple, making keyboard macro recording possible on VS Code.
 
 For years no one seemed to have achieved this in a suitable way for practical use. Through this challenge, I have found a couple of difficulties that justify the absence of this kind of extension.
 
@@ -77,7 +77,7 @@ This script also performs some optimizations, something like tree shaking, to re
 
 Many people use their favorite keymap on VS Code by using keymap extensions, such as one for Emacs keybindings. So this extension should work together with those keymap extensions.
 
-A keymap extension defines its keybindings in the `package.json`.
+A keymap extension defines its keybindings in its `package.json`.
 
 To enable those keybindings to be recorded by this extension, we need to define corresponding wrapper keybindings for each keybinding in the keymap extension. So we did it for some popular keymap extensions. See [Keymap wrappers](keymap-wrapper/README.md).
 
@@ -121,10 +121,12 @@ It was not clear whether overriding the `type` command to capture typed characte
 
 So this extension took another way to capture typed characters. That is to listen to the events on changes on the text document. Basically this is possible through the `vscode.workspace.onDidChangeTextDocument` event.
 
+This is implemented in [`src/typing_detector.js`](src/typing_detector.js).
+
 ## Testing
 
 This repository contains a set of tests for this extension.
-Tests are in `test/suite` directory.
+Tests are in [`test/suite`](test/suite) directory.
 ```
 test/
     suite/
