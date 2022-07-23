@@ -125,11 +125,11 @@ This is implemented in [`src/typing_detector.js`](src/typing_detector.js).
 
 ## Dealing with re-entrance
 
-In VS Code, commands defined by an extension are invoked asynchronously. It means that if multiple keystrokes are made quickly corresponding commands might be invoked concurrently. If a command consists of asynchronous operations such as using `await` for something but still needs to be serialized execution among other commands in the extension, we must deal with re-entrance.
+In VS Code, commands defined in an extension are invoked asynchronously. It means that if multiple keystrokes are made quickly corresponding commands might be invoked concurrently. If a command consists of asynchronous operations such as using `await` for something but still needs to be serialized execution among other commands in the extension, we must deal with re-entrance.
 
-In terms of re-entrance, there are three types of commands that this extension provides.
+In terms of re-entrance, there are three types of commands that this extension implements.
 
-- Commands that will fail to execute if other commands are running
+1. Commands that will fail to execute if other commands are running:
     - `kb-macro.startRecording`
     - `kb-macro.finishRecording`
     - `kb-macro.cancelRecording`
@@ -137,12 +137,12 @@ In terms of re-entrance, there are three types of commands that this extension p
     - `kb-macro.playback`
     - `kb-macro.repeatPlayback`
     - `kb-macro.repeatPlaybackTillEndOfFile`
-- Commands that will be processed in FIFO manner with an internal command queue
+2. Commands that will be processed in FIFO manner with an internal command queue:
     - `kb-macro.wrap`
-- Commands that can be executed anytime
+3. Commands that can be executed anytime:
     - `kb-macro.abortPlayback`
 
-For example, the command `kb-macro.playback` could take even multiple seconds due to a long sequence of a macro, and if the user requests another playback during playback we should not make the new playback start immediately. But the command `kb-macro.abortPlayback` should be able to be invoked during playback and stop the playback immediately.
+For example, the command `kb-macro.playback` could take even multiple seconds or more due to a long sequence of a macro, and if the user requests another playback during playback it is not expected to start the new playback immediately. But the command `kb-macro.abortPlayback` is another type of command, and it should be able to be executed during playback to stop it immediately.
 
 ## Testing
 
