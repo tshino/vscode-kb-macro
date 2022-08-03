@@ -2,6 +2,12 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Feature:
+  - Added new `kb-macro.active` 'when'-clause context. At this version, it is just an alias of `kb-macro.recording`. [#134](https://github.com/tshino/vscode-kb-macro/pull/134)
+- Documentation:
+  - Added 'Dealing with re-entrance' section to [DESIGN.md](./DESIGN.md).
+
 ### [0.12.3] - 2022-07-09
 - Update
   - Update default keybindings wrappers based on vscode 1.69.0. [#126](https://github.com/tshino/vscode-kb-macro/pull/126)
