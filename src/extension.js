@@ -56,6 +56,8 @@ function activate(context) {
 
             const contextName = ContextPrefix + 'recording';
             vscode.commands.executeCommand('setContext', contextName, recording);
+            const contextNameAlias = ContextPrefix + 'active';
+            vscode.commands.executeCommand('setContext', contextNameAlias, recording);
 
             if (recording) {
                 modeIndicator.show();
