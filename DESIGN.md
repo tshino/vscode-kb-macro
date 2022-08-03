@@ -139,10 +139,12 @@ In terms of re-entrance, there are three types of commands that this extension i
     - `kb-macro.repeatPlaybackTillEndOfFile`
 2. Commands that will be processed in FIFO manner with an internal command queue:
     - `kb-macro.wrap`
-3. Commands that can be executed anytime:
+3. Commands that can be executed anytime without restriction:
     - `kb-macro.abortPlayback`
 
-For example, the command `kb-macro.playback` could take even multiple seconds or more due to a long sequence of a macro, and if the user requests another playback during playback it is not expected to start the new playback immediately. But the command `kb-macro.abortPlayback` is another type of command, and it should be able to be executed during playback to stop it immediately.
+For example, the command `kb-macro.playback` could take even multiple seconds or more due to a long sequence of a macro, and if the user requests another playback during playback it is not expected to start the new playback immediately. We could delay it and execute it after the former one is finished, however thinking about the case of key repeating, the queued executions can easily become too many than the user expects. So we simply discard the latter request.
+
+In other examples, the command `kb-macro.abortPlayback` is another type of command, and it should be able to be executed during playback to stop it immediately.
 
 ## Testing
 
