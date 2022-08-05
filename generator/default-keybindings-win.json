@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.69.2 for Windows
+// Default Keybindings of Visual Studio Code 1.70.0 for Windows
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -318,6 +318,8 @@
                                      "when": "editorTextFocus && hasWordHighlights" },
 { "key": "escape",                "command": "editor.cancelOperation",
                                      "when": "cancellableOperation" },
+{ "key": "ctrl+k ctrl+,",         "command": "editor.createFoldingRangeFromSelection",
+                                     "when": "editorTextFocus && foldingEnabled" },
 { "key": "escape",                "command": "editor.debug.action.closeExceptionWidget",
                                      "when": "exceptionWidgetVisible" },
 { "key": "ctrl+k ctrl+i",         "command": "editor.debug.action.showDebugHover",
@@ -356,6 +358,8 @@
                                      "when": "hasSymbols" },
 { "key": "escape",                "command": "editor.gotoNextSymbolFromResult.cancel",
                                      "when": "hasSymbols" },
+{ "key": "ctrl+k ctrl+.",         "command": "editor.removeManualFoldingRanges",
+                                     "when": "editorTextFocus && foldingEnabled" },
 { "key": "ctrl+k ctrl+l",         "command": "editor.toggleFold",
                                      "when": "editorTextFocus && foldingEnabled" },
 { "key": "ctrl+shift+]",          "command": "editor.unfold",
@@ -489,13 +493,17 @@
 { "key": "up",                    "command": "showPrevParameterHint",
                                      "when": "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible" },
 { "key": "shift+tab",             "command": "acceptAlternativeSelectedSuggestion",
-                                     "when": "suggestWidgetVisible && textInputFocus" },
+                                     "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" },
 { "key": "shift+enter",           "command": "acceptAlternativeSelectedSuggestion",
-                                     "when": "suggestWidgetVisible && textInputFocus" },
+                                     "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" },
 { "key": "tab",                   "command": "acceptSelectedSuggestion",
-                                     "when": "suggestWidgetVisible && textInputFocus" },
+                                     "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" },
 { "key": "enter",                 "command": "acceptSelectedSuggestion",
-                                     "when": "acceptSuggestionOnEnter && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus" },
+                                     "when": "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus" },
+{ "key": "shift+escape",          "command": "hideCodeActionMenuWidget",
+                                     "when": "CodeActionMenuVisible" },
+{ "key": "escape",                "command": "hideCodeActionMenuWidget",
+                                     "when": "CodeActionMenuVisible" },
 { "key": "shift+escape",          "command": "hideSuggestWidget",
                                      "when": "suggestWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "hideSuggestWidget",
@@ -654,6 +662,8 @@
                                      "when": "inKeybindings" },
 { "key": "escape",                "command": "list.clear",
                                      "when": "listFocus && listHasSelectionOrFocus && !inputFocus" },
+{ "key": "escape",                "command": "list.closeFind",
+                                     "when": "listFocus && treeFindOpen" },
 { "key": "left",                  "command": "list.collapse",
                                      "when": "listFocus && treeElementCanCollapse && !inputFocus || listFocus && treeElementHasParent && !inputFocus" },
 { "key": "ctrl+left",             "command": "list.collapseAll",
@@ -664,6 +674,10 @@
                                      "when": "listFocus && listSupportsMultiselect && !inputFocus" },
 { "key": "shift+up",              "command": "list.expandSelectionUp",
                                      "when": "listFocus && listSupportsMultiselect && !inputFocus" },
+{ "key": "f3",                    "command": "list.find",
+                                     "when": "listFocus && listSupportsFind" },
+{ "key": "ctrl+f",                "command": "list.find",
+                                     "when": "listFocus && listSupportsFind" },
 { "key": "down",                  "command": "list.focusDown",
                                      "when": "listFocus && !inputFocus" },
 { "key": "home",                  "command": "list.focusFirst",
@@ -1053,7 +1067,8 @@
 { "key": "ctrl+k ctrl+shift+\\",  "command": "workbench.action.splitEditorInGroup",
                                      "when": "activeEditorCanSplitInGroup" },
 { "key": "ctrl+k ctrl+\\",        "command": "workbench.action.splitEditorOrthogonal" },
-{ "key": "ctrl+shift+b",          "command": "workbench.action.tasks.build" },
+{ "key": "ctrl+shift+b",          "command": "workbench.action.tasks.build",
+                                     "when": "taskCommandsRegistered" },
 { "key": "escape",                "command": "workbench.action.terminal.clearSelection",
                                      "when": "terminalFocus && terminalHasBeenCreated && terminalTextSelected && !terminalFindVisible || terminalFocus && terminalProcessSupported && terminalTextSelected && !terminalFindVisible" },
 { "key": "ctrl+shift+c",          "command": "workbench.action.terminal.copySelection",
@@ -1141,6 +1156,15 @@
 { "key": "ctrl+v",                "command": "workbench.action.terminal.sendSequence",
                                      "when": "terminalFocus && !accessibilityModeEnabled && terminalShellType == 'pwsh'",
                                      "args": {"text":"\u0016"} },
+{ "key": "ctrl+space",            "command": "workbench.action.terminal.sendSequence",
+                                     "when": "terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'",
+                                     "args": {"text":"\u001b[24~a"} },
+{ "key": "alt+space",             "command": "workbench.action.terminal.sendSequence",
+                                     "when": "terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'",
+                                     "args": {"text":"\u001b[24~b"} },
+{ "key": "shift+enter",           "command": "workbench.action.terminal.sendSequence",
+                                     "when": "terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'",
+                                     "args": {"text":"\u001b[24~c"} },
 { "key": "ctrl+backspace",        "command": "workbench.action.terminal.sendSequence",
                                      "when": "terminalFocus",
                                      "args": {"text":"\u0017"} },
@@ -1355,7 +1379,21 @@
 { "key": "shift+f4",              "command": "references-view.prev",
                                      "when": "reference-list.hasResult && references-view.canNavigate" },
 { "key": "shift+alt+h",           "command": "references-view.showCallHierarchy",
-                                     "when": "editorHasCallHierarchyProvider" }
+                                     "when": "editorHasCallHierarchyProvider" },
+{ "key": "ctrl+down",             "command": "focusNextCodeAction",
+                                     "when": "CodeActionMenuVisible" },
+{ "key": "down",                  "command": "focusNextCodeAction",
+                                     "when": "CodeActionMenuVisible" },
+{ "key": "ctrl+up",               "command": "focusPreviousCodeAction",
+                                     "when": "CodeActionMenuVisible" },
+{ "key": "up",                    "command": "focusPreviousCodeAction",
+                                     "when": "CodeActionMenuVisible" },
+{ "key": "shift+tab",             "command": "onEnterSelectCodeAction",
+                                     "when": "CodeActionMenuVisible" },
+{ "key": "enter",                 "command": "onEnterSelectCodeAction",
+                                     "when": "CodeActionMenuVisible" },
+{ "key": "ctrl+enter",            "command": "onEnterSelectCodeActionWithPreview",
+                                     "when": "CodeActionMenuVisible" }
 ]
 
 
@@ -1373,6 +1411,7 @@
 // - closeReferenceSearchEditor
 // - codelens.showLensesInCurrentLine
 // - columnSelect
+// - commandCenter.help
 // - comments.collapse
 // - compareFiles
 // - compareSelected
@@ -1721,6 +1760,7 @@
 // - git.unstageAll
 // - github.copyVscodeDevLink
 // - github.copyVscodeDevLinkFile
+// - github.openOnVscodeDev
 // - github.publish
 // - goToNextReferenceFromEmbeddedEditor
 // - goToPreviousReferenceFromEmbeddedEditor
@@ -1758,13 +1798,16 @@
 // - list.scrollRight
 // - list.selectAndPreserveFocus
 // - list.toggleFilterOnType
+// - list.toggleFindMode
 // - list.toggleKeyboardNavigation
+// - list.triggerTypeNavigation
 // - markdown.findAllFileReferences
 // - markdown.preview.refresh
 // - markdown.preview.toggleLock
 // - markdown.showLockedPreviewToSide
 // - markdown.showPreviewSecuritySelector
 // - markdown.showSource
+// - menu.resetHiddenStates
 // - merge-conflict.accept.all-both
 // - merge-conflict.accept.all-current
 // - merge-conflict.accept.all-incoming
@@ -1775,12 +1818,16 @@
 // - merge-conflict.compare
 // - merge-conflict.next
 // - merge-conflict.previous
+// - merge.acceptAllInput1
+// - merge.acceptAllInput2
 // - merge.columnLayout
 // - merge.dev.copyContents
 // - merge.dev.openContents
 // - merge.goToNextConflict
 // - merge.goToPreviousConflict
 // - merge.mixedLayout
+// - merge.openBaseEditor
+// - merge.openResult
 // - merge.toggleActiveConflictInput1
 // - merge.toggleActiveConflictInput2
 // - mergeEditor.compareInput1WithBase
@@ -1819,6 +1866,7 @@
 // - notebook.execute
 // - notebook.inspectLayout
 // - notebook.renderAllMarkdownCells
+// - notebook.revealLastFailedCell
 // - notebook.revealRunningCell
 // - notebook.saveMimeTypeOrder
 // - notebook.setProfile
@@ -1908,11 +1956,15 @@
 // - resetGettingStartedProgress
 // - revealInExplorer
 // - scm.openInTerminal
+// - scrollEditorBottom
+// - scrollEditorTop
 // - search.action.clearHistory
 // - search.action.clearSearchResults
 // - search.action.collapseSearchResults
 // - search.action.copyAll
 // - search.action.expandSearchResults
+// - search.action.focusFilesToExclude
+// - search.action.focusFilesToInclude
 // - search.action.focusSearchList
 // - search.action.openEditor
 // - search.action.openNewEditor
@@ -1963,6 +2015,8 @@
 // - timeline.toggleVisibility
 // - toggle.diff.ignoreTrimWhitespace
 // - toggle.diff.renderSideBySide
+// - toggle.window.commandCenter
+// - toggle.workbench.layoutControl.enabled
 // - toggleEscapeSequenceLogging
 // - typescript.findAllFileReferences
 // - typescript.goToProjectConfig
@@ -2021,12 +2075,17 @@
 // - workbench.action.createTerminalEditor
 // - workbench.action.createTerminalEditorSide
 // - workbench.action.customizeLayout
+// - workbench.action.debug.callStackBottom
+// - workbench.action.debug.callStackDown
+// - workbench.action.debug.callStackTop
+// - workbench.action.debug.callStackUp
 // - workbench.action.debug.configure
 // - workbench.action.debug.disconnectAndSuspend
 // - workbench.action.debug.focusProcess
 // - workbench.action.debug.restartFrame
 // - workbench.action.debug.reverseContinue
 // - workbench.action.debug.selectDebugConsole
+// - workbench.action.debug.selectDebugSession
 // - workbench.action.debug.selectRepl
 // - workbench.action.debug.selectandstart
 // - workbench.action.debug.showLoadedScripts
@@ -2052,6 +2111,7 @@
 // - workbench.action.editorLayoutTwoRowsRight
 // - workbench.action.evenEditorWidths
 // - workbench.action.extensionHostProfiler.stop
+// - workbench.action.files.newFile
 // - workbench.action.files.openFileFolderInNewWindow
 // - workbench.action.files.openFileInNewWindow
 // - workbench.action.files.openFolderInNewWindow
@@ -2077,6 +2137,7 @@
 // - workbench.action.focusRightGroupWithoutWrap
 // - workbench.action.focusSecondSideEditor
 // - workbench.action.focusStatusBar
+// - workbench.action.focusTitleBar
 // - workbench.action.generateColorTheme
 // - workbench.action.increaseViewHeight
 // - workbench.action.increaseViewSize
@@ -2137,6 +2198,7 @@
 // - workbench.action.nextPanelView
 // - workbench.action.nextSideBarView
 // - workbench.action.openActiveLogOutputFile
+// - workbench.action.openApplicationSettingsJson
 // - workbench.action.openDefaultKeybindingsFile
 // - workbench.action.openDocumentationUrl
 // - workbench.action.openEditorAtIndex
@@ -2175,6 +2237,7 @@
 // - workbench.action.openWorkspaceSettings
 // - workbench.action.openWorkspaceSettingsFile
 // - workbench.action.pauseSocketWriting
+// - workbench.action.populateFileFromSnippet
 // - workbench.action.positionPanelBottom
 // - workbench.action.positionPanelLeft
 // - workbench.action.positionPanelRight
@@ -2259,6 +2322,7 @@
 // - workbench.action.terminal.changeIconPanel
 // - workbench.action.terminal.clear
 // - workbench.action.terminal.clearCommandHistory
+// - workbench.action.terminal.copyLastCommand
 // - workbench.action.terminal.copySelectionAsHtml
 // - workbench.action.terminal.createProfileButton
 // - workbench.action.terminal.detachSession
@@ -2359,6 +2423,8 @@
 // - workbench.actions.treeView.testExplorer.filter
 // - workbench.actions.treeView.workbench.panel.markers.view.collapseAll
 // - workbench.actions.treeView.workbench.panel.markers.view.filter
+// - workbench.actions.treeView.workbench.views.editSessions.data.collapseAll
+// - workbench.actions.treeView.workbench.views.editSessions.data.refresh
 // - workbench.actions.treeView.workbench.views.sync.localActivity.collapseAll
 // - workbench.actions.treeView.workbench.views.sync.localActivity.refresh
 // - workbench.actions.treeView.workbench.views.sync.machines.collapseAll
@@ -2398,6 +2464,9 @@
 // - workbench.debug.welcome.removeView
 // - workbench.debug.welcome.resetViewLocation
 // - workbench.debug.welcome.toggleVisibility
+// - workbench.editSessions.actions.delete
+// - workbench.editSessions.actions.resetAuth
+// - workbench.editSessions.actions.resume
 // - workbench.explorer.emptyView.removeView
 // - workbench.explorer.emptyView.resetViewLocation
 // - workbench.explorer.emptyView.toggleVisibility
@@ -2412,6 +2481,7 @@
 // - workbench.extensions.action.addToWorkspaceRecommendations
 // - workbench.extensions.action.checkForUpdates
 // - workbench.extensions.action.clearExtensionsSearchResults
+// - workbench.extensions.action.clearLanguage
 // - workbench.extensions.action.configure
 // - workbench.extensions.action.configureWorkspaceFolderRecommendedExtensions
 // - workbench.extensions.action.configureWorkspaceRecommendedExtensions
@@ -2497,11 +2567,14 @@
 // - workbench.panel.repl.view.resetViewLocation
 // - workbench.panel.repl.view.toggleVisibility
 // - workbench.profiles.actions.cleanupProfiles
+// - workbench.profiles.actions.createEmptyProfile
 // - workbench.profiles.actions.createFromCurrentProfile
 // - workbench.profiles.actions.createProfile
+// - workbench.profiles.actions.deleteProfile
 // - workbench.profiles.actions.exportProfile
 // - workbench.profiles.actions.importProfile
-// - workbench.profiles.actions.removeProfile
+// - workbench.profiles.actions.profileEntry.22483868
+// - workbench.profiles.actions.renameProfile
 // - workbench.profiles.actions.switchProfile
 // - workbench.scm.action.collapseAllRepositories
 // - workbench.scm.action.expandAllRepositories
@@ -2519,7 +2592,6 @@
 // - workbench.scm.repositories.resetViewLocation
 // - workbench.scm.resetViewLocation
 // - workbench.scm.toggleVisibility
-// - workbench.sessionSync.actions.resetAuth
 // - workbench.trust.configure
 // - workbench.trust.manage
 // - workbench.userData.actions.askToTunrOnAfterInit
@@ -2541,6 +2613,8 @@
 // - workbench.userDataSync.actions.turnOff
 // - workbench.userDataSync.actions.turnOn
 // - workbench.view.debug.resetViewContainerLocation
+// - workbench.view.editSessions
+// - workbench.view.editSessions.resetViewContainerLocation
 // - workbench.view.explorer.resetViewContainerLocation
 // - workbench.view.extension.references-view
 // - workbench.view.extension.references-view.resetViewContainerLocation
@@ -2559,6 +2633,8 @@
 // - workbench.view.sync.resetViewContainerLocation
 // - workbench.view.testing.focus
 // - workbench.view.testing.resetViewLocation
+// - workbench.views.editSessions.data.focus
+// - workbench.views.editSessions.data.resetViewLocation
 // - workbench.views.extensions.builtinFeatureExtensions.focus
 // - workbench.views.extensions.builtinFeatureExtensions.resetViewLocation
 // - workbench.views.extensions.builtinProgrammingLanguageExtensions.focus
