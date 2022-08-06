@@ -9,7 +9,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - Documentation:
   - Added 'Dealing with re-entrance' section to [DESIGN.md](./DESIGN.md).
 - Internal:
-  - Added new `kb-macro.active` 'when'-clause context. At this version, it is just an alias of `kb-macro.recording`. [#134](https://github.com/tshino/vscode-kb-macro/pull/134)
+  - Added new `kb-macro.active` when clause context. At this version, it is just an alias of `kb-macro.recording`. [#134](https://github.com/tshino/vscode-kb-macro/pull/134)
 
 ### [0.12.3] - 2022-07-09
 - Update
@@ -36,8 +36,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Updated default keybindings wrappers based on vscode 1.67.0. [#101](https://github.com/tshino/vscode-kb-macro/pull/101)
   - Updated keymap wrapper for Vz Keymap (v0.19.0). [#96](https://github.com/tshino/vscode-kb-macro/pull/96)
   - Updated keymap wrapper for Vz Keymap (v0.19.1). [#100](https://github.com/tshino/vscode-kb-macro/pull/100)
-  - Updated Keymap wrapper for Awesome Emacs Keymap (v0.43.1). [#97](https://github.com/tshino/vscode-kb-macro/pull/97)
-  - Updated Keymap wrapper for Awesome Emacs Keymap (v0.44.0). [#99](https://github.com/tshino/vscode-kb-macro/pull/99)
+  - Updated keymap wrapper for Awesome Emacs Keymap (v0.43.1). [#97](https://github.com/tshino/vscode-kb-macro/pull/97)
+  - Updated keymap wrapper for Awesome Emacs Keymap (v0.44.0). [#99](https://github.com/tshino/vscode-kb-macro/pull/99)
 
 ### [0.12.0] - 2022-04-05
 - Feature
@@ -50,7 +50,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Updated default keybindings based on VS Code 1.65.2. [#74](https://github.com/tshino/vscode-kb-macro/pull/74)
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.41.1). [#81](https://github.com/tshino/vscode-kb-macro/pull/81)
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.41.2). [#91](https://github.com/tshino/vscode-kb-macro/pull/91)
-  - Updated Keymap wrapper for Delphi Keymap (v9.5.0). [#90](https://github.com/tshino/vscode-kb-macro/pull/90)
+  - Updated keymap wrapper for Delphi Keymap (v9.5.0). [#90](https://github.com/tshino/vscode-kb-macro/pull/90)
 - Fix
   - Fixed: Typing in the find input box during recording may cause unexpected cursor movements during playback. [#33](https://github.com/tshino/vscode-kb-macro/issues/33)
 - Internal
@@ -121,7 +121,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
   - Added Visual Studio Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#24](https://github.com/tshino/vscode-kb-macro/pull/24)
   - Added emacs-style prefix-arguments support through the keymap wrapper for Awesome Emacs Keymap. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#25](https://github.com/tshino/vscode-kb-macro/pull/25)
   - Added new `kb-macro.abortPlayback` command, which is available on `escape` key. [#26](https://github.com/tshino/vscode-kb-macro/pull/26)
-  - Added new `kb-macro.playing` 'when'-clause context, which evaluates true when the macro playback is ongoing. [#27](https://github.com/tshino/vscode-kb-macro/pull/27)
+  - Added new `kb-macro.playing` when clause context, which evaluates true when the macro playback is ongoing. [#27](https://github.com/tshino/vscode-kb-macro/pull/27)
 - Update
   - (Internal) Added colors to warnings and errors on the console output of generator scripts.
 
@@ -129,7 +129,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - New
   - Added Atom Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#22](https://github.com/tshino/vscode-kb-macro/pull/22)
   - Added Notepad++ Keymap support. (See [Keymap Wrappers](keymap-wrapper/README.md)) [#21](https://github.com/tshino/vscode-kb-macro/pull/21)
-  - Added new 'when' clause context `kb-macro.headOfLine`, which evaluates true if the cursor is at the beginning of a line, for the help of defining more precise await options.
+  - Added new when clause context `kb-macro.headOfLine`, which evaluates true if the cursor is at the beginning of a line, for the help of defining more precise await options.
 - Update
   - Reduced unnecessary delays after the `editor.action.clipboardCutAction` command.
   - Added comment lines to keymap wrapper files to describe keymap name and its version. [#20](https://github.com/tshino/vscode-kb-macro/pull/20)
