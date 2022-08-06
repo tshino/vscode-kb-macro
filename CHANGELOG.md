@@ -4,23 +4,23 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [Unreleased]
 - Update
-  - Update default keybindings wrappers based on vscode 1.70.0. [#135](https://github.com/tshino/vscode-kb-macro/pull/135)
-- Feature:
-  - Added new `kb-macro.active` 'when'-clause context. At this version, it is just an alias of `kb-macro.recording`. [#134](https://github.com/tshino/vscode-kb-macro/pull/134)
+  - Updated default keybindings wrappers based on vscode 1.70.0. [#135](https://github.com/tshino/vscode-kb-macro/pull/135)
 - Documentation:
   - Added 'Dealing with re-entrance' section to [DESIGN.md](./DESIGN.md).
+- Internal:
+  - Added new `kb-macro.active` 'when'-clause context. At this version, it is just an alias of `kb-macro.recording`. [#134](https://github.com/tshino/vscode-kb-macro/pull/134)
 
 ### [0.12.3] - 2022-07-09
 - Update
-  - Update default keybindings wrappers based on vscode 1.69.0. [#126](https://github.com/tshino/vscode-kb-macro/pull/126)
+  - Updated default keybindings wrappers based on vscode 1.69.0. [#126](https://github.com/tshino/vscode-kb-macro/pull/126)
 
 ### [0.12.2] - 2022-06-12
 - Fix
   - Fixed: `ctrl+tab` doesn't work correctly with this extension installed. [#119](https://github.com/tshino/vscode-kb-macro/issues/119)
 - Update
-  - Update default keybindings wrappers based on vscode 1.67.1. [#106](https://github.com/tshino/vscode-kb-macro/pull/106)
-  - Update default keybindings wrappers based on vscode 1.67.2. [#108](https://github.com/tshino/vscode-kb-macro/pull/108)
-  - Update default keybindings wrappers based on vscode 1.68.0. [#117](https://github.com/tshino/vscode-kb-macro/pull/117)
+  - Updated default keybindings wrappers based on vscode 1.67.1. [#106](https://github.com/tshino/vscode-kb-macro/pull/106)
+  - Updated default keybindings wrappers based on vscode 1.67.2. [#108](https://github.com/tshino/vscode-kb-macro/pull/108)
+  - Updated default keybindings wrappers based on vscode 1.68.0. [#117](https://github.com/tshino/vscode-kb-macro/pull/117)
   - Updated keymap wrapper for Vz Keymap (v0.19.2). [#118](https://github.com/tshino/vscode-kb-macro/pull/118)
 - Internal
   - Added summary output for the automated workflow. [#102](https://github.com/tshino/vscode-kb-macro/pull/102)
@@ -30,9 +30,9 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 - Documentation:
   - Added 'Testing' section to [DESIGN.md](./DESIGN.md).
 - Update
-  - Update default keybindings wrappers based on vscode 1.66.1. [#93](https://github.com/tshino/vscode-kb-macro/pull/93)
-  - Update default keybindings wrappers based on vscode 1.66.2. [#95](https://github.com/tshino/vscode-kb-macro/pull/95)
-  - Update default keybindings wrappers based on vscode 1.67.0. [#101](https://github.com/tshino/vscode-kb-macro/pull/101)
+  - Updated default keybindings wrappers based on vscode 1.66.1. [#93](https://github.com/tshino/vscode-kb-macro/pull/93)
+  - Updated default keybindings wrappers based on vscode 1.66.2. [#95](https://github.com/tshino/vscode-kb-macro/pull/95)
+  - Updated default keybindings wrappers based on vscode 1.67.0. [#101](https://github.com/tshino/vscode-kb-macro/pull/101)
   - Updated keymap wrapper for Vz Keymap (v0.19.0). [#96](https://github.com/tshino/vscode-kb-macro/pull/96)
   - Updated keymap wrapper for Vz Keymap (v0.19.1). [#100](https://github.com/tshino/vscode-kb-macro/pull/100)
   - Updated Keymap wrapper for Awesome Emacs Keymap (v0.43.1). [#97](https://github.com/tshino/vscode-kb-macro/pull/97)
