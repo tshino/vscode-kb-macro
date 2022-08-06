@@ -5,6 +5,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [Unreleased]
 - Update
   - Updated default keybindings wrappers based on vscode 1.70.0. [#135](https://github.com/tshino/vscode-kb-macro/pull/135)
+  - Updated keymap wrapper for Delphi Keymap (v9.5.1). [#136](https://github.com/tshino/vscode-kb-macro/pull/136)
 - Documentation:
   - Added 'Dealing with re-entrance' section to [DESIGN.md](./DESIGN.md).
 - Internal:
