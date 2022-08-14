@@ -146,6 +146,8 @@ For example, the command `kb-macro.playback` could take even multiple seconds or
 
 In other examples, the command `kb-macro.abortPlayback` is another type of command, and it should be able to be executed during playback to stop it immediately.
 
+These command patterns are implemented in [`src/reentrant_guard.js`](src/reentrant_guard.js).
+
 ## Testing
 
 This repository contains a set of tests for this extension.
