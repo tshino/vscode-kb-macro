@@ -49,14 +49,14 @@ the corresponding wrapper should look like below.
         "args": {
             "command": "editor.action.selectToBracket"
         },
-        "when": "kb-macro.recording && editorTextFocus"
+        "when": "kb-macro.active && editorTextFocus"
     }
 ```
 Add this keybinding rule below the original one in the `keybindings.json`.
 
 The followings are the details.
 - The `kb-macro.wrap` command is the wrapper that executes the target command specified in the `args.command` parameter and records it on the sequence.
-- The `when` clause of a wrapper keybinding should contain additional context `kb-macro.recording`, which evaluates to `true` when macro recording is active.
+- The `when` clause of a wrapper keybinding should contain additional context `kb-macro.active`, which evaluates to `true` when the recording mechanism is active.
 - If you have an `args` parameter for the target command, you could write it in `args.args`.
 - If the target command is not a built-in command of VS Code, in other words, it is provided by an extension, likely you may need to add an `args.await` parameter in the wrapper. See below.
 
@@ -81,7 +81,7 @@ We need to know the true timing of the end of command execution, especially for 
             "command": "some.extension.command",
             "await": "document selection"
         },
-        "when": "kb-macro.recording && editorTextFocus"
+        "when": "kb-macro.active && editorTextFocus"
     }
 ```
 The value of an `args.await` parameter is a space-separated keyword list. Possible keywords are shown below.
@@ -196,6 +196,7 @@ The `kb-macro.playback` command has an optional `sequence` argument to specify a
 
 | `when` clause context | True when |
 | --------------------- | --------- |
+| `kb-macro.active`     | The recording mechanism is active, which is almost the same as `kb-macro.recording` |
 | `kb-macro.recording`  | The macro recording is ongoing |
 | `kb-macro.playing`    | The macro playback is ongoing |
 
