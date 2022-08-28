@@ -142,10 +142,19 @@ const KeyboardMacro = function({ awaitController }) {
         if (func !== undefined) {
             await func(spec.args);
         } else {
-            await vscode.commands.executeCommand(
-                spec.command,
-                spec.args
-            );
+            // Passing an unnecessary second argument even if it's `undefined` can cause
+            // unexpected behavior of the target command.
+            // https://github.com/tshino/vscode-kb-macro/issues/142
+            if (spec.args === undefined) {
+                await vscode.commands.executeCommand(
+                    spec.command
+                );
+            } else {
+                await vscode.commands.executeCommand(
+                    spec.command,
+                    spec.args
+                );
+            }
         }
     };
 
