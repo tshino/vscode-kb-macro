@@ -125,6 +125,7 @@ const joinComplementalKeybindings = function(keybindings) {
             k1.mac === k2.mac &&
             k1.command === k2.command &&
             k1.args && k2.args &&
+            'await' in k1.args && 'await' in k2.args &&
             k1.args.command === k2.args.command) {
             const w1 = k1.when;
             const w2 = k2.when;

@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+## [Unreleased]
+- Internal:
+  - Fixed: Failure in automated workflow to update default keybindings wrappers. [#145](https://github.com/tshino/vscode-kb-macro/issues/145)
+
 ### [0.12.5] - 2022-08-28
 - Fix
   - Fixed: `ctrl+shift+f` fails to focus Search in recording mode. [#142](https://github.com/tshino/vscode-kb-macro/issues/142)
