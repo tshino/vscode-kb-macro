@@ -226,9 +226,9 @@
 				"key": "shift+escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "hideCodeActionMenuWidget"
+					"command": "hideCodeActionWidget"
 				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "shift+escape",
@@ -485,9 +485,9 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "hideCodeActionMenuWidget"
+					"command": "hideCodeActionWidget"
 				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "escape",
@@ -529,6 +529,14 @@
 					"command": "closeReplaceInFilesWidget"
 				},
 				"when": "kb-macro.recording && replaceInputBoxFocus && searchViewletVisible"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "commentsClearFilterText"
+				},
+				"when": "kb-macro.recording && commentsFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -715,6 +723,14 @@
 					"record": "side-effect"
 				},
 				"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+			},
+			{
+				"key": "cmd+down",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "commentsFocusViewFromFilter"
+				},
+				"when": "kb-macro.recording && commentsFilterFocus"
 			},
 			{
 				"key": "ctrl+end",
@@ -905,9 +921,9 @@
 				"key": "down",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "focusNextCodeAction"
+					"command": "selectNextCodeAction"
 				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+shift+down",
@@ -1591,9 +1607,9 @@
 				"key": "up",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "focusPreviousCodeAction"
+					"command": "selectPrevCodeAction"
 				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+shift+up",
@@ -1869,14 +1885,6 @@
 				"when": "kb-macro.recording && hasOtherSuggestions && textInputFocus && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
 			},
 			{
-				"key": "shift+tab",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "onEnterSelectCodeAction"
-				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
-			},
-			{
 				"key": "ctrl+shift+z",
 				"mac": "shift+cmd+z",
 				"command": "kb-macro.wrap",
@@ -1909,6 +1917,14 @@
 					"record": "side-effect"
 				},
 				"when": "kb-macro.recording && !isMac && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+			},
+			{
+				"key": "ctrl+down",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "commentsFocusViewFromFilter"
+				},
+				"when": "kb-macro.recording && !isMac && commentsFilterFocus"
 			},
 			{
 				"key": "ctrl+down",
@@ -2017,9 +2033,9 @@
 				"mac": "cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "focusNextCodeAction"
+					"command": "selectNextCodeAction"
 				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+up",
@@ -2096,9 +2112,9 @@
 				"mac": "cmd+up",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "focusPreviousCodeAction"
+					"command": "selectPrevCodeAction"
 				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "alt+pagedown",
@@ -2565,6 +2581,15 @@
 				"mac": "cmd+f",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "commentsFocusFilter"
+				},
+				"when": "kb-macro.recording && focusedView == 'workbench.panel.comments'"
+			},
+			{
+				"key": "ctrl+f",
+				"mac": "cmd+f",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "keybindings.editor.searchKeybindings"
 				},
 				"when": "kb-macro.recording && inKeybindings"
@@ -2810,9 +2835,9 @@
 				"key": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "onEnterSelectCodeAction"
+					"command": "acceptSelectedCodeAction"
 				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+u",
@@ -3602,9 +3627,9 @@
 				"mac": "cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "onEnterSelectCodeActionWithPreview"
+					"command": "previewSelectedCodeAction"
 				},
-				"when": "kb-macro.recording && CodeActionMenuVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+shift+enter",
@@ -3968,6 +3993,26 @@
 					"command": "problems.action.showQuickFixes"
 				},
 				"when": "kb-macro.recording && problemFocus"
+			},
+			{
+				"key": "cmd+.",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.sendSequence",
+					"args": {
+						"text": "\u0003"
+					}
+				},
+				"when": "kb-macro.recording && terminalFocus"
+			},
+			{
+				"key": "ctrl+.",
+				"mac": "cmd+.",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "acceptSelectedCodeAction"
+				},
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+shift+r",
@@ -7005,6 +7050,14 @@
 				"key": "shift+alt+c",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "copyFilePath"
+				},
+				"when": "kb-macro.recording && isWindows && editorFocus"
+			},
+			{
+				"key": "shift+alt+c",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "search.action.copyPath"
 				},
 				"when": "kb-macro.recording && isWindows && fileMatchOrFolderMatchWithResourceFocus"
@@ -7016,6 +7069,14 @@
 					"command": "copyRelativeFilePath"
 				},
 				"when": "kb-macro.recording && isWindows && !editorFocus"
+			},
+			{
+				"key": "ctrl+k ctrl+shift+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "copyRelativeFilePath"
+				},
+				"when": "kb-macro.recording && isWindows && editorFocus"
 			},
 			{
 				"key": "alt+delete",
@@ -7489,12 +7550,28 @@
 				"when": "kb-macro.recording && isLinux && fileMatchOrFolderMatchWithResourceFocus"
 			},
 			{
+				"key": "ctrl+k ctrl+alt+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "copyFilePath"
+				},
+				"when": "kb-macro.recording && isLinux && editorFocus"
+			},
+			{
 				"key": "ctrl+shift+alt+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "copyRelativeFilePath"
 				},
 				"when": "kb-macro.recording && isLinux && !editorFocus"
+			},
+			{
+				"key": "ctrl+k ctrl+shift+alt+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "copyRelativeFilePath"
+				},
+				"when": "kb-macro.recording && isLinux && editorFocus"
 			},
 			{
 				"key": "shift+alt+meta+j",
@@ -7787,17 +7864,6 @@
 				"when": "kb-macro.recording && terminalFindFocused && terminalHasBeenCreated || kb-macro.recording && terminalFindFocused && terminalProcessSupported || kb-macro.recording && terminalFocus && terminalHasBeenCreated || kb-macro.recording && terminalFocus && terminalProcessSupported"
 			},
 			{
-				"key": "cmd+.",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.terminal.sendSequence",
-					"args": {
-						"text": "\u0003"
-					}
-				},
-				"when": "kb-macro.recording && terminalFocus"
-			},
-			{
 				"key": "ctrl+shift+cmd+right",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7823,12 +7889,28 @@
 				"when": "kb-macro.recording && isMac && editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
 			},
 			{
+				"key": "cmd+k alt+cmd+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "copyFilePath"
+				},
+				"when": "kb-macro.recording && editorFocus"
+			},
+			{
 				"key": "shift+alt+cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "copyRelativeFilePath"
 				},
 				"when": "kb-macro.recording && !editorFocus"
+			},
+			{
+				"key": "cmd+k shift+alt+cmd+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "copyRelativeFilePath"
+				},
+				"when": "kb-macro.recording && editorFocus"
 			},
 			{
 				"key": "ctrl+cmd+down",
