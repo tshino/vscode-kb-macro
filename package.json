@@ -51,7 +51,7 @@
 	"devDependencies": {
 		"@vscode/test-electron": "^2.1.5",
 		"ansi-regex": ">=6.0.1",
-		"eslint": "^8.23.0",
+		"eslint": "^8.23.1",
 		"glob": "^8.0.3",
 		"json": "^11.0.0",
 		"mocha": "^10.0.0",
