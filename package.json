@@ -1742,7 +1742,7 @@
 				"args": {
 					"command": "notebook.cell.delete"
 				},
-				"when": "kb-macro.recording && notebookEditable && notebookEditorFocused && !inputFocus"
+				"when": "kb-macro.recording && notebookEditorFocused && !inputFocus"
 			},
 			{
 				"key": "delete",
@@ -3995,15 +3995,13 @@
 				"when": "kb-macro.recording && problemFocus"
 			},
 			{
-				"key": "cmd+.",
+				"key": "ctrl+.",
+				"mac": "cmd+.",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.terminal.sendSequence",
-					"args": {
-						"text": "\u0003"
-					}
+					"command": "workbench.action.terminal.quickFix"
 				},
-				"when": "kb-macro.recording && terminalFocus"
+				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+.",
@@ -7208,6 +7206,14 @@
 				"when": "kb-macro.recording && isMac && inQuickOpen"
 			},
 			{
+				"key": "ctrl+n",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectNextCodeAction"
+				},
+				"when": "kb-macro.recording && isMac && codeActionMenuVisible"
+			},
+			{
 				"key": "ctrl+o",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -7348,6 +7354,14 @@
 					"command": "workbench.action.quickOpenSelectPrevious"
 				},
 				"when": "kb-macro.recording && isMac && inQuickOpen"
+			},
+			{
+				"key": "ctrl+p",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "selectPrevCodeAction"
+				},
+				"when": "kb-macro.recording && isMac && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+q",

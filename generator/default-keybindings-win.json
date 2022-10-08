@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.71.2 for Windows
+// Default Keybindings of Visual Studio Code 1.72.0 for Windows
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -727,7 +727,7 @@
 { "key": "shift+alt+up",          "command": "notebook.cell.copyUp",
                                      "when": "notebookEditorFocused && !inputFocus" },
 { "key": "delete",                "command": "notebook.cell.delete",
-                                     "when": "notebookEditable && notebookEditorFocused && !inputFocus" },
+                                     "when": "notebookEditorFocused && !inputFocus" },
 { "key": "shift+alt+d",           "command": "notebook.cell.detectLanguage",
                                      "when": "notebookCellEditable && notebookEditable" },
 { "key": "enter",                 "command": "notebook.cell.edit",
@@ -1141,6 +1141,8 @@
                                      "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
 { "key": "ctrl+v",                "command": "workbench.action.terminal.paste",
                                      "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
+{ "key": "ctrl+.",                "command": "workbench.action.terminal.quickFix",
+                                     "when": "terminalFocus && terminalProcessSupported" },
 { "key": "f2",                    "command": "workbench.action.terminal.renameInstance",
                                      "when": "terminalHasBeenCreated && terminalTabsFocus && terminalTabsSingularSelection || terminalProcessSupported && terminalTabsFocus && terminalTabsSingularSelection" },
 { "key": "ctrl+alt+pagedown",     "command": "workbench.action.terminal.scrollDown",
@@ -1421,7 +1423,6 @@
 // - closeReferenceSearchEditor
 // - codelens.showLensesInCurrentLine
 // - columnSelect
-// - commandCenter.help
 // - comments.collapse
 // - compareFiles
 // - compareSelected
@@ -1662,6 +1663,7 @@
 // - extensions.sort.name
 // - extensions.sort.publishedDate
 // - extensions.sort.rating
+// - extensions.sort.updateDate
 // - files.openTimeline
 // - files.participants.resetChoice
 // - filesExplorer.findInWorkspace
@@ -1713,6 +1715,7 @@
 // - git.ignore
 // - git.init
 // - git.merge
+// - git.mergeAbort
 // - git.openAllChanges
 // - git.openChange
 // - git.openFile
@@ -1744,6 +1747,8 @@
 // - git.revealFileInOS.windows
 // - git.revealInExplorer
 // - git.revertChange
+// - git.runGitMerge
+// - git.runGitMergeDiff3
 // - git.setLogLevel
 // - git.showOutput
 // - git.stage
@@ -1783,6 +1788,7 @@
 // - interactive.history.focus
 // - interactive.input.clear
 // - interactive.input.focus
+// - ipynb.cleanInvalidImageAttachment
 // - ipynb.newUntitledIpynb
 // - ipynb.openIpynbInNotebookEditor
 // - javascript.goToProjectConfig
@@ -1836,16 +1842,22 @@
 // - merge.dev.copyContentsJson
 // - merge.dev.loadContentsFromFolder
 // - merge.dev.openContentsJson
+// - merge.dev.openSelectionInTemporaryMergeEditor
 // - merge.dev.saveContentsToFolder
 // - merge.goToNextUnhandledConflict
 // - merge.goToPreviousUnhandledConflict
 // - merge.mixedLayout
 // - merge.openBaseEditor
 // - merge.openResult
+// - merge.showBase
+// - merge.showBaseAtTop
+// - merge.showNonConflictingChanges
 // - merge.toggleActiveConflictInput1
 // - merge.toggleActiveConflictInput2
+// - mergeEditor.acceptMerge
 // - mergeEditor.compareInput1WithBase
 // - mergeEditor.compareInput2WithBase
+// - mergeEditor.resetResultToBaseAndAutoMerge
 // - noop
 // - notebook.cancelExecution
 // - notebook.cell.cancelExecution
@@ -1879,6 +1891,7 @@
 // - notebook.diff.switchToText
 // - notebook.execute
 // - notebook.inspectLayout
+// - notebook.interruptExecution
 // - notebook.renderAllMarkdownCells
 // - notebook.revealLastFailedCell
 // - notebook.revealRunningCell
@@ -1919,6 +1932,9 @@
 // - outline.sortByPosition
 // - outline.toggleVisibility
 // - paste
+// - perf.event.profiling
+// - perf.insta.printAsyncCycles
+// - perf.insta.printTraces
 // - perfview.show
 // - problems.action.copyMessage
 // - problems.action.copyRelatedInformationMessage
@@ -1986,6 +2002,8 @@
 // - search.action.openNewEditorToSide
 // - search.action.refreshSearchResults
 // - search.action.revealInSideBar
+// - search.action.viewAsList
+// - search.action.viewAsTree
 // - selectFirstSuggestion
 // - selectForCompare
 // - selectLastSuggestion
@@ -2080,6 +2098,7 @@
 // - workbench.action.closeOtherEditors
 // - workbench.action.closePanel
 // - workbench.action.closeSidebar
+// - workbench.action.collapseAllComments
 // - workbench.action.compareEditor.focusOtherSide
 // - workbench.action.compareEditor.focusPrimarySide
 // - workbench.action.compareEditor.focusSecondarySide
@@ -2124,6 +2143,7 @@
 // - workbench.action.editorLayoutTwoRows
 // - workbench.action.editorLayoutTwoRowsRight
 // - workbench.action.evenEditorWidths
+// - workbench.action.expandAllComments
 // - workbench.action.extensionHostProfiler.stop
 // - workbench.action.files.newFile
 // - workbench.action.files.openFileFolderInNewWindow
@@ -2247,6 +2267,7 @@
 // - workbench.action.openWalkthrough
 // - workbench.action.openWorkspace
 // - workbench.action.openWorkspaceConfigFile
+// - workbench.action.openWorkspaceFromEditor
 // - workbench.action.openWorkspaceInNewWindow
 // - workbench.action.openWorkspaceSettings
 // - workbench.action.openWorkspaceSettingsFile
@@ -2312,6 +2333,7 @@
 // - workbench.action.splitEditorToPreviousGroup
 // - workbench.action.splitEditorToRightGroup
 // - workbench.action.splitEditorUp
+// - workbench.action.stopTracing
 // - workbench.action.switchWindow
 // - workbench.action.tasks.configureDefaultBuildTask
 // - workbench.action.tasks.configureDefaultTestTask
@@ -2338,7 +2360,6 @@
 // - workbench.action.terminal.clearCommandHistory
 // - workbench.action.terminal.copyLastCommand
 // - workbench.action.terminal.copySelectionAsHtml
-// - workbench.action.terminal.createProfileButton
 // - workbench.action.terminal.detachSession
 // - workbench.action.terminal.focus
 // - workbench.action.terminal.focusAtIndex1
@@ -2350,6 +2371,7 @@
 // - workbench.action.terminal.focusAtIndex7
 // - workbench.action.terminal.focusAtIndex8
 // - workbench.action.terminal.focusAtIndex9
+// - workbench.action.terminal.gitCreateProfileButton
 // - workbench.action.terminal.goToRecentDirectory
 // - workbench.action.terminal.join
 // - workbench.action.terminal.joinInstance
@@ -2425,31 +2447,11 @@
 // - workbench.actions.syncData.reset
 // - workbench.actions.table.workbench.panel.markers.view.viewAsTable
 // - workbench.actions.table.workbench.panel.markers.view.viewAsTree
-// - workbench.actions.treeView.jsBrowserBreakpoints.collapseAll
-// - workbench.actions.treeView.jsBrowserBreakpoints.refresh
-// - workbench.actions.treeView.jsExcludedCallers.collapseAll
-// - workbench.actions.treeView.jsExcludedCallers.refresh
-// - workbench.actions.treeView.npm.collapseAll
-// - workbench.actions.treeView.npm.refresh
-// - workbench.actions.treeView.references-view.tree.collapseAll
-// - workbench.actions.treeView.references-view.tree.refresh
 // - workbench.actions.treeView.repl.filter
 // - workbench.actions.treeView.testExplorer.filter
 // - workbench.actions.treeView.workbench.panel.comments.filter
 // - workbench.actions.treeView.workbench.panel.markers.view.collapseAll
 // - workbench.actions.treeView.workbench.panel.markers.view.filter
-// - workbench.actions.treeView.workbench.views.editSessions.data.collapseAll
-// - workbench.actions.treeView.workbench.views.editSessions.data.refresh
-// - workbench.actions.treeView.workbench.views.sync.localActivity.collapseAll
-// - workbench.actions.treeView.workbench.views.sync.localActivity.refresh
-// - workbench.actions.treeView.workbench.views.sync.machines.collapseAll
-// - workbench.actions.treeView.workbench.views.sync.machines.refresh
-// - workbench.actions.treeView.workbench.views.sync.merges.collapseAll
-// - workbench.actions.treeView.workbench.views.sync.merges.refresh
-// - workbench.actions.treeView.workbench.views.sync.remoteActivity.collapseAll
-// - workbench.actions.treeView.workbench.views.sync.remoteActivity.refresh
-// - workbench.actions.treeView.workbench.views.sync.troubleshoot.collapseAll
-// - workbench.actions.treeView.workbench.views.sync.troubleshoot.refresh
 // - workbench.actions.view.toggleProblems
 // - workbench.debug.action.copyAll
 // - workbench.debug.action.focusBreakpointsView
@@ -2483,8 +2485,12 @@
 // - workbench.editSessions.actions.deleteAll
 // - workbench.editSessions.actions.resetAuth
 // - workbench.editSessions.actions.resume
+// - workbench.editSessions.actions.resumeLatest
+// - workbench.editSessions.actions.showEditSessions
+// - workbench.editSessions.actions.showOutputChannel
 // - workbench.editSessions.actions.signIn
 // - workbench.editSessions.actions.store
+// - workbench.editSessions.actions.storeCurrent
 // - workbench.explorer.emptyView.removeView
 // - workbench.explorer.emptyView.resetViewLocation
 // - workbench.explorer.emptyView.toggleVisibility
@@ -2513,6 +2519,7 @@
 // - workbench.extensions.action.enableAllWorkspace
 // - workbench.extensions.action.enableAutoUpdate
 // - workbench.extensions.action.extensionHostProfile
+// - workbench.extensions.action.extensionUpdates
 // - workbench.extensions.action.ignoreRecommendation
 // - workbench.extensions.action.install.specificVersion
 // - workbench.extensions.action.installExtensions
@@ -2520,7 +2527,6 @@
 // - workbench.extensions.action.installWebExtensionFromLocation
 // - workbench.extensions.action.installWorkspaceRecommendedExtensions
 // - workbench.extensions.action.listBuiltInExtensions
-// - workbench.extensions.action.listOutdatedExtensions
 // - workbench.extensions.action.listWorkspaceUnsupportedExtensions
 // - workbench.extensions.action.manageAuthorizedExtensionURIs
 // - workbench.extensions.action.openExtensionsFolder
@@ -2536,7 +2542,6 @@
 // - workbench.extensions.action.showEnabledExtensions
 // - workbench.extensions.action.showExtensionsForLanguage
 // - workbench.extensions.action.showExtensionsWithIds
-// - workbench.extensions.action.showInstalledExtensions
 // - workbench.extensions.action.showLanguageExtensions
 // - workbench.extensions.action.showPopularExtensions
 // - workbench.extensions.action.showPreReleaseVersion
@@ -2587,6 +2592,7 @@
 // - workbench.profiles.actions.cleanupProfiles
 // - workbench.profiles.actions.createEmptyProfile
 // - workbench.profiles.actions.createFromCurrentProfile
+// - workbench.profiles.actions.createFromTemplate
 // - workbench.profiles.actions.createProfile
 // - workbench.profiles.actions.createTemporaryProfile
 // - workbench.profiles.actions.deleteProfile
@@ -2594,9 +2600,11 @@
 // - workbench.profiles.actions.importProfile
 // - workbench.profiles.actions.manage
 // - workbench.profiles.actions.profileEntry.22483868
+// - workbench.profiles.actions.renameCurrentProfile
 // - workbench.profiles.actions.renameProfile
 // - workbench.profiles.actions.resetWorkspaces
 // - workbench.profiles.actions.switchProfile
+// - workbench.profiles.actions.updateCurrentProfileShortName
 // - workbench.scm.action.collapseAllRepositories
 // - workbench.scm.action.expandAllRepositories
 // - workbench.scm.action.repositories.setSortKey.discoveryTime
@@ -2616,6 +2624,7 @@
 // - workbench.trust.configure
 // - workbench.trust.manage
 // - workbench.userData.actions.askToTunrOnAfterInit
+// - workbench.userData.actions.cancelTurnOn
 // - workbench.userData.actions.openSyncBackupsFolder
 // - workbench.userData.actions.signin
 // - workbench.userData.actions.turningOn
@@ -2623,11 +2632,8 @@
 // - workbench.userDataSync.actions.configure
 // - workbench.userDataSync.actions.help
 // - workbench.userDataSync.actions.manage
-// - workbench.userDataSync.actions.resolveKeybindingsConflicts
-// - workbench.userDataSync.actions.resolveSettingsConflicts
-// - workbench.userDataSync.actions.resolveSnippetsConflicts
-// - workbench.userDataSync.actions.resolveTasksConflicts
 // - workbench.userDataSync.actions.settings
+// - workbench.userDataSync.actions.showConflicts
 // - workbench.userDataSync.actions.showLog
 // - workbench.userDataSync.actions.showSyncedData
 // - workbench.userDataSync.actions.syncNow
@@ -2685,6 +2691,8 @@
 // - workbench.views.extensions.searchInstalled.resetViewLocation
 // - workbench.views.extensions.searchOutdated.focus
 // - workbench.views.extensions.searchOutdated.resetViewLocation
+// - workbench.views.extensions.searchRecentlyUpdated.focus
+// - workbench.views.extensions.searchRecentlyUpdated.resetViewLocation
 // - workbench.views.extensions.searchWorkspaceUnsupported.focus
 // - workbench.views.extensions.searchWorkspaceUnsupported.resetViewLocation
 // - workbench.views.extensions.untrustedPartiallySupportedExtensions.focus
@@ -2697,12 +2705,12 @@
 // - workbench.views.extensions.virtualUnsupportedExtensions.resetViewLocation
 // - workbench.views.extensions.workspaceRecommendations.focus
 // - workbench.views.extensions.workspaceRecommendations.resetViewLocation
+// - workbench.views.sync.conflicts.focus
+// - workbench.views.sync.conflicts.resetViewLocation
 // - workbench.views.sync.localActivity.focus
 // - workbench.views.sync.localActivity.resetViewLocation
 // - workbench.views.sync.machines.focus
 // - workbench.views.sync.machines.resetViewLocation
-// - workbench.views.sync.merges.focus
-// - workbench.views.sync.merges.resetViewLocation
 // - workbench.views.sync.remoteActivity.focus
 // - workbench.views.sync.remoteActivity.resetViewLocation
 // - workbench.views.sync.troubleshoot.focus
