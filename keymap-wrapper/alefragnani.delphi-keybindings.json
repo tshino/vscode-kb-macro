@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Delphi Keymap v9.5.1
+	// Keymap wrapper for Delphi Keymap v9.6.0
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -53,9 +53,9 @@
 		"when": "kb-macro.recording && isMac && editorTextFocus && !editorReadonly" },
 	{ "key": "ctrl+;", "command": "kb-macro.wrap", "args": { "command": "editor.action.commentLine" },
 		"when": "kb-macro.recording && !isMac && editorTextFocus && !editorReadonly" },
-	{ "key": "cmd+p", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickOpen" },
+	{ "key": "cmd+f12", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickOpen" },
 		"when": "kb-macro.recording && isMac" },
-	{ "key": "ctrl+p", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickOpen" },
+	{ "key": "ctrl+f12", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickOpen" },
 		"when": "kb-macro.recording && !isMac" },
 	{ "key": "alt+f7", "command": "kb-macro.wrap", "args": { "command": "editor.action.marker.prev" },
 		"when": "kb-macro.recording && editorFocus && !editorReadonly" },
