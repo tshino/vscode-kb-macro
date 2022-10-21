@@ -64,11 +64,11 @@ jobs:
         shell: bash
         run: |
           if git diff --exit-code; then
-            echo "::set-output name=has-diff::false"
+            echo "has-diff=false" >> $GITHUB_OUTPUT
             echo "No diff found"
             echo "### No diff found :+1:" >> $GITHUB_STEP_SUMMARY
           else
-            echo "::set-output name=has-diff::true"
+            echo "has-diff=true" >> $GITHUB_OUTPUT
           fi
       - name: Extract version numbers
         id: ver
@@ -80,9 +80,9 @@ jobs:
           echo "ver_linux: ${ver_linux}"
           echo "ver_macos: ${ver_macos}"
           echo "ver_windows: ${ver_windows}"
-          echo "::set-output name=linux::${ver_linux}"
-          echo "::set-output name=macos::${ver_macos}"
-          echo "::set-output name=windows::${ver_windows}"
+          echo "linux=${ver_linux}" >> $GITHUB_OUTPUT
+          echo "macos=${ver_macos}" >> $GITHUB_OUTPUT
+          echo "windows=${ver_windows}" >> $GITHUB_OUTPUT
           echo "Versions:" >> $GITHUB_STEP_SUMMARY
           echo "- VS Code for Linux: ${ver_linux}" >> $GITHUB_STEP_SUMMARY
           echo "- VS Code for macOS: ${ver_macos}" >> $GITHUB_STEP_SUMMARY
@@ -92,7 +92,7 @@ jobs:
         shell: bash
         run: |
           datetime=$(date +'%Y-%m-%d-%H-%M')
-          echo "::set-output name=branch-name::update-default-keybinding-${datetime}"
+          echo "branch-name=update-default-keybinding-${datetime}" >> $GITHUB_OUTPUT
       - name: Make a commit and push a branch
         if: steps.diff.outputs.has-diff == 'true'
         shell: bash
