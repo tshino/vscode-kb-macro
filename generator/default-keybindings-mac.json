@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.72.2 for macOS
+// Default Keybindings of Visual Studio Code 1.73.0 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -570,10 +570,6 @@
                                      "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" },
 { "key": "enter",                 "command": "acceptSelectedSuggestion",
                                      "when": "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus" },
-{ "key": "shift+escape",          "command": "hideCodeActionWidget",
-                                     "when": "codeActionMenuVisible" },
-{ "key": "escape",                "command": "hideCodeActionWidget",
-                                     "when": "codeActionMenuVisible" },
 { "key": "shift+escape",          "command": "hideSuggestWidget",
                                      "when": "suggestWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "hideSuggestWidget",
@@ -841,7 +837,7 @@
 { "key": "ctrl+l",                "command": "notebook.centerActiveCell",
                                      "when": "notebookEditorFocused" },
 { "key": "cmd+f",                 "command": "notebook.find",
-                                     "when": "notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'" },
+                                     "when": "notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.interactive' || notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'" },
 { "key": "cmd+down",              "command": "notebook.focusBottom",
                                      "when": "notebookEditorFocused && !inputFocus" },
 { "key": "down",                  "command": "notebook.focusNextEditor",
@@ -959,6 +955,8 @@
                                      "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible" },
 { "key": "cmd+up",                "command": "search.focus.previousInputBox",
                                      "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible && !searchInputBoxFocus" },
+{ "key": "shift+alt+f",           "command": "search.restrictSearchToFolder",
+                                     "when": "folderMatchWithResourceFocus && searchViewletVisible" },
 { "key": "shift+cmd+l",           "command": "selectAllSearchEditorMatches",
                                      "when": "inSearchEditor" },
 { "key": "escape",                "command": "settings.action.focusLevelUp",
@@ -1513,6 +1511,10 @@
                                      "when": "codeActionMenuVisible" },
 { "key": "enter",                 "command": "acceptSelectedCodeAction",
                                      "when": "codeActionMenuVisible" },
+{ "key": "shift+escape",          "command": "hideCodeActionWidget",
+                                     "when": "codeActionMenuVisible" },
+{ "key": "escape",                "command": "hideCodeActionWidget",
+                                     "when": "codeActionMenuVisible" },
 { "key": "cmd+enter",             "command": "previewSelectedCodeAction",
                                      "when": "codeActionMenuVisible" },
 { "key": "ctrl+n",                "command": "selectNextCodeAction",
@@ -1855,7 +1857,6 @@
 // - git.revertChange
 // - git.runGitMerge
 // - git.runGitMergeDiff3
-// - git.setLogLevel
 // - git.showOutput
 // - git.stage
 // - git.stageAll
@@ -1899,6 +1900,8 @@
 // - ipynb.openIpynbInNotebookEditor
 // - javascript.goToProjectConfig
 // - javascript.reloadProjects
+// - javascript.removeUnusedImports
+// - javascript.sortImports
 // - jsBrowserBreakpoints.focus
 // - jsBrowserBreakpoints.resetViewLocation
 // - jsExcludedCallers.focus
@@ -1916,6 +1919,7 @@
 // - lastCursorLineSelectDrag
 // - lastCursorWordSelect
 // - layoutEditorGroups
+// - list.collapseAllToFocus
 // - list.focusParent
 // - list.scrollLeft
 // - list.scrollRight
@@ -1924,6 +1928,8 @@
 // - list.toggleFindMode
 // - list.toggleKeyboardNavigation
 // - list.triggerTypeNavigation
+// - markdown.editor.insertImageFromWorkspace
+// - markdown.editor.insertLinkFromWorkspace
 // - markdown.findAllFileReferences
 // - markdown.preview.refresh
 // - markdown.preview.toggleLock
@@ -1955,7 +1961,8 @@
 // - merge.openBaseEditor
 // - merge.openResult
 // - merge.showBase
-// - merge.showBaseAtTop
+// - merge.showBaseCenter
+// - merge.showBaseTop
 // - merge.showNonConflictingChanges
 // - merge.toggleActiveConflictInput1
 // - merge.toggleActiveConflictInput2
@@ -2027,6 +2034,7 @@
 // - openInTerminal
 // - openReference
 // - outline.collapse
+// - outline.expand
 // - outline.filterOnType
 // - outline.focus
 // - outline.followCursor
@@ -2091,10 +2099,13 @@
 // - scm.openInTerminal
 // - scrollEditorBottom
 // - scrollEditorTop
+// - scrollLeft
+// - scrollRight
 // - search.action.clearHistory
 // - search.action.clearSearchResults
 // - search.action.collapseSearchResults
 // - search.action.copyAll
+// - search.action.excludeFromSearch
 // - search.action.expandSearchResults
 // - search.action.focusFilesToExclude
 // - search.action.focusFilesToInclude
@@ -2158,10 +2169,12 @@
 // - typescript.goToSourceDefinition
 // - typescript.openTsServerLog
 // - typescript.reloadProjects
+// - typescript.removeUnusedImports
 // - typescript.restartTsServer
 // - typescript.selectTypeScriptVersion
+// - typescript.sortImports
 // - update.check
-// - update.checkForVSCodeUpdate
+// - update.checkForUpdate
 // - update.checking
 // - update.downloadNow
 // - update.downloadUpdate
@@ -2229,6 +2242,7 @@
 // - workbench.action.decreaseViewHeight
 // - workbench.action.decreaseViewSize
 // - workbench.action.decreaseViewWidth
+// - workbench.action.download
 // - workbench.action.duplicateActiveEditorGroupDown
 // - workbench.action.duplicateActiveEditorGroupLeft
 // - workbench.action.duplicateActiveEditorGroupRight
@@ -2338,6 +2352,7 @@
 // - workbench.action.newWindowTab
 // - workbench.action.nextPanelView
 // - workbench.action.nextSideBarView
+// - workbench.action.openAccessibilitySettings
 // - workbench.action.openActiveLogOutputFile
 // - workbench.action.openApplicationSettingsJson
 // - workbench.action.openDefaultKeybindingsFile
@@ -2378,6 +2393,18 @@
 // - workbench.action.openWorkspaceInNewWindow
 // - workbench.action.openWorkspaceSettings
 // - workbench.action.openWorkspaceSettingsFile
+// - workbench.action.output.show.editSessionsSyncLog
+// - workbench.action.output.show.extHostLog
+// - workbench.action.output.show.extension-output-vscode.git-#1-Git
+// - workbench.action.output.show.extension-output-vscode.github-authentication-#1-GitHub Authentication
+// - workbench.action.output.show.extension-output-vscode.microsoft-authentication-#1-Microsoft Authentication
+// - workbench.action.output.show.mainLog
+// - workbench.action.output.show.ptyHostLog
+// - workbench.action.output.show.remoteTunnelLog
+// - workbench.action.output.show.rendererLog
+// - workbench.action.output.show.sharedLog
+// - workbench.action.output.show.tasks
+// - workbench.action.output.show.userDataSyncLog
 // - workbench.action.pauseSocketWriting
 // - workbench.action.populateFileFromSnippet
 // - workbench.action.positionPanelBottom
@@ -2396,6 +2423,7 @@
 // - workbench.action.quickOpenPreviousRecentlyUsedEditor
 // - workbench.action.quickOpenRecent
 // - workbench.action.quickOpenTerm
+// - workbench.action.quickOpenWithModes
 // - workbench.action.quickPickManyToggle
 // - workbench.action.quickSwitchWindow
 // - workbench.action.reloadWindowWithExtensionsDisabled
@@ -2502,6 +2530,7 @@
 // - workbench.action.terminal.setDimensions
 // - workbench.action.terminal.showEnvironmentInformation
 // - workbench.action.terminal.showTabs
+// - workbench.action.terminal.showTextureAtlas
 // - workbench.action.terminal.sizeToContentWidthInstance
 // - workbench.action.terminal.splitInActiveWorkspace
 // - workbench.action.terminal.switchTerminal
@@ -2547,12 +2576,15 @@
 // - workbench.actions.syncData.reset
 // - workbench.actions.table.workbench.panel.markers.view.viewAsTable
 // - workbench.actions.table.workbench.panel.markers.view.viewAsTree
-// - workbench.actions.treeView.repl.filter
-// - workbench.actions.treeView.testExplorer.filter
-// - workbench.actions.treeView.workbench.panel.comments.filter
 // - workbench.actions.treeView.workbench.panel.markers.view.collapseAll
-// - workbench.actions.treeView.workbench.panel.markers.view.filter
 // - workbench.actions.view.toggleProblems
+// - workbench.actions.workbench.panel.comments.toggleResolvedComments
+// - workbench.actions.workbench.panel.comments.toggleUnResolvedComments
+// - workbench.actions.workbench.panel.markers.view.toggleActiveFile
+// - workbench.actions.workbench.panel.markers.view.toggleErrors
+// - workbench.actions.workbench.panel.markers.view.toggleExcludedFiles
+// - workbench.actions.workbench.panel.markers.view.toggleInfos
+// - workbench.actions.workbench.panel.markers.view.toggleWarnings
 // - workbench.debug.action.copyAll
 // - workbench.debug.action.focusBreakpointsView
 // - workbench.debug.action.focusCallStackView
@@ -2671,6 +2703,7 @@
 // - workbench.notebook.layout.configure.editorTitle
 // - workbench.notebook.layout.gettingStarted
 // - workbench.notebook.layout.select
+// - workbench.notebook.layout.webview.reset
 // - workbench.output.action.clearOutput
 // - workbench.output.action.switchBetweenOutputs
 // - workbench.output.action.toggleAutoScroll
@@ -2723,7 +2756,6 @@
 // - workbench.scm.toggleVisibility
 // - workbench.trust.configure
 // - workbench.trust.manage
-// - workbench.userData.actions.askToTunrOnAfterInit
 // - workbench.userData.actions.cancelTurnOn
 // - workbench.userData.actions.openSyncBackupsFolder
 // - workbench.userData.actions.signin

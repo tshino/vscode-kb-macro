@@ -226,14 +226,6 @@
 				"key": "shift+escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "hideCodeActionWidget"
-				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
-			},
-			{
-				"key": "shift+escape",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "hideSuggestWidget",
 					"record": "side-effect"
 				},
@@ -286,6 +278,14 @@
 					"command": "closeReferenceSearch"
 				},
 				"when": "kb-macro.recording && referenceSearchVisible && !config.editor.stablePeek"
+			},
+			{
+				"key": "shift+escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "hideCodeActionWidget"
+				},
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "escape",
@@ -480,14 +480,6 @@
 					"command": "closeParameterHints"
 				},
 				"when": "kb-macro.recording && editorFocus && parameterHintsVisible"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "hideCodeActionWidget"
-				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "escape",
@@ -705,6 +697,14 @@
 					"command": "notifications.hideToasts"
 				},
 				"when": "kb-macro.recording && notificationFocus && notificationToastsVisible"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "hideCodeActionWidget"
+				},
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+end",
@@ -2610,7 +2610,7 @@
 				"args": {
 					"command": "notebook.find"
 				},
-				"when": "kb-macro.recording && notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'"
+				"when": "kb-macro.recording && notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.interactive' || kb-macro.recording && notebookEditorFocused && !editorFocus && activeEditor == 'workbench.editor.notebook'"
 			},
 			{
 				"key": "ctrl+f",
@@ -3420,6 +3420,14 @@
 					"command": "notebook.format"
 				},
 				"when": "kb-macro.recording && !isLinux && notebookEditable && !editorTextFocus && activeEditor == 'workbench.editor.notebook'"
+			},
+			{
+				"key": "shift+alt+f",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "search.restrictSearchToFolder"
+				},
+				"when": "kb-macro.recording && folderMatchWithResourceFocus && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+k ctrl+f",
