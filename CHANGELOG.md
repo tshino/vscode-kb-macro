@@ -4,7 +4,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 
 ### [Unreleased]
 - Update
-  - Updated keymap wrapper for Awesome Emacs Keymap (v0.45.1). [#162](https://github.com/tshino/vscode-kb-macro/pull/162)
+  - Updated keymap wrapper for Awesome Emacs Keymap (v0.45.2). [#162](https://github.com/tshino/vscode-kb-macro/pull/162)
 
 ### [0.12.8] - 2022-11-05
 - Update
