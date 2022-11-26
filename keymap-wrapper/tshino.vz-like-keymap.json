@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Vz Keymap v0.19.2
+	// Keymap wrapper for Vz Keymap v0.19.3
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -272,9 +272,9 @@
 	{ "key": "ctrl+q a", "command": "kb-macro.wrap", "args": { "command": "vz.findStart", "await": "selection" },
 		"when": "kb-macro.recording && editorFocus && replaceInputFocussed" },
 	{ "key": "ctrl+e", "command": "kb-macro.wrap", "args": { "command": "history.showPrevious", "await": "selection" },
-		"when": "kb-macro.recording && historyNavigationBackwardsEnabled && historyNavigationWidget" },
+		"when": "kb-macro.recording && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible" },
 	{ "key": "ctrl+x", "command": "kb-macro.wrap", "args": { "command": "history.showNext", "await": "selection" },
-		"when": "kb-macro.recording && historyNavigationForwardsEnabled && historyNavigationWidget" },
+		"when": "kb-macro.recording && historyNavigationForwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible" },
 	{ "key": "enter", "command": "kb-macro.wrap", "args": { "command": "vz.findStart", "await": "selection" },
 		"when": "kb-macro.recording && editorFocus && findInputFocussed" },
 	{ "key": "shift+enter", "command": "kb-macro.wrap", "args": { "command": "vz.findStart", "await": "selection" },
