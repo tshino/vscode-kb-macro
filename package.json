@@ -285,7 +285,7 @@
 				"args": {
 					"command": "hideCodeActionWidget"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "escape",
@@ -704,7 +704,7 @@
 				"args": {
 					"command": "hideCodeActionWidget"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+end",
@@ -923,7 +923,7 @@
 				"args": {
 					"command": "selectNextCodeAction"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+shift+down",
@@ -1609,7 +1609,7 @@
 				"args": {
 					"command": "selectPrevCodeAction"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+shift+up",
@@ -2035,7 +2035,7 @@
 				"args": {
 					"command": "selectNextCodeAction"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+up",
@@ -2114,7 +2114,7 @@
 				"args": {
 					"command": "selectPrevCodeAction"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "alt+pagedown",
@@ -2837,7 +2837,7 @@
 				"args": {
 					"command": "acceptSelectedCodeAction"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+u",
@@ -3425,7 +3425,7 @@
 				"key": "shift+alt+f",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "search.restrictSearchToFolder"
+					"command": "search.action.restrictSearchToFolder"
 				},
 				"when": "kb-macro.recording && folderMatchWithResourceFocus && searchViewletVisible"
 			},
@@ -3637,7 +3637,7 @@
 				"args": {
 					"command": "previewSelectedCodeAction"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+shift+enter",
@@ -3998,6 +3998,15 @@
 				"mac": "cmd+.",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.terminal.showQuickFixes"
+				},
+				"when": "kb-macro.recording && terminalFocus"
+			},
+			{
+				"key": "ctrl+.",
+				"mac": "cmd+.",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "problems.action.showQuickFixes"
 				},
 				"when": "kb-macro.recording && problemFocus"
@@ -4007,18 +4016,9 @@
 				"mac": "cmd+.",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.terminal.quickFix"
-				},
-				"when": "kb-macro.recording && terminalFocus && terminalProcessSupported"
-			},
-			{
-				"key": "ctrl+.",
-				"mac": "cmd+.",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "acceptSelectedCodeAction"
 				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"when": "kb-macro.recording && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+shift+r",
@@ -4265,10 +4265,19 @@
 				"mac": "cmd+i",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "focusSuggestion"
+				},
+				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus && !config.editor.suggest.selectQuickSuggestions && !suggestWidgetHasFocusedSuggestion"
+			},
+			{
+				"key": "ctrl+i",
+				"mac": "cmd+i",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "toggleSuggestionDetails",
 					"record": "side-effect"
 				},
-				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
+				"when": "kb-macro.recording && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
 			},
 			{
 				"key": "ctrl+space",
@@ -4283,10 +4292,18 @@
 				"key": "ctrl+space",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "focusSuggestion"
+				},
+				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus && !config.editor.suggest.selectQuickSuggestions && !suggestWidgetHasFocusedSuggestion"
+			},
+			{
+				"key": "ctrl+space",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "toggleSuggestionDetails",
 					"record": "side-effect"
 				},
-				"when": "kb-macro.recording && suggestWidgetVisible && textInputFocus"
+				"when": "kb-macro.recording && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
 			},
 			{
 				"key": "ctrl+space",
@@ -4909,7 +4926,7 @@
 				"args": {
 					"command": "breadcrumbs.focus"
 				},
-				"when": "kb-macro.recording && breadcrumbsPossible"
+				"when": "kb-macro.recording && breadcrumbsPossible && breadcrumbsVisible"
 			},
 			{
 				"key": "space",
@@ -7219,7 +7236,7 @@
 				"args": {
 					"command": "selectNextCodeAction"
 				},
-				"when": "kb-macro.recording && isMac && codeActionMenuVisible"
+				"when": "kb-macro.recording && isMac && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+o",
@@ -7369,7 +7386,7 @@
 				"args": {
 					"command": "selectPrevCodeAction"
 				},
-				"when": "kb-macro.recording && isMac && codeActionMenuVisible"
+				"when": "kb-macro.recording && isMac && actionWidgetVisible"
 			},
 			{
 				"key": "ctrl+q",
