@@ -285,7 +285,7 @@
 				"args": {
 					"command": "hideCodeActionWidget"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "escape",
@@ -704,7 +704,7 @@
 				"args": {
 					"command": "hideCodeActionWidget"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+end",
@@ -923,7 +923,7 @@
 				"args": {
 					"command": "selectNextCodeAction"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+shift+down",
@@ -1609,7 +1609,7 @@
 				"args": {
 					"command": "selectPrevCodeAction"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+shift+up",
@@ -2035,7 +2035,7 @@
 				"args": {
 					"command": "selectNextCodeAction"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+up",
@@ -2114,7 +2114,7 @@
 				"args": {
 					"command": "selectPrevCodeAction"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "alt+pagedown",
@@ -2837,7 +2837,7 @@
 				"args": {
 					"command": "acceptSelectedCodeAction"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+u",
@@ -3637,7 +3637,7 @@
 				"args": {
 					"command": "previewSelectedCodeAction"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+shift+enter",
@@ -4018,7 +4018,7 @@
 				"args": {
 					"command": "acceptSelectedCodeAction"
 				},
-				"when": "kb-macro.recording && actionWidgetVisible"
+				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+shift+r",
@@ -7236,7 +7236,7 @@
 				"args": {
 					"command": "selectNextCodeAction"
 				},
-				"when": "kb-macro.recording && isMac && actionWidgetVisible"
+				"when": "kb-macro.recording && isMac && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+o",
@@ -7386,7 +7386,7 @@
 				"args": {
 					"command": "selectPrevCodeAction"
 				},
-				"when": "kb-macro.recording && isMac && actionWidgetVisible"
+				"when": "kb-macro.recording && isMac && codeActionMenuVisible"
 			},
 			{
 				"key": "ctrl+q",
