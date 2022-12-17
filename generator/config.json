@@ -20,7 +20,13 @@
         "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
         "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
         "workbench.action.quickOpenNavigateNextInEditorPicker",
-        "workbench.action.quickOpenNavigatePreviousInEditorPicker"
+        "workbench.action.quickOpenNavigatePreviousInEditorPicker",
+        "editor.action.quickFix",
+        "acceptSelectedCodeAction",
+        "hideCodeActionWidget",
+        "previewSelectedCodeAction",
+        "selectNextCodeAction",
+        "selectPrevCodeAction"
     ],
     "awaitOptions": [
         [ "editor.action.clipboardCopyAction", "clipboard" ],
@@ -70,7 +76,7 @@
                     "text": "\n"
                 }
             },
-            "when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible"
+            "when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible && !codeActionMenuVisible"
         }
     ],
     "footer": [

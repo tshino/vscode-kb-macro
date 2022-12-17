@@ -131,7 +131,7 @@
 						"text": "\n"
 					}
 				},
-				"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible"
+				"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible && !codeActionMenuVisible"
 			},
 			{
 				"key": "escape escape",
@@ -281,10 +281,7 @@
 			},
 			{
 				"key": "shift+escape",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "hideCodeActionWidget"
-				},
+				"command": "hideCodeActionWidget",
 				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
@@ -700,10 +697,7 @@
 			},
 			{
 				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "hideCodeActionWidget"
-				},
+				"command": "hideCodeActionWidget",
 				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
@@ -919,10 +913,7 @@
 			},
 			{
 				"key": "down",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "selectNextCodeAction"
-				},
+				"command": "selectNextCodeAction",
 				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
@@ -1605,10 +1596,7 @@
 			},
 			{
 				"key": "up",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "selectPrevCodeAction"
-				},
+				"command": "selectPrevCodeAction",
 				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
@@ -2030,12 +2018,9 @@
 			},
 			{
 				"key": "ctrl+down",
-				"mac": "cmd+down",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "selectNextCodeAction"
-				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"command": "selectNextCodeAction",
+				"when": "kb-macro.recording && codeActionMenuVisible",
+				"mac": "cmd+down"
 			},
 			{
 				"key": "ctrl+up",
@@ -2109,12 +2094,9 @@
 			},
 			{
 				"key": "ctrl+up",
-				"mac": "cmd+up",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "selectPrevCodeAction"
-				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"command": "selectPrevCodeAction",
+				"when": "kb-macro.recording && codeActionMenuVisible",
+				"mac": "cmd+up"
 			},
 			{
 				"key": "alt+pagedown",
@@ -2833,10 +2815,7 @@
 			},
 			{
 				"key": "enter",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "acceptSelectedCodeAction"
-				},
+				"command": "acceptSelectedCodeAction",
 				"when": "kb-macro.recording && codeActionMenuVisible"
 			},
 			{
@@ -3632,12 +3611,9 @@
 			},
 			{
 				"key": "ctrl+enter",
-				"mac": "cmd+enter",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "previewSelectedCodeAction"
-				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"command": "previewSelectedCodeAction",
+				"when": "kb-macro.recording && codeActionMenuVisible",
+				"mac": "cmd+enter"
 			},
 			{
 				"key": "ctrl+shift+enter",
@@ -3986,12 +3962,9 @@
 			},
 			{
 				"key": "ctrl+.",
-				"mac": "cmd+.",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "editor.action.quickFix"
-				},
-				"when": "kb-macro.recording && editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+				"command": "editor.action.quickFix",
+				"when": "kb-macro.recording && editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
+				"mac": "cmd+."
 			},
 			{
 				"key": "ctrl+.",
@@ -4013,12 +3986,9 @@
 			},
 			{
 				"key": "ctrl+.",
-				"mac": "cmd+.",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "acceptSelectedCodeAction"
-				},
-				"when": "kb-macro.recording && codeActionMenuVisible"
+				"command": "acceptSelectedCodeAction",
+				"when": "kb-macro.recording && codeActionMenuVisible",
+				"mac": "cmd+."
 			},
 			{
 				"key": "ctrl+shift+r",
@@ -7232,10 +7202,7 @@
 			},
 			{
 				"key": "ctrl+n",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "selectNextCodeAction"
-				},
+				"command": "selectNextCodeAction",
 				"when": "kb-macro.recording && isMac && codeActionMenuVisible"
 			},
 			{
@@ -7382,10 +7349,7 @@
 			},
 			{
 				"key": "ctrl+p",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "selectPrevCodeAction"
-				},
+				"command": "selectPrevCodeAction",
 				"when": "kb-macro.recording && isMac && codeActionMenuVisible"
 			},
 			{
