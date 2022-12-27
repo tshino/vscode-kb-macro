@@ -24,6 +24,8 @@ const KeyboardMacro = function({ awaitController }) {
     let onEndWrappedCommandCallback = null;
     let showInputBox = vscode.window.showInputBox; // replaceable for testing
     let showMessage = vscode.window.showInformationMessage; // replaceable for testing
+    let active = false; // === (backgroundRecording || recording)
+    let backgroundRecording = false;
     let recording = false;
     let playing = false;
     let shouldAbortPlayback = false;
@@ -46,15 +48,25 @@ const KeyboardMacro = function({ awaitController }) {
     const onChangeActiveState = function(callback) {
         onChangeActiveStateCallback = callback;
     };
+    const updateActiveState = function() {
+        const newState = backgroundRecording || recording;
+        if (active !== newState) {
+            active = newState;
+            if (onChangeActiveStateCallback) {
+                onChangeActiveStateCallback({ active });
+            }
+        }
+    };
+    const changeBackgroundRecordingState = function(newState) {
+        backgroundRecording = newState;
+        updateActiveState();
+    };
     const changeRecordingState = function(newState, reason) {
         recording = newState;
         if (onChangeRecordingStateCallback) {
             onChangeRecordingStateCallback({ recording, reason });
         }
-        if (onChangeActiveStateCallback) {
-            const active = recording;
-            onChangeActiveStateCallback({ active });
-        }
+        updateActiveState();
     };
     const onChangePlaybackState = function(callback) {
         onChangePlaybackStateCallback = callback;
@@ -105,6 +117,16 @@ const KeyboardMacro = function({ awaitController }) {
             changeRecordingState(false, RecordingStateReason.Finish);
         }
     });
+    const enableBackgroundRecording = async function() {
+        await reentrantGuard.callExclusively(function() {
+            changeBackgroundRecordingState(true);
+        });
+    };
+    const disableBackgroundRecording = async function() {
+        await reentrantGuard.callExclusively(function() {
+            changeBackgroundRecordingState(false);
+        });
+    };
 
     const push = function(spec) {
         if (recording) {
@@ -340,6 +362,8 @@ const KeyboardMacro = function({ awaitController }) {
         startRecording,
         cancelRecording,
         finishRecording,
+        enableBackgroundRecording,
+        disableBackgroundRecording,
         push,
         copyMacroAsKeybinding,
         validatePlaybackArgs,
@@ -352,6 +376,7 @@ const KeyboardMacro = function({ awaitController }) {
 
         // testing purpose only
         isRecording: () => { return recording; },
+        isBackgroundRecordingEnabled: () => { return backgroundRecording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
         setShowInputBox,

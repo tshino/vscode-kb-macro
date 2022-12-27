@@ -1039,4 +1039,124 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
     });
+    describe('enableBackgroundRecording', () => {
+        const logs = [];
+        beforeEach(async () => {
+            keyboardMacro.cancelRecording();
+            logs.length = 0;
+            keyboardMacro.onChangeRecordingState(({ recording }) => {
+                logs.push(`recording:${recording}`);
+            });
+            keyboardMacro.onChangeActiveState(({ active }) => {
+                logs.push(`active:${active}`);
+            });
+            keyboardMacro.registerInternalCommand('internal:log', async () => {
+                logs.push('begin');
+                await TestUtil.sleep(10);
+                logs.push('end');
+            });
+        });
+        afterEach(async () => {
+            await keyboardMacro.disableBackgroundRecording();
+            keyboardMacro.cancelRecording();
+        });
+        it('should enable background recording mode', async () => {
+            assert.strictEqual(keyboardMacro.isBackgroundRecordingEnabled(), false);
+            await keyboardMacro.enableBackgroundRecording();
+            assert.strictEqual(keyboardMacro.isBackgroundRecordingEnabled(), true);
+        });
+        it('should turn active context on', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            assert.deepStrictEqual(logs, ['active:true']);
+        });
+        it('should be ignored if already enabled', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.enableBackgroundRecording();
+            assert.deepStrictEqual(logs, ['active:true']);
+        });
+        it('should be combined with recording state to control active context', async () => {
+            keyboardMacro.startRecording();
+            assert.deepStrictEqual(logs, ['recording:true', 'active:true']);
+            logs.length = 0;
+            await keyboardMacro.enableBackgroundRecording();
+            assert.deepStrictEqual(logs, []);
+            logs.length = 0;
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(logs, ['recording:false']);
+            logs.length = 0;
+            await keyboardMacro.disableBackgroundRecording();
+            assert.deepStrictEqual(logs, ['active:false']);
+        });
+        it('should defer starting background recording mode until ongoing wrapper ends', async () => {
+            keyboardMacro.startRecording();
+            logs.length = 0;
+            const promise1 = keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.enableBackgroundRecording();
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            await promise1;
+            keyboardMacro.finishRecording();
+        });
+    });
+    describe('disableBackgroundRecording', () => {
+        const logs = [];
+        beforeEach(async () => {
+            keyboardMacro.cancelRecording();
+            logs.length = 0;
+            keyboardMacro.onChangeRecordingState(({ recording }) => {
+                logs.push(`recording:${recording}`);
+            });
+            keyboardMacro.onChangeActiveState(({ active }) => {
+                logs.push(`active:${active}`);
+            });
+            keyboardMacro.registerInternalCommand('internal:log', async () => {
+                logs.push('begin');
+                await TestUtil.sleep(10);
+                logs.push('end');
+            });
+        });
+        afterEach(async () => {
+            await keyboardMacro.disableBackgroundRecording();
+        });
+        it('should disable background recording mode', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.disableBackgroundRecording();
+            assert.strictEqual(keyboardMacro.isBackgroundRecordingEnabled(), false);
+        });
+        it('should turn active context off', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            logs.length = 0;
+            await keyboardMacro.disableBackgroundRecording();
+            assert.deepStrictEqual(logs, ['active:false']);
+        });
+        it('should be ignored if already disabled', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            logs.length = 0;
+            await keyboardMacro.disableBackgroundRecording();
+            await keyboardMacro.disableBackgroundRecording();
+            assert.deepStrictEqual(logs, ['active:false']);
+        });
+        it('should be combined with recording state to control active context', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            assert.deepStrictEqual(logs, ['active:true']);
+            logs.length = 0;
+            keyboardMacro.startRecording();
+            assert.deepStrictEqual(logs, ['recording:true']);
+            logs.length = 0;
+            await keyboardMacro.disableBackgroundRecording();
+            assert.deepStrictEqual(logs, []);
+            logs.length = 0;
+            keyboardMacro.finishRecording();
+            assert.deepStrictEqual(logs, ['recording:false', 'active:false']);
+        });
+        it('should defer starting background recording mode until ongoing wrapper ends', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            keyboardMacro.startRecording();
+            logs.length = 0;
+            const promise1 = keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.disableBackgroundRecording();
+            assert.deepStrictEqual(logs, [ 'begin', 'end' ]);
+            await promise1;
+            keyboardMacro.finishRecording();
+        });
+    });
 });
