@@ -509,4 +509,118 @@ describe('reentrantGuard', () => {
             ]);
         });
     });
+    describe('callExclusively', () => {
+        const logs = [];
+        beforeEach(() => {
+            logs.length = 0;
+        });
+        it('should call given function', async () => {
+            await reentrantGuard.callExclusively(
+                () => {
+                    logs.push('exclusive');
+                }
+            );
+            assert.deepStrictEqual(logs, ['exclusive']);
+        });
+        it('should not await end of calling given async function', async () => {
+            let done = null;
+            const cleanup = new Promise(resolve => { done = resolve; });
+            await reentrantGuard.callExclusively(
+                async () => {
+                    logs.push('hello');
+                    await TestUtil.sleep(20);
+                    logs.push('bye');
+                    done();
+                }
+            );
+            assert.deepStrictEqual(logs, ['hello']);
+            await cleanup;
+        });
+        it('should defer calling given function until ongoing guarded command ends', async () => {
+            const command = reentrantGuard.makeGuardedCommand(
+                async () => {
+                    logs.push('hello');
+                    await TestUtil.sleep(20);
+                    logs.push('bye');
+                }
+            );
+            const promise1 = command();
+            const promise2 = reentrantGuard.callExclusively(
+                () => {
+                    logs.push('exclusive');
+                }
+            );
+            await Promise.all([promise1, promise2]);
+            assert.deepStrictEqual(logs, ['hello', 'bye', 'exclusive']);
+        });
+        it('should defer calling given multiple functions until ongoing guarded command ends', async () => {
+            const command = reentrantGuard.makeGuardedCommand(
+                async () => {
+                    logs.push('hello');
+                    await TestUtil.sleep(10);
+                    logs.push('bye');
+                }
+            );
+            const promise1 = command();
+            const target = async () => {
+                logs.push('exclusive');
+            };
+            const promise2 = reentrantGuard.callExclusively(target);
+            const promise3 = reentrantGuard.callExclusively(target);
+            await Promise.all([promise1, promise2, promise3]);
+            assert.deepStrictEqual(logs, ['hello', 'bye', 'exclusive', 'exclusive']);
+        });
+        it('should not block guarded command execution by calling async function', async () => {
+            let done = null;
+            const cleanup = new Promise(resolve => { done = resolve; });
+            const target = async () => {
+                logs.push('exclusive');
+                await TestUtil.sleep(10);
+                logs.push('end');
+                done();
+            };
+            const promise1 = reentrantGuard.callExclusively(target);
+            const command = reentrantGuard.makeGuardedCommand(
+                async () => {
+                    logs.push('hello');
+                }
+            );
+            const promise2 = command();
+            await Promise.all([promise1, promise2, cleanup]);
+            assert.deepStrictEqual(logs, ['exclusive', 'hello', 'end']);
+        });
+        it('should call given function after ongoing non-async guarded command', async () => {
+            const command = reentrantGuard.makeGuardedCommandSync(
+                () => {
+                    logs.push('hello');
+                    reentrantGuard.callExclusively(
+                        () => {
+                            logs.push('exclusive');
+                        }
+                    );
+                    logs.push('bye');
+                }
+            );
+            command();
+            assert.deepStrictEqual(logs, ['hello', 'bye', 'exclusive']);
+        });
+        it('should defer calling given function until ongoing queueable guarded command ends', async () => {
+            const command = reentrantGuard.makeQueueableCommand(
+                async () => {
+                    logs.push('hello');
+                    await TestUtil.sleep(10);
+                    logs.push('bye');
+                }
+            );
+            const promise1 = command();
+            const promise2 = command();
+            const promise3 = reentrantGuard.callExclusively(
+                () => {
+                    logs.push('exclusive');
+                }
+            );
+            await Promise.all([promise1, promise2, promise3]);
+            assert.deepStrictEqual(logs, ['hello', 'bye', 'hello', 'bye', 'exclusive']);
+        });
+    });
 });

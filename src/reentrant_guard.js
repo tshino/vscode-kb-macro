@@ -7,6 +7,7 @@ const reentrantGuard = (function() {
         queueable: false
     };
     const queue = [];
+    const deferedFunctions = [];
 
     let printError = defaultPrintError;
     function defaultPrintError(error) {
@@ -17,6 +18,13 @@ const reentrantGuard = (function() {
         const old = printError;
         printError = printErrorImpl;
         return old;
+    };
+
+    const callDeferedFunctions = function() {
+        while (0 < deferedFunctions.length) {
+            const func = deferedFunctions.shift();
+            func();
+        }
     };
 
     const makeGuardedCommand = function(body) {
@@ -30,6 +38,7 @@ const reentrantGuard = (function() {
             } catch (error) {
                 printError(error);
             } finally {
+                callDeferedFunctions();
                 state.locked = false;
             }
         };
@@ -45,6 +54,7 @@ const reentrantGuard = (function() {
             } catch (error) {
                 printError(error);
             } finally {
+                callDeferedFunctions();
                 state.locked = false;
             }
         };
@@ -75,17 +85,31 @@ const reentrantGuard = (function() {
                     queue.splice(0, 1);
                     resolve();
                 } else {
+                    callDeferedFunctions();
                     state.locked = false;
                     state.queueable = false;
                 }
             }
         };
     };
+    const callExclusively = async function(func) {
+        if (state.locked) {
+            await new Promise(resolve => {
+                deferedFunctions.push(() => {
+                    func();
+                    resolve();
+                });
+            });
+        } else {
+            func();
+        }
+    };
 
     return {
         makeGuardedCommand,
         makeGuardedCommandSync,
         makeQueueableCommand,
+        callExclusively,
 
         // testing purpose only
         setPrintError,
