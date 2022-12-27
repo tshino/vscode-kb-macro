@@ -18,6 +18,7 @@ const KeyboardMacro = function({ awaitController }) {
     };
 
     let onChangeRecordingStateCallback = null;
+    let onChangeActiveStateCallback = null;
     let onChangePlaybackStateCallback = null;
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
@@ -42,10 +43,17 @@ const KeyboardMacro = function({ awaitController }) {
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
     };
+    const onChangeActiveState = function(callback) {
+        onChangeActiveStateCallback = callback;
+    };
     const changeRecordingState = function(newState, reason) {
         recording = newState;
         if (onChangeRecordingStateCallback) {
             onChangeRecordingStateCallback({ recording, reason });
+        }
+        if (onChangeActiveStateCallback) {
+            const active = recording;
+            onChangeActiveStateCallback({ active });
         }
     };
     const onChangePlaybackState = function(callback) {
@@ -324,6 +332,7 @@ const KeyboardMacro = function({ awaitController }) {
         PlaybackStateReason,
         setPrintError,
         onChangeRecordingState,
+        onChangeActiveState,
         onChangePlaybackState,
         onBeginWrappedCommand,
         onEndWrappedCommand,
