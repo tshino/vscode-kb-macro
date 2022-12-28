@@ -1328,6 +1328,8 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(keyboardMacro.getHistory(), []);
         });
         // TODO: more tests
+        // TODO: tests on repeatPlayback
+        // TODO: tests on repeatPlaybackTillEndOfFile
     });
-    // TODO: tests on playback in background recording
-});
+    // TODO: tests on typing in background recording
+ });
