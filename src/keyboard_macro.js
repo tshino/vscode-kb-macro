@@ -314,7 +314,7 @@ const KeyboardMacro = function({ awaitController }) {
     // See: https://github.com/tshino/vscode-kb-macro/pull/32
     const WrapQueueSize = 2;
     const wrapSync = reentrantGuard.makeQueueableCommand(async function(args) {
-        if (recording) {
+        if (active) {
             const spec = util.makeCommandSpec(args);
             if (!spec) {
                 return;
