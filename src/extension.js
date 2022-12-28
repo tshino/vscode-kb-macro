@@ -56,8 +56,6 @@ function activate(context) {
 
             const contextName = ContextPrefix + 'recording';
             vscode.commands.executeCommand('setContext', contextName, recording);
-            const contextNameAlias = ContextPrefix + 'active';
-            vscode.commands.executeCommand('setContext', contextNameAlias, recording);
 
             if (recording) {
                 modeIndicator.show();
@@ -70,6 +68,13 @@ function activate(context) {
                     vscode.window.setStatusBarMessage('Recording finished!', 3000);
                 }
             }
+        }
+    );
+    addEventListener(
+        keyboardMacro.onChangeActiveState,
+        function({ active }) {
+            const contextName = ContextPrefix + 'active';
+            vscode.commands.executeCommand('setContext', contextName, active);
         }
     );
     addEventListener(

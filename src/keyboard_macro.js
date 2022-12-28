@@ -18,15 +18,19 @@ const KeyboardMacro = function({ awaitController }) {
     };
 
     let onChangeRecordingStateCallback = null;
+    let onChangeActiveStateCallback = null;
     let onChangePlaybackStateCallback = null;
     let onBeginWrappedCommandCallback = null;
     let onEndWrappedCommandCallback = null;
     let showInputBox = vscode.window.showInputBox; // replaceable for testing
     let showMessage = vscode.window.showInformationMessage; // replaceable for testing
+    let active = false; // === (backgroundRecording || recording)
+    let backgroundRecording = false;
     let recording = false;
     let playing = false;
     let shouldAbortPlayback = false;
     const sequence = CommandSequence();
+    const history = CommandSequence();
     const internalCommands = new Map();
 
     let printError = defaultPrintError;
@@ -42,11 +46,28 @@ const KeyboardMacro = function({ awaitController }) {
     const onChangeRecordingState = function(callback) {
         onChangeRecordingStateCallback = callback;
     };
+    const onChangeActiveState = function(callback) {
+        onChangeActiveStateCallback = callback;
+    };
+    const updateActiveState = function() {
+        const newState = backgroundRecording || recording;
+        if (active !== newState) {
+            active = newState;
+            if (onChangeActiveStateCallback) {
+                onChangeActiveStateCallback({ active });
+            }
+        }
+    };
+    const changeBackgroundRecordingState = function(newState) {
+        backgroundRecording = newState;
+        updateActiveState();
+    };
     const changeRecordingState = function(newState, reason) {
         recording = newState;
         if (onChangeRecordingStateCallback) {
             onChangeRecordingStateCallback({ recording, reason });
         }
+        updateActiveState();
     };
     const onChangePlaybackState = function(callback) {
         onChangePlaybackStateCallback = callback;
@@ -97,13 +118,29 @@ const KeyboardMacro = function({ awaitController }) {
             changeRecordingState(false, RecordingStateReason.Finish);
         }
     });
+    const enableBackgroundRecording = async function() {
+        await reentrantGuard.callExclusively(function() {
+            if (!backgroundRecording) {
+                history.clear();
+                changeBackgroundRecordingState(true);
+            }
+        });
+    };
+    const disableBackgroundRecording = async function() {
+        await reentrantGuard.callExclusively(function() {
+            changeBackgroundRecordingState(false);
+        });
+    };
 
     const push = function(spec) {
+        if (spec.record === 'side-effect') {
+            // side-effect mode
+            return;
+        }
+        if (active) {
+            history.push(spec);
+        }
         if (recording) {
-            if (spec.record === 'side-effect') {
-                // side-effect mode
-                return;
-            }
             sequence.push(spec);
         }
     };
@@ -199,7 +236,7 @@ const KeyboardMacro = function({ awaitController }) {
         args = validatePlaybackArgs(args);
         const repeat = 'repeat' in args ? args.repeat : 1;
         const commands = 'sequence' in args ? args.sequence : sequence.get();
-        const wrapMode = recording ? 'command' : null;
+        const wrapMode = active ? 'command' : null;
         if (recording) {
             if (!('sequence' in args)) {
                 return;
@@ -284,7 +321,7 @@ const KeyboardMacro = function({ awaitController }) {
     // See: https://github.com/tshino/vscode-kb-macro/pull/32
     const WrapQueueSize = 2;
     const wrapSync = reentrantGuard.makeQueueableCommand(async function(args) {
-        if (recording) {
+        if (active) {
             const spec = util.makeCommandSpec(args);
             if (!spec) {
                 return;
@@ -324,6 +361,7 @@ const KeyboardMacro = function({ awaitController }) {
         PlaybackStateReason,
         setPrintError,
         onChangeRecordingState,
+        onChangeActiveState,
         onChangePlaybackState,
         onBeginWrappedCommand,
         onEndWrappedCommand,
@@ -331,6 +369,8 @@ const KeyboardMacro = function({ awaitController }) {
         startRecording,
         cancelRecording,
         finishRecording,
+        enableBackgroundRecording,
+        disableBackgroundRecording,
         push,
         copyMacroAsKeybinding,
         validatePlaybackArgs,
@@ -343,8 +383,11 @@ const KeyboardMacro = function({ awaitController }) {
 
         // testing purpose only
         isRecording: () => { return recording; },
+        isBackgroundRecordingEnabled: () => { return backgroundRecording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
+        getHistory: () => { return history.get(); },
+        discardHistory: () => { history.clear(); },
         setShowInputBox,
         setShowMessage,
         WrapQueueSize
