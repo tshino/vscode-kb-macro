@@ -1186,12 +1186,13 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(logs, [ 'begin', 'end', 'active:false' ]);
         });
     });
-    describe('wrap with background recording', () => {
+    describe('background recording', () => {
         const logs = [];
         let oldPrintError;
         beforeEach(async () => {
             keyboardMacro.startRecording();
             keyboardMacro.cancelRecording();
+            keyboardMacro.discardHistory();
             keyboardMacro.onChangeActiveState(({ active }) => {
                 logs.push(`active:${active}`);
             });
@@ -1213,15 +1214,119 @@ describe('KeybaordMacro', () => {
             keyboardMacro.setPrintError(oldPrintError);
             logs.length = 0;
         });
-        it('should invoke specified command in background recording mode, and not record it as explicit recording', async () => {
+        it('should invoke wrapped commands and not record them as explicit recording', async () => {
             await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
             await keyboardMacro.wrapSync({ command: 'internal:log' });
             await keyboardMacro.disableBackgroundRecording();
 
-            assert.deepStrictEqual(logs, [ 'active:true', 'begin', 'end', 'active:false' ]);
+            assert.deepStrictEqual(logs, [
+                'active:true',
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'active:false'
+            ]);
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
-        // TODO: test implicitly recorded sequence in background recording
+        it('should record wrapped commands as history', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.disableBackgroundRecording();
+
+            assert.deepStrictEqual(keyboardMacro.getHistory(), [
+                { command: 'internal:log' },
+                { command: 'internal:log' }
+            ]);
+        });
+        it('should invoke commands in a playback with explicit sequence option and not record them as explicit recording', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.playback(
+                { sequence: [
+                    { command: 'internal:log' },
+                    { command: 'internal:log' }
+                ] }
+            );
+            await keyboardMacro.disableBackgroundRecording();
+
+            assert.deepStrictEqual(logs, [
+                'active:true',
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'active:false'
+            ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
+        });
+        it('should invoke commands in a playback without sequence option and not record them as explicit recording', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+            logs.length = 0;
+
+            const sequenceBeforePlayback = Array.from(keyboardMacro.getCurrentSequence());
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.playback();
+            await keyboardMacro.playback();
+            await keyboardMacro.disableBackgroundRecording();
+            const sequenceAfterPlayback = Array.from(keyboardMacro.getCurrentSequence());
+
+            assert.deepStrictEqual(logs, [
+                'active:true',
+                'begin',
+                'end',
+                'begin',
+                'end',
+                'active:false'
+            ]);
+            assert.deepStrictEqual(sequenceAfterPlayback, sequenceBeforePlayback);
+        });
+        it('should record commands in a playback with explicit sequence option as history', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.playback(
+                { sequence: [
+                    { command: 'internal:log' },
+                    { command: 'internal:log' }
+                ] }
+            );
+            await keyboardMacro.disableBackgroundRecording();
+
+            assert.deepStrictEqual(keyboardMacro.getHistory(), [
+                { command: 'internal:log' },
+                { command: 'internal:log' }
+            ]);
+        });
+        it('should record commands in a playback without sequence option as history', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+            logs.length = 0;
+
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.playback();
+            await keyboardMacro.playback();
+            await keyboardMacro.disableBackgroundRecording();
+
+            assert.deepStrictEqual(keyboardMacro.getHistory(), [
+                { command: 'internal:log' },
+                { command: 'internal:log' },
+                { command: 'internal:log' },
+                { command: 'internal:log' }
+            ]);
+        });
+        it('should discard history when background recording starts', async () => {
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.disableBackgroundRecording();
+            await keyboardMacro.enableBackgroundRecording();
+
+            assert.deepStrictEqual(keyboardMacro.getHistory(), []);
+        });
         // TODO: more tests
     });
     // TODO: tests on playback in background recording

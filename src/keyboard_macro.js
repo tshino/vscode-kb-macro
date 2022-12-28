@@ -30,6 +30,7 @@ const KeyboardMacro = function({ awaitController }) {
     let playing = false;
     let shouldAbortPlayback = false;
     const sequence = CommandSequence();
+    const history = CommandSequence();
     const internalCommands = new Map();
 
     let printError = defaultPrintError;
@@ -119,7 +120,10 @@ const KeyboardMacro = function({ awaitController }) {
     });
     const enableBackgroundRecording = async function() {
         await reentrantGuard.callExclusively(function() {
-            changeBackgroundRecordingState(true);
+            if (!backgroundRecording) {
+                history.clear();
+                changeBackgroundRecordingState(true);
+            }
         });
     };
     const disableBackgroundRecording = async function() {
@@ -129,11 +133,14 @@ const KeyboardMacro = function({ awaitController }) {
     };
 
     const push = function(spec) {
+        if (spec.record === 'side-effect') {
+            // side-effect mode
+            return;
+        }
+        if (active) {
+            history.push(spec);
+        }
         if (recording) {
-            if (spec.record === 'side-effect') {
-                // side-effect mode
-                return;
-            }
             sequence.push(spec);
         }
     };
@@ -229,7 +236,7 @@ const KeyboardMacro = function({ awaitController }) {
         args = validatePlaybackArgs(args);
         const repeat = 'repeat' in args ? args.repeat : 1;
         const commands = 'sequence' in args ? args.sequence : sequence.get();
-        const wrapMode = recording ? 'command' : null;
+        const wrapMode = active ? 'command' : null;
         if (recording) {
             if (!('sequence' in args)) {
                 return;
@@ -379,6 +386,8 @@ const KeyboardMacro = function({ awaitController }) {
         isBackgroundRecordingEnabled: () => { return backgroundRecording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
+        getHistory: () => { return history.get(); },
+        discardHistory: () => { history.clear(); },
         setShowInputBox,
         setShowMessage,
         WrapQueueSize
