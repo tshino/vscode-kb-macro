@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Vz Keymap v0.19.3
+	// Keymap wrapper for Vz Keymap v0.19.4
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -190,9 +190,9 @@
 	{ "key": "ctrl+m", "command": "",
 		"when": "kb-macro.recording && editorFocus" },
 	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "vz.enter", "await": "document selection" },
-		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible" },
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible && !codeActionMenuVisible" },
 	{ "key": "enter", "command": "kb-macro.wrap", "args": { "command": "vz.enter", "await": "document selection" },
-		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible" },
+		"when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible && !codeActionMenuVisible" },
 	{ "key": "ctrl+n", "command": "",
 		"when": "kb-macro.recording && editorFocus && config.vzKeymap.ctrl+N" },
 	{ "key": "ctrl+n", "command": "kb-macro.wrap", "args": { "command": "vz.insertLineBefore", "await": "document selection" },
@@ -436,7 +436,7 @@
 	{ "key": "ctrl+q c", "command": "kb-macro.wrap", "args": { "command": "selectLastSuggestion", "record": "side-effect" },
 		"when": "kb-macro.recording && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys" },
 	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "acceptSelectedSuggestion", "record": "side-effect" },
-		"when": "kb-macro.recording && acceptSuggestionOnEnter && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus && config.vzKeymap.suggestionWidgetKeys" },
+		"when": "kb-macro.recording && acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus && config.vzKeymap.suggestionWidgetKeys" },
 	{ "key": "ctrl+x", "command": "kb-macro.wrap", "args": { "command": "settings.action.focusSettingsFromSearch" },
 		"when": "kb-macro.recording && inSettingsSearch && !suggestWidgetVisible && config.vzKeymap.settingsPageKeys" },
 	{ "key": "ctrl+s", "command": "kb-macro.wrap", "args": { "command": "settings.action.focusTOC" },
@@ -449,6 +449,12 @@
 		"when": "kb-macro.recording && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible && config.vzKeymap.parameterHintKeys" },
 	{ "key": "ctrl+x", "command": "showNextParameterHint",
 		"when": "kb-macro.recording && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible && config.vzKeymap.parameterHintKeys" },
+	{ "key": "ctrl+x", "command": "selectNextCodeAction",
+		"when": "kb-macro.recording && codeActionMenuVisible && config.vzKeymap.codeActionKeys" },
+	{ "key": "ctrl+e", "command": "selectPrevCodeAction",
+		"when": "kb-macro.recording && codeActionMenuVisible && config.vzKeymap.codeActionKeys" },
+	{ "key": "ctrl+m", "command": "acceptSelectedCodeAction",
+		"when": "kb-macro.recording && codeActionMenuVisible && config.vzKeymap.codeActionKeys" },
 	{ "key": "ctrl+oem_102", "command": "kb-macro.startRecording",
 		"when": "!kb-macro.recording && config.vzKeymap.ctrl+_" },
 	{ "key": "ctrl+oem_102", "command": "kb-macro.cancelRecording",
