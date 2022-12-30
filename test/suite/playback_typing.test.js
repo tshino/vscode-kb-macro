@@ -711,4 +711,23 @@ describe('Recording and Playback: Typing', () => {
             assert.deepStrictEqual(getSelections(), [[18, 2]]);
         });
     });
+
+    describe('background recording of direct typing', () => {
+        beforeEach(async () => {
+            await TestUtil.resetDocument(textEditor, (
+                '\n'.repeat(10) +
+                'abcd\n'.repeat(10) +
+                '    efgh\n'.repeat(10)
+            ));
+        });
+        it('should detect and reproduce direct typing of a character', async () => {
+            await setSelections([[0, 0]]);
+            await keyboardMacro.enableBackgroundRecording();
+            await vscode.commands.executeCommand('type', { text: 'X' });
+            await keyboardMacro.disableBackgroundRecording();
+            assert.deepStrictEqual(keyboardMacro.getHistory(), [ Type('X') ]);
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'X');
+            assert.deepStrictEqual(getSelections(), [[0, 1]]);
+        });
+    });
 });
