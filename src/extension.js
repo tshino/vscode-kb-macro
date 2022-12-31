@@ -48,12 +48,6 @@ function activate(context) {
     addEventListener(
         keyboardMacro.onChangeRecordingState,
         function({ recording, reason }) {
-            if (recording) {
-                typingDetector.start();
-            } else {
-                typingDetector.stop();
-            }
-
             const contextName = ContextPrefix + 'recording';
             vscode.commands.executeCommand('setContext', contextName, recording);
 
@@ -73,6 +67,12 @@ function activate(context) {
     addEventListener(
         keyboardMacro.onChangeActiveState,
         function({ active }) {
+            if (active) {
+                typingDetector.start();
+            } else {
+                typingDetector.stop();
+            }
+
             const contextName = ContextPrefix + 'active';
             vscode.commands.executeCommand('setContext', contextName, active);
         }

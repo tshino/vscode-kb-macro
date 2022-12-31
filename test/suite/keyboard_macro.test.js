@@ -1304,7 +1304,6 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.wrapSync({ command: 'internal:log' });
             await keyboardMacro.wrapSync({ command: 'internal:log' });
             keyboardMacro.finishRecording();
-            logs.length = 0;
 
             await keyboardMacro.enableBackgroundRecording();
             await keyboardMacro.playback();
@@ -1314,6 +1313,20 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(keyboardMacro.getHistory(), [
                 { command: 'internal:log' },
                 { command: 'internal:log' },
+                { command: 'internal:log' },
+                { command: 'internal:log' }
+            ]);
+        });
+        it('should record commands in a playback with repeat option as history', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            await keyboardMacro.enableBackgroundRecording();
+            await keyboardMacro.playback({ repeat: 2 });
+            await keyboardMacro.disableBackgroundRecording();
+
+            assert.deepStrictEqual(keyboardMacro.getHistory(), [
                 { command: 'internal:log' },
                 { command: 'internal:log' }
             ]);
