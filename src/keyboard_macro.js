@@ -137,7 +137,7 @@ const KeyboardMacro = function({ awaitController }) {
             // side-effect mode
             return;
         }
-        if (active) {
+        if (backgroundRecording) {
             history.push(spec);
         }
         if (recording) {
