@@ -1241,6 +1241,14 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log' }
             ]);
         });
+        it('should not create history without background recording even if in explicit recording mode', async () => {
+            keyboardMacro.startRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            await keyboardMacro.wrapSync({ command: 'internal:log' });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(keyboardMacro.getHistory(), []);
+        });
         it('should invoke commands in a playback with explicit sequence option and not record them as explicit recording', async () => {
             await keyboardMacro.enableBackgroundRecording();
             await keyboardMacro.playback(
