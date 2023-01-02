@@ -166,6 +166,12 @@ function activate(context) {
     );
 
     helperContext.reset(vscode.window.activeTextEditor);
+
+    const api = {
+        enableBackgroundRecording: keyboardMacro.enableBackgroundRecording,
+        disableBackgroundRecording: keyboardMacro.disableBackgroundRecording
+    };
+    return api;
 }
 
 function deactivate() {}
