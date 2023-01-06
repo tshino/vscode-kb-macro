@@ -118,7 +118,7 @@ const KeyboardMacro = function({ awaitController }) {
             changeRecordingState(false, RecordingStateReason.Finish);
         }
     });
-    const enableBackgroundRecording = async function() {
+    const startBackgroundRecording = async function() {
         await reentrantGuard.callExclusively(function() {
             if (!backgroundRecording) {
                 history.clear();
@@ -126,7 +126,7 @@ const KeyboardMacro = function({ awaitController }) {
             }
         });
     };
-    const disableBackgroundRecording = async function() {
+    const stopBackgroundRecording = async function() {
         await reentrantGuard.callExclusively(function() {
             changeBackgroundRecordingState(false);
         });
@@ -369,8 +369,8 @@ const KeyboardMacro = function({ awaitController }) {
         startRecording,
         cancelRecording,
         finishRecording,
-        enableBackgroundRecording,
-        disableBackgroundRecording,
+        startBackgroundRecording,
+        stopBackgroundRecording,
         push,
         copyMacroAsKeybinding,
         validatePlaybackArgs,
@@ -383,7 +383,7 @@ const KeyboardMacro = function({ awaitController }) {
 
         // testing purpose only
         isRecording: () => { return recording; },
-        isBackgroundRecordingEnabled: () => { return backgroundRecording; },
+        isBackgroundRecordingOngoing: () => { return backgroundRecording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
         getHistory: () => { return history.get(); },

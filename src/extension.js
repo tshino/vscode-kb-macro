@@ -11,6 +11,11 @@ const keyboardMacro = KeyboardMacro({ awaitController });
 const typingDetector = TypingDetector();
 const helperContext = HelperContext();
 
+const api = {
+    startBackgroundRecording: keyboardMacro.startBackgroundRecording,
+    stopBackgroundRecording: keyboardMacro.stopBackgroundRecording
+};
+
 function activate(context) {
     const CommandPrefix = 'kb-macro.';
     const ContextPrefix = 'kb-macro.';
@@ -166,6 +171,8 @@ function activate(context) {
     );
 
     helperContext.reset(vscode.window.activeTextEditor);
+
+    return api;
 }
 
 function deactivate() {}
@@ -173,6 +180,9 @@ function deactivate() {}
 module.exports = {
     activate,
     deactivate,
+
+    // for testing
     awaitController,
-    keyboardMacro
+    keyboardMacro,
+    api,
 };
