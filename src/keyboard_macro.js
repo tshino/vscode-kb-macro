@@ -383,7 +383,7 @@ const KeyboardMacro = function({ awaitController }) {
 
         // testing purpose only
         isRecording: () => { return recording; },
-        isBackgroundRecordingEnabled: () => { return backgroundRecording; },
+        isBackgroundRecordingOngoing: () => { return backgroundRecording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
         getHistory: () => { return history.get(); },

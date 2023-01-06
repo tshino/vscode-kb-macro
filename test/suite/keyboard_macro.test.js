@@ -1064,9 +1064,9 @@ describe('KeybaordMacro', () => {
             logs.length = 0;
         });
         it('should enable background recording mode', async () => {
-            assert.strictEqual(keyboardMacro.isBackgroundRecordingEnabled(), false);
+            assert.strictEqual(keyboardMacro.isBackgroundRecordingOngoing(), false);
             await keyboardMacro.startBackgroundRecording();
-            assert.strictEqual(keyboardMacro.isBackgroundRecordingEnabled(), true);
+            assert.strictEqual(keyboardMacro.isBackgroundRecordingOngoing(), true);
         });
         it('should turn active context on', async () => {
             await keyboardMacro.startBackgroundRecording();
@@ -1131,7 +1131,7 @@ describe('KeybaordMacro', () => {
         it('should disable background recording mode', async () => {
             await keyboardMacro.startBackgroundRecording();
             await keyboardMacro.stopBackgroundRecording();
-            assert.strictEqual(keyboardMacro.isBackgroundRecordingEnabled(), false);
+            assert.strictEqual(keyboardMacro.isBackgroundRecordingOngoing(), false);
         });
         it('should turn active context off', async () => {
             await keyboardMacro.startBackgroundRecording();
