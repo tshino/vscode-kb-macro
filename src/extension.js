@@ -168,8 +168,8 @@ function activate(context) {
     helperContext.reset(vscode.window.activeTextEditor);
 
     const api = {
-        startBackgroundRecording: keyboardMacro.enableBackgroundRecording,
-        stopBackgroundRecording: keyboardMacro.disableBackgroundRecording
+        startBackgroundRecording: keyboardMacro.startBackgroundRecording,
+        stopBackgroundRecording: keyboardMacro.stopBackgroundRecording
     };
     return api;
 }
