@@ -1063,7 +1063,7 @@ describe('KeybaordMacro', () => {
             keyboardMacro.onChangeActiveState(null);
             logs.length = 0;
         });
-        it('should enable background recording mode', async () => {
+        it('should start background recording mode', async () => {
             assert.strictEqual(keyboardMacro.isBackgroundRecordingOngoing(), false);
             await keyboardMacro.startBackgroundRecording();
             assert.strictEqual(keyboardMacro.isBackgroundRecordingOngoing(), true);
@@ -1072,7 +1072,7 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.startBackgroundRecording();
             assert.deepStrictEqual(logs, ['active:true']);
         });
-        it('should be ignored if already enabled', async () => {
+        it('should be ignored if already started', async () => {
             await keyboardMacro.startBackgroundRecording();
             await keyboardMacro.startBackgroundRecording();
             assert.deepStrictEqual(logs, ['active:true']);
@@ -1128,7 +1128,7 @@ describe('KeybaordMacro', () => {
             keyboardMacro.onChangeActiveState(null);
             logs.length = 0;
         });
-        it('should disable background recording mode', async () => {
+        it('should stop background recording mode', async () => {
             await keyboardMacro.startBackgroundRecording();
             await keyboardMacro.stopBackgroundRecording();
             assert.strictEqual(keyboardMacro.isBackgroundRecordingOngoing(), false);
@@ -1139,7 +1139,7 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.stopBackgroundRecording();
             assert.deepStrictEqual(logs, ['active:false']);
         });
-        it('should be ignored if already disabled', async () => {
+        it('should be ignored if already stopped', async () => {
             await keyboardMacro.startBackgroundRecording();
             logs.length = 0;
             await keyboardMacro.stopBackgroundRecording();
