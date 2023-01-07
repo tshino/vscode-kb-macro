@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const { api } = require('../../src/extension.js');
+const { api, keyboardMacro } = require('../../src/extension.js');
 
 describe('api', () => {
     describe('startBackgroundRecording', () => {
@@ -18,10 +18,36 @@ describe('api', () => {
         });
     });
     describe('getRecentBackgroundRecords', () => {
-        it('should be a function', () => {
+        beforeEach(async () => {
+            await api.stopBackgroundRecording();
+            keyboardMacro.discardHistory();
+        });
+        it('should be a non-async function', () => {
             const func = api.getRecentBackgroundRecords;
             assert.strictEqual(typeof func, 'function');
             assert.strictEqual(func.constructor.name, 'Function');
+        });
+        it('should return the recent records of background recording', async () => {
+            await api.startBackgroundRecording();
+            await keyboardMacro.wrapSync({
+                command: 'workbench.action.togglePanel'
+            });
+            await keyboardMacro.wrapSync({
+                command: 'workbench.action.toggleSidebarVisibility'
+            });
+            await api.stopBackgroundRecording();
+
+            assert.deepStrictEqual(
+                api.getRecentBackgroundRecords(),
+                [
+                    {
+                        command: 'workbench.action.togglePanel'
+                    },
+                    {
+                        command: 'workbench.action.toggleSidebarVisibility'
+                    }
+                ]
+            );
         });
     });
 });
