@@ -131,6 +131,9 @@ const KeyboardMacro = function({ awaitController }) {
             changeBackgroundRecordingState(false);
         });
     };
+    const getRecentBackgroundRecords = function() {
+        return history.get();
+    };
 
     const push = function(spec) {
         if (spec.record === 'side-effect') {
@@ -371,6 +374,7 @@ const KeyboardMacro = function({ awaitController }) {
         finishRecording,
         startBackgroundRecording,
         stopBackgroundRecording,
+        getRecentBackgroundRecords,
         push,
         copyMacroAsKeybinding,
         validatePlaybackArgs,

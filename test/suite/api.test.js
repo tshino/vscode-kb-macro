@@ -17,4 +17,11 @@ describe('api', () => {
             assert.strictEqual(func.constructor.name, 'AsyncFunction');
         });
     });
+    describe('getRecentBackgroundRecords', () => {
+        it('should be a function', () => {
+            const func = api.getRecentBackgroundRecords;
+            assert.strictEqual(typeof func, 'function');
+            assert.strictEqual(func.constructor.name, 'Function');
+        });
+    });
 });
