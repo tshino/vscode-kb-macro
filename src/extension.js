@@ -13,7 +13,8 @@ const helperContext = HelperContext();
 
 const api = {
     startBackgroundRecording: keyboardMacro.startBackgroundRecording,
-    stopBackgroundRecording: keyboardMacro.stopBackgroundRecording
+    stopBackgroundRecording: keyboardMacro.stopBackgroundRecording,
+    getRecentBackgroundRecords: keyboardMacro.getRecentBackgroundRecords,
 };
 
 function activate(context) {
