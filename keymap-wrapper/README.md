@@ -16,13 +16,13 @@ Click the keymap wrapper link in the table below, which opens a JSON file. Copy 
 
 | Keymap extension | Keymap wrapper | Last updated | Start recording | Stop recording | Playback |
 | ---------------- | -------------- | ------------ | ---------- | --------- | -------- |
-| [Atom Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings) | [link](ms-vscode.atom-keybindings.json) | 2022-12-30 | `Ctrl+Alt+R` | `Ctrl+Alt+R` | `Ctrl+Alt+P` |
-| [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | [link](tuttieee.emacs-mcx.json) | 2022-11-26 | `C-x S-9` | `C-x S-0` | `C-x e` |
-| [Delphi Keymap](https://marketplace.visualstudio.com/items?itemName=alefragnani.delphi-keybindings) | [link](alefragnani.delphi-keybindings.json) | 2022-10-09 | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+P` |
-| [Notepad++ Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.notepadplusplus-keybindings) | [link](ms-vscode.notepadplusplus-keybindings.json) | 2021-12-26 | `Ctrl+Shift+R` | `Ctrl+Shift+R` | `Ctrl+Shift+P` |
-| [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [link](ms-vscode.sublime-keybindings.json) | 2021-12-21 | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Shift+Q` |
-| [Visual Studio Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vs-keybindings) | [link](ms-vscode.vs-keybindings.json) | 2022-04-05 | `Ctrl+M R` | `Ctrl+M R` | `Ctrl+M Enter` |
-| [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap) | [link](tshino.vz-like-keymap.json) | 2022-12-29 | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` |
+| [Atom Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings) | [link](ms-vscode.atom-keybindings.json) | 2023-01-08 | `Ctrl+Alt+R` | `Ctrl+Alt+R` | `Ctrl+Alt+P` |
+| [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | [link](tuttieee.emacs-mcx.json) | 2023-01-08 | `C-x S-9` | `C-x S-0` | `C-x e` |
+| [Delphi Keymap](https://marketplace.visualstudio.com/items?itemName=alefragnani.delphi-keybindings) | [link](alefragnani.delphi-keybindings.json) | 2023-01-08 | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+P` |
+| [Notepad++ Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.notepadplusplus-keybindings) | [link](ms-vscode.notepadplusplus-keybindings.json) | 2023-01-08 | `Ctrl+Shift+R` | `Ctrl+Shift+R` | `Ctrl+Shift+P` |
+| [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [link](ms-vscode.sublime-keybindings.json) | 2023-01-08 | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Shift+Q` |
+| [Visual Studio Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vs-keybindings) | [link](ms-vscode.vs-keybindings.json) | 2023-01-08 | `Ctrl+M R` | `Ctrl+M R` | `Ctrl+M Enter` |
+| [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap) | [link](tshino.vz-like-keymap.json) | 2023-01-08 | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` |
 
 - Each keyboard shortcut for start/stop recording and playback is assigned to the same ones that the original editor is using, as much as possible.
 - You can find the definitions of them at the bottom of each keymap wrapper file (find the `startRecording` command etc.). You can customize them as you like.
