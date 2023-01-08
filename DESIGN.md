@@ -41,11 +41,11 @@ A wrapper keybinding associates a particular combination of `key` and `when` wit
         "args": {
             "command": "editor.action.selectToBracket"
         },
-        "when": "kb-macro.recording && editorTextFocus"
+        "when": "kb-macro.active && editorTextFocus"
     }
 ```
 
-We use the wrapper command only when the macro recording is ongoing. So we add the `kb-macro.recording` context to every wrapper keybinding.
+Since we want to use the wrapper command only when needed, we add the `kb-macro.active` context to every wrapper keybinding.
 
 Why don't we use the wrapper keybindings always to simplify things? Because we want to keep the original behavior of each command for the keybindings as much as possible. It is not clear but the indirect execution may not be perfectly transparent.
 
