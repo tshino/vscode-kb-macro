@@ -76,7 +76,7 @@
                     "text": "\n"
                 }
             },
-            "when": "kb-macro.recording && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible && !codeActionMenuVisible"
+            "when": "kb-macro.active && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible && !codeActionMenuVisible"
         }
     ],
     "footer": [

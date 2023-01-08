@@ -352,9 +352,9 @@ describe('gen_wrapper_util', () => {
     });
     describe('makeWrapperWhen', () => {
         const makeWrapperWhen = genWrapperUtil.makeWrapperWhen;
-        it('should append recording context to the "when" field', () => {
+        it('should append active context to the "when" field', () => {
             const input = { key: 'key1', command: 'command1', when: 'context1' };
-            const expected = 'kb-macro.recording && context1';
+            const expected = 'kb-macro.active && context1';
             assert.strictEqual(makeWrapperWhen(input), expected);
         });
     });
@@ -372,7 +372,7 @@ describe('gen_wrapper_util', () => {
                 args: {
                     command: 'command1'
                 },
-                when: 'kb-macro.recording && context1'
+                when: 'kb-macro.active && context1'
             } ];
             assert.deepStrictEqual(makeWrapper(input), expected);
         });
@@ -390,7 +390,7 @@ describe('gen_wrapper_util', () => {
                     command: 'command1',
                     args: { opt1: 'arg1' }
                 },
-                when: 'kb-macro.recording && context1'
+                when: 'kb-macro.active && context1'
             } ];
             assert.deepStrictEqual(makeWrapper(input), expected);
         });
@@ -408,7 +408,7 @@ describe('gen_wrapper_util', () => {
                 args: {
                     command: 'command1'
                 },
-                when: 'kb-macro.recording && context1'
+                when: 'kb-macro.active && context1'
             } ];
             assert.deepStrictEqual(makeWrapper(input), expected);
         });
@@ -426,7 +426,7 @@ describe('gen_wrapper_util', () => {
                     command: 'command1',
                     "await": "await1 await2"
                 },
-                when: 'kb-macro.recording && context1'
+                when: 'kb-macro.active && context1'
             } ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
         });
@@ -445,7 +445,7 @@ describe('gen_wrapper_util', () => {
                         command: 'command1',
                         "await": 'await1'
                     },
-                    when: 'kb-macro.recording && cond1 && context1'
+                    when: 'kb-macro.active && cond1 && context1'
                 },
                 {
                     key: 'key1',
@@ -453,7 +453,7 @@ describe('gen_wrapper_util', () => {
                     args: {
                         command: 'command1'
                     },
-                    when: 'kb-macro.recording && !cond1 && context1'
+                    when: 'kb-macro.active && !cond1 && context1'
                 }
             ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
@@ -473,7 +473,7 @@ describe('gen_wrapper_util', () => {
                         command: 'command1',
                         "await": "await1 await2"
                     },
-                    when: 'kb-macro.recording && cond1 && context1'
+                    when: 'kb-macro.active && cond1 && context1'
                 },
                 {
                     key: 'key1',
@@ -482,7 +482,7 @@ describe('gen_wrapper_util', () => {
                         command: 'command1',
                         "await": "await1"
                     },
-                    when: 'kb-macro.recording && !cond1 && context1'
+                    when: 'kb-macro.active && !cond1 && context1'
                 }
             ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
@@ -502,7 +502,7 @@ describe('gen_wrapper_util', () => {
                         command: 'command1',
                         "await": "await1 await2"
                     },
-                    when: 'kb-macro.recording && !cond1 && context1'
+                    when: 'kb-macro.active && !cond1 && context1'
                 },
                 {
                     key: 'key1',
@@ -511,7 +511,7 @@ describe('gen_wrapper_util', () => {
                         command: 'command1',
                         "await": "await1"
                     },
-                    when: 'kb-macro.recording && cond1 && context1'
+                    when: 'kb-macro.active && cond1 && context1'
                 }
             ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption), expected);
@@ -531,7 +531,7 @@ describe('gen_wrapper_util', () => {
                     command: 'command1',
                     record: 'side-effect'
                 },
-                when: 'kb-macro.recording && context1'
+                when: 'kb-macro.active && context1'
             } ];
             assert.deepStrictEqual(makeWrapper(input, awaitOption, recordOption), expected);
         });

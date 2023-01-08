@@ -69,7 +69,7 @@ const unwrapCommon = function(keybinding) {
             delete keybinding.args;
         }
     }
-    keybinding.when = removeWhenContext(keybinding.when, 'kb-macro.recording');
+    keybinding.when = removeWhenContext(keybinding.when, 'kb-macro.active');
     return keybinding;
 };
 const unwrapForWindows = function(keybinding) {
@@ -251,8 +251,8 @@ async function verifyWrapper() {
 
     for (const wrapper of wrappers) {
         assert.ok(
-            containsWhenContext(wrapper.when, 'kb-macro.recording'),
-            '"when" in a wrapper should contain "kb-macro.recording &&" context'
+            containsWhenContext(wrapper.when, 'kb-macro.active'),
+            '"when" in a wrapper should contain "kb-macro.active &&" context'
         );
         if (isWrapped(wrapper)) {
             assert.strictEqual(

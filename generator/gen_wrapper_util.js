@@ -254,7 +254,7 @@ function makeWrapperArgs(keybinding) {
 }
 
 function makeWrapperWhen(keybinding) {
-    return addWhenContext(keybinding.when, 'kb-macro.recording');
+    return addWhenContext(keybinding.when, 'kb-macro.active');
 }
 
 function makeWrapper(keybinding, awaitOption, recordOption = '') {
