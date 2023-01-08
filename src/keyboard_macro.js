@@ -132,7 +132,8 @@ const KeyboardMacro = function({ awaitController }) {
         });
     };
     const getRecentBackgroundRecords = function() {
-        return history.get();
+        const sequence = history.get();
+        return JSON.parse(JSON.stringify(sequence));
     };
 
     const push = function(spec) {
@@ -390,7 +391,6 @@ const KeyboardMacro = function({ awaitController }) {
         isBackgroundRecordingOngoing: () => { return backgroundRecording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
-        getHistory: () => { return history.get(); },
         discardHistory: () => { history.clear(); },
         setShowInputBox,
         setShowMessage,
