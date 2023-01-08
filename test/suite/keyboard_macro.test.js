@@ -1186,6 +1186,29 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(logs, [ 'begin', 'end', 'active:false' ]);
         });
     });
+    describe('getRecentBackgroundRecords', () => {
+        beforeEach(async () => {
+            keyboardMacro.startRecording();
+            keyboardMacro.cancelRecording();
+            keyboardMacro.discardHistory();
+            keyboardMacro.registerInternalCommand('internal:none', async () => {});
+        });
+        afterEach(async () => {
+            await keyboardMacro.stopBackgroundRecording();
+            keyboardMacro.cancelRecording();
+            keyboardMacro.discardHistory();
+        });
+        it('should return the sequence recorded in background recording', async () => {
+            await keyboardMacro.startBackgroundRecording();
+            await keyboardMacro.wrapSync({ command: 'internal:none', args: 1 });
+            await keyboardMacro.wrapSync({ command: 'internal:none', args: 2 });
+
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [
+                { command: 'internal:none', args: 1 },
+                { command: 'internal:none', args: 2 }
+            ]);
+        });
+    });
     describe('background recording', () => {
         const logs = [];
         let oldPrintError;
@@ -1209,8 +1232,6 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.stopBackgroundRecording();
             keyboardMacro.cancelRecording();
             keyboardMacro.onChangeActiveState(null);
-            keyboardMacro.onBeginWrappedCommand(null);
-            keyboardMacro.onEndWrappedCommand(null);
             keyboardMacro.setPrintError(oldPrintError);
             logs.length = 0;
         });
@@ -1236,7 +1257,7 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.wrapSync({ command: 'internal:log' });
             await keyboardMacro.stopBackgroundRecording();
 
-            assert.deepStrictEqual(keyboardMacro.getHistory(), [
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [
                 { command: 'internal:log' },
                 { command: 'internal:log' }
             ]);
@@ -1247,7 +1268,7 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.wrapSync({ command: 'internal:log' });
             keyboardMacro.finishRecording();
 
-            assert.deepStrictEqual(keyboardMacro.getHistory(), []);
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), []);
         });
         it('should invoke commands in a playback with explicit sequence option and not record them as explicit recording', async () => {
             await keyboardMacro.startBackgroundRecording();
@@ -1302,7 +1323,7 @@ describe('KeybaordMacro', () => {
             );
             await keyboardMacro.stopBackgroundRecording();
 
-            assert.deepStrictEqual(keyboardMacro.getHistory(), [
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [
                 { command: 'internal:log' },
                 { command: 'internal:log' }
             ]);
@@ -1318,7 +1339,7 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.playback();
             await keyboardMacro.stopBackgroundRecording();
 
-            assert.deepStrictEqual(keyboardMacro.getHistory(), [
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [
                 { command: 'internal:log' },
                 { command: 'internal:log' },
                 { command: 'internal:log' },
@@ -1334,7 +1355,7 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.playback({ repeat: 2 });
             await keyboardMacro.stopBackgroundRecording();
 
-            assert.deepStrictEqual(keyboardMacro.getHistory(), [
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [
                 { command: 'internal:log' },
                 { command: 'internal:log' }
             ]);
@@ -1346,7 +1367,7 @@ describe('KeybaordMacro', () => {
             await keyboardMacro.stopBackgroundRecording();
             await keyboardMacro.startBackgroundRecording();
 
-            assert.deepStrictEqual(keyboardMacro.getHistory(), []);
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), []);
         });
         // TODO: more tests
         // TODO: tests on repeatPlayback

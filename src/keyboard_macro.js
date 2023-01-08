@@ -390,7 +390,6 @@ const KeyboardMacro = function({ awaitController }) {
         isBackgroundRecordingOngoing: () => { return backgroundRecording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
-        getHistory: () => { return history.get(); },
         discardHistory: () => { history.clear(); },
         setShowInputBox,
         setShowMessage,

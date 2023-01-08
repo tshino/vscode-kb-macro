@@ -725,7 +725,7 @@ describe('Recording and Playback: Typing', () => {
             await keyboardMacro.startBackgroundRecording();
             await vscode.commands.executeCommand('type', { text: 'X' });
             await keyboardMacro.stopBackgroundRecording();
-            assert.deepStrictEqual(keyboardMacro.getHistory(), [ Type('X') ]);
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [ Type('X') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'X');
             assert.deepStrictEqual(getSelections(), [[0, 1]]);
         });
@@ -734,7 +734,7 @@ describe('Recording and Playback: Typing', () => {
             await keyboardMacro.startBackgroundRecording();
             await vscode.commands.executeCommand('type', { text: '(' });
             await keyboardMacro.stopBackgroundRecording();
-            assert.deepStrictEqual(keyboardMacro.getHistory(), [ Type('()'), MoveLeft(1) ]);
+            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [ Type('()'), MoveLeft(1) ]);
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abcd()');
             assert.deepStrictEqual(getSelections(), [[10, 5]]);
         });
