@@ -1208,6 +1208,18 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:none', args: 2 }
             ]);
         });
+        it('should return deep copy of the sequence', async () => {
+            await keyboardMacro.startBackgroundRecording();
+
+            await keyboardMacro.wrapSync({ command: 'internal:none', args: 1 });
+            const record1 = keyboardMacro.getRecentBackgroundRecords();
+
+            await keyboardMacro.wrapSync({ command: 'internal:none', args: 2 });
+            const record2 = keyboardMacro.getRecentBackgroundRecords();
+
+            assert.strictEqual(record1 === record2, false);
+            assert.strictEqual(record1[0] === record2[0], false);
+        });
     });
     describe('background recording', () => {
         const logs = [];

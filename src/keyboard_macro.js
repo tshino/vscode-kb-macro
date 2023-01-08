@@ -132,7 +132,8 @@ const KeyboardMacro = function({ awaitController }) {
         });
     };
     const getRecentBackgroundRecords = function() {
-        return history.get();
+        const sequence = history.get();
+        return JSON.parse(JSON.stringify(sequence));
     };
 
     const push = function(spec) {
