@@ -50,4 +50,24 @@ describe('api', () => {
             );
         });
     });
+    describe('areEqualRecords', () => {
+        it('should return true if given two records are equal', () => {
+            const record1 = { command: 'c1' };
+            const record2 = { command: 'c1' };
+
+            assert.strictEqual(api.areEqualRecords(record1, record2), true);
+        });
+        it('should return false if given two records are not equal', () => {
+            const record1 = { command: 'c1' };
+            const record2 = { command: 'c2' };
+
+            assert.strictEqual(api.areEqualRecords(record1, record2), false);
+        });
+        it('should return null for invalid arguments', () => {
+            assert.strictEqual(api.areEqualRecords(null, null), null);
+            assert.strictEqual(api.areEqualRecords({}, {}), null);
+            assert.strictEqual(api.areEqualRecords({}, undefined), null);
+            assert.strictEqual(api.areEqualRecords({ command: 1234 }, { command: 1234 }), null);
+        });
+    });
 });

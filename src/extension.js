@@ -15,6 +15,7 @@ const api = {
     startBackgroundRecording: keyboardMacro.startBackgroundRecording,
     stopBackgroundRecording: keyboardMacro.stopBackgroundRecording,
     getRecentBackgroundRecords: keyboardMacro.getRecentBackgroundRecords,
+    areEqualRecords: keyboardMacro.areEqualRecords,
 };
 
 function activate(context) {
