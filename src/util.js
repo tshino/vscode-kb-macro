@@ -82,13 +82,43 @@ const util = (function() {
         return spec;
     };
 
+    const areEqualCommandSpec = function(spec1, spec2) {
+        if (spec1 === spec2) {
+            return true;
+        }
+        if (spec1.command !== spec2.command) {
+            return false;
+        }
+        if (
+            ('args' in spec1) !== ('args' in spec2) ||
+            typeof spec1.args !== typeof spec2.args ||
+            JSON.stringify(spec1.args) !== JSON.stringify(spec2.args)
+        ) {
+            return false;
+        }
+        if (
+            ('await' in spec1) !== ('await' in spec2) ||
+            spec1.await !== spec2.await
+        ) {
+            return false;
+        }
+        if (
+            ('record' in spec1) !== ('record' in spec2) ||
+            spec1.record !== spec2.record
+        ) {
+            return false;
+        }
+        return true;
+    };
+
     return {
         isEqualSelections,
         sortSelections,
         makeIndexOfSortedSelections,
         makeSelectionsAfterTyping,
         validatePositiveIntegerInput,
-        makeCommandSpec
+        makeCommandSpec,
+        areEqualCommandSpec
     };
 })();
 

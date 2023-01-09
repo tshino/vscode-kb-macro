@@ -135,6 +135,14 @@ const KeyboardMacro = function({ awaitController }) {
         const sequence = history.get();
         return JSON.parse(JSON.stringify(sequence));
     };
+    const areEqualRecords = function(record1, record2) {
+        const spec1 = util.makeCommandSpec(record1);
+        const spec2 = util.makeCommandSpec(record2);
+        if (!spec1 || !spec2) {
+            return null;
+        }
+        return util.areEqualCommandSpec(spec1, spec2);
+    };
 
     const push = function(spec) {
         if (spec.record === 'side-effect') {
@@ -376,6 +384,7 @@ const KeyboardMacro = function({ awaitController }) {
         startBackgroundRecording,
         stopBackgroundRecording,
         getRecentBackgroundRecords,
+        areEqualRecords,
         push,
         copyMacroAsKeybinding,
         validatePlaybackArgs,

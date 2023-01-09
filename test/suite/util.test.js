@@ -255,4 +255,57 @@ describe('util', () => {
             );
         });
     });
+    describe('areEqualCommandSpec', () => {
+        it('should return true only if given two specs are equal', () => {
+            assert.strictEqual(util.areEqualCommandSpec(
+                { command: 'a' },
+                { command: 'a' }
+            ), true);
+            assert.strictEqual(util.areEqualCommandSpec(
+                { command: 'a', args: 123 },
+                { command: 'a', args: 123 }
+            ), true);
+            assert.strictEqual(util.areEqualCommandSpec(
+                { command: 'a', args: [ 1, 2, 3] },
+                { command: 'a', args: [ 1, 2, 3] }
+            ), true);
+            assert.strictEqual(util.areEqualCommandSpec(
+                { command: 'a', args: { x: 123 } },
+                { command: 'a', args: { x: 123 } }
+            ), true);
+            assert.strictEqual(util.areEqualCommandSpec(
+                { command: 'a', await: 'selection' },
+                { command: 'a', await: 'selection' }
+            ), true);
+            assert.strictEqual(util.areEqualCommandSpec(
+                { command: 'a', record: 'side-effect' },
+                { command: 'a', record: 'side-effect' }
+            ), true);
+        });
+        it('should return false if given two specs are not equal', () => {
+            const s1 = { command: 'a' };
+            const s2 = { command: 'b' };
+            const s3 = { command: 'a', args: 123 };
+            const s4 = { command: 'a', args: [ 1, 2, 3 ] };
+            const s5 = { command: 'a', args: [ 1, 2, 3, 4 ] };
+            const s6 = { command: 'a', args: { x: 123 } };
+            const s7 = { command: 'a', args: { x: 456 } };
+            const s8 = { command: 'a', await: 'document' };
+            const s9 = { command: 'a', await: 'document selection' };
+            const s10 = { command: 'a', record: '' };
+            const s11 = { command: 'a', record: 'side-effect' };
+
+            assert.strictEqual(util.areEqualCommandSpec(s1, s2), false);
+            assert.strictEqual(util.areEqualCommandSpec(s1, s3), false);
+            assert.strictEqual(util.areEqualCommandSpec(s3, s4), false);
+            assert.strictEqual(util.areEqualCommandSpec(s3, s6), false);
+            assert.strictEqual(util.areEqualCommandSpec(s4, s5), false);
+            assert.strictEqual(util.areEqualCommandSpec(s4, s6), false);
+            assert.strictEqual(util.areEqualCommandSpec(s6, s7), false);
+            assert.strictEqual(util.areEqualCommandSpec(s1, s8), false);
+            assert.strictEqual(util.areEqualCommandSpec(s8, s9), false);
+            assert.strictEqual(util.areEqualCommandSpec(s1, s10), false);
+            assert.strictEqual(util.areEqualCommandSpec(s10, s11), false);
+        });
+    });
 });
