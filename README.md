@@ -22,11 +22,11 @@ With this Visual Studio Code extension, you can record and playback your keyboar
 **YOU CANNOT RECORD** (mainly due to the lack of capabilities of VS Code API to capture them):
   - Mouse inputs
   - Command execution via Command Palette
-  - Menu navigation (even if you use acceralator keys)
+  - Menu navigation (even if you use accelerator keys)
   - Widget/Popup UI navigation (e.g. Quick Picks, Find and replace widget, IntelliSense popup)
     - Typing on the find/replace input box is not recorded, but shortcut keys like Enter/F3 (Find Next) hit on the widget are recorded.
-    - Selecting items on suggest widget (even with arrow keys) are not recorded, however, once you accept one of the items and the text is inserted into the document, that is recorded as if you typed it directly.
-  - IME nagivation
+    - Selecting items in the suggest widget (even with arrow keys) are not recorded, however, once you accept one of the items and the text is inserted into the document, that is recorded as if you typed it directly.
+  - IME navigation
     - IME navigation is not recorded directly, however, the characters that are inserted into the document as output from IME are recorded as if they are typed directly.
 
 ## How to enable custom keybindings to be recorded
@@ -54,7 +54,7 @@ the corresponding wrapper should look like below.
 ```
 Add this keybinding rule below the original one in the `keybindings.json`.
 
-The followings are the details.
+The following are the details:
 - The `kb-macro.wrap` command is the wrapper that executes the target command specified in the `args.command` parameter and records it on the sequence.
 - The `when` clause of a wrapper keybinding should contain additional context `kb-macro.active`, which evaluates to `true` when the recording mechanism is active.
 - If you have an `args` parameter for the target command, you could write it in `args.args`.
@@ -90,7 +90,7 @@ The value of an `args.await` parameter is a space-separated keyword list. Possib
 | ------- | ------- |
 | `'document'` | Changes in the text document of the active editor |
 | `'selection'` | Changes of the selection (typically, cursor movement) in the active editor |
-| `'cilpboard'` | Changes of the clipboard text |
+| `'clipboard'` | Changes of the clipboard text |
 
 If multiple keywords are specified in an `args.await` parameter, it means all of them are expected to happen.
 
