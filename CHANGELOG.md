@@ -8,6 +8,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
     - This change does not require any actions for existing users unless they want to use the extra feature Background Recording API.
   - Updated keymap wrapper for Vz Keymap (v0.19.4). [#180](https://github.com/tshino/vscode-kb-macro/pull/180)
   - Updated keymap wrapper for Atom Keymap (v3.2.0).
+- Internal
+  - Added `vsce` command to devDependencies.
 
 ### [0.12.10] - 2022-12-17
 - Fix
