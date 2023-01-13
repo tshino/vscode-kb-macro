@@ -16,6 +16,7 @@ const KeyboardMacro = function({ awaitController }) {
         Abort: 1,
         Finish: 2
     };
+    const MaxHistoryLength = 256;
 
     let onChangeRecordingStateCallback = null;
     let onChangeActiveStateCallback = null;
@@ -30,7 +31,7 @@ const KeyboardMacro = function({ awaitController }) {
     let playing = false;
     let shouldAbortPlayback = false;
     const sequence = CommandSequence();
-    const history = CommandSequence();
+    const history = CommandSequence({ maxLength: MaxHistoryLength });
     const internalCommands = new Map();
 
     let printError = defaultPrintError;

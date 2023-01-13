@@ -1,6 +1,6 @@
 'use strict';
 
-const CommandSequence = function() {
+const CommandSequence = function({ maxLength = null } = {}) {
     const sequence = [];
 
     const clear = function() {
@@ -8,6 +8,9 @@ const CommandSequence = function() {
     };
     const push = function(commandSpec) {
         sequence.push(commandSpec);
+        if (maxLength !== null && maxLength < sequence.length) {
+            sequence.splice(0, sequence.length - maxLength);
+        }
     };
     const optimize = function() {
         for (let i = 0; i < sequence.length; i++) {

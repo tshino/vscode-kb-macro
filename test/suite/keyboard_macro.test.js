@@ -1220,6 +1220,17 @@ describe('KeybaordMacro', () => {
             assert.strictEqual(record1 === record2, false);
             assert.strictEqual(record1[0] === record2[0], false);
         });
+        it('should only return the latest 256 items', async () => {
+            await keyboardMacro.startBackgroundRecording();
+            for (let i = 0; i < 257; i++) {
+                await keyboardMacro.wrapSync({ command: 'internal:none', args: i });
+            }
+
+            const record = keyboardMacro.getRecentBackgroundRecords();
+            assert.strictEqual(record.length, 256);
+            assert.deepStrictEqual(record[0], { command: 'internal:none', args: 1 });
+            assert.deepStrictEqual(record[255], { command: 'internal:none', args: 256 });
+        });
     });
     describe('background recording', () => {
         const logs = [];
