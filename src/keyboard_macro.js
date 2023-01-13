@@ -244,11 +244,19 @@ const KeyboardMacro = function({ awaitController }) {
         }
         return validArgs;
     };
+    const optimizeSequence = function(sequence) {
+        const s = CommandSequence();
+        for (const command of sequence) {
+            s.push(command);
+        }
+        s.optimize();
+        return s.get();
+    };
 
     const playbackImpl = async function(args, { tillEndOfFile = false } = {}) {
         args = validatePlaybackArgs(args);
         const repeat = 'repeat' in args ? args.repeat : 1;
-        const commands = 'sequence' in args ? args.sequence : sequence.get();
+        const commands = 'sequence' in args ? optimizeSequence(args.sequence) : sequence.get();
         const wrapMode = active ? 'command' : null;
         if (recording) {
             if (!('sequence' in args)) {
