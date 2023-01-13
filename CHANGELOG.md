@@ -3,6 +3,9 @@
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
 ### [Unreleased]
+- Feature:
+  - Added optimization of the input sequence to the playback command. [#195](https://github.com/tshino/vscode-kb-macro/pull/195)
+    - This optimization can improve playback performance, especially in a sequence containing a long typing.
 - Update
   - Changed the activatation context of wrapper keybindings from `kb-macro.recording` to `kb-macro.active`. [#133](https://github.com/tshino/vscode-kb-macro/issues/133)
     - This change does not require any actions for existing users unless they want to use the extra feature Background Recording API.
