@@ -631,7 +631,7 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log', args: 'hello' }
             ]);
         });
-        it('should record the commands specified times if repeat option specified', async () => {
+        it('should record the commands multiple times if repeat option specified', async () => {
             const sequence = [
                 { command: 'internal:log', args: 'hello' }
             ];
@@ -652,6 +652,23 @@ describe('KeybaordMacro', () => {
                 { command: 'internal:log', args: 'hello' },
                 { command: 'internal:log', args: 'hello' },
                 { command: 'internal:log', args: 'hello' }
+            ]);
+        });
+        it('should optimize the specified sequence before executing and recording', async () => {
+            keyboardMacro.registerInternalCommand('$type', async (args) => {
+                logs.push(`$type:${args.text}`);
+            });
+            const sequence = [
+                { command: '$type', args: { text: 'A' } },
+                { command: '$type', args: { text: 'B' } }
+            ];
+            keyboardMacro.startRecording();
+            await keyboardMacro.playback({ sequence });
+            keyboardMacro.finishRecording();
+
+            assert.deepStrictEqual(logs, [ '$type:AB' ]);
+            assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
+                { command: '$type', args: { text: 'AB' } }
             ]);
         });
     });

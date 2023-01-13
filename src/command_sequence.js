@@ -55,8 +55,10 @@ const CommandSequence = function({ maxLength = null } = {}) {
                     groupSize1 === 1 &&
                     characterDelta1 < 0 &&
                     characterDelta1 + deleteRight2 === 0) {
-                    sequence[i + 1].args.deleteLeft = deleteLeft2 + deleteRight2;
-                    delete sequence[i + 1].args.deleteRight;
+                    const args = JSON.parse(JSON.stringify(sequence[i + 1].args));
+                    args.deleteLeft = deleteLeft2 + deleteRight2;
+                    delete args.deleteRight;
+                    sequence[i + 1] = { command: '$type', args };
                     sequence.splice(i, 1);
                     i--;
                     continue;
@@ -76,7 +78,9 @@ const CommandSequence = function({ maxLength = null } = {}) {
                 if (text1.length >= deleteLeft2 &&
                     deleteRight2 === 0) {
                     const text = text1.substr(0, text1.length - deleteLeft2) + text2;
-                    sequence[i - 1].args.text = text;
+                    const args = JSON.parse(JSON.stringify(sequence[i - 1].args));
+                    args.text = text;
+                    sequence[i - 1] = { command: '$type', args };
                     sequence.splice(i, 1);
                     i--;
                     continue;
