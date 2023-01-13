@@ -81,6 +81,17 @@ describe('CommandSequence', () => {
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ TYPE123 ]);
         });
+        it('should not modify input objects (1: consucutive typing)', () => {
+            const TYPE1 = { command: '$type', args: { text: 'A' } };
+            const TYPE2 = { command: '$type', args: { text: 'B' } };
+            const seq = CommandSequence();
+            seq.push(TYPE1);
+            seq.push(TYPE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ { command: '$type', args: { text: 'AB' } } ]);
+            assert.deepStrictEqual(TYPE1, { command: '$type', args: { text: 'A' } });
+            assert.deepStrictEqual(TYPE2, { command: '$type', args: { text: 'B' } });
+        });
         it('should not concatenate direct typing commands with deleting (1)', () => {
             const TYPE1 = {
                 command: '$type',
@@ -188,6 +199,17 @@ describe('CommandSequence', () => {
             seq.optimize();
             assert.deepStrictEqual(seq.get(), []);
         });
+        it('should not modify input objects (2: pair of cursor motion)', () => {
+            const MOVE1 = { command: '$moveCursor', args: { characterDelta: -3 } };
+            const MOVE2 = { command: '$moveCursor', args: { characterDelta: 3 } };
+            const seq = CommandSequence();
+            seq.push(MOVE1);
+            seq.push(MOVE2);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), []);
+            assert.deepStrictEqual(MOVE1, { command: '$moveCursor', args: { characterDelta: -3 } });
+            assert.deepStrictEqual(MOVE2, { command: '$moveCursor', args: { characterDelta: 3 } });
+        });
         it('should retain consecutive cursor motions that have vertical motion', () => {
             const MOVE1 = {
                 command: '$moveCursor',
@@ -268,6 +290,20 @@ describe('CommandSequence', () => {
             seq.push(INPUT[1]);
             seq.optimize();
             assert.deepStrictEqual(seq.get(), [ EXPECTED ]);
+        });
+        it('should not modify input objects (3: cursor motion followed by deleting and typing)', () => {
+            const INPUT = [
+                { command: '$moveCursor', args: { characterDelta: -1 } },
+                { command: '$type', args: { deleteRight: 1, text: 'a' } }
+            ];
+            const EXPECTED = { command: '$type', args: { deleteLeft: 1, text: 'a' } };
+            const seq = CommandSequence();
+            seq.push(INPUT[0]);
+            seq.push(INPUT[1]);
+            seq.optimize();
+            assert.deepStrictEqual(seq.get(), [ EXPECTED ]);
+            assert.deepStrictEqual(INPUT[0], { command: '$moveCursor', args: { characterDelta: -1 } });
+            assert.deepStrictEqual(INPUT[1], { command: '$type', args: { deleteRight: 1, text: 'a' } });
         });
         it('should shrink three commands into one', () => {
             const INPUT = [
