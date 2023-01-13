@@ -25,6 +25,18 @@ describe('CommandSequence', () => {
             seq.push(COMMAND2);
             assert.deepStrictEqual(seq.get(), [ COMMAND1, COMMAND2 ]);
         });
+        it('should only retain latest N=maxLength items if specified', () => {
+            const seq = CommandSequence({ maxLength: 5 });
+            seq.push({ command: 'cmd1' });
+            seq.push({ command: 'cmd2' });
+            seq.push({ command: 'cmd3' });
+            seq.push({ command: 'cmd4' });
+            seq.push({ command: 'cmd5' });
+            seq.push({ command: 'cmd6' });
+            assert.strictEqual(seq.get().length, 5);
+            assert.deepStrictEqual(seq.get()[0], { command: 'cmd2' });
+            assert.deepStrictEqual(seq.get()[4], { command: 'cmd6' });
+        });
     });
     describe('clear', () => {
         it('should discard all items pushed', () => {
