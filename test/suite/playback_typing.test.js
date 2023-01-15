@@ -713,28 +713,33 @@ describe('Recording and Playback: Typing', () => {
     });
 
     describe('background recording of typing', () => {
+        let session = null;
         beforeEach(async () => {
             await TestUtil.resetDocument(textEditor, (
                 '\n'.repeat(10) +
                 'abcd\n'.repeat(10) +
                 '    efgh\n'.repeat(10)
             ));
+            session = keyboardMacro.newSession();
+        });
+        afterEach(async () => {
+            await session.close();
         });
         it('should detect and reproduce direct typing of a character', async () => {
             await setSelections([[0, 0]]);
-            await keyboardMacro.startBackgroundRecording();
+            await session.startRecording();
             await vscode.commands.executeCommand('type', { text: 'X' });
-            await keyboardMacro.stopBackgroundRecording();
-            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [ Type('X') ]);
+            await session.stopRecording();
+            assert.deepStrictEqual(session.getRecentSequence(), [ Type('X') ]);
             assert.strictEqual(textEditor.document.lineAt(0).text, 'X');
             assert.deepStrictEqual(getSelections(), [[0, 1]]);
         });
         it('should record typing of an opening bracket which triggers bracket completion', async () => {
             await setSelections([[10, 4]]);
-            await keyboardMacro.startBackgroundRecording();
+            await session.startRecording();
             await vscode.commands.executeCommand('type', { text: '(' });
-            await keyboardMacro.stopBackgroundRecording();
-            assert.deepStrictEqual(keyboardMacro.getRecentBackgroundRecords(), [ Type('()'), MoveLeft(1) ]);
+            await session.stopRecording();
+            assert.deepStrictEqual(session.getRecentSequence(), [ Type('()'), MoveLeft(1) ]);
             assert.strictEqual(textEditor.document.lineAt(10).text, 'abcd()');
             assert.deepStrictEqual(getSelections(), [[10, 5]]);
         });
