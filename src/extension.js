@@ -11,12 +11,29 @@ const keyboardMacro = KeyboardMacro({ awaitController });
 const typingDetector = TypingDetector();
 const helperContext = HelperContext();
 
-const api = {
-    startBackgroundRecording: keyboardMacro.startBackgroundRecording,
-    stopBackgroundRecording: keyboardMacro.stopBackgroundRecording,
-    getRecentBackgroundRecords: keyboardMacro.getRecentBackgroundRecords,
-    areEqualRecords: keyboardMacro.areEqualRecords,
-};
+const api = (function() {
+    // This global session is a workaround for the early dynamic-macro extension.
+    // https://github.com/tshino/vscode-dynamic-macro
+    const globalSession = keyboardMacro.newSession();
+
+    return {
+        startBackgroundRecording: globalSession.startRecording,
+        stopBackgroundRecording: globalSession.stopRecording,
+        getRecentBackgroundRecords: globalSession.getRecentSequence,
+        areEqualRecords: keyboardMacro.areEqualRecords,
+
+        newSession: function() {
+            const session = keyboardMacro.newSession();
+            return {
+                startRecording: session.startRecording,
+                stopRecording: session.stopRecording,
+                getRecentSequence: session.getRecentSequence,
+                areEqualRecords: keyboardMacro.areEqualRecords,
+                close: session.close,
+            };
+        },
+    };
+})();
 
 function activate(context) {
     const CommandPrefix = 'kb-macro.';

@@ -26,13 +26,12 @@ const KeyboardMacro = function({ awaitController }) {
     let showInputBox = vscode.window.showInputBox; // replaceable for testing
     let showMessage = vscode.window.showInformationMessage; // replaceable for testing
     let active = false; // === (backgroundRecording || recording)
-    let backgroundRecording = false;
     let recording = false;
     let playing = false;
     let shouldAbortPlayback = false;
     const sequence = CommandSequence();
-    const history = CommandSequence({ maxLength: MaxHistoryLength });
     const internalCommands = new Map();
+    const sessions = [];
 
     let printError = defaultPrintError;
     function defaultPrintError(error) {
@@ -51,6 +50,7 @@ const KeyboardMacro = function({ awaitController }) {
         onChangeActiveStateCallback = callback;
     };
     const updateActiveState = function() {
+        const backgroundRecording = sessions.some(s => s.isRecording());
         const newState = backgroundRecording || recording;
         if (active !== newState) {
             active = newState;
@@ -58,10 +58,6 @@ const KeyboardMacro = function({ awaitController }) {
                 onChangeActiveStateCallback({ active });
             }
         }
-    };
-    const changeBackgroundRecordingState = function(newState) {
-        backgroundRecording = newState;
-        updateActiveState();
     };
     const changeRecordingState = function(newState, reason) {
         recording = newState;
@@ -119,23 +115,63 @@ const KeyboardMacro = function({ awaitController }) {
             changeRecordingState(false, RecordingStateReason.Finish);
         }
     });
-    const startBackgroundRecording = async function() {
-        await reentrantGuard.callExclusively(function() {
-            if (!backgroundRecording) {
-                history.clear();
-                changeBackgroundRecordingState(true);
+
+    const Session = function() {
+        let recording = false;
+        const sequence = CommandSequence({ maxLength: MaxHistoryLength });
+
+        const changeRecordingState = function(newState) {
+            recording = newState;
+            updateActiveState();
+        };
+        const startRecording = async function() {
+            await reentrantGuard.callExclusively(function() {
+                if (!recording) {
+                    sequence.clear();
+                    changeRecordingState(true);
+                }
+            });
+        };
+        const stopRecording = async function() {
+            await reentrantGuard.callExclusively(function() {
+                if (recording) {
+                    changeRecordingState(false);
+                }
+            });
+        };
+        const push = function(spec) {
+            if (recording) {
+                sequence.push(spec);
             }
-        });
+        };
+        const getRecentSequence = function() {
+            return JSON.parse(JSON.stringify(sequence.get()));
+        };
+
+        const self = {
+            startRecording,
+            stopRecording,
+            getRecentSequence,
+            close: async () => {
+                await stopRecording();
+                const index = sessions.indexOf(self);
+                if (0 <= index) {
+                    sessions.splice(index, 1);
+                }
+            },
+
+            // internal
+            push,
+            isRecording: () => recording,
+        };
+        sessions.push(self);
+        return self;
     };
-    const stopBackgroundRecording = async function() {
-        await reentrantGuard.callExclusively(function() {
-            changeBackgroundRecordingState(false);
-        });
+
+    const newSession = function() {
+        return Session();
     };
-    const getRecentBackgroundRecords = function() {
-        const sequence = history.get();
-        return JSON.parse(JSON.stringify(sequence));
-    };
+
     const areEqualRecords = function(record1, record2) {
         const spec1 = util.makeCommandSpec(record1);
         const spec2 = util.makeCommandSpec(record2);
@@ -150,8 +186,8 @@ const KeyboardMacro = function({ awaitController }) {
             // side-effect mode
             return;
         }
-        if (backgroundRecording) {
-            history.push(spec);
+        for (const session of sessions) {
+            session.push(spec);
         }
         if (recording) {
             sequence.push(spec);
@@ -390,9 +426,7 @@ const KeyboardMacro = function({ awaitController }) {
         startRecording,
         cancelRecording,
         finishRecording,
-        startBackgroundRecording,
-        stopBackgroundRecording,
-        getRecentBackgroundRecords,
+        newSession,
         areEqualRecords,
         push,
         copyMacroAsKeybinding,
@@ -406,10 +440,8 @@ const KeyboardMacro = function({ awaitController }) {
 
         // testing purpose only
         isRecording: () => { return recording; },
-        isBackgroundRecordingOngoing: () => { return backgroundRecording; },
         isPlaying: () => { return playing; },
         getCurrentSequence: () => { return sequence.get(); },
-        discardHistory: () => { history.clear(); },
         setShowInputBox,
         setShowMessage,
         WrapQueueSize
