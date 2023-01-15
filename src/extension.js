@@ -22,6 +22,7 @@ const api = (function() {
         getRecentBackgroundRecords: globalSession.getRecentSequence,
         areEqualRecords: keyboardMacro.areEqualRecords,
 
+        // Background Recording API
         newSession: function() {
             const session = keyboardMacro.newSession();
             return {
