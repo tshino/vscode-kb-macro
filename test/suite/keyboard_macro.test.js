@@ -4,6 +4,7 @@ const vscode = require('vscode');
 const { TestUtil } = require('./test_util.js');
 const { AwaitController } = require('../../src/await_controller.js');
 const { KeyboardMacro } = require('../../src/keyboard_macro.js');
+const reentrantGuard = require('../../src/reentrant_guard.js');
 
 describe('KeybaordMacro', () => {
     const awaitController = AwaitController();
@@ -1016,23 +1017,26 @@ describe('KeybaordMacro', () => {
             assert.deepStrictEqual(logs, []);
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), []);
         });
-        it('should prevent indirect recursive calls', async () => {
+        it('should not cause deadlock through indirect recursive calls', async () => {
             // For design details, see https://github.com/tshino/vscode-kb-macro/issues/63
             keyboardMacro.registerInternalCommand('internal:indirectWrap', async () => {
                 await vscode.commands.executeCommand('kb-macro.wrap', {
-                    command: 'internal:log'
+                    command: 'workbench.action.focusFirstEditorGroup' // dummy
                 });
+                logs.push('end indirect wrap');
             });
             keyboardMacro.startRecording();
             await keyboardMacro.wrapSync({
                 command: 'internal:indirectWrap'
             });
+            await reentrantGuard.callExclusively(() => {}); // ensure to end the inner wrap command
             keyboardMacro.finishRecording();
 
-            assert.deepStrictEqual(logs, []);
+            assert.deepStrictEqual(logs, [ 'end indirect wrap' ]);
             assert.deepStrictEqual(keyboardMacro.getCurrentSequence(), [
                 { command: 'internal:indirectWrap' }
             ]);
+            assert.strictEqual(keyboardMacro.isRecording(), false);
         });
         it('should invoke but not record the target command if side-effect mode', async () => {
             keyboardMacro.startRecording();
