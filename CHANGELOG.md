@@ -2,7 +2,7 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.13.0] - 2023-01-16
 - Feature:
   - Added optimization of the input sequence to the playback command. [#195](https://github.com/tshino/vscode-kb-macro/pull/195)
     - This optimization can improve playback performance, especially in a sequence containing a long typing.
