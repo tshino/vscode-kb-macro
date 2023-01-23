@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Update
+  - Updated keymap wrapper for Atom Keymap (v3.3.0).
+
 ### [0.13.0] - 2023-01-16
 - Feature:
   - Added optimization of the input sequence to the playback command. [#195](https://github.com/tshino/vscode-kb-macro/pull/195)
