@@ -5,6 +5,8 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [Unreleased]
 - Update
   - Updated keymap wrapper for Atom Keymap (v3.3.0).
+- Documentation:
+  - Added 'API' section to [DESIGN.md](./DESIGN.md).
 
 ### [0.13.0] - 2023-01-16
 - Feature:

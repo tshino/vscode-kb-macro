@@ -148,6 +148,10 @@ In other examples, the command `kb-macro.abortPlayback` is another type of comma
 
 These command patterns are implemented in [`src/reentrant_guard.js`](src/reentrant_guard.js).
 
+## API
+
+This extension provides an experimental API that other extensions could use to realize custom keyboard automation in a different manner than this extension. [Dynamic Macro](https://marketplace.visualstudio.com/items?itemName=tshino.dynamic-macro) is an extension that uses this API. You can find some details and the background information at [#176](https://github.com/tshino/vscode-kb-macro/issues/176).
+
 ## Testing
 
 This repository contains a set of tests for this extension.
