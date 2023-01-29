@@ -68,6 +68,8 @@ function activate(context) {
 
     const modeIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 110);
     modeIndicator.text = "REC";
+    modeIndicator.name = "Keyboard Macro Recording State";
+    modeIndicator.tooltip = "Keyboard macro recording is ongoing!";
     context.subscriptions.push(modeIndicator);
 
     addEventListener(
