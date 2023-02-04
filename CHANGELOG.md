@@ -5,7 +5,9 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [Unreleased]
 - Update
   - Added a tooltip on the `REC` mark on the status bar to be clear. [#197](https://github.com/tshino/vscode-kb-macro/issues/197)
+  - Updated default keybindings wrappers based on vscode 1.75.0. [#201](https://github.com/tshino/vscode-kb-macro/pull/201)
   - Updated keymap wrapper for Atom Keymap (v3.3.0).
+
 - Documentation:
   - Added 'API' section to [DESIGN.md](./DESIGN.md).
 
