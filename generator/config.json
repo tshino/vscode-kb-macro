@@ -39,8 +39,11 @@
         [ "editor.action.inlineSuggest.commit", "side-effect" ],
         [ "editor.action.inlineSuggest.hide", "side-effect" ],
         [ "editor.action.inlineSuggest.trigger", "side-effect" ],
+        [ "editor.action.inlineSuggest.undo", "side-effect" ],
+        [ "editor.action.inlineSuggest.acceptNextWord", "side-effect" ],
 
         [ "editor.action.triggerSuggest", "side-effect" ],
+        [ "focusSuggestion", "side-effect" ],
         [ "hideSuggestWidget", "side-effect" ],
         [ "insertNextSuggestion", "side-effect" ],
         [ "insertPrevSuggestion", "side-effect" ],
@@ -63,6 +66,7 @@
         [ "leaveSnippet", "side-effect" ],
         [ "editor.action.insertSnippet", "side-effect" ],
         [ "editor.action.showSnippets", "side-effect" ],
+        [ "editor.action.surroundWithSnippet", "side-effect" ],
         [ "jumpToNextSnippetPlaceholder", "side-effect" ],
         [ "jumpToPrevSnippetPlaceholder", "side-effect" ]
     ],
