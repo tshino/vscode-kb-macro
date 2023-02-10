@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.75.0 for Linux
+// Default Keybindings of Visual Studio Code 1.75.1 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -2343,11 +2343,11 @@
 // - workbench.action.openWorkspaceSettings
 // - workbench.action.openWorkspaceSettingsFile
 // - workbench.action.output.show.editSessionsSyncLog
-// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230203T164926/ptyhost.log
-// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230203T164926/window1/exthost/exthost.log
-// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230203T164926/window1/exthost/vscode.git/Git.log
-// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230203T164926/window1/exthost/vscode.github-authentication/GitHub%20Authentication.log
-// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230203T164926/window1/exthost/vscode.microsoft-authentication/Microsoft%20Authentication.log
+// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165054/ptyhost.log
+// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165054/window1/exthost/exthost.log
+// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165054/window1/exthost/vscode.git/Git.log
+// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165054/window1/exthost/vscode.github-authentication/GitHub%20Authentication.log
+// - workbench.action.output.show.file:///home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165054/window1/exthost/vscode.microsoft-authentication/Microsoft%20Authentication.log
 // - workbench.action.output.show.mainLog
 // - workbench.action.output.show.remoteTunnelServiceLog
 // - workbench.action.output.show.rendererLog
