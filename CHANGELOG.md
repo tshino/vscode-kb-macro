@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Internal
+  - Updated automated workflow to ignore meaningless rows in the default keybindings JSON. [#206](https://github.com/tshino/vscode-kb-macro/issues/206)
+
 ### [0.13.1] - 2023-02-04
 - Update
   - Added a tooltip on the `REC` mark on the status bar to be clear. [#197](https://github.com/tshino/vscode-kb-macro/issues/197)
