@@ -2466,11 +2466,11 @@
 // - workbench.action.openWorkspaceSettings
 // - workbench.action.openWorkspaceSettingsFile
 // - workbench.action.output.show.editSessionsSyncLog
-// - workbench.action.output.show.file:///Users/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165112/ptyhost.log
-// - workbench.action.output.show.file:///Users/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165112/window1/exthost/exthost.log
-// - workbench.action.output.show.file:///Users/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165112/window1/exthost/vscode.git/Git.log
-// - workbench.action.output.show.file:///Users/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165112/window1/exthost/vscode.github-authentication/GitHub%20Authentication.log
-// - workbench.action.output.show.file:///Users/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/logs/20230210T165112/window1/exthost/vscode.microsoft-authentication/Microsoft%20Authentication.log
+// - workbench.action.output.show.file:///(snip)
+// - workbench.action.output.show.file:///(snip)
+// - workbench.action.output.show.file:///(snip)
+// - workbench.action.output.show.file:///(snip)
+// - workbench.action.output.show.file:///(snip)
 // - workbench.action.output.show.mainLog
 // - workbench.action.output.show.remoteTunnelServiceLog
 // - workbench.action.output.show.rendererLog
