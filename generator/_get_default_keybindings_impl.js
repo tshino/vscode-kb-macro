@@ -27,6 +27,13 @@ async function openDefaultKeybindingsFile() {
     });
 }
 
+function removeMeaninglessPart(json) {
+    return json.replace(
+        /\/\/ - workbench\.action\.output\.show\.file\:\/\/\/[^\n]+\/logs\/[^\n]+/gm,
+        '// - workbench.action.output.show.file:///(snip)'
+    );
+}
+
 function makeHeader(platform) {
     const target = (
         platform === 'win32' ? 'Windows' :
@@ -52,10 +59,11 @@ async function run() {
     await sleep(2000);
     const document = await openDefaultKeybindingsFile();
     const json = document.getText();
+    const jsonFiltered = removeMeaninglessPart(json);
     const platform = os.platform();
     const header = makeHeader(platform);
     const outputPath = makeOutputFilePath(platform);
-    await fsPromises.writeFile(outputPath, header + json);
+    await fsPromises.writeFile(outputPath, header + jsonFiltered);
     console.log(`The default keybindings JSON has been successfully saved to ${outputPath}.`);
 }
 
