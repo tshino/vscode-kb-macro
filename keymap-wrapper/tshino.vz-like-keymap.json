@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Vz Keymap v0.19.4
+	// Keymap wrapper for Vz Keymap v0.19.5
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -196,7 +196,9 @@
 	{ "key": "ctrl+n", "command": "",
 		"when": "kb-macro.active && editorFocus && config.vzKeymap.ctrl+N" },
 	{ "key": "ctrl+n", "command": "kb-macro.wrap", "args": { "command": "vz.insertLineBefore", "await": "document selection" },
-		"when": "kb-macro.active && editorTextFocus && !editorReadonly && config.vzKeymap.ctrl+N" },
+		"when": "kb-macro.active && !kb-macro.headOfLine && editorTextFocus && !editorReadonly && config.vzKeymap.ctrl+N" },
+	{ "key": "ctrl+n", "command": "kb-macro.wrap", "args": { "command": "vz.insertLineBefore", "await": "document" },
+		"when": "kb-macro.active && kb-macro.headOfLine && editorTextFocus && !editorReadonly && config.vzKeymap.ctrl+N" },
 	{ "key": "ctrl+k ctrl+d", "command": "kb-macro.wrap", "args": { "command": "vz.copyLinesDown", "await": "document selection" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadonly" },
 	{ "key": "ctrl+k d", "command": "kb-macro.wrap", "args": { "command": "vz.copyLinesDown", "await": "document selection" },
