@@ -2,7 +2,7 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.13.2] - 2023-03-04
 - Update
   - Updated default keybindings wrappers based on vscode 1.76.0. [#219](https://github.com/tshino/vscode-kb-macro/pull/219)
   - Updated keymap wrapper for Delphi Keymap (v9.7.1). [#210](https://github.com/tshino/vscode-kb-macro/pull/210)
