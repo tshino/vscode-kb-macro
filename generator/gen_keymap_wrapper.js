@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const glob = require('glob');
+const fs = require('fs');
 const genWrapperUtil = require('./gen_wrapper_util');
 
 const CommonConfigPath = 'generator/config.json';
@@ -127,11 +127,11 @@ async function makeKeymapWrapper(configPath, commonConfig) {
 async function main() {
     const commonConfig = await genWrapperUtil.readJSON(CommonConfigPath);
     const files = await new Promise((c, e) => {
-        glob('*.config.json', { cwd: KeymapWrapperPath }, (err, files) => {
+        fs.readdir(KeymapWrapperPath, (err, files) => {
             if (err) {
                 e(err);
             } else {
-                c(files);
+                c(files.filter(f => f.endsWith('.config.json')));
             }
         });
     });
