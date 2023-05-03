@@ -22,14 +22,6 @@
 		"url": "https://github.com/tshino/vscode-kb-macro.git"
 	},
 	"activationEvents": [
-		"onCommand:kb-macro.startRecording",
-		"onCommand:kb-macro.finishRecording",
-		"onCommand:kb-macro.cancelRecording",
-		"onCommand:kb-macro.copyMacroAsKeybinding",
-		"onCommand:kb-macro.playback",
-		"onCommand:kb-macro.abortPlayback",
-		"onCommand:kb-macro.repeatPlayback",
-		"onCommand:kb-macro.repeatPlaybackTillEndOfFile",
 		"onCommand:kb-macro.wrap"
 	],
 	"main": "./src/extension.js",
