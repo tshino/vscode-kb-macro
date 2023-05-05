@@ -351,6 +351,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "editor.action.hideColorPicker"
+				},
+				"when": "kb-macro.active && standaloneColorPickerVisible"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "editor.action.inlineSuggest.hide",
 					"record": "side-effect"
 				},
@@ -862,7 +870,7 @@
 				"args": {
 					"command": "notebook.focusNextEditor"
 				},
-				"when": "kb-macro.active && config.notebook.navigation.allowNavigateToSurroundingCells && editorTextFocus && inputFocus && notebookEditorFocused && notebookEditorCursorAtBoundary != 'none' && notebookEditorCursorAtBoundary != 'top'"
+				"when": "kb-macro.active && config.notebook.navigation.allowNavigateToSurroundingCells && editorTextFocus && inputFocus && notebookEditorFocused && !accessibilityModeEnabled && notebookEditorCursorAtBoundary != 'none' && notebookEditorCursorAtBoundary != 'top'"
 			},
 			{
 				"key": "down",
@@ -924,7 +932,7 @@
 				"args": {
 					"command": "notebook.focusNextEditor"
 				},
-				"when": "kb-macro.active && config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !notebookCellMarkdownEditMode && notebookCellType == 'markup'"
+				"when": "kb-macro.active && config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !accessibilityModeEnabled && !notebookCellMarkdownEditMode && notebookCellType == 'markup'"
 			},
 			{
 				"key": "down",
@@ -1687,7 +1695,7 @@
 				"args": {
 					"command": "notebook.focusPreviousEditor"
 				},
-				"when": "kb-macro.active && config.notebook.navigation.allowNavigateToSurroundingCells && editorTextFocus && inputFocus && notebookEditorFocused && notebookEditorCursorAtBoundary != 'bottom' && notebookEditorCursorAtBoundary != 'none'"
+				"when": "kb-macro.active && config.notebook.navigation.allowNavigateToSurroundingCells && editorTextFocus && inputFocus && notebookEditorFocused && !accessibilityModeEnabled && notebookEditorCursorAtBoundary != 'bottom' && notebookEditorCursorAtBoundary != 'none'"
 			},
 			{
 				"key": "up",
@@ -1733,7 +1741,7 @@
 				"args": {
 					"command": "notebook.focusPreviousEditor"
 				},
-				"when": "kb-macro.active && config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !notebookCellMarkdownEditMode && notebookCellType == 'markup'"
+				"when": "kb-macro.active && config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !accessibilityModeEnabled && !notebookCellMarkdownEditMode && notebookCellType == 'markup'"
 			},
 			{
 				"key": "up",
@@ -2079,6 +2087,15 @@
 				"when": "kb-macro.active"
 			},
 			{
+				"key": "ctrl+shift+z",
+				"mac": "alt+cmd+z",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "interactiveEditor.undoToClipboard"
+				},
+				"when": "kb-macro.active && interactiveEditorHasProvider && interactiveEditorVisible && interactiveEditorLastEditKind == 'simple'"
+			},
+			{
 				"key": "ctrl+y",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -2222,6 +2239,15 @@
 				"when": "kb-macro.active && terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || kb-macro.active && terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
 			},
 			{
+				"key": "ctrl+down",
+				"mac": "cmd+down",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.accessibleBufferGoToNextCommand"
+				},
+				"when": "kb-macro.active && terminalAccessibleBufferFocus || kb-macro.active && terminalAccessibleBufferFocus && terminalHasBeenCreated || kb-macro.active && terminalAccessibleBufferFocus && terminalProcessSupported"
+			},
+			{
 				"key": "cmd+down",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -2300,7 +2326,7 @@
 				"args": {
 					"command": "search.action.focusSearchFromResults"
 				},
-				"when": "kb-macro.active && firstMatchFocus && searchViewletVisible"
+				"when": "kb-macro.active && accessibilityModeEnabled && searchViewletVisible || kb-macro.active && firstMatchFocus && searchViewletVisible"
 			},
 			{
 				"key": "ctrl+up",
@@ -2319,6 +2345,15 @@
 					"command": "workbench.action.terminal.scrollToPreviousCommand"
 				},
 				"when": "kb-macro.active && terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || kb-macro.active && terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
+			},
+			{
+				"key": "ctrl+up",
+				"mac": "cmd+up",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.accessibleBufferGoToPreviousCommand"
+				},
+				"when": "kb-macro.active && terminalAccessibleBufferFocus && terminalHasBeenCreated || kb-macro.active && terminalAccessibleBufferFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+up",
@@ -2431,15 +2466,6 @@
 				"when": "kb-macro.active"
 			},
 			{
-				"key": "ctrl+z",
-				"mac": "cmd+z",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "interactiveEditor.undo"
-				},
-				"when": "kb-macro.active && interactiveEditorHasProvider && interactiveEditorVisible"
-			},
-			{
 				"key": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -2470,6 +2496,14 @@
 					"command": "editor.action.goToFocusedStickyScrollLine"
 				},
 				"when": "kb-macro.active && stickyScrollFocused"
+			},
+			{
+				"key": "enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.insertColorWithStandaloneColorPicker"
+				},
+				"when": "kb-macro.active && standaloneColorPickerFocused"
 			},
 			{
 				"key": "enter",
@@ -2606,7 +2640,7 @@
 				"args": {
 					"command": "settings.action.focusSettingControl"
 				},
-				"when": "kb-macro.active && settingRowFocus"
+				"when": "kb-macro.active && inSettingsEditor && settingRowFocus"
 			},
 			{
 				"key": "enter",
@@ -2925,6 +2959,14 @@
 				"key": "cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "interactiveEditor.applyEdits"
+				},
+				"when": "kb-macro.active && interactiveEditorHasProvider && interactiveEditorVisible"
+			},
+			{
+				"key": "cmd+enter",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "breadcrumbs.revealFocused"
 				},
 				"when": "kb-macro.active && breadcrumbsActive && breadcrumbsVisible"
@@ -3182,24 +3224,6 @@
 				"when": "kb-macro.active && isLinux && textInputFocus"
 			},
 			{
-				"key": "cmd+left",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "cursorHome"
-				},
-				"when": "kb-macro.active && textInputFocus"
-			},
-			{
-				"key": "ctrl+left",
-				"mac": "cmd+left",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "editor.action.inlineSuggest.undo",
-					"record": "side-effect"
-				},
-				"when": "kb-macro.active && canUndoInlineSuggestion && !editorReadonly"
-			},
-			{
 				"key": "ctrl+left",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -3306,7 +3330,7 @@
 				"args": {
 					"command": "editor.action.autoFix"
 				},
-				"when": "kb-macro.active && editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/"
+				"when": "kb-macro.active && textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/"
 			},
 			{
 				"key": "shift+alt+a",
@@ -3879,6 +3903,14 @@
 				"key": "ctrl+enter",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "interactiveEditor.applyEdits"
+				},
+				"when": "kb-macro.active && !isMac && interactiveEditorHasProvider && interactiveEditorVisible"
+			},
+			{
+				"key": "ctrl+enter",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "breadcrumbs.revealFocused"
 				},
 				"when": "kb-macro.active && !isMac && breadcrumbsActive && breadcrumbsVisible"
@@ -4245,7 +4277,7 @@
 				"args": {
 					"command": "editor.action.organizeImports"
 				},
-				"when": "kb-macro.active && editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
+				"when": "kb-macro.active && textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
 			},
 			{
 				"key": "ctrl+[",
@@ -4309,8 +4341,17 @@
 			{
 				"key": "ctrl+.",
 				"command": "editor.action.quickFix",
-				"when": "kb-macro.active && editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
+				"when": "kb-macro.active && editorHasCodeActionsProvider && textInputFocus && !editorReadonly",
 				"mac": "cmd+."
+			},
+			{
+				"key": "ctrl+.",
+				"mac": "cmd+.",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.changeDropType"
+				},
+				"when": "kb-macro.active && dropWidgetVisible"
 			},
 			{
 				"key": "ctrl+.",
@@ -4342,7 +4383,7 @@
 				"args": {
 					"command": "editor.action.refactor"
 				},
-				"when": "kb-macro.active && editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+				"when": "kb-macro.active && editorHasCodeActionsProvider && textInputFocus && !editorReadonly"
 			},
 			{
 				"key": "ctrl+shift+r",
@@ -5597,6 +5638,15 @@
 					"command": "workbench.action.splitEditorInGroup"
 				},
 				"when": "kb-macro.active && activeEditorCanSplitInGroup"
+			},
+			{
+				"key": "ctrl+k y",
+				"mac": "cmd+k y",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notebook.cell.toggleOutputScrolling"
+				},
+				"when": "kb-macro.active && notebookCellHasOutputs && notebookCellListFocused && !inputFocus"
 			},
 			{
 				"key": "ctrl+shift+a",
@@ -8082,7 +8132,7 @@
 				"args": {
 					"command": "editor.action.autoFix"
 				},
-				"when": "kb-macro.active && isLinux && editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/"
+				"when": "kb-macro.active && isLinux && textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/"
 			},
 			{
 				"key": "ctrl+shift+[IntlBackslash]",
@@ -8308,6 +8358,14 @@
 					}
 				},
 				"when": "kb-macro.active && terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'"
+			},
+			{
+				"key": "cmd+left",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "cursorHome"
+				},
+				"when": "kb-macro.active && textInputFocus"
 			},
 			{
 				"key": "cmd+left",
