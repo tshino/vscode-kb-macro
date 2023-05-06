@@ -41,6 +41,7 @@
         [ "editor.action.inlineSuggest.trigger", "side-effect" ],
         [ "editor.action.inlineSuggest.undo", "side-effect" ],
         [ "editor.action.inlineSuggest.acceptNextWord", "side-effect" ],
+        [ "editor.action.inlineSuggest.acceptNextLine", "side-effect" ],
 
         [ "editor.action.triggerSuggest", "side-effect" ],
         [ "focusSuggestion", "side-effect" ],
