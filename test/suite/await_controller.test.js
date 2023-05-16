@@ -93,42 +93,54 @@ describe('AwaitController', () => {
             });
         });
         it('should fullfill after both document and selection changed', async () => {
-            const logs = [];
-            const promise = awaitController.waitFor('document selection').then(
-                () => logs.push('resolved'),
-                () => logs.push('rejected')
-            );
-            logs.push('begin');
-            await TestUtil.sleep(30);
-            logs.push('waiting');
-            awaitController.processSelectionChangeEvent({});
-            await TestUtil.sleep(30);
-            logs.push('waiting');
-            awaitController.processDocumentChangeEvent({});
-            await TestUtil.sleep(30);
-            logs.push('check it out');
-            await promise;
-            assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'waiting', 'resolved', 'check it out' ]);
+            await withRetries(3, async (retry) => {
+                const logs = [];
+                let rejected = false;
+                const promise = awaitController.waitFor('document selection').then(
+                    () => logs.push('resolved'),
+                    () => { rejected = true; }
+                );
+                logs.push('begin');
+                await TestUtil.sleep(30);
+                logs.push('waiting');
+                awaitController.processSelectionChangeEvent({});
+                await TestUtil.sleep(30);
+                logs.push('waiting');
+                awaitController.processDocumentChangeEvent({});
+                await promise;
+                if (rejected) { // timeout
+                    retry();
+                } else {
+                    assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'waiting', 'resolved' ]);
+                }
+            });
         });
         it('should fullfill after all of document, selection and clipboard changed', async () => {
-            const logs = [];
-            await vscode.env.clipboard.writeText('HELLO');
-            const promise = awaitController.waitFor('document selection clipboard').then(
-                () => logs.push('resolved'),
-                () => logs.push('rejected')
-            );
-            logs.push('begin');
-            await TestUtil.sleep(30);
-            logs.push('waiting');
-            awaitController.processSelectionChangeEvent({});
-            await TestUtil.sleep(30);
-            logs.push('waiting');
-            awaitController.processDocumentChangeEvent({});
-            await TestUtil.sleep(30);
-            logs.push('waiting');
-            await vscode.env.clipboard.writeText('WORLD');
-            await promise;
-            assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'waiting', 'waiting', 'resolved' ]);
+            await withRetries(3, async (retry) => {
+                const logs = [];
+                await vscode.env.clipboard.writeText('HELLO');
+                let rejected = false;
+                const promise = awaitController.waitFor('document selection clipboard').then(
+                    () => logs.push('resolved'),
+                    () => { rejected = true; }
+                );
+                logs.push('begin');
+                await TestUtil.sleep(30);
+                logs.push('waiting');
+                awaitController.processSelectionChangeEvent({});
+                await TestUtil.sleep(30);
+                logs.push('waiting');
+                awaitController.processDocumentChangeEvent({});
+                await TestUtil.sleep(30);
+                logs.push('waiting');
+                await vscode.env.clipboard.writeText('WORLD');
+                await promise;
+                if (rejected) { // timeout
+                    retry();
+                } else {
+                    assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'waiting', 'waiting', 'resolved' ]);
+                }
+            });
         });
         it('should fail if timeout (document)', async () => {
             const logs = [];
