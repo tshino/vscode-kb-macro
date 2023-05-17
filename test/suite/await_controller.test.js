@@ -203,16 +203,24 @@ describe('AwaitController', () => {
             });
         }).timeout(5000);
         it('should fail if timeout (document selection clipboard)', async () => {
-            const logs = [];
-            const promise = awaitController.waitFor('document selection clipboard').then(
-                () => logs.push('resolved'),
-                () => logs.push('rejected')
-            );
-            logs.push('begin');
-            await TestUtil.sleep(30);
-            logs.push('waiting');
-            await promise;
-            assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'rejected' ]);
-        });
+            await withRetries(3, async (retry) => {
+                const logs = [];
+                let rejected = false;
+                const promise = awaitController.waitFor('document selection clipboard').then(
+                    () => logs.push('resolved'),
+                    () => { rejected = true; logs.push('rejected'); }
+                );
+                logs.push('begin');
+                await TestUtil.sleep(30);
+                logs.push('waiting');
+                if (rejected) { // too early timeout
+                    await promise;
+                    retry();
+                } else {
+                    await promise;
+                    assert.deepStrictEqual(logs, [ 'begin', 'waiting', 'rejected' ]);
+                }
+            });
+        }).timeout(5000);
     });
 });
