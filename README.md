@@ -200,9 +200,9 @@ The `kb-macro.playback` command has an optional `sequence` argument to specify a
 | `kb-macro.playing`    | The macro playback is ongoing |
 | `kb-macro.active`     | The recording mechanism is active. If true, all wrapper keybindings should be enabled. |
 
-## Known issues
-- Keyboard shortcuts that VS Code newly introduced may not be supported by this extension. Because this extension is configured with a fixed set of wrapper keybindings based on a particular version of VS Code for Windows, Linux, and macOS.
-- This extension is intended to work with VS Code on Windows, Linux, and macOS, but is tested mainly on Windows at this moment.
+## Known issues and limitations
+- As this extension will take a few days to catch up with each release of VS Code, keyboard shortcuts that are newly introduced may not work during that time.
+- This extension is intended to work with VS Code on Windows, Linux, and macOS, but is currently tested mainly on Windows.
 
 ## Design details
 See [DESIGN.md](DESIGN.md).
