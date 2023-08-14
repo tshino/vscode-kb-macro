@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.47.0
+	// Keymap wrapper for Awesome Emacs Keymap v0.48.0
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -1573,6 +1573,8 @@
 		"when": "kb-macro.active && editorTextFocus && config.emacs-mcx.useMetaPrefixEscape" },
 	{ "key": "ctrl+[ ctrl+shift+2", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.paredit.markSexp", "await": "selection" },
 		"when": "kb-macro.active && editorTextFocus && config.emacs-mcx.useMetaPrefixCtrlLeftBracket" },
+	{ "key": "ctrl+shift+k", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.paredit.pareditKill", "await": "document selection clipboard" },
+		"when": "kb-macro.active && editorTextFocus" },
 	{ "key": "ctrl+alt+k", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.paredit.killSexp", "await": "document selection clipboard" },
 		"when": "kb-macro.active && editorTextFocus && !config.emacs-mcx.useMetaPrefixMacCmd" },
 	{ "key": "ctrl+cmd+k", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.paredit.killSexp", "await": "document selection clipboard" },
