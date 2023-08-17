@@ -1,7 +1,7 @@
 {
     "base": {
-        "type": "url",
-        "url": "https://github.com/whitphx/vscode-emacs-mcx/raw/v0.48.0/package.json"
+        "type": "github-latest-release",
+        "repo": "https://github.com/whitphx/vscode-emacs-mcx"
     },
     "awaitOptions": [
         [ "emacs-mcx.forwardChar", "selection" ],
