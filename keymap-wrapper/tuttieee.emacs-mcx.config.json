@@ -44,6 +44,10 @@
         [ "emacs-mcx.clearRectangle", "document selection" ],
         [ "emacs-mcx.stringRectangle", "document selection" ],
         [ "emacs-mcx.replaceKillRingToRectangle", "document selection" ],
+        [ "emacs-mcx.StartRegisterSaveCommand", "" ],
+        [ "emacs-mcx.StartRegisterInsertCommand", "" ],
+        [ "emacs-mcx.RegisterSaveCommand", "selection" ],
+        [ "emacs-mcx.RegisterInsertCommand", "document selection" ],
 
         [ "emacs-mcx.paredit.forwardSexp", "selection" ],
         [ "emacs-mcx.paredit.backwardSexp", "selection" ],
