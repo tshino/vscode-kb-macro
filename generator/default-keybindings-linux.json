@@ -3007,8 +3007,6 @@
 // - workbench.views.sync.troubleshoot.focus
 // - workbench.views.sync.troubleshoot.resetViewLocation
 // - ~remote.forwardedPorts.focus
-// - ~remote.forwardedPorts.removeView
 // - ~remote.forwardedPorts.resetViewLocation
-// - ~remote.forwardedPorts.toggleVisibility
 // - ~remote.forwardedPortsContainer
 // - ~remote.forwardedPortsContainer.resetViewContainerLocation
