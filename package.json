@@ -938,6 +938,14 @@
 				"key": "down",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "iconSelectBox.focusDown"
+				},
+				"when": "kb-macro.active && iconSelectBoxFocus"
+			},
+			{
+				"key": "down",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "interactive.history.next"
 				},
 				"when": "kb-macro.active && !suggestWidgetVisible && activeEditor == 'workbench.editor.interactive' && interactiveInputCursorAtBoundary != 'none' && interactiveInputCursorAtBoundary != 'top'"
@@ -1217,6 +1225,14 @@
 					"command": "breadcrumbs.focusPrevious"
 				},
 				"when": "kb-macro.active && breadcrumbsActive && breadcrumbsVisible"
+			},
+			{
+				"key": "left",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "iconSelectBox.focusPrevious"
+				},
+				"when": "kb-macro.active && iconSelectBoxFocus && iconSelectBoxInputEmpty || kb-macro.active && iconSelectBoxFocus && !iconSelectBoxInputFocus"
 			},
 			{
 				"key": "left",
@@ -1528,6 +1544,14 @@
 				"key": "right",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "iconSelectBox.focusNext"
+				},
+				"when": "kb-macro.active && iconSelectBoxFocus && iconSelectBoxInputEmpty || kb-macro.active && iconSelectBoxFocus && !iconSelectBoxInputFocus"
+			},
+			{
+				"key": "right",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "list.expand"
 				},
 				"when": "kb-macro.active && listFocus && treeElementCanExpand && !inputFocus || kb-macro.active && listFocus && treeElementHasChild && !inputFocus"
@@ -1742,6 +1766,14 @@
 					"command": "history.showPrevious"
 				},
 				"when": "kb-macro.active && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !isComposing && !suggestWidgetVisible"
+			},
+			{
+				"key": "up",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "iconSelectBox.focusUp"
+				},
+				"when": "kb-macro.active && iconSelectBoxFocus"
 			},
 			{
 				"key": "up",
@@ -2269,7 +2301,7 @@
 				"args": {
 					"command": "workbench.action.terminal.focus"
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && terminalAccessibleBufferOnLastLine && terminalHasBeenCreated || kb-macro.active && accessibilityModeEnabled && terminalAccessibleBufferOnLastLine && terminalProcessSupported"
+				"when": "kb-macro.active && accessibilityModeEnabled && accessibleViewOnLastLine && terminalHasBeenCreated && accessibleViewCurrentProviderId == 'terminal' || kb-macro.active && accessibilityModeEnabled && accessibleViewOnLastLine && terminalProcessSupported && accessibleViewCurrentProviderId == 'terminal'"
 			},
 			{
 				"key": "ctrl+down",
@@ -2279,15 +2311,6 @@
 					"command": "workbench.action.terminal.scrollToNextCommand"
 				},
 				"when": "kb-macro.active && terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || kb-macro.active && terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
-			},
-			{
-				"key": "ctrl+down",
-				"mac": "cmd+down",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.terminal.accessibleBufferGoToNextCommand"
-				},
-				"when": "kb-macro.active && terminalAccessibleBufferFocus && !accessibilityModeEnabled || kb-macro.active && terminalAccessibleBufferFocus && terminalHasBeenCreated && !accessibilityModeEnabled || kb-macro.active && terminalAccessibleBufferFocus && terminalProcessSupported && !accessibilityModeEnabled"
 			},
 			{
 				"key": "cmd+down",
@@ -2395,7 +2418,7 @@
 				"args": {
 					"command": "workbench.action.terminal.focusAccessibleBuffer"
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated && terminalTabFocusMode || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated && !terminalAccessibleBufferFocus || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalProcessSupported && terminalTabFocusMode || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalProcessSupported && !terminalAccessibleBufferFocus"
+				"when": "kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "ctrl+up",
@@ -2405,15 +2428,6 @@
 					"command": "workbench.action.terminal.scrollToPreviousCommand"
 				},
 				"when": "kb-macro.active && terminalFocus && terminalHasBeenCreated && !accessibilityModeEnabled || kb-macro.active && terminalFocus && terminalProcessSupported && !accessibilityModeEnabled"
-			},
-			{
-				"key": "ctrl+up",
-				"mac": "cmd+up",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.terminal.accessibleBufferGoToPreviousCommand"
-				},
-				"when": "kb-macro.active && terminalAccessibleBufferFocus && terminalHasBeenCreated && !accessibilityModeEnabled || kb-macro.active && terminalAccessibleBufferFocus && terminalProcessSupported && !accessibilityModeEnabled"
 			},
 			{
 				"key": "ctrl+up",
@@ -2638,6 +2652,14 @@
 					"command": "breadcrumbs.selectFocused"
 				},
 				"when": "kb-macro.active && breadcrumbsActive && breadcrumbsVisible"
+			},
+			{
+				"key": "enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "iconSelectBox.selectFocused"
+				},
+				"when": "kb-macro.active && iconSelectBoxFocus"
 			},
 			{
 				"key": "enter",
@@ -3012,7 +3034,7 @@
 				"key": "cmd+enter",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.submitComment"
+					"command": "editor.action.submitComment"
 				},
 				"when": "kb-macro.active && commentEditorFocused"
 			},
@@ -3982,6 +4004,14 @@
 				"key": "ctrl+enter",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "editor.action.submitComment"
+				},
+				"when": "kb-macro.active && !isMac && commentEditorFocused"
+			},
+			{
+				"key": "ctrl+enter",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "notebook.cell.quitEdit"
 				},
 				"when": "kb-macro.active && isMac && inputFocus && notebookEditorFocused && notebookCellType == 'markup'"
@@ -4009,14 +4039,6 @@
 					"command": "openReferenceToSide"
 				},
 				"when": "kb-macro.active && listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand"
-			},
-			{
-				"key": "ctrl+enter",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.submitComment"
-				},
-				"when": "kb-macro.active && !isMac && commentEditorFocused"
 			},
 			{
 				"key": "ctrl+enter",
@@ -4292,7 +4314,7 @@
 				"args": {
 					"command": "workbench.action.terminal.accessibleBufferGoToNextCommand"
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && terminalAccessibleBufferFocus || kb-macro.active && accessibilityModeEnabled && terminalAccessibleBufferFocus && terminalHasBeenCreated || kb-macro.active && accessibilityModeEnabled && terminalAccessibleBufferFocus && terminalProcessSupported"
+				"when": "kb-macro.active && accessibleViewIsShown && accessibleViewCurrentProviderId == 'terminal' || kb-macro.active && accessibleViewIsShown && terminalHasBeenCreated && accessibleViewCurrentProviderId == 'terminal' || kb-macro.active && accessibleViewIsShown && terminalProcessSupported && accessibleViewCurrentProviderId == 'terminal'"
 			},
 			{
 				"key": "alt+up",
@@ -4362,7 +4384,7 @@
 				"args": {
 					"command": "workbench.action.terminal.accessibleBufferGoToPreviousCommand"
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && terminalAccessibleBufferFocus && terminalHasBeenCreated || kb-macro.active && accessibilityModeEnabled && terminalAccessibleBufferFocus && terminalProcessSupported"
+				"when": "kb-macro.active && accessibleViewIsShown && terminalHasBeenCreated && accessibleViewCurrentProviderId == 'terminal' || kb-macro.active && accessibleViewIsShown && terminalProcessSupported && accessibleViewCurrentProviderId == 'terminal'"
 			},
 			{
 				"key": "ctrl+k ctrl+d",
@@ -4379,7 +4401,16 @@
 				"args": {
 					"command": "editor.action.nextCommentThreadAction"
 				},
-				"when": "kb-macro.active && editorFocus"
+				"when": "kb-macro.active"
+			},
+			{
+				"key": "ctrl+k ctrl+alt+down",
+				"mac": "cmd+k alt+cmd+down",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.nextCommentingRange"
+				},
+				"when": "kb-macro.active && accessibilityModeEnabled && commentFocused || kb-macro.active && accessibilityModeEnabled && editorFocus || kb-macro.active && accessibilityHelpIsShown && accessibilityModeEnabled && accessibleViewCurrentProviderId == 'comments'"
 			},
 			{
 				"key": "f3",
@@ -4454,7 +4485,16 @@
 				"args": {
 					"command": "editor.action.previousCommentThreadAction"
 				},
-				"when": "kb-macro.active && editorFocus"
+				"when": "kb-macro.active"
+			},
+			{
+				"key": "ctrl+k ctrl+alt+up",
+				"mac": "cmd+k alt+cmd+up",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.previousCommentingRange"
+				},
+				"when": "kb-macro.active && accessibilityModeEnabled && commentFocused || kb-macro.active && accessibilityModeEnabled && editorFocus || kb-macro.active && accessibilityHelpIsShown && accessibilityModeEnabled && accessibleViewCurrentProviderId == 'comments'"
 			},
 			{
 				"key": "shift+f3",
@@ -4898,7 +4938,7 @@
 				"args": {
 					"command": "editor.debug.action.toggleBreakpoint"
 				},
-				"when": "kb-macro.active && debuggersAvailable && editorTextFocus"
+				"when": "kb-macro.active && debuggersAvailable && disassemblyViewFocus || kb-macro.active && debuggersAvailable && editorTextFocus"
 			},
 			{
 				"key": "f9",
@@ -5149,6 +5189,15 @@
 					"command": "togglePeekWidgetFocus"
 				},
 				"when": "kb-macro.active && inReferenceSearchEditor || kb-macro.active && referenceSearchVisible"
+			},
+			{
+				"key": "ctrl+k ctrl+alt+c",
+				"mac": "cmd+k alt+cmd+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.addComment"
+				},
+				"when": "kb-macro.active"
 			},
 			{
 				"key": "alt+f5",
@@ -5613,7 +5662,7 @@
 				"args": {
 					"command": "workbench.action.terminal.focusAccessibleBuffer"
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated && terminalTabFocusMode || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated && !terminalAccessibleBufferFocus || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalProcessSupported && terminalTabFocusMode || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalProcessSupported && !terminalAccessibleBufferFocus"
+				"when": "kb-macro.active && !isLinux && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated || kb-macro.active && !isLinux && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "alt+f6",
@@ -5859,6 +5908,15 @@
 				"when": "kb-macro.active && notificationToastsVisible"
 			},
 			{
+				"key": "ctrl+k ctrl+shift+n",
+				"mac": "cmd+k shift+cmd+n",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notifications.showList"
+				},
+				"when": "kb-macro.active"
+			},
+			{
 				"key": "ctrl+; ctrl+x",
 				"mac": "cmd+; cmd+x",
 				"command": "kb-macro.wrap",
@@ -6009,6 +6067,15 @@
 					"command": "workbench.action.chat.nextFileTree"
 				},
 				"when": "kb-macro.active && hasChatProvider && inChat"
+			},
+			{
+				"key": "ctrl+alt+i",
+				"mac": "ctrl+cmd+i",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.chat.open"
+				},
+				"when": "kb-macro.active && hasChatProvider"
 			},
 			{
 				"key": "ctrl+shift+f9",
@@ -6530,7 +6597,7 @@
 				"args": {
 					"command": "workbench.action.terminal.openDetectedLink"
 				},
-				"when": "kb-macro.active && terminalAccessibleBufferFocus && terminalHasBeenCreated || kb-macro.active && terminalFocus && terminalHasBeenCreated"
+				"when": "kb-macro.active && terminalFocus && terminalHasBeenCreated"
 			},
 			{
 				"key": "ctrl+shift+o",
@@ -6889,11 +6956,12 @@
 			},
 			{
 				"key": "ctrl+r",
+				"mac": "cmd+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.terminal.runRecentCommand"
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
+				"when": "kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated || kb-macro.active && accessibilityModeEnabled && terminalFocus && terminalProcessSupported || kb-macro.active && accessibilityModeEnabled && accessibleViewIsShown && terminalHasBeenCreated && accessibleViewCurrentProviderId == 'terminal' || kb-macro.active && accessibilityModeEnabled && accessibleViewIsShown && terminalProcessSupported && accessibleViewCurrentProviderId == 'terminal'"
 			},
 			{
 				"key": "ctrl+r",
@@ -7591,9 +7659,9 @@
 				"mac": "shift+cmd+g",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.terminal.navigateAccessibleBuffer"
+					"command": "workbench.action.terminal.openDetectedLink"
 				},
-				"when": "kb-macro.active && terminalAccessibleBufferFocus && terminalHasBeenCreated || kb-macro.active && terminalAccessibleBufferFocus && terminalProcessSupported"
+				"when": "kb-macro.active && accessibleViewIsShown && terminalHasBeenCreated && accessibleViewCurrentProviderId == 'terminal'"
 			},
 			{
 				"key": "shift+alt+f1",
@@ -7937,6 +8005,14 @@
 					"command": "deleteLeft"
 				},
 				"when": "kb-macro.active && isMac && textInputFocus"
+			},
+			{
+				"key": "ctrl+k ctrl+alt+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "copyFilePath"
+				},
+				"when": "kb-macro.active && isLinux && editorFocus"
 			},
 			{
 				"key": "ctrl+pagedown",
@@ -8476,14 +8552,6 @@
 				"when": "kb-macro.active && isLinux && fileMatchOrFolderMatchWithResourceFocus"
 			},
 			{
-				"key": "ctrl+k ctrl+alt+c",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "copyFilePath"
-				},
-				"when": "kb-macro.active && isLinux && editorFocus"
-			},
-			{
 				"key": "ctrl+shift+alt+c",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -8506,6 +8574,14 @@
 					"command": "editor.action.accessibleView"
 				},
 				"when": "kb-macro.active && isLinux"
+			},
+			{
+				"key": "shift+alt+f2",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.terminal.focusAccessibleBuffer"
+				},
+				"when": "kb-macro.active && isLinux && accessibilityModeEnabled && terminalFocus && terminalHasBeenCreated || kb-macro.active && isLinux && accessibilityModeEnabled && terminalFocus && terminalProcessSupported"
 			},
 			{
 				"key": "shift+alt+meta+j",
