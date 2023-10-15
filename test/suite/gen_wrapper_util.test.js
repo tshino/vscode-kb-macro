@@ -32,6 +32,19 @@ describe('gen_wrapper_util', () => {
         it('should combine two when clauses with AND operator (2)', () => {
             assert.strictEqual(addWhenContext('c1 || c2', 'c3 || c4'), 'c3 && c1 || c3 && c2 || c4 && c1 || c4 && c2');
         });
+        it('should handle non-logical operators', () => {
+            assert.strictEqual(addWhenContext('a == b || c1', 'c2'), 'c2 && a == b || c2 && c1');
+            assert.strictEqual(addWhenContext('a != b || c1', 'c2'), 'c2 && a != b || c2 && c1');
+        });
+        // TODO: https://github.com/tshino/vscode-kb-macro/issues/296
+        /*
+        it('should leave parenthesized portion unchanged', () => {
+            assert.strictEqual(addWhenContext('(c1 || c2)', 'c3'), 'c3 && (c1 || c2)');
+            assert.strictEqual(addWhenContext('!(c1 || c2)', 'c3'), 'c3 && !(c1 || c2)');
+            assert.strictEqual(addWhenContext('c1 && (c2 || c3)', 'c4'), 'c4 && c1 && (c2 || c3)');
+            assert.strictEqual(addWhenContext('c1', '(c2 || c3)'), '(c2 || c3) && c1');
+        });
+        */
     });
     describe('negateContext', () => {
         const negateContext = genWrapperUtil.negateContext;
