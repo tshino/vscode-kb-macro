@@ -57,6 +57,10 @@ describe('gen_wrapper_util', () => {
         it('should not use double negation (1)', () => {
             assert.strictEqual(negateContext('!c1'), 'c1');
         });
+        it('should leave parenthesized portion unchanged', () => {
+            assert.strictEqual(negateContext('(c1 || c2)'), '!(c1 || c2)');
+            assert.strictEqual(negateContext('!(c1 || c2)'), '(c1 || c2)');
+        });
     });
     describe('copyKeybinding', () => {
         const copyKeybinding = genWrapperUtil.copyKeybinding;
