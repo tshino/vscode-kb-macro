@@ -7,16 +7,6 @@ const defaultKeybindingsLoader = require('./default_keybindings_loader');
 const PackageJsonPath = './package.json';
 const ConfigPath = 'generator/config.json';
 
-const containsWhenContext = function(when, context) {
-    if (when) {
-        return when.split('||').every(cond => {
-            return cond.split('&&').some(cond => {
-                return cond.trim() === context;
-            });
-        });
-    }
-    return false;
-};
 const removeWhenContext = function(when, context) {
     return when.split('||').map(cond => {
         return cond.split('&&').filter(cond => {
@@ -27,27 +17,27 @@ const removeWhenContext = function(when, context) {
 
 const availableOnWindows = function(keybinding) {
     return (
-        !containsWhenContext(keybinding.when, 'isLinux') &&
-        !containsWhenContext(keybinding.when, 'isMac') &&
-        !containsWhenContext(keybinding.when, '!isWindows') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, 'isLinux') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, 'isMac') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, '!isWindows') &&
         !/\bmeta\b/.test(keybinding.key) &&
         !/\bcmd\b/.test(keybinding.key)
     );
 };
 const availableOnLinux = function(keybinding) {
     return (
-        !containsWhenContext(keybinding.when, 'isWindows') &&
-        !containsWhenContext(keybinding.when, 'isMac') &&
-        !containsWhenContext(keybinding.when, '!isLinux') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, 'isWindows') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, 'isMac') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, '!isLinux') &&
         !/\bwin\b/.test(keybinding.key) &&
         !/\bcmd\b/.test(keybinding.key)
     );
 };
 const availableOnMac = function(keybinding) {
     return (
-        !containsWhenContext(keybinding.when, 'isWindows') &&
-        !containsWhenContext(keybinding.when, 'isLinux') &&
-        !containsWhenContext(keybinding.when, '!isMac') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, 'isWindows') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, 'isLinux') &&
+        !genWrapperUtil.containsWhenContext(keybinding.when, '!isMac') &&
         (
             (
                 !/\bwin\b/.test(keybinding.key) &&
@@ -251,7 +241,7 @@ async function verifyWrapper() {
 
     for (const wrapper of wrappers) {
         assert.ok(
-            containsWhenContext(wrapper.when, 'kb-macro.active'),
+            genWrapperUtil.containsWhenContext(wrapper.when, 'kb-macro.active'),
             '"when" in a wrapper should contain "kb-macro.active &&" context'
         );
         if (isWrapped(wrapper)) {

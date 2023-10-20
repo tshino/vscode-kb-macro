@@ -46,6 +46,36 @@ describe('gen_wrapper_util', () => {
         });
         */
     });
+    describe('containsWhenContext', () => {
+        const containsWhenContext = genWrapperUtil.containsWhenContext;
+        it('should return true if given when clause contains given context as an AND expression', () => {
+            assert.strictEqual(containsWhenContext('c1 && c2', 'c1'), true);
+            assert.strictEqual(containsWhenContext('c2 && c1', 'c1'), true);
+        });
+        it('should return false if given when clause can evaluate true without given context being true', () => {
+            assert.strictEqual(containsWhenContext('c2', 'c1'), false);
+            assert.strictEqual(containsWhenContext('c2 && c3', 'c1'), false);
+        });
+        it('should return false if given when clause is empty', () => {
+            assert.strictEqual(containsWhenContext('', 'c1'), false);
+        });
+        it('should handle OR expression', () => {
+            assert.strictEqual(containsWhenContext('c1 || c2', 'c1'), false);
+            assert.strictEqual(containsWhenContext('c2 || c3', 'c1'), false);
+            assert.strictEqual(containsWhenContext('c1 && c2 || c3 && c1', 'c1'), true);
+        });
+        it('should handle non-logical operators', () => {
+            assert.strictEqual(containsWhenContext('c1 && a == b || c == d && c1', 'c1'), true);
+        });
+        // TODO: https://github.com/tshino/vscode-kb-macro/issues/296
+        /*
+        it('should not recognise inside parenthesized portion in given when clause', () => {
+            assert.strictEqual(containsWhenContext('(c1 && c2)', 'c1'), false);
+            assert.strictEqual(containsWhenContext('c1 && (c2 || c3)', 'c1'), true);
+            assert.strictEqual(containsWhenContext('(c2 || c3) && c1', 'c1'), true);
+        });
+        */
+    });
     describe('negateContext', () => {
         const negateContext = genWrapperUtil.negateContext;
         it('should append operator ! in front of given context', () => {
