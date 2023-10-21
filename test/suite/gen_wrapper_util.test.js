@@ -49,6 +49,7 @@ describe('gen_wrapper_util', () => {
     describe('containsWhenContext', () => {
         const containsWhenContext = genWrapperUtil.containsWhenContext;
         it('should return true if given when clause contains given context as an AND expression', () => {
+            assert.strictEqual(containsWhenContext('c1', 'c1'), true);
             assert.strictEqual(containsWhenContext('c1 && c2', 'c1'), true);
             assert.strictEqual(containsWhenContext('c2 && c1', 'c1'), true);
         });
@@ -73,6 +74,42 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(containsWhenContext('(c1 && c2)', 'c1'), false);
             assert.strictEqual(containsWhenContext('c1 && (c2 || c3)', 'c1'), true);
             assert.strictEqual(containsWhenContext('(c2 || c3) && c1', 'c1'), true);
+        });
+        */
+    });
+    describe('removeWhenContext', () => {
+        const removeWhenContext = genWrapperUtil.removeWhenContext;
+        it('should remove given context from given when clause expression', () => {
+            assert.strictEqual(removeWhenContext('c1 && c2', 'c1'), 'c2');
+            assert.strictEqual(removeWhenContext('c2 && c1', 'c1'), 'c2');
+            assert.strictEqual(removeWhenContext('c1', 'c1'), '');
+        });
+        it('should leave given when clause unchanged when it does not contain given context', () => {
+            assert.strictEqual(removeWhenContext('c2 && c3', 'c1'), 'c2 && c3');
+            assert.strictEqual(removeWhenContext('c2', 'c1'), 'c2');
+            assert.strictEqual(removeWhenContext('', 'c1'), '');
+        });
+        it('should handle a negate operator as a part of context to match', () => {
+            assert.strictEqual(removeWhenContext('c2 && !c1', '!c1'), 'c2');
+            assert.strictEqual(removeWhenContext('!c2 && c1', 'c1'), '!c2');
+            assert.strictEqual(removeWhenContext('!c2 && c1', '!c1'), '!c2 && c1');
+            assert.strictEqual(removeWhenContext('!c2 && !c1', 'c1'), '!c2 && !c1');
+        });
+        it('should handle OR expression', () => {
+            assert.strictEqual(removeWhenContext('c1 && c2 || c1 && c3', 'c1'), 'c2 || c3');
+        });
+        it('should handle non-logical operators', () => {
+            assert.strictEqual(removeWhenContext('c1 && a == b || c == d && c1', 'c1'), 'a == b || c == d');
+        });
+        // TODO: https://github.com/tshino/vscode-kb-macro/issues/296
+        /*
+        it('should leave parenthesized portion unchanged', () => {
+            assert.strictEqual(removeWhenContext('(c1 && c2)', 'c1'), '(c1 && c2)');
+            assert.strictEqual(removeWhenContext('(c2 && c1 && c3)', 'c1'), '(c2 && c1 && c3)');
+            assert.strictEqual(removeWhenContext('c1 && (c2 || c3)', 'c1'), '(c2 || c3)');
+            assert.strictEqual(removeWhenContext('c1 && (c2 || c1 && c3)', 'c1'), '(c2 || c1 && c3)');
+            assert.strictEqual(removeWhenContext('(c2 || c3) && c1', 'c1'), '(c2 || c3)');
+            assert.strictEqual(removeWhenContext('(c2 && c1 || c3) && c1', 'c1'), '(c2 && c1 || c3)');
         });
         */
     });

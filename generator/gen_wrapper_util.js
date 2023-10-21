@@ -78,6 +78,14 @@ const containsWhenContext = function(when, context) {
     return false;
 };
 
+const removeWhenContext = function(when, context) {
+    return when.split('||').map(cond => {
+        return cond.split('&&').filter(cond => {
+            return cond.trim() !== context;
+        }).map(cond => cond.trim()).join(' && ');
+    }).filter(cond => cond !== '').join(' || ');
+};
+
 function negateContext(context) {
     if (context) {
         context = context.trim();
@@ -302,6 +310,7 @@ module.exports = {
     makeCompactKeybindingsJSON,
     addWhenContext,
     containsWhenContext,
+    removeWhenContext,
     negateContext,
     copyKeybinding,
     removeOSSpecificKeys,
