@@ -48,6 +48,17 @@ function makeCompactKeybindingsJSON(keybindings) {
     return compactJson;
 }
 
+const decomposeWhenClause = function(when) {
+    // returns Array of Arrays.
+    // The outer array corresponds to '||' operators.
+    // The inner array corresponds to '&&' operators.
+    return when.split('||').map(
+        cond => cond.split('&&').map(
+            cond => cond.trim()
+        )
+    );
+};
+
 function addWhenContext(when, context) {
     context = context || '';
     if (when) {
@@ -308,6 +319,7 @@ module.exports = {
     writeJSON,
     writeFile,
     makeCompactKeybindingsJSON,
+    decomposeWhenClause,
     addWhenContext,
     containsWhenContext,
     removeWhenContext,

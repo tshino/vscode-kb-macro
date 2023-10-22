@@ -3,6 +3,36 @@ const assert = require('assert');
 const genWrapperUtil = require('../../generator/gen_wrapper_util.js');
 
 describe('gen_wrapper_util', () => {
+    describe('decomposeWhenClause', () => {
+        const decomposeWhenClause = genWrapperUtil.decomposeWhenClause;
+        it('should split OR-of-AND expressions into nested Array of conditions', () => {
+            assert.deepStrictEqual(decomposeWhenClause('a'), [['a']]);
+            assert.deepStrictEqual(decomposeWhenClause('a || b'), [['a'], ['b']]);
+            assert.deepStrictEqual(decomposeWhenClause('a && b'), [['a', 'b']]);
+            assert.deepStrictEqual(decomposeWhenClause('a && b || c'), [['a', 'b'], ['c']]);
+            assert.deepStrictEqual(decomposeWhenClause('a && b || c && d'), [['a', 'b'], ['c', 'd']]);
+        });
+        it('should return [[""]] if empty string is given', () => {
+            assert.deepStrictEqual(decomposeWhenClause(''), [['']]);
+        });
+        it('should retain non-logical expressions portion untouched', () => {
+            assert.deepStrictEqual(decomposeWhenClause('a == b'), [['a == b']]);
+            assert.deepStrictEqual(decomposeWhenClause('a == b && c'), [['a == b', 'c']]);
+        });
+        it('should leave negate operators being attached', () => {
+            assert.deepStrictEqual(decomposeWhenClause('!c'), [['!c']]);
+            assert.deepStrictEqual(decomposeWhenClause('c1 || !c2 || !!c3'), [['c1'], ['!c2'], ['!!c3']]);
+        });
+        // TODO: https://github.com/tshino/vscode-kb-macro/issues/296
+        /*
+        it('should leave parenthesized portion unchanged', () => {
+            assert.deepStrictEqual(decomposeWhenClause('(c1 || c2)'), [['(c1 || c2)']]);
+            assert.deepStrictEqual(decomposeWhenClause('!(c1 || c2)'), [['!(c1 || c2)']]);
+            assert.deepStrictEqual(decomposeWhenClause('c1 && (c2 || c3)'), [['c1', '(c2 || c3)']]);
+            assert.deepStrictEqual(decomposeWhenClause('c1 || (c2 && c3)'), [['c1'], ['(c2 && c3)']]);
+        });
+        */
+    });
     describe('addWhenContext', () => {
         const addWhenContext = genWrapperUtil.addWhenContext;
         it('should return given context if when clause is empty', () => {
