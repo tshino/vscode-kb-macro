@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.83.1 for Linux
+// Default Keybindings of Visual Studio Code 1.84.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -138,6 +138,8 @@
 { "key": "enter",                 "command": "chat.action.acceptInput",
                                      "when": "inChatInput && textInputFocus" },
 { "key": "ctrl+up",               "command": "chat.action.focus",
+                                     "when": "inChatInput && textInputFocus" },
+{ "key": "ctrl+enter",            "command": "chat.action.submitSecondaryAgent",
                                      "when": "inChatInput && textInputFocus" },
 { "key": "shift+escape",          "command": "closeBreakpointWidget",
                                      "when": "breakpointWidgetVisible && textInputFocus" },
@@ -495,7 +497,7 @@
                                      "when": "inWelcome && activeEditor == 'gettingStartedPage'" },
 { "key": "ctrl+k ctrl+alt+c",     "command": "workbench.action.addComment" },
 { "key": "ctrl+alt+enter",        "command": "workbench.action.chat.runInTerminal",
-                                     "when": "hasChatProvider && inChat" },
+                                     "when": "hasChatProvider && inChat && !accessibilityModeEnabled" },
 { "key": "alt+f5",                "command": "workbench.action.editor.nextChange",
                                      "when": "editorTextFocus && !textCompareEditorActive" },
 { "key": "shift+alt+f5",          "command": "workbench.action.editor.previousChange",
@@ -878,8 +880,12 @@
                                      "when": "config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !accessibilityModeEnabled && !isEmbeddedDiffEditor && !notebookCellMarkdownEditMode && notebookCellType == 'markup'" },
 { "key": "ctrl+down",             "command": "notebook.focusNextEditor",
                                      "when": "notebookEditorFocused && notebookOutputFocused" },
+{ "key": "ctrl+alt+pagedown",     "command": "notebook.focusNextEditor",
+                                     "when": "notebookEditorFocused" },
 { "key": "up",                    "command": "notebook.focusPreviousEditor",
                                      "when": "config.notebook.navigation.allowNavigateToSurroundingCells && notebookCursorNavigationMode && notebookEditorFocused && !accessibilityModeEnabled && !isEmbeddedDiffEditor && !notebookCellMarkdownEditMode && notebookCellType == 'markup'" },
+{ "key": "ctrl+alt+pageup",       "command": "notebook.focusPreviousEditor",
+                                     "when": "notebookEditorFocused && !accessibilityModeEnabled" },
 { "key": "ctrl+home",             "command": "notebook.focusTop",
                                      "when": "notebookEditorFocused && !inputFocus" },
 { "key": "left",                  "command": "notebook.fold",
@@ -895,7 +901,7 @@
 { "key": "ctrl+shift+]",          "command": "notebook.unfold",
                                      "when": "notebookEditorFocused && !inputFocus && activeEditor == 'workbench.editor.notebook'" },
 { "key": "ctrl+shift+a",          "command": "notification.acceptPrimaryAction",
-                                     "when": "notificationToastsVisible" },
+                                     "when": "notificationFocus" },
 { "key": "delete",                "command": "notification.clear",
                                      "when": "notificationFocus" },
 { "key": "left",                  "command": "notification.collapse",
@@ -1049,18 +1055,22 @@
                                      "when": "hasChatProvider && inChat" },
 { "key": "ctrl+down",             "command": "workbench.action.chat.focusInput",
                                      "when": "inChat && !editorFocus" },
-{ "key": "f9",                    "command": "workbench.action.chat.nextCodeBlock",
+{ "key": "ctrl+enter",            "command": "workbench.action.chat.insertCodeBlock",
+                                     "when": "accessibilityModeEnabled && hasChatProvider && inChat" },
+{ "key": "ctrl+alt+pagedown",     "command": "workbench.action.chat.nextCodeBlock",
                                      "when": "hasChatProvider && inChat" },
 { "key": "ctrl+f9",               "command": "workbench.action.chat.nextFileTree",
                                      "when": "hasChatProvider && inChat" },
 { "key": "ctrl+alt+i",            "command": "workbench.action.chat.open",
                                      "when": "hasChatProvider" },
-{ "key": "shift+f9",              "command": "workbench.action.chat.previousCodeBlock",
+{ "key": "ctrl+alt+pageup",       "command": "workbench.action.chat.previousCodeBlock",
                                      "when": "hasChatProvider && inChat" },
 { "key": "ctrl+shift+f9",         "command": "workbench.action.chat.previousFileTree",
                                      "when": "hasChatProvider && inChat" },
 { "key": "delete",                "command": "workbench.action.chat.remove",
                                      "when": "inChat && !inChatInput" },
+{ "key": "ctrl+/",                "command": "workbench.action.chat.runInTerminal",
+                                     "when": "accessibilityModeEnabled && hasChatProvider && inChat" },
 { "key": "ctrl+w",                "command": "workbench.action.closeActiveEditor" },
 { "key": "ctrl+k ctrl+w",         "command": "workbench.action.closeAllEditors" },
 { "key": "ctrl+k ctrl+shift+w",   "command": "workbench.action.closeAllGroups" },
@@ -1139,7 +1149,8 @@
 { "key": "ctrl+6",                "command": "workbench.action.focusSixthEditorGroup" },
 { "key": "ctrl+3",                "command": "workbench.action.focusThirdEditorGroup" },
 { "key": "ctrl+g",                "command": "workbench.action.gotoLine" },
-{ "key": "ctrl+shift+o",          "command": "workbench.action.gotoSymbol" },
+{ "key": "ctrl+shift+o",          "command": "workbench.action.gotoSymbol",
+                                     "when": "!accessibilityHelpIsShown && !accessibleViewIsShown" },
 { "key": "down",                  "command": "workbench.action.interactivePlayground.arrowDown",
                                      "when": "interactivePlaygroundFocus && !editorTextFocus" },
 { "key": "up",                    "command": "workbench.action.interactivePlayground.arrowUp",
@@ -1358,6 +1369,8 @@
 { "key": "shift+alt+0",           "command": "workbench.action.toggleEditorGroupLayout" },
 { "key": "f11",                   "command": "workbench.action.toggleFullScreen",
                                      "when": "!isIOS" },
+{ "key": "ctrl+k ctrl+m",         "command": "workbench.action.toggleMaximizeEditorGroup",
+                                     "when": "maximizedEditorGroup || multipleEditorGroups" },
 { "key": "ctrl+j",                "command": "workbench.action.togglePanel" },
 { "key": "ctrl+b",                "command": "workbench.action.toggleSidebarVisibility" },
 { "key": "ctrl+k z",              "command": "workbench.action.toggleZenMode" },
@@ -1544,6 +1557,16 @@
                                      "when": "isDevelopment" },
 { "key": "escape",                "command": "notifications.hideToasts",
                                      "when": "notificationFocus && notificationToastsVisible" },
+{ "key": "escape",                "command": "workbench.action.chat.stopListening",
+                                     "when": "hasSpeechProvider && voiceChatInProgress" },
+{ "key": "escape",                "command": "workbench.action.chat.stopListeningInChatEditor",
+                                     "when": "hasSpeechProvider && voiceChatInEditorInProgress" },
+{ "key": "escape",                "command": "workbench.action.chat.stopListeningInChatView",
+                                     "when": "hasSpeechProvider && voiceChatInViewInProgress" },
+{ "key": "escape",                "command": "workbench.action.chat.stopListeningInInlineChat",
+                                     "when": "hasSpeechProvider && inlineVoiceChatInProgress" },
+{ "key": "escape",                "command": "workbench.action.chat.stopListeningInQuickChat",
+                                     "when": "hasSpeechProvider && quickVoiceChatInProgress" },
 { "key": "f10",                   "command": "extension.node-debug.startWithStopOnEntry",
                                      "when": "!inDebugMode && debugConfigurationType == 'node' || !inDebugMode && debugConfigurationType == 'pwa-extensionHost' || !inDebugMode && debugConfigurationType == 'pwa-node'" },
 { "key": "ctrl+k ctrl+alt+s",     "command": "git.stageSelectedRanges",
@@ -1638,6 +1661,7 @@
 // - cursorWordStartRight
 // - cursorWordStartRightSelect
 // - cut
+// - debug.action.openDisassemblyView
 // - debug.action.toggleDisassemblyViewSourceCode
 // - debug.addConfiguration
 // - debug.addToWatchExpressions
@@ -1770,7 +1794,6 @@
 // - editor.debug.action.editBreakpoint
 // - editor.debug.action.goToNextBreakpoint
 // - editor.debug.action.goToPreviousBreakpoint
-// - editor.debug.action.openDisassemblyView
 // - editor.debug.action.runToCursor
 // - editor.debug.action.selectionToRepl
 // - editor.debug.action.selectionToWatch
@@ -1916,6 +1939,8 @@
 // - git.fetch
 // - git.fetchAll
 // - git.fetchPrune
+// - git.generateCommitMessage
+// - git.generateCommitMessageCancel
 // - git.ignore
 // - git.init
 // - git.manageUnsafeRepositories
@@ -2199,7 +2224,6 @@
 // - references-view.showTypeHierarchy
 // - references-view.tree.focus
 // - references-view.tree.resetViewLocation
-// - remote.explorer.switch
 // - remote.tunnel.changeLocalPort
 // - remote.tunnel.closeCommandPalette
 // - remote.tunnel.copyAddressCommandPalette
@@ -2321,6 +2345,9 @@
 // - welcome.markStepIncomplete
 // - welcome.showAllWalkthroughs
 // - workbench.action.acceptSelectedQuickOpenItem
+// - workbench.action.activityBarLocation.hide
+// - workbench.action.activityBarLocation.side
+// - workbench.action.activityBarLocation.top
 // - workbench.action.addRootFolder
 // - workbench.action.alignPanelCenter
 // - workbench.action.alignPanelJustify
@@ -2335,14 +2362,19 @@
 // - workbench.action.chat.copyItem
 // - workbench.action.chat.export
 // - workbench.action.chat.import
-// - workbench.action.chat.insertCodeBlock
+// - workbench.action.chat.inlineVoiceChat
 // - workbench.action.chat.insertIntoNewFile
 // - workbench.action.chat.insertIntoNotebook
 // - workbench.action.chat.markHelpful
 // - workbench.action.chat.markUnhelpful
 // - workbench.action.chat.openInEditor
 // - workbench.action.chat.openInSidebar
+// - workbench.action.chat.quickVoiceChat
+// - workbench.action.chat.selectAndInsertFile
+// - workbench.action.chat.startVoiceChat
+// - workbench.action.chat.stopListeningAndSubmit
 // - workbench.action.chat.submit
+// - workbench.action.chat.voiceChatInChatView
 // - workbench.action.chatEditor.clear
 // - workbench.action.chatEditor.clearHistory
 // - workbench.action.clearCommandHistory
@@ -2443,6 +2475,7 @@
 // - workbench.action.focusStatusBar
 // - workbench.action.focusTitleBar
 // - workbench.action.generateColorTheme
+// - workbench.action.hideEditorTabs
 // - workbench.action.increaseViewHeight
 // - workbench.action.increaseViewSize
 // - workbench.action.increaseViewWidth
@@ -2468,7 +2501,7 @@
 // - workbench.action.logStorage
 // - workbench.action.logWorkingCopies
 // - workbench.action.manageTrustedDomain
-// - workbench.action.maximizeEditor
+// - workbench.action.maximizeEditorHideSidebar
 // - workbench.action.minimizeOtherEditors
 // - workbench.action.moveEditorToAboveGroup
 // - workbench.action.moveEditorToBelowGroup
@@ -2602,12 +2635,14 @@
 // - workbench.action.setLogLevel
 // - workbench.action.showAboutDialog
 // - workbench.action.showAllEditorsByMostRecentlyUsed
+// - workbench.action.showEditorTab
 // - workbench.action.showEditorsInActiveGroup
 // - workbench.action.showEditorsInGroup
 // - workbench.action.showEmmetCommands
 // - workbench.action.showErrorsWarnings
 // - workbench.action.showInteractivePlayground
 // - workbench.action.showLogs
+// - workbench.action.showMultipleEditorTabs
 // - workbench.action.showOutputChannels
 // - workbench.action.showRuntimeExtensions
 // - workbench.action.showWindowLog
@@ -2716,7 +2751,6 @@
 // - workbench.action.toggleSplitEditorInGroup
 // - workbench.action.toggleSplitEditorInGroupLayout
 // - workbench.action.toggleStatusbarVisibility
-// - workbench.action.toggleTabsVisibility
 // - workbench.action.triggerReconnect
 // - workbench.action.troubleshootIssue.start
 // - workbench.action.troubleshootIssue.stop
@@ -2724,6 +2758,8 @@
 // - workbench.action.url.openUrl
 // - workbench.action.webview.openDeveloperTools
 // - workbench.action.webview.reloadWebviewAction
+// - workbench.actions.accounts
+// - workbench.actions.manage
 // - workbench.actions.sync.compareWithLocal
 // - workbench.actions.sync.editMachineName
 // - workbench.actions.sync.loadActivity
