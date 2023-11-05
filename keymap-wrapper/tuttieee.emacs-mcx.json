@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.50.4
+	// Keymap wrapper for Awesome Emacs Keymap v0.51.0
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -1999,6 +1999,10 @@
 		"when": "kb-macro.active && !terminalFocus" },
 	{ "key": "ctrl+i", "command": "kb-macro.wrap", "args": { "command": "tab" },
 		"when": "kb-macro.active" },
+	{ "key": "ctrl+i", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.tabToTabStop", "await": "document selection" },
+		"when": "kb-macro.active && config.emacs-mcx.emacsLikeTab && editorTextFocus && !editorReadonly && !inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible && !inSnippetMode && !editorTabCompletion && !editorParameterHintsVisible" },
+	{ "key": "tab", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.tabToTabStop", "await": "document selection" },
+		"when": "kb-macro.active && config.emacs-mcx.emacsLikeTab && editorTextFocus && !editorReadonly && !inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible && !inSnippetMode && !editorTabCompletion && !editorParameterHintsVisible" },
 	{ "key": "ctrl+x left", "command": "kb-macro.wrap", "args": { "command": "workbench.action.previousEditor" },
 		"when": "kb-macro.active" },
 	{ "key": "ctrl+x right", "command": "kb-macro.wrap", "args": { "command": "workbench.action.nextEditor" },

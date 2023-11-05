@@ -28,6 +28,7 @@
         [ "emacs-mcx.queryReplaceRegexp", "" ],
 
         [ "emacs-mcx.recenterTopBottom", "" ],
+        [ "emacs-mcx.tabToTabStop", "document selection" ],
 
         [ "emacs-mcx.addSelectionToNextFindMatch", "selection" ],
         [ "emacs-mcx.addSelectionToPreviousFindMatch", "selection" ],
