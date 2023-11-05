@@ -17,7 +17,7 @@ Click the keymap wrapper link in the table below, which opens a JSON file. Copy 
 | Keymap extension | Keymap wrapper | Last updated | Start recording | Stop recording | Playback |
 | ---------------- | -------------- | ------------ | ---------- | --------- | -------- |
 | [Atom Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings) | [link](ms-vscode.atom-keybindings.json) | 2023-01-24 | `Ctrl+Alt+R` | `Ctrl+Alt+R` | `Ctrl+Alt+P` |
-| [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | [link](tuttieee.emacs-mcx.json) | 2023-11-05 | `C-x S-9` | `C-x S-0` | `C-x e` |
+| [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) | [link](tuttieee.emacs-mcx.json) | 2023-11-06 | `C-x S-9` | `C-x S-0` | `C-x e` |
 | [Delphi Keymap](https://marketplace.visualstudio.com/items?itemName=alefragnani.delphi-keybindings) | [link](alefragnani.delphi-keybindings.json) | 2023-02-19 | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+R` | `Ctrl/Cmd+Shift+P` |
 | [Notepad++ Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.notepadplusplus-keybindings) | [link](ms-vscode.notepadplusplus-keybindings.json) | 2023-01-08 | `Ctrl+Shift+R` | `Ctrl+Shift+R` | `Ctrl+Shift+P` |
 | [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [link](ms-vscode.sublime-keybindings.json) | 2023-01-08 | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Shift+Q` |
