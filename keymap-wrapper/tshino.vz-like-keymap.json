@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Vz Keymap v0.19.10
+	// Keymap wrapper for Vz Keymap v0.19.11
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -450,9 +450,9 @@
 	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "breadcrumbs.selectFocused" },
 		"when": "kb-macro.active && breadcrumbsActive && breadcrumbsVisible && config.vzKeymap.breadcrumbsKeys" },
 	{ "key": "ctrl+e", "command": "kb-macro.wrap", "args": { "command": "history.showPrevious", "await": "selection" },
-		"when": "kb-macro.active && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible" },
+		"when": "kb-macro.active && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !isComposing && !suggestWidgetVisible" },
 	{ "key": "ctrl+x", "command": "kb-macro.wrap", "args": { "command": "history.showNext", "await": "selection" },
-		"when": "kb-macro.active && historyNavigationForwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible" },
+		"when": "kb-macro.active && historyNavigationForwardsEnabled && historyNavigationWidgetFocus && !isComposing && !suggestWidgetVisible" },
 	{ "key": "ctrl+e", "command": "kb-macro.wrap", "args": { "command": "list.focusUp" },
 		"when": "kb-macro.active && listFocus && !inputFocus && config.vzKeymap.listViewKeys" },
 	{ "key": "ctrl+x", "command": "kb-macro.wrap", "args": { "command": "list.focusDown" },
