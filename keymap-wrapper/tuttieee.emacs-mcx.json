@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.51.0
+	// Keymap wrapper for Awesome Emacs Keymap v0.54.0
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -1125,15 +1125,15 @@
 		"when": "kb-macro.active && editorTextFocus && !editorReadonly && config.emacs-mcx.useMetaPrefixEscape" },
 	{ "key": "ctrl+[ c", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.transformToTitlecase" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadonly && config.emacs-mcx.useMetaPrefixCtrlLeftBracket" },
-	{ "key": "alt+shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.executeCommands", "args": [ "emacs-mcx.previousLine", "editor.action.joinLines" ], "await": "document selection" },
+	{ "key": "alt+shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteIndentation", "await": "document selection" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadOnly && !config.emacs-mcx.useMetaPrefixMacCmd" },
-	{ "key": "cmd+shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.executeCommands", "args": [ "emacs-mcx.previousLine", "editor.action.joinLines" ], "await": "document selection" },
+	{ "key": "cmd+shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteIndentation", "await": "document selection" },
 		"when": "kb-macro.active && isMac && editorTextFocus && !editorReadOnly && config.emacs-mcx.useMetaPrefixMacCmd" },
-	{ "key": "alt+shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.executeCommands", "args": [ "emacs-mcx.previousLine", "editor.action.joinLines" ], "await": "document selection" },
+	{ "key": "alt+shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteIndentation", "await": "document selection" },
 		"when": "kb-macro.active && !isMac && editorTextFocus && !editorReadOnly && config.emacs-mcx.useMetaPrefixMacCmd" },
-	{ "key": "escape shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.executeCommands", "args": [ "emacs-mcx.previousLine", "editor.action.joinLines" ], "await": "document selection" },
+	{ "key": "escape shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteIndentation", "await": "document selection" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadOnly && config.emacs-mcx.useMetaPrefixEscape" },
-	{ "key": "ctrl+[ shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.executeCommands", "args": [ "emacs-mcx.previousLine", "editor.action.joinLines" ], "await": "document selection" },
+	{ "key": "ctrl+[ shift+6", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteIndentation", "await": "document selection" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadOnly && config.emacs-mcx.useMetaPrefixCtrlLeftBracket" },
 	{ "key": "escape", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.cancel", "await": "selection" },
 		"when": "kb-macro.active && editorHasSelection && editorTextFocus && editorHasSelection && !config.emacs-mcx.useMetaPrefixEscape" },
