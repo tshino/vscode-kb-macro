@@ -52,32 +52,23 @@ const decomposeWhenClause = function(when) {
     // returns Array of Arrays.
     // The outer array corresponds to '||' operators.
     // The inner array corresponds to '&&' operators.
-    const tokens = when.split(/(\|\||\&\&)/);
-    const or_s = [];
-    for (let i = 0, j = 0; i < tokens.length; i++) {
-        if (tokens[i] === '||') {
-            or_s.push(tokens.slice(j, i));
-            j = i + 1;
-        } else if (i === tokens.length - 1) {
-            or_s.push(tokens.slice(j, i + 1));
-        }
-    }
-    const or_s_of_and_s = or_s.map(
-        tokens => {
-            const and_s = [];
-            for (let i = 0, j = 0; i < tokens.length; i++) {
-                if (tokens[i] === '&&') {
-                    and_s.push(tokens.slice(j, i));
-                    j = i + 1;
-                } else if (i === tokens.length - 1) {
-                    and_s.push(tokens.slice(j, i + 1));
-                }
+    const splitArray = function(array, separator) {
+        const result = [];
+        for (let i = 0, j = 0; i < array.length; i++) {
+            if (array[i] === separator) {
+                result.push(array.slice(j, i));
+                j = i + 1;
+            } else if (i === array.length - 1) {
+                result.push(array.slice(j, i + 1));
             }
-            const and_s_flat = and_s.map(x => x.join('').trim());
-            return and_s_flat;
         }
+        return result;
+    };
+    const tokens = when.split(/(\|\||\&\&)/);
+    const ors_of_ands = splitArray(tokens, '||').map(a =>
+        splitArray(a, '&&').map(x => x.join('').trim())
     );
-    return or_s_of_and_s;
+    return ors_of_ands;
 };
 
 function addWhenContext(when, context) {
