@@ -51,7 +51,7 @@ function makeCompactKeybindingsJSON(keybindings) {
 const decomposeWhenClause = function(when) {
     // returns Array of Arrays.
     // The outer array corresponds to '||' operators.
-    // The inner array corresponds to '&&' operators.
+    // The inner arrays correspond to '&&' operators.
     const splitArray = function(array, separator) {
         const result = [];
         for (let i = 0, j = 0; i < array.length; i++) {
