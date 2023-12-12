@@ -65,7 +65,28 @@ const decomposeWhenClause = function(when) {
         return result;
     };
     const tokens = when.split(/(\|\||\&\&)/);
-    const ors_of_ands = splitArray(tokens, '||').map(a =>
+    let nest = 0;
+    const outMostTokens = [];
+    for (let i = 0; i < tokens.length; i++) {
+        let str = tokens[i];
+        let open = 0, close = 0;
+        let m;
+        while ((m = str.match(/^\s*(\!\s*)*[(]/)) !== null) {
+            open += 1;
+            str = str.slice(m[0].length);
+        }
+        while ((m = str.match(/[)]\s*$/)) !== null) {
+            close += 1;
+            str = str.slice(0, str.length - m[0].length);
+        }
+        if (nest === 0) {
+            outMostTokens.push(tokens[i]);
+        } else {
+            outMostTokens[outMostTokens.length - 1] += tokens[i];
+        }
+        nest += open - close;
+    }
+    const ors_of_ands = splitArray(outMostTokens, '||').map(a =>
         splitArray(a, '&&').map(x => x.join('').trim())
     );
     return ors_of_ands;

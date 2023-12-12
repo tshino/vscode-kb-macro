@@ -23,15 +23,24 @@ describe('gen_wrapper_util', () => {
             assert.deepStrictEqual(decomposeWhenClause('!c'), [['!c']]);
             assert.deepStrictEqual(decomposeWhenClause('c1 || !c2 || !!c3'), [['c1'], ['!c2'], ['!!c3']]);
         });
-        // TODO: https://github.com/tshino/vscode-kb-macro/issues/296
-        /*
         it('should leave parenthesized portion unchanged', () => {
             assert.deepStrictEqual(decomposeWhenClause('(c1 || c2)'), [['(c1 || c2)']]);
             assert.deepStrictEqual(decomposeWhenClause('!(c1 || c2)'), [['!(c1 || c2)']]);
             assert.deepStrictEqual(decomposeWhenClause('c1 && (c2 || c3)'), [['c1', '(c2 || c3)']]);
             assert.deepStrictEqual(decomposeWhenClause('c1 || (c2 && c3)'), [['c1'], ['(c2 && c3)']]);
         });
-        */
+        it('should handle nested parenthesized portion', () => {
+            assert.deepStrictEqual(decomposeWhenClause('((c1 || c2))'), [['((c1 || c2))']]);
+            assert.deepStrictEqual(decomposeWhenClause('(!(c1 || c2))'), [['(!(c1 || c2))']]);
+            assert.deepStrictEqual(decomposeWhenClause('c1 && ((c2 && c3) || c4)'), [['c1', '((c2 && c3) || c4)']]);
+            assert.deepStrictEqual(decomposeWhenClause('(c1 || !(c2 && c3)) && c4'), [['(c1 || !(c2 && c3))', 'c4']]);
+        });
+        it('should handle spaces around parentheses', () => {
+            assert.deepStrictEqual(decomposeWhenClause('( (c1 || c2)) || c3'), [['( (c1 || c2))'], ['c3']]);
+            assert.deepStrictEqual(decomposeWhenClause('((c1 || c2) ) || c3'), [['((c1 || c2) )'], ['c3']]);
+            assert.deepStrictEqual(decomposeWhenClause('! (c1 || c2)'), [['! (c1 || c2)']]);
+            assert.deepStrictEqual(decomposeWhenClause('( !(c1 || c2))'), [['( !(c1 || c2))']]);
+        });
     });
     describe('addWhenContext', () => {
         const addWhenContext = genWrapperUtil.addWhenContext;
