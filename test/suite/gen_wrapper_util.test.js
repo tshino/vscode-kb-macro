@@ -75,15 +75,12 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(addWhenContext('a == b || c1', 'c2'), 'c2 && a == b || c2 && c1');
             assert.strictEqual(addWhenContext('a != b || c1', 'c2'), 'c2 && a != b || c2 && c1');
         });
-        // TODO: https://github.com/tshino/vscode-kb-macro/issues/296
-        /*
         it('should leave parenthesized portion unchanged', () => {
             assert.strictEqual(addWhenContext('(c1 || c2)', 'c3'), 'c3 && (c1 || c2)');
             assert.strictEqual(addWhenContext('!(c1 || c2)', 'c3'), 'c3 && !(c1 || c2)');
             assert.strictEqual(addWhenContext('c1 && (c2 || c3)', 'c4'), 'c4 && c1 && (c2 || c3)');
             assert.strictEqual(addWhenContext('c1', '(c2 || c3)'), '(c2 || c3) && c1');
         });
-        */
     });
     describe('containsWhenContext', () => {
         const containsWhenContext = genWrapperUtil.containsWhenContext;

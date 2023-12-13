@@ -95,14 +95,14 @@ const decomposeWhenClause = function(when) {
 function addWhenContext(when, context) {
     context = context || '';
     if (when) {
-        const conditions = when.split('||');
-        const restricted = context.split('||').map(
-            context => conditions.map(
-                cond => {
-                    context = context.trim();
-                    cond = cond.trim();
-                    return context ? context + ' && ' + cond : cond;
-                }
+        const conditions = decomposeWhenClause(when).map(
+            ands => ands.join(' && ').trim()
+        );
+        const restricted = decomposeWhenClause(context).map(
+            ands => ands.join(' && ').trim()
+        ).map(
+            ctx => conditions.map(
+                cond => ctx ? ctx + ' && ' + cond : cond
             ).join(' || ')
         ).join(' || ');
         return restricted;
