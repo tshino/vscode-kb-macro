@@ -36,7 +36,7 @@ jobs:
       run: npm run get-default-keybindings
       if: runner.os == 'Windows'
     - name: Upload the output file
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: default-keybindings-${{ matrix.os }}
         path: default-keybindings-*.json
