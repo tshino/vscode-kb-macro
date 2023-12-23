@@ -104,14 +104,11 @@ describe('gen_wrapper_util', () => {
         it('should handle non-logical operators', () => {
             assert.strictEqual(containsWhenContext('c1 && a == b || c == d && c1', 'c1'), true);
         });
-        // TODO: https://github.com/tshino/vscode-kb-macro/issues/296
-        /*
         it('should not recognise inside parenthesized portion in given when clause', () => {
             assert.strictEqual(containsWhenContext('(c1 && c2)', 'c1'), false);
             assert.strictEqual(containsWhenContext('c1 && (c2 || c3)', 'c1'), true);
             assert.strictEqual(containsWhenContext('(c2 || c3) && c1', 'c1'), true);
         });
-        */
     });
     describe('removeWhenContext', () => {
         const removeWhenContext = genWrapperUtil.removeWhenContext;

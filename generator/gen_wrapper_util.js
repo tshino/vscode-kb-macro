@@ -113,11 +113,11 @@ function addWhenContext(when, context) {
 
 const containsWhenContext = function(when, context) {
     if (when) {
-        return when.split('||').every(cond => {
-            return cond.split('&&').some(cond => {
-                return cond.trim() === context;
-            });
-        });
+        return decomposeWhenClause(when).every(
+            cond => cond.some(
+                cond => cond.trim() === context
+            )
+        );
     }
     return false;
 };
