@@ -134,8 +134,6 @@ describe('gen_wrapper_util', () => {
         it('should handle non-logical operators', () => {
             assert.strictEqual(removeWhenContext('c1 && a == b || c == d && c1', 'c1'), 'a == b || c == d');
         });
-        // TODO: https://github.com/tshino/vscode-kb-macro/issues/296
-        /*
         it('should leave parenthesized portion unchanged', () => {
             assert.strictEqual(removeWhenContext('(c1 && c2)', 'c1'), '(c1 && c2)');
             assert.strictEqual(removeWhenContext('(c2 && c1 && c3)', 'c1'), '(c2 && c1 && c3)');
@@ -144,7 +142,6 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(removeWhenContext('(c2 || c3) && c1', 'c1'), '(c2 || c3)');
             assert.strictEqual(removeWhenContext('(c2 && c1 || c3) && c1', 'c1'), '(c2 && c1 || c3)');
         });
-        */
     });
     describe('negateContext', () => {
         const negateContext = genWrapperUtil.negateContext;

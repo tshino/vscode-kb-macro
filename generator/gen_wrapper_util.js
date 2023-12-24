@@ -123,11 +123,11 @@ const containsWhenContext = function(when, context) {
 };
 
 const removeWhenContext = function(when, context) {
-    return when.split('||').map(cond => {
-        return cond.split('&&').filter(cond => {
-            return cond.trim() !== context;
-        }).map(cond => cond.trim()).join(' && ');
-    }).filter(cond => cond !== '').join(' || ');
+    return decomposeWhenClause(when).map(
+        cond => cond.map(
+            cond => cond.trim()
+        ).filter(cond => cond !== context).join(' && ')
+    ).filter(cond => cond !== '').join(' || ');
 };
 
 function negateContext(context) {
