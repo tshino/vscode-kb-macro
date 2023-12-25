@@ -114,13 +114,13 @@ const joinComplementalKeybindings = function(keybindings) {
             if (!w1 || !w2) {
                 continue;
             }
-            const p1 = w1.split('||');
-            const p2 = w2.split('||');
+            const p1 = genWrapperUtil.decomposeWhenClause(w1);
+            const p2 = genWrapperUtil.decomposeWhenClause(w2);
             if (p1.length !== p2.length) {
                 continue;
             }
-            const f1 = p1.map(p => p.split('&&').map(f => f.trim()));
-            const f2 = p2.map(p => p.split('&&').map(f => f.trim()));
+            const f1 = p1.map(p => p.map(f => f.trim()));
+            const f2 = p2.map(p => p.map(f => f.trim()));
             if (!util.isDeepStrictEqual(f1.map(f => f.length), f2.map(f => f.length))) {
                 continue;
             }
