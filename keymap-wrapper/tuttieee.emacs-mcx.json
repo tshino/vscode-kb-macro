@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.55.0
+	// Keymap wrapper for Awesome Emacs Keymap v0.56.0
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -961,6 +961,16 @@
 		"when": "kb-macro.active && !editorHasSelection && editorTextFocus && !editorReadonly" },
 	{ "key": "ctrl+h", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteBackwardChar", "await": "document selection" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadonly" },
+	{ "key": "alt+\\", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteHorizontalSpace", "await": "document selection" },
+		"when": "kb-macro.active && editorTextFocus && !editorReadonly && !config.emacs-mcx.useMetaPrefixMacCmd" },
+	{ "key": "cmd+\\", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteHorizontalSpace", "await": "document selection" },
+		"when": "kb-macro.active && isMac && editorTextFocus && !editorReadonly && config.emacs-mcx.useMetaPrefixMacCmd" },
+	{ "key": "alt+\\", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteHorizontalSpace", "await": "document selection" },
+		"when": "kb-macro.active && !isMac && editorTextFocus && !editorReadonly && config.emacs-mcx.useMetaPrefixMacCmd" },
+	{ "key": "escape \\", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteHorizontalSpace", "await": "document selection" },
+		"when": "kb-macro.active && editorTextFocus && !editorReadonly && config.emacs-mcx.useMetaPrefixEscape" },
+	{ "key": "ctrl+[ \\", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.deleteHorizontalSpace", "await": "document selection" },
+		"when": "kb-macro.active && editorTextFocus && !editorReadonly && config.emacs-mcx.useMetaPrefixCtrlLeftBracket" },
 	{ "key": "alt+d", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.killWord", "await": "document clipboard" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadonly && !config.emacs-mcx.useMetaPrefixMacCmd" },
 	{ "key": "cmd+d", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.killWord", "await": "document clipboard" },
