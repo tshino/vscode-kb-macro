@@ -5,6 +5,7 @@ All notable changes to the Keyboard Macro Bata extension will be documented in t
 ### [Unreleased]
 - Update
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.56.0). [#326](https://github.com/tshino/vscode-kb-macro/pull/326)
+  - Updated keymap wrapper for Awesome Emacs Keymap (v0.57.1). [#327](https://github.com/tshino/vscode-kb-macro/pull/327)
 - Internal
   - Support parenthesis in when clause in wrapper keybindings generator [#296](https://github.com/tshino/vscode-kb-macro/issues/296)
 
