@@ -110,6 +110,36 @@ describe('gen_wrapper_util', () => {
             assert.strictEqual(containsWhenContext('(c2 || c3) && c1', 'c1'), true);
         });
     });
+    describe('hasCommonHeadingWhenContext', () => {
+        const hasCommonHeadingWhenContext = genWrapperUtil.hasCommonHeadingWhenContext;
+        it('should return true if given when clause has given context as the common heading factor of AND expression', () => {
+            assert.strictEqual(hasCommonHeadingWhenContext('c1', 'c1'), true);
+            assert.strictEqual(hasCommonHeadingWhenContext('c1 && c2', 'c1'), true);
+            assert.strictEqual(hasCommonHeadingWhenContext('c2 && c1', 'c1'), false);
+        });
+        it('should return false if given when clause can evaluate true without given context being true', () => {
+            assert.strictEqual(hasCommonHeadingWhenContext('c2', 'c1'), false);
+            assert.strictEqual(hasCommonHeadingWhenContext('c2 && c3', 'c1'), false);
+        });
+        it('should return false if given when clause is empty', () => {
+            assert.strictEqual(hasCommonHeadingWhenContext('', 'c1'), false);
+        });
+        it('should handle OR expression', () => {
+            assert.strictEqual(hasCommonHeadingWhenContext('c1 || c2', 'c1'), false);
+            assert.strictEqual(hasCommonHeadingWhenContext('c2 || c3', 'c1'), false);
+            assert.strictEqual(hasCommonHeadingWhenContext('c1 && c2 || c1 && c3', 'c1'), true);
+            assert.strictEqual(hasCommonHeadingWhenContext('c1 && c2 || c3 && c1', 'c1'), false);
+        });
+        it('should handle non-logical operators', () => {
+            assert.strictEqual(hasCommonHeadingWhenContext('c && a == b || c && c == d', 'c'), true);
+            assert.strictEqual(hasCommonHeadingWhenContext('c && a == b || c == d && c', 'c'), false);
+        });
+        it('should not recognise inside parenthesized portion in given when clause', () => {
+            assert.strictEqual(hasCommonHeadingWhenContext('(c1 && c2)', 'c1'), false);
+            assert.strictEqual(hasCommonHeadingWhenContext('c1 && (c2 || c3)', 'c1'), true);
+            assert.strictEqual(hasCommonHeadingWhenContext('(c2 || c3) && c1', 'c1'), false);
+        });
+    });
     describe('removeWhenContext', () => {
         const removeWhenContext = genWrapperUtil.removeWhenContext;
         it('should remove given context from given when clause expression', () => {

@@ -122,6 +122,17 @@ const containsWhenContext = function(when, context) {
     return false;
 };
 
+const hasCommonHeadingWhenContext = function(when, context) {
+    if (when) {
+        return decomposeWhenClause(when).every(
+            cond => (
+                0 < cond.length && cond[0].trim() === context
+            )
+        );
+    }
+    return false;
+};
+
 const removeWhenContext = function(when, context) {
     return decomposeWhenClause(when).map(
         cond => cond.map(
@@ -355,6 +366,7 @@ module.exports = {
     decomposeWhenClause,
     addWhenContext,
     containsWhenContext,
+    hasCommonHeadingWhenContext,
     removeWhenContext,
     negateContext,
     copyKeybinding,
