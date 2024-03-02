@@ -56,9 +56,9 @@ const unwrapCommon = function(keybinding) {
 };
 const unwrapForWindows = function(keybinding) {
     keybinding = unwrapCommon(keybinding);
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, 'isWindows');
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, '!isLinux');
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, '!isMac');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, 'isWindows');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isLinux');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isMac');
     if (keybinding.when === '') {
         delete keybinding.when;
     }
@@ -70,9 +70,9 @@ const unwrapForWindows = function(keybinding) {
 };
 const unwrapForLinux = function(keybinding) {
     keybinding = unwrapCommon(keybinding);
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, 'isLinux');
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, '!isWindows');
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, '!isMac');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, 'isLinux');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isWindows');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isMac');
     if (keybinding.when === '') {
         delete keybinding.when;
     }
@@ -84,9 +84,9 @@ const unwrapForLinux = function(keybinding) {
 };
 const unwrapForMac = function(keybinding) {
     keybinding = unwrapCommon(keybinding);
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, 'isMac');
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, '!isWindows');
-    keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, '!isLinux');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, 'isMac');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isWindows');
+    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isLinux');
     if (keybinding.when === '') {
         delete keybinding.when;
     }
