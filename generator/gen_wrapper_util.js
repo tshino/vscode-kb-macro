@@ -122,12 +122,35 @@ const containsWhenContext = function(when, context) {
     return false;
 };
 
+const hasCommonHeadingWhenContext = function(when, context) {
+    if (when) {
+        return decomposeWhenClause(when).every(
+            cond => (
+                0 < cond.length && cond[0].trim() === context
+            )
+        );
+    }
+    return false;
+};
+
 const removeWhenContext = function(when, context) {
     return decomposeWhenClause(when).map(
         cond => cond.map(
             cond => cond.trim()
         ).filter(cond => cond !== context).join(' && ')
     ).filter(cond => cond !== '').join(' || ');
+};
+
+const removeCommonHeadingWhenContext = function(when, context) {
+    return (
+        hasCommonHeadingWhenContext(when, context)
+        ? decomposeWhenClause(when).map(
+            cond => (
+                (0 < cond.length && cond[0].trim() === context) ? cond.slice(1) : cond
+            ).join(' && ')
+        ).filter(cond => cond !== '').join(' || ')
+        : when
+    );
 };
 
 function negateContext(context) {
@@ -355,7 +378,9 @@ module.exports = {
     decomposeWhenClause,
     addWhenContext,
     containsWhenContext,
+    hasCommonHeadingWhenContext,
     removeWhenContext,
+    removeCommonHeadingWhenContext,
     negateContext,
     copyKeybinding,
     removeOSSpecificKeys,
