@@ -141,6 +141,18 @@ const removeWhenContext = function(when, context) {
     ).filter(cond => cond !== '').join(' || ');
 };
 
+const removeCommonHeadingWhenContext = function(when, context) {
+    return (
+        hasCommonHeadingWhenContext(when, context)
+        ? decomposeWhenClause(when).map(
+            cond => (
+                (0 < cond.length && cond[0].trim() === context) ? cond.slice(1) : cond
+            ).join(' && ')
+        ).filter(cond => cond !== '').join(' || ')
+        : when
+    );
+};
+
 function negateContext(context) {
     if (context) {
         context = context.trim();
@@ -368,6 +380,7 @@ module.exports = {
     containsWhenContext,
     hasCommonHeadingWhenContext,
     removeWhenContext,
+    removeCommonHeadingWhenContext,
     negateContext,
     copyKeybinding,
     removeOSSpecificKeys,
