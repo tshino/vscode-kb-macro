@@ -1,8 +1,14 @@
 [
-	// Keymap wrapper for Vz Keymap v0.19.12
+	// Keymap wrapper for Vz Keymap v0.19.13
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
+	{ "key": "ctrl+e", "command": "",
+		"when": "kb-macro.active" },
+	{ "key": "ctrl+w", "command": "",
+		"when": "kb-macro.active && config.vzKeymap.ctrl+W" },
+	{ "key": "ctrl+z", "command": "",
+		"when": "kb-macro.active && config.vzKeymap.ctrl+Z" },
 	{ "key": "ctrl+s", "command": "",
 		"when": "kb-macro.active && editorFocus" },
 	{ "key": "ctrl+s", "command": "kb-macro.wrap", "args": { "command": "vz.cursorLeft", "await": "selection" },
@@ -535,6 +541,12 @@
 		"when": "kb-macro.active && treestickyScrollFocused && config.vzKeymap.listViewKeys" },
 	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "list.stickyScrollselect" },
 		"when": "kb-macro.active && treestickyScrollFocused && config.vzKeymap.listViewKeys" },
+	{ "key": "ctrl+e", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickOpenNavigatePrevious" },
+		"when": "kb-macro.active && inQuickOpen && config.vzKeymap.quickOpenKeys" },
+	{ "key": "ctrl+x", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickOpenNavigateNext" },
+		"when": "kb-macro.active && inQuickOpen && config.vzKeymap.quickOpenKeys" },
+	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "workbench.action.acceptSelectedQuickOpenItem" },
+		"when": "kb-macro.active && inQuickOpen && config.vzKeymap.quickOpenKeys" },
 	{ "key": "ctrl+e", "command": "selectPrevCodeAction",
 		"when": "kb-macro.active && codeActionMenuVisible && config.vzKeymap.codeActionKeys" },
 	{ "key": "ctrl+x", "command": "selectNextCodeAction",
