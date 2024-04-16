@@ -22,7 +22,7 @@ Click the keymap wrapper link in the table below, which opens a JSON file. Copy 
 | [Notepad++ Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.notepadplusplus-keybindings) | [link](ms-vscode.notepadplusplus-keybindings.json) | 2023-01-08 | `Ctrl+Shift+R` | `Ctrl+Shift+R` | `Ctrl+Shift+P` |
 | [Sublime Text Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings) | [link](ms-vscode.sublime-keybindings.json) | 2024-02-14 | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Q` | `Ctrl/Cmd+Shift+Q` |
 | [Visual Studio Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vs-keybindings) | [link](ms-vscode.vs-keybindings.json) | 2023-01-08 | `Ctrl+M R` | `Ctrl+M R` | `Ctrl+M Enter` |
-| [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap) | [link](tshino.vz-like-keymap.json) | 2024-03-30 | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` |
+| [Vz Keymap](https://marketplace.visualstudio.com/items?itemName=tshino.vz-like-keymap) | [link](tshino.vz-like-keymap.json) | 2024-04-16 | `Ctrl+_` | `Ctrl+^` | `Ctrl+^` |
 
 - Each keyboard shortcut for start/stop recording and playback is assigned to the same ones that the original editor is using, as much as possible.
 - You can find the definitions of them at the bottom of each keymap wrapper file (find the `startRecording` command etc.). You can customize them as you like.
