@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Vz Keymap v0.19.13
+	// Keymap wrapper for Vz Keymap v0.19.14
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -421,6 +421,12 @@
 		"when": "kb-macro.active && editorHoverFocused && config.vzKeymap.editorHoverKeys" },
 	{ "key": "ctrl+d", "command": "kb-macro.wrap", "args": { "command": "editor.action.scrollRightHover" },
 		"when": "kb-macro.active && editorHoverFocused && config.vzKeymap.editorHoverKeys" },
+	{ "key": "ctrl+e", "command": "kb-macro.wrap", "args": { "command": "editor.action.selectPreviousStickyScrollLine" },
+		"when": "kb-macro.active && stickyScrollFocused && config.vzKeymap.editorStickyScrollKeys" },
+	{ "key": "ctrl+x", "command": "kb-macro.wrap", "args": { "command": "editor.action.selectNextStickyScrollLine" },
+		"when": "kb-macro.active && stickyScrollFocused && config.vzKeymap.editorStickyScrollKeys" },
+	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "editor.action.goToFocusedStickyScrollLine" },
+		"when": "kb-macro.active && stickyScrollFocused && config.vzKeymap.editorStickyScrollKeys" },
 	{ "key": "ctrl+e", "command": "showPrevParameterHint",
 		"when": "kb-macro.active && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible && config.vzKeymap.parameterHintKeys" },
 	{ "key": "ctrl+x", "command": "showNextParameterHint",
@@ -443,6 +449,12 @@
 		"when": "kb-macro.active && suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && config.vzKeymap.suggestionWidgetKeys" },
 	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "acceptSelectedSuggestion", "record": "side-effect" },
 		"when": "kb-macro.active && acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus && config.vzKeymap.suggestionWidgetKeys" },
+	{ "key": "ctrl+x", "command": "kb-macro.wrap", "args": { "command": "focusNextRenameSuggestion" },
+		"when": "kb-macro.active && renameInputVisible && config.vzKeymap.renameInputKeys" },
+	{ "key": "ctrl+e", "command": "kb-macro.wrap", "args": { "command": "focusPreviousRenameSuggestion" },
+		"when": "kb-macro.active && renameInputVisible && config.vzKeymap.renameInputKeys" },
+	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "acceptRenameInput" },
+		"when": "kb-macro.active && editorFocus && renameInputVisible && !isComposing && config.vzKeymap.renameInputKeys" },
 	{ "key": "ctrl+f", "command": "kb-macro.wrap", "args": { "command": "breadcrumbs.focusNext" },
 		"when": "kb-macro.active && breadcrumbsActive && breadcrumbsVisible && config.vzKeymap.breadcrumbsKeys" },
 	{ "key": "ctrl+d", "command": "kb-macro.wrap", "args": { "command": "breadcrumbs.focusNext" },
