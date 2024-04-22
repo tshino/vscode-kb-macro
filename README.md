@@ -68,7 +68,7 @@ See [Keymap Wrappers](keymap-wrapper/README.md).
 
 When this extension performs playback of a recorded command sequence, the commands should be executed one by one exactly. Specifically, each command in the sequence should end its execution and all the side effects of the command such as document change should be completed before the subsequent command is invoked. Otherwise, it may cause an unexpected result.
 
-The mechanism of this extension to playback recorded command sequence relies on a VS Code API `vscode.commands.executeCommand`. But unfortunately, this API doesn't seem to provide a Promise that resolves when the target command ends its execution. Especially, if the target command is provided by an extension, the API seems to ensure only the start of the command execution. And I found the same thing happens with some built-in commands.
+The mechanism of this extension to playback recorded command sequence relies on a VS Code API `vscode.commands.executeCommand`. Unfortunately, this API doesn't seem to provide a Promise that resolves when the target command ends its execution. Especially, if the target command is provided by an extension, the API seems to ensure only the start of the command execution. And I found the same thing happens with some built-in commands.
 
 So, we don't have a proper way to execute commands one by one, without any knowledge of target commands.
 
