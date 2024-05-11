@@ -1,9 +1,11 @@
 [
-	// Keymap wrapper for Vz Keymap v0.19.14
+	// Keymap wrapper for Vz Keymap v0.19.15
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
 	{ "key": "ctrl+e", "command": "",
+		"when": "kb-macro.active" },
+	{ "key": "ctrl+x", "command": "",
 		"when": "kb-macro.active" },
 	{ "key": "ctrl+w", "command": "",
 		"when": "kb-macro.active && config.vzKeymap.ctrl+W" },
@@ -11,6 +13,8 @@
 		"when": "kb-macro.active && config.vzKeymap.ctrl+Z" },
 	{ "key": "ctrl+s", "command": "",
 		"when": "kb-macro.active && editorFocus" },
+	{ "key": "ctrl+m", "command": "",
+		"when": "kb-macro.active" },
 	{ "key": "ctrl+s", "command": "kb-macro.wrap", "args": { "command": "vz.cursorLeft", "await": "selection" },
 		"when": "kb-macro.active && editorTextFocus" },
 	{ "key": "left", "command": "kb-macro.wrap", "args": { "command": "vz.cursorLeft", "await": "selection" },
@@ -193,8 +197,6 @@
 		"when": "kb-macro.active && editorTextFocus && !editorReadonly" },
 	{ "key": "ctrl+i", "command": "kb-macro.wrap", "args": { "command": "tab", "await": "document selection" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadonly && config.vzKeymap.ctrl+I" },
-	{ "key": "ctrl+m", "command": "",
-		"when": "kb-macro.active && editorFocus" },
 	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "vz.enter", "await": "document selection" },
 		"when": "kb-macro.active && editorTextFocus && !editorReadonly && !renameInputVisible && !codeActionMenuVisible && !suggestWidgetHasFocusedSuggestion || kb-macro.active && editorTextFocus && !editorReadonly && !renameInputVisible && !codeActionMenuVisible && suggestWidgetHasFocusedSuggestion && !acceptSuggestionOnEnter" },
 	{ "key": "enter", "command": "kb-macro.wrap", "args": { "command": "vz.enter", "await": "document selection" },
@@ -507,6 +509,8 @@
 		"when": "kb-macro.active && searchViewletFocus && searchViewletVisible && config.vzKeymap.searchViewletKeys && config.vzKeymap.ctrl+W" },
 	{ "key": "ctrl+z", "command": "kb-macro.wrap", "args": { "command": "search.focus.nextInputBox" },
 		"when": "kb-macro.active && searchViewletFocus && searchViewletVisible && config.vzKeymap.searchViewletKeys && config.vzKeymap.ctrl+Z" },
+	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "search.action.refreshSearchResults" },
+		"when": "kb-macro.active && inputBoxFocus && searchViewletFocus && searchViewletVisible && config.vzKeymap.searchViewletKeys" },
 	{ "key": "ctrl+m", "command": "kb-macro.wrap", "args": { "command": "search.action.openResult" },
 		"when": "kb-macro.active && fileMatchOrMatchFocus && searchViewletVisible && config.vzKeymap.searchViewletKeys" },
 	{ "key": "ctrl+x", "command": "kb-macro.wrap", "args": { "command": "settings.action.focusSettingsFromSearch" },
