@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.61.0
+	// Keymap wrapper for Awesome Emacs Keymap v0.61.2
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -894,11 +894,11 @@
 	{ "key": "alt+backspace", "command": "",
 		"when": "kb-macro.active && isWindows && replaceInputFocussed && !isComposing" },
 	{ "key": "alt+s o", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickTextSearch" },
-		"when": "kb-macro.active && editorFocus && !config.emacs-mcx.useMetaPrefixMacCmd" },
+		"when": "kb-macro.active && !config.emacs-mcx.useMetaPrefixMacCmd" },
 	{ "key": "cmd+s o", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickTextSearch" },
-		"when": "kb-macro.active && isMac && editorFocus && config.emacs-mcx.useMetaPrefixMacCmd" },
+		"when": "kb-macro.active && isMac && config.emacs-mcx.useMetaPrefixMacCmd" },
 	{ "key": "alt+s o", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickTextSearch" },
-		"when": "kb-macro.active && !isMac && editorFocus && config.emacs-mcx.useMetaPrefixMacCmd" },
+		"when": "kb-macro.active && !isMac && config.emacs-mcx.useMetaPrefixMacCmd" },
 	{ "key": "ctrl+alt+n", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.addSelectionToNextFindMatch", "await": "selection" },
 		"when": "kb-macro.active && editorFocus && !config.emacs-mcx.useMetaPrefixMacCmd" },
 	{ "key": "ctrl+cmd+n", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.addSelectionToNextFindMatch", "await": "selection" },
@@ -1844,7 +1844,7 @@
 	{ "key": "ctrl+x j", "command": "kb-macro.wrap", "args": { "command": "workbench.action.togglePanel" },
 		"when": "kb-macro.active && !terminalFocus" },
 	{ "key": "ctrl+i", "command": "kb-macro.wrap", "args": { "command": "tab" },
-		"when": "kb-macro.active" },
+		"when": "kb-macro.active && editorTextFocus && !editorReadonly && !editorTabMovesFocus" },
 	{ "key": "ctrl+i", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.tabToTabStop", "await": "document selection" },
 		"when": "kb-macro.active && config.emacs-mcx.emacsLikeTab && editorTextFocus && !editorReadonly && !inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible && !inSnippetMode && !editorTabCompletion && !editorParameterHintsVisible" },
 	{ "key": "tab", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.tabToTabStop", "await": "document selection" },
