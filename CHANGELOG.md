@@ -2,12 +2,14 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Internal:
+  - Updated eslint major version from 8 to 9. [#396](https://github.com/tshino/vscode-kb-macro/issues/396)
+
 ### [0.13.17] - 2024-07-08
 - Update
   - Updated default keybindings wrappers based on VS Code 1.91.0. [#388](https://github.com/tshino/vscode-kb-macro/pull/388)
   - Updated keymap wrapper for Awesome Emacs Keymap (v0.61.2). [#382](https://github.com/tshino/vscode-kb-macro/pull/382)
-- Internal:
-  - Updated eslint major version from 8 to 9. [#396](https://github.com/tshino/vscode-kb-macro/issues/396)
 
 ### [0.13.16] - 2024-06-08
 - Update
