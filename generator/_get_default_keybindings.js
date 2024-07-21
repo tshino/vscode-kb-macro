@@ -32,7 +32,7 @@ async function main() {
                 emptyDir2
             ]
         });
-    } catch (err) {
+    } catch (_err) {
         console.error('Failed to run');
         process.exit(1);
     }
