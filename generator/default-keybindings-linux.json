@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.91.1 for Linux
+// Default Keybindings of Visual Studio Code 1.92.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -513,7 +513,7 @@
                                      "when": "inWelcome && activeEditor == 'gettingStartedPage'" },
 { "key": "ctrl+k ctrl+alt+c",     "command": "workbench.action.addComment" },
 { "key": "ctrl+/",                "command": "workbench.action.chat.attachContext",
-                                     "when": "inChatInput" },
+                                     "when": "config.chat.experimental.variables.editor && inChatInput && chatLocation == 'editor' || config.chat.experimental.variables.notebook && inChatInput && chatLocation == 'notebook' || config.chat.experimental.variables.terminal && inChatInput && chatLocation == 'terminal' || inChatInput && !quickChatHasFocus && chatLocation == 'panel'" },
 { "key": "ctrl+alt+enter",        "command": "workbench.action.chat.runInTerminal",
                                      "when": "accessibleViewInCodeBlock && chatIsEnabled || chatIsEnabled && inChat" },
 { "key": "enter",                 "command": "workbench.action.chat.submit",
@@ -722,8 +722,10 @@
                                      "when": "!accessibilityHelpIsShown" },
 { "key": "shift+alt+f1",          "command": "editor.action.accessibilityHelp",
                                      "when": "!accessibilityHelpIsShown" },
+{ "key": "alt+a",                 "command": "editor.action.accessibilityHelpConfigureAssignedKeybindings",
+                                     "when": "accessibilityHelpIsShown && accessibleViewHasAssignedKeybindings" },
 { "key": "alt+k",                 "command": "editor.action.accessibilityHelpConfigureKeybindings",
-                                     "when": "accessibilityHelpIsShown" },
+                                     "when": "accessibilityHelpIsShown && accessibleViewHasUnassignedKeybindings" },
 { "key": "alt+h",                 "command": "editor.action.accessibilityHelpOpenHelpLink",
                                      "when": "accessibilityHelpIsShown" },
 { "key": "alt+f2",                "command": "editor.action.accessibleView" },
@@ -958,6 +960,8 @@
                                      "when": "notebookCellHasOutputs && notebookCellListFocused && !inputFocus" },
 { "key": "ctrl+l",                "command": "notebook.centerActiveCell",
                                      "when": "notebookEditorFocused" },
+{ "key": "ctrl+/",                "command": "notebook.commentSelectedCells",
+                                     "when": "notebookEditable && notebookEditorFocused && !inputFocus" },
 { "key": "alt+f3",                "command": "notebook.diff.action.next",
                                      "when": "activeEditor == 'workbench.editor.notebookTextDiffEditor'" },
 { "key": "shift+alt+f3",          "command": "notebook.diff.action.previous",
@@ -1626,7 +1630,7 @@
                                      "when": "inDebugRepl" },
 { "key": "tab",                   "command": "workbench.action.terminal.acceptSelectedSuggestion",
                                      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible" },
-{ "key": "enter",                 "command": "workbench.action.terminal.acceptSelectedSuggestion",
+{ "key": "enter",                 "command": "workbench.action.terminal.acceptSelectedSuggestionEnter",
                                      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible" },
 { "key": "escape",                "command": "workbench.action.terminal.hideSuggestWidget",
                                      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible" },
@@ -1785,6 +1789,8 @@
                                      "when": "reference-list.hasResult && references-view.canNavigate" },
 { "key": "shift+alt+h",           "command": "references-view.showCallHierarchy",
                                      "when": "editorHasCallHierarchyProvider" },
+{ "key": "ctrl+enter",            "command": "workbench.action.chat.applyInEditor",
+                                     "when": "accessibleViewInCodeBlock && chatIsEnabled || chatIsEnabled && inChat && !inChatInput" },
 { "key": "ctrl+enter",            "command": "workbench.action.chat.insertCodeBlock",
                                      "when": "accessibleViewInCodeBlock && chatIsEnabled || chatIsEnabled && inChat && !inChatInput" },
 { "key": "ctrl+i",                "command": "workbench.action.terminal.chat.start",
@@ -1823,6 +1829,7 @@
 // - breadcrumbs.toggle
 // - breadcrumbs.toggleFromEditorTitle
 // - callStack.collapse
+// - callStackWidget.goToFile
 // - changeEditorIndentation1
 // - cleanSearchEditorState
 // - closeReferenceSearchEditor
@@ -1836,10 +1843,6 @@
 // - compositionEnd
 // - compositionStart
 // - compositionType
-// - configureExtensionsAutoUpdate.all
-// - configureExtensionsAutoUpdate.enabled
-// - configureExtensionsAutoUpdate.none
-// - configureExtensionsAutoUpdate.selected
 // - createCursor
 // - cursorLineEnd
 // - cursorLineEndSelect
@@ -2151,6 +2154,8 @@
 // - git.commitStagedSigned
 // - git.commitStagedSignedNoVerify
 // - git.continueInLocalClone
+// - git.copyCommitId
+// - git.copyCommitMessage
 // - git.createTag
 // - git.deleteBranch
 // - git.deleteRemoteTag
@@ -2380,6 +2385,7 @@
 // - notebook.cell.paste
 // - notebook.cell.toggleLineNumbers
 // - notebook.cell.toggleOutputs
+// - notebook.cellOuput.showEmptyOutputs
 // - notebook.cellOutput.copy
 // - notebook.cellOutput.openInTextEditor
 // - notebook.clearAllCellsOutputs
@@ -2539,6 +2545,8 @@
 // - terminal.resetViewContainerLocation
 // - terminal.resetViewLocation
 // - terminal.toggleVisibility
+// - testing.callStack.debug
+// - testing.callStack.run
 // - testing.cancelTestRefresh
 // - testing.clearTestResults
 // - testing.collapseAll
@@ -2556,9 +2564,13 @@
 // - testing.debug.uri
 // - testing.debugSelected
 // - testing.getSelectedProfiles
+// - testing.goToRelatedCode
+// - testing.goToRelatedTest
 // - testing.hideTest
 // - testing.openCoverage
 // - testing.openMessageInEditor
+// - testing.peekRelatedCode
+// - testing.peekRelatedTest
 // - testing.run
 // - testing.run.uri
 // - testing.runSelected
@@ -2683,6 +2695,8 @@
 // - workbench.action.compareEditor.focusPrimarySide
 // - workbench.action.compareEditor.focusSecondarySide
 // - workbench.action.compareEditor.swapSides
+// - workbench.action.configureEditor
+// - workbench.action.configureEditorTabs
 // - workbench.action.configureLanguageBasedSettings
 // - workbench.action.configureLocale
 // - workbench.action.configureRuntimeArguments
@@ -2900,6 +2914,7 @@
 // - workbench.action.positionPanelBottom
 // - workbench.action.positionPanelLeft
 // - workbench.action.positionPanelRight
+// - workbench.action.positionPanelTop
 // - workbench.action.previewColorTheme
 // - workbench.action.previousPanelView
 // - workbench.action.previousSideBarView
@@ -2991,6 +3006,7 @@
 // - workbench.action.terminal.chat.viewInChat
 // - workbench.action.terminal.clear
 // - workbench.action.terminal.clearPreviousSessionHistory
+// - workbench.action.terminal.clearSuggestCache
 // - workbench.action.terminal.copyAndClearSelection
 // - workbench.action.terminal.copyLastCommand
 // - workbench.action.terminal.copyLastCommandAndLastCommandOutput
@@ -3265,6 +3281,7 @@
 // - workbench.profiles.actions.importProfile
 // - workbench.profiles.actions.manage
 // - workbench.profiles.actions.manageProfiles
+// - workbench.profiles.actions.newWindowWithProfile
 // - workbench.profiles.actions.profileEntry.__default__profile__
 // - workbench.profiles.actions.renameProfile
 // - workbench.profiles.actions.resetWorkspaces
@@ -3288,6 +3305,7 @@
 // - workbench.scm.action.repositories.setSortKey.name
 // - workbench.scm.action.repositories.setSortKey.path
 // - workbench.scm.action.scm.showChangesSummary
+// - workbench.scm.action.scm.viewChanges
 // - workbench.scm.action.setListViewMode
 // - workbench.scm.action.setListViewModeNavigation
 // - workbench.scm.action.setSortKey.name

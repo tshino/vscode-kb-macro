@@ -3390,6 +3390,14 @@
 				"key": "ctrl+enter",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.chat.applyInEditor"
+				},
+				"when": "kb-macro.active && accessibleViewInCodeBlock && chatIsEnabled || kb-macro.active && chatIsEnabled && inChat && !inChatInput"
+			},
+			{
+				"key": "ctrl+enter",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.chat.insertCodeBlock"
 				},
 				"when": "kb-macro.active && accessibleViewInCodeBlock && chatIsEnabled || kb-macro.active && chatIsEnabled && inChat && !inChatInput"
@@ -3835,7 +3843,7 @@
 				"key": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.terminal.acceptSelectedSuggestion"
+					"command": "workbench.action.terminal.acceptSelectedSuggestionEnter"
 				},
 				"when": "kb-macro.active && terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || kb-macro.active && terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
 			},
@@ -4392,7 +4400,7 @@
 				"args": {
 					"command": "workbench.action.chat.attachContext"
 				},
-				"when": "kb-macro.active && inChatInput"
+				"when": "kb-macro.active && config.chat.experimental.variables.editor && inChatInput && chatLocation == 'editor' || kb-macro.active && config.chat.experimental.variables.notebook && inChatInput && chatLocation == 'notebook' || kb-macro.active && config.chat.experimental.variables.terminal && inChatInput && chatLocation == 'terminal' || kb-macro.active && inChatInput && !quickChatHasFocus && chatLocation == 'panel'"
 			},
 			{
 				"key": "ctrl+/",
@@ -4401,6 +4409,15 @@
 					"command": "editor.action.accessibleViewAcceptInlineCompletion"
 				},
 				"when": "kb-macro.active && accessibleViewIsShown && accessibleViewCurrentProviderId == 'inlineCompletions'"
+			},
+			{
+				"key": "ctrl+/",
+				"mac": "cmd+/",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notebook.commentSelectedCells"
+				},
+				"when": "kb-macro.active && notebookEditable && notebookEditorFocused && !inputFocus"
 			},
 			{
 				"key": "ctrl+/",
@@ -6552,12 +6569,20 @@
 				"when": "kb-macro.active && !accessibilityHelpIsShown"
 			},
 			{
+				"key": "alt+a",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.accessibilityHelpConfigureAssignedKeybindings"
+				},
+				"when": "kb-macro.active && accessibilityHelpIsShown && accessibleViewHasAssignedKeybindings"
+			},
+			{
 				"key": "alt+k",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "editor.action.accessibilityHelpConfigureKeybindings"
 				},
-				"when": "kb-macro.active && accessibilityHelpIsShown"
+				"when": "kb-macro.active && accessibilityHelpIsShown && accessibleViewHasUnassignedKeybindings"
 			},
 			{
 				"key": "alt+k",
