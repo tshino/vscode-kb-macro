@@ -10,3 +10,4 @@ keymap-wrapper/**
 **/jsconfig.json
 **/*.map
 **/.eslintrc.json
+**/eslint.config.mjs
