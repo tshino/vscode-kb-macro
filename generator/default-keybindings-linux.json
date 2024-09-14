@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.93.0 for Linux
+// Default Keybindings of Visual Studio Code 1.93.1 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
