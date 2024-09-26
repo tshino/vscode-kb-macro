@@ -48,7 +48,7 @@
 		"json": "^11.0.0",
 		"mocha": "^10.7.3",
 		"process": "^0.11.10",
-		"webpack": "^5.94.0",
+		"webpack": "^5.95.0",
 		"webpack-cli": "^5.1.4"
 	},
 	"contributes": {
