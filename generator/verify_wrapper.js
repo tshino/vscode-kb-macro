@@ -200,7 +200,9 @@ async function verifyWrapper() {
         // await genWrapperUtil.writeJSON('base.json', base);
 
         assert.strictEqual(unwrapped.length, base.length, 'the number of unrapped default keybindings should match the base (Windows)');
-        assert.deepStrictEqual(unwrapped, base, 'unwrapped wrappers should exactly match the base (Windows)');
+        for (let i = 0; i < base.length; i++) {
+            assert.deepStrictEqual(unwrapped[i], base[i], `unwrapped wrappers should exactly match the base (Windows; #${i+1})`);
+        }
     }
     // Linux
     {
@@ -214,7 +216,9 @@ async function verifyWrapper() {
         // await genWrapperUtil.writeJSON('base.json', base);
 
         assert.strictEqual(unwrapped.length, base.length, 'the number of unrapped default keybindings should match the base (Linux)');
-        assert.deepStrictEqual(unwrapped, base, 'unwrapped wrappers should exactly match the base (Linux)');
+        for (let i = 0; i < base.length; i++) {
+            assert.deepStrictEqual(unwrapped[i], base[i], `unwrapped wrappers should exactly match the base (Linux; #${i+1})`);
+        }
     }
     // Mac
     {
@@ -228,7 +232,9 @@ async function verifyWrapper() {
         // await genWrapperUtil.writeJSON('base.json', base);
 
         assert.strictEqual(unwrapped.length, base.length, 'the number of unrapped default keybindings should match the base (macOS)');
-        assert.deepStrictEqual(unwrapped, base, 'unwrapped wrappers should exactly match the base (macOS)');
+        for (let i = 0; i < base.length; i++) {
+            assert.deepStrictEqual(unwrapped[i], base[i], `unwrapped wrappers should exactly match the base (macOS; #${i+1})`);
+        }
     }
 
     for (const wrapper of wrappers) {
