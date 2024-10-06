@@ -54,14 +54,24 @@ const unwrapCommon = function(keybinding) {
     keybinding.when = genWrapperUtil.removeWhenContext(keybinding.when, 'kb-macro.active');
     return keybinding;
 };
-const unwrapForWindows = function(keybinding) {
-    keybinding = unwrapCommon(keybinding);
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, 'isWindows');
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isLinux');
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isMac');
+const removeOSSpecificWhenContextsFor = function(keybinding, os) {
+    if (keybinding.when) {
+        const contexts = (
+            os === 'win' ? [ 'isWindows', '!isLinux', '!isMac' ] :
+            os === 'linux' ? [ 'isLinux', '!isWindows', '!isMac' ] :
+            os === 'mac' ? [ 'isMac', '!isWindows', '!isLinux' ] : []
+        );
+        for (const context of contexts) {
+            keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, context);
+        }
+    }
     if (keybinding.when === '') {
         delete keybinding.when;
     }
+}
+const unwrapForWindows = function(keybinding) {
+    keybinding = unwrapCommon(keybinding);
+    removeOSSpecificWhenContextsFor(keybinding, 'win');
     if ('win' in keybinding) {
         keybinding.key = keybinding.win;
     }
@@ -70,12 +80,7 @@ const unwrapForWindows = function(keybinding) {
 };
 const unwrapForLinux = function(keybinding) {
     keybinding = unwrapCommon(keybinding);
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, 'isLinux');
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isWindows');
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isMac');
-    if (keybinding.when === '') {
-        delete keybinding.when;
-    }
+    removeOSSpecificWhenContextsFor(keybinding, 'linux');
     if ('linux' in keybinding) {
         keybinding.key = keybinding.linux;
     }
@@ -84,12 +89,7 @@ const unwrapForLinux = function(keybinding) {
 };
 const unwrapForMac = function(keybinding) {
     keybinding = unwrapCommon(keybinding);
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, 'isMac');
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isWindows');
-    keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, '!isLinux');
-    if (keybinding.when === '') {
-        delete keybinding.when;
-    }
+    removeOSSpecificWhenContextsFor(keybinding, 'mac');
     if ('mac' in keybinding) {
         keybinding.key = keybinding.mac;
     }
