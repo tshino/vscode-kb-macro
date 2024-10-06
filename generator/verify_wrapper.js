@@ -193,15 +193,17 @@ async function verifyWrapper() {
         const wrapper = wrappers.filter(availableOnWindows);
         const unwrapped = wrapper.map(unwrapForWindows);
         const base = baseKeybindings.filter(({ context }) => context === 'isWindows')[0].keybindings;
+        const baseFiltered = base.filter(availableOnWindows);
+        baseFiltered.forEach(keybinding => removeOSSpecificWhenContextsFor(keybinding, 'win'));
 
         unwrapped.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
-        base.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        baseFiltered.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
         // await genWrapperUtil.writeJSON('unwrapped.json', unwrapped);
-        // await genWrapperUtil.writeJSON('base.json', base);
+        // await genWrapperUtil.writeJSON('base.json', baseFiltered);
 
-        assert.strictEqual(unwrapped.length, base.length, 'the number of unwrapped default keybindings should match the base (Windows)');
-        for (let i = 0; i < base.length; i++) {
-            assert.deepStrictEqual(unwrapped[i], base[i], `unwrapped wrappers should exactly match the base (Windows; #${i+1})`);
+        assert.strictEqual(unwrapped.length, baseFiltered.length, 'the number of unwrapped default keybindings should match the base (Windows)');
+        for (let i = 0; i < unwrapped.length; i++) {
+            assert.deepStrictEqual(unwrapped[i], baseFiltered[i], `unwrapped wrappers should exactly match the base (Windows; #${i+1})`);
         }
     }
     // Linux
@@ -209,15 +211,17 @@ async function verifyWrapper() {
         const wrapper = wrappers.filter(availableOnLinux);
         const unwrapped = wrapper.map(unwrapForLinux);
         const base = baseKeybindings.filter(({ context }) => context === 'isLinux')[0].keybindings;
+        const baseFiltered = base.filter(availableOnLinux);
+        baseFiltered.forEach(keybinding => removeOSSpecificWhenContextsFor(keybinding, 'linux'));
 
         unwrapped.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
-        base.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        baseFiltered.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
         // await genWrapperUtil.writeJSON('unwrapped.json', unwrapped);
-        // await genWrapperUtil.writeJSON('base.json', base);
+        // await genWrapperUtil.writeJSON('base.json', baseFiltered);
 
-        assert.strictEqual(unwrapped.length, base.length, 'the number of unwrapped default keybindings should match the base (Linux)');
-        for (let i = 0; i < base.length; i++) {
-            assert.deepStrictEqual(unwrapped[i], base[i], `unwrapped wrappers should exactly match the base (Linux; #${i+1})`);
+        assert.strictEqual(unwrapped.length, baseFiltered.length, 'the number of unwrapped default keybindings should match the base (Linux)');
+        for (let i = 0; i < unwrapped.length; i++) {
+            assert.deepStrictEqual(unwrapped[i], baseFiltered[i], `unwrapped wrappers should exactly match the base (Linux; #${i+1})`);
         }
     }
     // Mac
@@ -225,15 +229,17 @@ async function verifyWrapper() {
         const wrapper = wrappers.filter(availableOnMac);
         const unwrapped = wrapper.map(unwrapForMac);
         const base = baseKeybindings.filter(({ context }) => context === 'isMac')[0].keybindings;
+        const baseFiltered = base.filter(availableOnMac);
+        baseFiltered.forEach(keybinding => removeOSSpecificWhenContextsFor(keybinding, 'mac'));
 
         unwrapped.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
-        base.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+        baseFiltered.sort((a,b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
         // await genWrapperUtil.writeJSON('unwrapped.json', unwrapped);
-        // await genWrapperUtil.writeJSON('base.json', base);
+        // await genWrapperUtil.writeJSON('base.json', baseFiltered);
 
-        assert.strictEqual(unwrapped.length, base.length, 'the number of unwrapped default keybindings should match the base (macOS)');
-        for (let i = 0; i < base.length; i++) {
-            assert.deepStrictEqual(unwrapped[i], base[i], `unwrapped wrappers should exactly match the base (macOS; #${i+1})`);
+        assert.strictEqual(unwrapped.length, baseFiltered.length, 'the number of unwrapped default keybindings should match the base (macOS)');
+        for (let i = 0; i < unwrapped.length; i++) {
+            assert.deepStrictEqual(unwrapped[i], baseFiltered[i], `unwrapped wrappers should exactly match the base (macOS; #${i+1})`);
         }
     }
 
