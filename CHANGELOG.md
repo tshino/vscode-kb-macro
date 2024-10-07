@@ -2,7 +2,7 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
-### [Unreleased]
+### [0.13.20] - 2024-10-08
 - Update:
   - Updated default keybindings wrappers based on VS Code 1.94.0. [#422](https://github.com/tshino/vscode-kb-macro/pull/422)
 - Internal:
