@@ -2374,7 +2374,7 @@
 				"args": {
 					"command": "workbench.action.chat.newChat"
 				},
-				"when": "kb-macro.active && chatIsEnabled && inChat"
+				"when": "kb-macro.active && chatIsEnabled && inChat && chatLocation != 'editing-session'"
 			},
 			{
 				"key": "ctrl+down",
