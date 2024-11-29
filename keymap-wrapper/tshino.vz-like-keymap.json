@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Vz Keymap v0.19.16
+	// Keymap wrapper for Vz Keymap v0.19.17
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -397,6 +397,8 @@
 		"when": "kb-macro.active && !multipleEditorGroups && !sideBarFocus && !panelFocus && !findWidgetVisible && config.vzKeymap.alt+W" },
 	{ "key": "alt+w", "command": "kb-macro.wrap", "args": { "command": "workbench.action.focusNextGroup" },
 		"when": "kb-macro.active && multipleEditorGroups && !sideBarFocus && !panelFocus && !findWidgetVisible && config.vzKeymap.alt+W" },
+	{ "key": "alt+w", "command": "kb-macro.wrap", "args": { "command": "workbench.action.compareEditor.focusOtherSide" },
+		"when": "kb-macro.active && textCompareEditorActive && !sideBarFocus && !panelFocus && !findWidgetVisible && config.vzKeymap.alt+W" },
 	{ "key": "ctrl+q ctrl+q", "command": "kb-macro.wrap", "args": { "command": "workbench.action.quickOpenView" },
 		"when": "kb-macro.active && editorFocus" },
 	{ "key": "ctrl+alt+b", "command": "kb-macro.wrap", "args": { "command": "workbench.action.toggleSidebarVisibility" },
