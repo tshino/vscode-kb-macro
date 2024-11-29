@@ -1,5 +1,5 @@
 [
-	// Keymap wrapper for Awesome Emacs Keymap v0.61.2
+	// Keymap wrapper for Awesome Emacs Keymap v0.62.3
 	// (required by Keyboard Macro Beta)
 	// The latest version can be found at:
 	// https://github.com/tshino/vscode-kb-macro/blob/main/keymap-wrapper/README.md
@@ -1776,6 +1776,8 @@
 	{ "key": "ctrl+x 4", "command": "kb-macro.wrap", "args": { "command": "workbench.action.toggleEditorGroupLayout" },
 		"when": "kb-macro.active && !terminalFocus" },
 	{ "key": "ctrl+x o", "command": "kb-macro.wrap", "args": { "command": "workbench.action.navigateEditorGroups" },
+		"when": "kb-macro.active && !terminalFocus" },
+	{ "key": "ctrl+x shift+=", "command": "kb-macro.wrap", "args": { "command": "workbench.action.evenEditorWidths" },
 		"when": "kb-macro.active && !terminalFocus" },
 	{ "key": "ctrl+alt+f", "command": "kb-macro.wrap", "args": { "command": "emacs-mcx.paredit.forwardSexp", "await": "selection" },
 		"when": "kb-macro.active && editorTextFocus && !config.emacs-mcx.useMetaPrefixMacCmd" },
