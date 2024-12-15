@@ -126,6 +126,24 @@
 				"when": "kb-macro.active && editorTextFocus && !editorReadonly && !suggestWidgetVisible && !renameInputVisible && !codeActionMenuVisible"
 			},
 			{
+				"key": "shift+delete",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.clipboardCutAction",
+					"await": "document selection clipboard"
+				},
+				"when": "kb-macro.active && !kb-macro.headOfLine && isLinux"
+			},
+			{
+				"key": "shift+delete",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.clipboardCutAction",
+					"await": "document clipboard"
+				},
+				"when": "kb-macro.active && kb-macro.headOfLine && isLinux"
+			},
+			{
 				"key": "escape escape",
 				"command": "kb-macro.wrap",
 				"args": {
