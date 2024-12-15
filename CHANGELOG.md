@@ -3,6 +3,8 @@
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
 ### [Unreleased]
+- Fix
+  - Fixed: `shift+delete` was not recorded properly on Linux. [#447](https://github.com/tshino/vscode-kb-macro/issues/447)
 - Update:
   - Updated default keybindings wrappers based on VS Code 1.96.0. [#448](https://github.com/tshino/vscode-kb-macro/pull/448)
 
