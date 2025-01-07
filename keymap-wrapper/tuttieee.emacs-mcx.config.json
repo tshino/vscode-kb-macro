@@ -52,6 +52,8 @@
         [ "emacs-mcx.preCopyToRegister", "" ],
         [ "emacs-mcx.preInsertRegister", "" ],
         [ "emacs-mcx.preCopyRectangleToRegister", "" ],
+        [ "emacs-mcx.prePointToRegister", "" ],
+        [ "emacs-mcx.preJumpToRegister", "" ],
         [ "emacs-mcx.someRegisterCommand", "document selection" ],
 
         [ "emacs-mcx.paredit.forwardSexp", "selection" ],
