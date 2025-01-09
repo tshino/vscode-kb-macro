@@ -45,16 +45,12 @@
         [ "emacs-mcx.clearRectangle", "document selection" ],
         [ "emacs-mcx.stringRectangle", "document selection" ],
         [ "emacs-mcx.replaceKillRingToRectangle", "document selection" ],
-        [ "emacs-mcx.startRegisterCopyCommand", "" ],
-        [ "emacs-mcx.startRegisterInsertCommand", "" ],
-        [ "emacs-mcx.copyToRegister", "selection" ],
-        [ "emacs-mcx.insertRegister", "document selection" ],
-        [ "emacs-mcx.preCopyToRegister", "" ],
-        [ "emacs-mcx.preInsertRegister", "" ],
-        [ "emacs-mcx.preCopyRectangleToRegister", "" ],
-        [ "emacs-mcx.prePointToRegister", "" ],
-        [ "emacs-mcx.preJumpToRegister", "" ],
-        [ "emacs-mcx.someRegisterCommand", "document selection" ],
+        [ "emacs-mcx.copyToRegister", "" ],
+        [ "emacs-mcx.insertRegister", "" ],
+        [ "emacs-mcx.copyRectangleToRegister", "" ],
+        [ "emacs-mcx.pointToRegister", "" ],
+        [ "emacs-mcx.jumpToRegister", "" ],
+        [ "emacs-mcx.registerNameCommand", "document selection" ],
 
         [ "emacs-mcx.paredit.forwardSexp", "selection" ],
         [ "emacs-mcx.paredit.backwardSexp", "selection" ],
@@ -71,8 +67,7 @@
         [ "emacs-mcx.yank*", "document selection" ],
 
         [ "emacs-mcx.cancel", "[editorHasSelection]selection" ],
-        [ "emacs-mcx.isearchExit", "document selection" ],
-        [ "emacs-mcx.executeCommands", "document selection" ]
+        [ "emacs-mcx.isearchExit", "document selection" ]
     ],
     "footer": [
         {
