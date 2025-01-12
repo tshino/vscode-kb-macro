@@ -159,8 +159,8 @@ After you have successfully recorded a sequence, you may also save it for future
 | ------------ | ---------- | -------- |
 | `Playback` | `kb-macro.playback` | Perform playback of the last recorded sequence |
 | `Abort Playback` | `kb-macro.abortPlayback` | Abort currently-running playback |
-| `Repeat Playback` | `kb-macro.repeatPlayback` | Perform playback specified number of times |
-| `Repeat Playback Till End of File` | `kb-macro.repeatPlaybackTillEndOfFile` | Repeat playback until the cursor reaches the end of the file |
+| `Repeat Playback` | `kb-macro.repeatPlayback` | Perform playback of the last recorded sequence a specified number of times |
+| `Repeat Playback Till End of File` | `kb-macro.repeatPlaybackTillEndOfFile` | Repeat playback of the last recorded sequence until the cursor reaches the end of the file |
 
 The `kb-macro.repeatPlayback` command shows an input box to specify the number of times.
 
