@@ -191,6 +191,7 @@ The `kb-macro.playback` command has an optional `sequence` argument to specify a
     }
 }
 ```
+The `kb-macro.repeatPlaybackTillEndOfFile` command also has the optional `sequence` argument.
 
 ## When clause context
 
