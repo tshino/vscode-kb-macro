@@ -364,8 +364,8 @@ const KeyboardMacro = function({ awaitController }) {
         }
     });
 
-    const repeatPlaybackTillEndOfFile = reentrantGuard.makeGuardedCommand(async function() {
-        const args = {};
+    const repeatPlaybackTillEndOfFile = reentrantGuard.makeGuardedCommand(async function(args) {
+        args = (args && typeof(args) === 'object' && 'sequence' in args) ? { sequence: args.sequence } : {};
         const option = { tillEndOfFile: true };
         await playbackImpl(args, option);
     });

@@ -101,5 +101,14 @@ describe('Recording and Playback with Repeat', () => {
             assert.strictEqual(textEditor.document.lineCount, 11);
             assert.deepStrictEqual(getSelections(), [[10, 0]]); // the beginning of the last line
         });
+        it('should accept the sequence option', async () => {
+            const sequence = [ Cmd.CursorEnd, Type(', '), Cmd.DeleteRight ];
+            await setSelections([[0, 0]]);
+
+            await keyboardMacro.repeatPlaybackTillEndOfFile({ sequence });
+
+            assert.strictEqual(textEditor.document.lineAt(0).text, 'zero, one, two, three, four, five');
+            assert.deepStrictEqual(getSelections(), [[0, 29]]); // at 'f' of 'five'
+        });
     });
 });
