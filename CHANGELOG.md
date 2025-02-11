@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Feature:
+  - Added support for optional `sequence` argument to the `kb-macro.repeatPlaybackTillEndOfFile` command. [#468](https://github.com/tshino/vscode-kb-macro/pull/468)
+
 ### [0.13.24] - 2025-02-09
 - Update:
   - Updated default keybindings wrappers based on VS Code 1.97.0. [#466](https://github.com/tshino/vscode-kb-macro/pull/466)
