@@ -7,7 +7,7 @@ const reentrantGuard = (function() {
         queueable: false
     };
     const queue = [];
-    const deferedFunctions = [];
+    const deferredFunctions = [];
 
     let printError = defaultPrintError;
     function defaultPrintError(error) {
@@ -20,9 +20,9 @@ const reentrantGuard = (function() {
         return old;
     };
 
-    const callDeferedFunctions = function() {
-        while (0 < deferedFunctions.length) {
-            const func = deferedFunctions.shift();
+    const callDeferredFunctions = function() {
+        while (0 < deferredFunctions.length) {
+            const func = deferredFunctions.shift();
             func();
         }
     };
@@ -38,7 +38,7 @@ const reentrantGuard = (function() {
             } catch (error) {
                 printError(error);
             } finally {
-                callDeferedFunctions();
+                callDeferredFunctions();
                 state.locked = false;
             }
         };
@@ -54,7 +54,7 @@ const reentrantGuard = (function() {
             } catch (error) {
                 printError(error);
             } finally {
-                callDeferedFunctions();
+                callDeferredFunctions();
                 state.locked = false;
             }
         };
@@ -85,7 +85,7 @@ const reentrantGuard = (function() {
                     queue.splice(0, 1);
                     resolve();
                 } else {
-                    callDeferedFunctions();
+                    callDeferredFunctions();
                     state.locked = false;
                     state.queueable = false;
                 }
@@ -95,7 +95,7 @@ const reentrantGuard = (function() {
     const callExclusively = async function(func) {
         if (state.locked) {
             await new Promise(resolve => {
-                deferedFunctions.push(() => {
+                deferredFunctions.push(() => {
                     func();
                     resolve();
                 });
