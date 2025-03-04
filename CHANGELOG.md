@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Update:
+  - Update keymap wrapper for Delphi Keymap (v9.8.1). [#476](https://github.com/tshino/vscode-kb-macro/pull/476)
+
 ### [0.14.0] - 2025-02-16
 - Feature:
   - Added support for optional `sequence` argument to the `kb-macro.repeatPlaybackTillEndOfFile` command. [#468](https://github.com/tshino/vscode-kb-macro/pull/468)
