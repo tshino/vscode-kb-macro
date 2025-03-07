@@ -617,7 +617,7 @@
 				"args": {
 					"command": "inlineChat2.stop"
 				},
-				"when": "kb-macro.active && inlineChatHasEditsAgent && inlineChatVisible && inlineChatHasSession == 'empty'"
+				"when": "kb-macro.active && inlineChatHasEditsAgent && inlineChatVisible"
 			},
 			{
 				"key": "escape",
@@ -681,7 +681,7 @@
 				"args": {
 					"command": "scm.clearInput"
 				},
-				"when": "kb-macro.active && scmRepository && !suggestWidgetVisible"
+				"when": "kb-macro.active && scmRepository && !editorHasSelection && !suggestWidgetVisible"
 			},
 			{
 				"key": "escape",
@@ -2234,7 +2234,7 @@
 				"args": {
 					"command": "chatEditor.action.reject"
 				},
-				"when": "kb-macro.active && chat.hasEditorModifications && editorFocus && hasUndecidedChatEditingResource"
+				"when": "kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
 			},
 			{
 				"key": "delete",
@@ -3352,7 +3352,7 @@
 				"args": {
 					"command": "chatEditor.action.accept"
 				},
-				"when": "kb-macro.active && chat.hasEditorModifications && editorFocus && hasUndecidedChatEditingResource"
+				"when": "kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
 			},
 			{
 				"key": "ctrl+enter",
@@ -3439,6 +3439,15 @@
 					"command": "workbench.action.terminal.chat.runFirstCommand"
 				},
 				"when": "kb-macro.active && terminalChatResponseContainsMultipleCodeBlocks && terminalHasBeenCreated && !terminalChatActiveRequest || kb-macro.active && terminalChatResponseContainsMultipleCodeBlocks && terminalProcessSupported && !terminalChatActiveRequest"
+			},
+			{
+				"key": "ctrl+enter",
+				"mac": "cmd+enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.chat.acceptTool"
+				},
+				"when": "kb-macro.active && chatHasToolConfirmation && inChat"
 			},
 			{
 				"key": "ctrl+enter",
@@ -3772,7 +3781,7 @@
 				"args": {
 					"command": "workbench.action.chat.submit"
 				},
-				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatSessionRequestInProgress && chatLocation != 'editing-session' || kb-macro.active && chatInstructionsAttached && inChatInput && !chatSessionRequestInProgress && chatLocation != 'editing-session'"
+				"when": "kb-macro.active && chatInputHasText && chatRequestIsPaused && inChatInput && chatLocation != 'editing-session' || kb-macro.active && chatInputHasText && inChatInput && !chatSessionRequestInProgress && chatLocation != 'editing-session' || kb-macro.active && chatInstructionsAttached && chatRequestIsPaused && inChatInput && chatLocation != 'editing-session' || kb-macro.active && chatInstructionsAttached && inChatInput && !chatSessionRequestInProgress && chatLocation != 'editing-session'"
 			},
 			{
 				"key": "enter",
@@ -3780,7 +3789,7 @@
 				"args": {
 					"command": "workbench.action.edits.submit"
 				},
-				"when": "kb-macro.active && chatInputHasText && inChatInput && !isApplyingChatEdits && chatLocation == 'editing-session' || kb-macro.active && chatInstructionsAttached && inChatInput && !isApplyingChatEdits && chatLocation == 'editing-session'"
+				"when": "kb-macro.active && chatInputHasText && chatRequestIsPaused && inChatInput && chatLocation == 'editing-session' || kb-macro.active && chatInputHasText && inChatInput && !chatSessionRequestInProgress && chatLocation == 'editing-session' || kb-macro.active && chatInstructionsAttached && chatRequestIsPaused && inChatInput && chatLocation == 'editing-session' || kb-macro.active && chatInstructionsAttached && inChatInput && !chatSessionRequestInProgress && chatLocation == 'editing-session'"
 			},
 			{
 				"key": "enter",
@@ -4216,7 +4225,7 @@
 				"args": {
 					"command": "chatEditor.action.reject"
 				},
-				"when": "kb-macro.active && !isMac && chat.hasEditorModifications && editorFocus && hasUndecidedChatEditingResource"
+				"when": "kb-macro.active && !isMac && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
 			},
 			{
 				"key": "ctrl+backspace",
@@ -4264,6 +4273,14 @@
 					"command": "editor.action.wordHighlight.next"
 				},
 				"when": "kb-macro.active && editorTextFocus && hasWordHighlights"
+			},
+			{
+				"key": "f7",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "chatEditor.action.showAccessibleDiffView"
+				},
+				"when": "kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
 			},
 			{
 				"key": "f7",
@@ -4445,7 +4462,7 @@
 				"args": {
 					"command": "workbench.debug.viewlet.action.copyValue"
 				},
-				"when": "kb-macro.active && focusedView == 'workbench.debug.variablesView' || kb-macro.active && focusedView == 'workbench.debug.watchExpressionsView'"
+				"when": "kb-macro.active && !expressionSelected && focusedView == 'workbench.debug.variablesView' || kb-macro.active && !expressionSelected && focusedView == 'workbench.debug.watchExpressionsView'"
 			},
 			{
 				"key": "ctrl+c",
@@ -4626,7 +4643,16 @@
 				"args": {
 					"command": "workbench.action.chat.attachContext"
 				},
-				"when": "kb-macro.active && inChatInput && chatLocation == 'editing-session' || kb-macro.active && inChatInput && chatLocation == 'editor' || kb-macro.active && inChatInput && chatLocation == 'notebook' || kb-macro.active && inChatInput && chatLocation == 'panel' || kb-macro.active && inChatInput && chatLocation == 'terminal'"
+				"when": "kb-macro.active && inChatInput && chatLocation == 'editor' && chatLocation != 'editing-session' || kb-macro.active && inChatInput && chatLocation == 'notebook' && chatLocation != 'editing-session' || kb-macro.active && inChatInput && chatLocation == 'panel' && chatLocation != 'editing-session' || kb-macro.active && inChatInput && chatLocation == 'terminal' && chatLocation != 'editing-session'"
+			},
+			{
+				"key": "ctrl+/",
+				"mac": "cmd+/",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.chat.editing.attachFiles"
+				},
+				"when": "kb-macro.active && inChatInput && chatLocation == 'editing-session'"
 			},
 			{
 				"key": "ctrl+/",
@@ -5076,7 +5102,7 @@
 				"args": {
 					"command": "chatEditor.action.acceptHunk"
 				},
-				"when": "kb-macro.active && chat.hasEditorModifications && editorFocus && hasUndecidedChatEditingResource && !chatSessionRequestInProgress"
+				"when": "kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
 			},
 			{
 				"key": "ctrl+shift+enter",
@@ -5632,6 +5658,14 @@
 				"key": "ctrl+shift+r",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.tasks.rerunForActiveTerminal"
+				},
+				"when": "kb-macro.active && taskTerminalActive && terminalFocus"
+			},
+			{
+				"key": "ctrl+shift+r",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.quickOpenNavigatePreviousInRecentFilesPicker"
 				},
 				"when": "kb-macro.active && inQuickOpen && inRecentFilesPicker"
@@ -5804,6 +5838,15 @@
 				"mac": "cmd+k cmd+i",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.showHover"
+				},
+				"when": "kb-macro.active && !editorTextFocus"
+			},
+			{
+				"key": "ctrl+k ctrl+i",
+				"mac": "cmd+k cmd+i",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "list.showHover"
 				},
 				"when": "kb-macro.active && listFocus && !inputFocus && !treestickyScrollFocused"
@@ -5914,7 +5957,7 @@
 				"args": {
 					"command": "inlineChat.holdForSpeech"
 				},
-				"when": "kb-macro.active && hasSpeechProvider && inlineChatHasProvider && inlineChatVisible && textInputFocus"
+				"when": "kb-macro.active && hasSpeechProvider && inlineChatVisible && textInputFocus"
 			},
 			{
 				"key": "ctrl+i",
@@ -5923,7 +5966,7 @@
 				"args": {
 					"command": "inlineChat.start"
 				},
-				"when": "kb-macro.active && editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
+				"when": "kb-macro.active && editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || kb-macro.active && editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
 			},
 			{
 				"key": "ctrl+i",
@@ -5932,16 +5975,7 @@
 				"args": {
 					"command": "inlineChat2.reveal"
 				},
-				"when": "kb-macro.active && inlineChatHasEditsAgent && inlineChatHasSession"
-			},
-			{
-				"key": "ctrl+i",
-				"mac": "cmd+i",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "inlineChat2.start"
-				},
-				"when": "kb-macro.active && editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput && !inlineChatHasSession"
+				"when": "kb-macro.active && inlineChatHasEditsAgent && !chatEdits.isGlobalEditingSession && chatEdits.requestCount >= 1"
 			},
 			{
 				"key": "ctrl+i",
@@ -5950,7 +5984,7 @@
 				"args": {
 					"command": "inlineChat2.stop"
 				},
-				"when": "kb-macro.active && inlineChatHasEditsAgent && inlineChatVisible && inlineChatHasSession == 'empty'"
+				"when": "kb-macro.active && inlineChatHasEditsAgent && inlineChatVisible && chatEdits.requestCount == '0'"
 			},
 			{
 				"key": "cmd+k i",
@@ -6057,6 +6091,14 @@
 					"record": "side-effect"
 				},
 				"when": "kb-macro.active && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
+			},
+			{
+				"key": "ctrl+space",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "quickInput.toggleHover"
+				},
+				"when": "kb-macro.active && inQuickInput && quickInputType == 'quickPick'"
 			},
 			{
 				"key": "ctrl+space",
@@ -6395,7 +6437,7 @@
 				"args": {
 					"command": "chatEditor.action.undoHunk"
 				},
-				"when": "kb-macro.active && chat.hasEditorModifications && editorFocus && hasUndecidedChatEditingResource && !chatSessionRequestInProgress"
+				"when": "kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
 			},
 			{
 				"key": "ctrl+k f2",
@@ -6429,7 +6471,7 @@
 				"args": {
 					"command": "workbench.action.editor.nextChange"
 				},
-				"when": "kb-macro.active && editorTextFocus && !textCompareEditorActive"
+				"when": "kb-macro.active && editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'"
 			},
 			{
 				"key": "alt+f5",
@@ -6437,7 +6479,7 @@
 				"args": {
 					"command": "chatEditor.action.navigateNext"
 				},
-				"when": "kb-macro.active && chat.hasEditorModifications && editorFocus || kb-macro.active && chat.hasNotebookEditorModifications && editorFocus"
+				"when": "kb-macro.active && chat.hasNotebookEditorModifications && editorFocus && !chatEdits.isRequestInProgress || kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
 			},
 			{
 				"key": "alt+f5",
@@ -6453,7 +6495,7 @@
 				"args": {
 					"command": "workbench.action.editor.previousChange"
 				},
-				"when": "kb-macro.active && editorTextFocus && !textCompareEditorActive"
+				"when": "kb-macro.active && editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'"
 			},
 			{
 				"key": "shift+alt+f5",
@@ -6461,7 +6503,7 @@
 				"args": {
 					"command": "chatEditor.action.navigatePrevious"
 				},
-				"when": "kb-macro.active && chat.hasEditorModifications && editorFocus || kb-macro.active && chat.hasNotebookEditorModifications && editorFocus"
+				"when": "kb-macro.active && chat.hasNotebookEditorModifications && editorFocus && !chatEdits.isRequestInProgress || kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
 			},
 			{
 				"key": "shift+alt+f5",
@@ -6531,6 +6573,14 @@
 					"command": "copyFilePath"
 				},
 				"when": "kb-macro.active && !editorFocus"
+			},
+			{
+				"key": "alt+cmd+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "debug.copyWatchExpression"
+				},
+				"when": "kb-macro.active && watchExpressionsExist && !expressionSelected && focusedView == 'workbench.debug.watchExpressionsView'"
 			},
 			{
 				"key": "alt+cmd+c",
@@ -6907,9 +6957,25 @@
 				"key": "shift+alt+f7",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "chatEditor.action.diffHunk"
+					"command": "chatEditor.action.toggleDiff"
 				},
-				"when": "kb-macro.active && chat.hasEditorModifications && editorFocus && hasUndecidedChatEditingResource && !chatSessionRequestInProgress"
+				"when": "kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isRequestInProgress"
+			},
+			{
+				"key": "ctrl+alt+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "copyFilePath"
+				},
+				"when": "kb-macro.active && isLinux && !editorFocus"
+			},
+			{
+				"key": "ctrl+alt+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "debug.copyWatchExpression"
+				},
+				"when": "kb-macro.active && !isMac && watchExpressionsExist && !expressionSelected && focusedView == 'workbench.debug.watchExpressionsView'"
 			},
 			{
 				"key": "ctrl+f5",
@@ -7299,6 +7365,24 @@
 					"command": "list.focusAnyLast"
 				},
 				"when": "kb-macro.active && listFocus && !inputFocus && !treestickyScrollFocused"
+			},
+			{
+				"key": "ctrl+k m",
+				"mac": "cmd+k m",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "notebook.cell.changeLanguage"
+				},
+				"when": "kb-macro.active && notebookCellEditable && notebookEditable && notebookEditorFocused"
+			},
+			{
+				"key": "ctrl+k m",
+				"mac": "cmd+k m",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.editor.changeLanguageMode"
+				},
+				"when": "kb-macro.active && !notebookEditorFocused"
 			},
 			{
 				"key": "y",
@@ -7873,15 +7957,6 @@
 					"command": "extension.node-debug.startWithStopOnEntry"
 				},
 				"when": "kb-macro.active && !inDebugMode && debugConfigurationType == 'node' || kb-macro.active && !inDebugMode && debugConfigurationType == 'pwa-extensionHost' || kb-macro.active && !inDebugMode && debugConfigurationType == 'pwa-node'"
-			},
-			{
-				"key": "ctrl+k m",
-				"mac": "cmd+k m",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.editor.changeLanguageMode"
-				},
-				"when": "kb-macro.active && !notebookEditorFocused"
 			},
 			{
 				"key": "ctrl+alt+v",
@@ -9183,6 +9258,15 @@
 				"when": "kb-macro.active && workbench.panel.markers.view.active"
 			},
 			{
+				"key": "ctrl+alt+/",
+				"mac": "alt+cmd+/",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.command.prompts.use"
+				},
+				"when": "kb-macro.active && config.chat.promptFiles"
+			},
+			{
 				"key": "ctrl+shift+y",
 				"mac": "shift+cmd+y",
 				"command": "kb-macro.wrap",
@@ -9670,6 +9754,14 @@
 				"when": "kb-macro.active && isWindows && editorFocus"
 			},
 			{
+				"key": "ctrl+alt+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "search.action.copyPath"
+				},
+				"when": "kb-macro.active && isLinux && fileMatchOrFolderMatchWithResourceFocus"
+			},
+			{
 				"key": "ctrl+alt+pagedown",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -10117,22 +10209,6 @@
 					"command": "editor.action.peekDefinition"
 				},
 				"when": "kb-macro.active && isLinux && editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
-			},
-			{
-				"key": "ctrl+alt+c",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "copyFilePath"
-				},
-				"when": "kb-macro.active && isLinux && !editorFocus"
-			},
-			{
-				"key": "ctrl+alt+c",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "search.action.copyPath"
-				},
-				"when": "kb-macro.active && isLinux && fileMatchOrFolderMatchWithResourceFocus"
 			},
 			{
 				"key": "ctrl+shift+alt+c",
