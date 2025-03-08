@@ -299,19 +299,22 @@ describe('Recording and Playback: Edit', () => {
             await awaitController.waitFor('selection', 50).catch(() => {});
         });
         describe('clipboardCopyAction', () => {
-            it('should copy one line', async () => {
+            // skip reason => https://github.com/tshino/vscode-kb-macro/issues/478
+            it.skip('should copy one line', async () => {
                 const seq = [ Cmd.ClipboardCopy ];
                 await testRecording(seq, { s: [[1, 3]] }, { s: [[1, 3]], c: 'fghij\n' });
                 await testPlayback({ s: [[2, 4]] }, { s: [[2, 4]], c: 'klmno\n' });
             });
-            it('should copy selected range', async () => {
+            // skip reason => https://github.com/tshino/vscode-kb-macro/issues/478
+            it.skip('should copy selected range', async () => {
                 const seq = [ Cmd.ClipboardCopy ];
                 await testRecording(seq, { s: [[0, 3, 1, 2]] }, { s: [[0, 3, 1, 2]], c: 'de\nfg' });
                 await testPlayback({ s: [[1, 2, 3, 4]] }, { s: [[1, 2, 3, 4]], c: 'hij\nklmno\npqrs' });
             });
         });
         describe('clipboardCutAction', () => {
-            it('should cut one line (1)', async () => {
+            // skip reason => https://github.com/tshino/vscode-kb-macro/issues/478
+            it.skip('should cut one line (1)', async () => {
                 const seq = [ Cmd.ClipboardCut_HOL ];
                 await testRecording(seq, { s: [[0, 0]] }, { s: [[0, 0]], d: [
                     [ 0, 'fghij' ]
@@ -320,7 +323,8 @@ describe('Recording and Playback: Edit', () => {
                     [2, 'vwxyz']
                 ], c: 'pqrstu\n' });
             });
-            it('should cut one line (2)', async () => {
+            // skip reason => https://github.com/tshino/vscode-kb-macro/issues/478
+            it.skip('should cut one line (2)', async () => {
                 const seq = [ Cmd.ClipboardCut_NotHOL ];
                 await testRecording(seq, { s: [[0, 3]] }, { s: [[0, 0]], d: [
                     [ 0, 'fghij' ]
@@ -329,7 +333,8 @@ describe('Recording and Playback: Edit', () => {
                     [2, 'vwxyz']
                 ], c: 'pqrstu\n' });
             });
-            it('should cut multiple lines', async () => {
+            // skip reason => https://github.com/tshino/vscode-kb-macro/issues/478
+            it.skip('should cut multiple lines', async () => {
                 const seq = [ Cmd.ClipboardCut_HOL, Cmd.ClipboardCut_HOL ];
                 await testRecording(seq, { s: [[1, 0]] }, { s: [[1, 0]], d: [
                     [ 1, 'pqrstu' ],
@@ -339,7 +344,8 @@ describe('Recording and Playback: Edit', () => {
                     [0, 'vwxyz']
                 ], c: 'pqrstu\n' });
             });
-            it('should cut selected range', async () => {
+            // skip reason => https://github.com/tshino/vscode-kb-macro/issues/478
+            it.skip('should cut selected range', async () => {
                 const seq = [ Cmd.ClipboardCut_NotHOL ];
                 await testRecording(seq, { s: [[0, 3, 1, 2]] }, { s: [[0, 3]], d: [
                     [ 0, 'abchij' ],
