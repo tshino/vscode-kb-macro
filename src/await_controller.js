@@ -42,7 +42,7 @@ const AwaitController = function() {
         let expectedEventCount = 0;
         const doneOne = function() {
             expectedEventCount -= 1;
-            if (expectedEventCount == 0) {
+            if (expectedEventCount === 0) {
                 resolveFunc();
             }
         };
