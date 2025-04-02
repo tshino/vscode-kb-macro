@@ -29,7 +29,7 @@ async function openDefaultKeybindingsFile() {
 
 function removeMeaninglessPart(json) {
     return json.replace(
-        /\/\/ - workbench\.action\.output\.show\.file\:\/\/\/[^\n]+\/logs\/[^\n]+/gm,
+        /\/\/ - workbench\.action\.output\.show\.file:\/\/\/[^\n]+\/logs\/[^\n]+/gm,
         '// - workbench.action.output.show.file:///(snip)'
     );
 }
