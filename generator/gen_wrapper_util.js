@@ -64,14 +64,14 @@ const decomposeWhenClause = function(when) {
         }
         return result;
     };
-    const tokens = when.split(/(\|\||\&\&)/);
+    const tokens = when.split(/(\|\||&&)/);
     let nest = 0;
     const outMostTokens = [];
     for (let i = 0; i < tokens.length; i++) {
         let str = tokens[i];
         let open = 0, close = 0;
         let m;
-        while ((m = str.match(/^\s*(\!\s*)*[(]/)) !== null) {
+        while ((m = str.match(/^\s*(!\s*)*[(]/)) !== null) {
             open += 1;
             str = str.slice(m[0].length);
         }
