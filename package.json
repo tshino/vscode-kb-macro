@@ -736,6 +736,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.actions.workbench.panel.output.clearFilterText"
+				},
+				"when": "kb-macro.active && isLinux && outputFilterFocus"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.banner.focusBanner"
 				},
 				"when": "kb-macro.active && bannerFocused"
