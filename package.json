@@ -41,7 +41,7 @@
 		"package-web": "webpack --mode production --devtool hidden-source-map --config ./build/web-extension.webpack.config.js"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.29.0",
+		"@eslint/js": "^9.30.0",
 		"@vscode/test-electron": "^2.5.2",
 		"@vscode/vsce": "^3.5.0",
 		"eslint": "^9.29.0",
