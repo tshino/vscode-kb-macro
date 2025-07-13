@@ -17,6 +17,9 @@
         [ "emacs-mcx.scrollDownCommand", "selection" ],
         [ "emacs-mcx.backwardParagraph", "selection" ],
         [ "emacs-mcx.forwardParagraph", "selection" ],
+        [ "emacs-mcx.moveToWindowLineTopBottom", "selection" ],
+        [ "emacs-mcx.gotoLine", "selection" ],
+        [ "emacs-mcx.findDefinitions", "selection" ],
         [ "emacs-mcx.endOfBuffer", "selection" ],
         [ "emacs-mcx.beginningOfBuffer", "selection" ],
 
@@ -67,7 +70,11 @@
         [ "emacs-mcx.yank*", "document selection" ],
 
         [ "emacs-mcx.cancel", "[editorHasSelection]selection" ],
-        [ "emacs-mcx.isearchExit", "document selection" ]
+        [ "emacs-mcx.isearchExit", "document selection" ],
+
+        [ "emacs-mcx.transformToLowercase", "[!editorHasSelection]selection document" ],
+        [ "emacs-mcx.transformToUppercase", "[!editorHasSelection]selection document" ],
+        [ "emacs-mcx.transformToTitlecase", "[!editorHasSelection]selection document" ]
     ],
     "footer": [
         {
