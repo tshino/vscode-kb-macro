@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.102.0 for Windows
+// Default Keybindings of Visual Studio Code 1.102.1 for Windows
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -2225,6 +2225,7 @@
 // - editor.inlayHints.Reset
 // - editor.showTypeHierarchy
 // - editor.toggleImportFold
+// - emmet.expandAbbreviation
 // - explorer.download
 // - explorer.newFile
 // - explorer.newFolder
