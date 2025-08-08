@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.102.3 for Linux
+// Default Keybindings of Visual Studio Code 1.103.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -533,28 +533,26 @@
                                      "when": "activeCursorHasCommentingRange" },
 { "key": "ctrl+/",                "command": "workbench.action.chat.attachContext",
                                      "when": "inChatInput && chatLocation == 'panel'" },
+{ "key": "ctrl+.",                "command": "workbench.action.chat.openModePicker",
+                                     "when": "chatIsEnabled && inChatInput && chatLocation == 'panel'" },
 { "key": "ctrl+alt+enter",        "command": "workbench.action.chat.runInTerminal",
                                      "when": "accessibleViewInCodeBlock && chatIsEnabled || chatIsEnabled && inChat" },
 { "key": "enter",                 "command": "workbench.action.chat.submit",
-                                     "when": "inChatInput && chatMode == 'ask'" },
+                                     "when": "inChatInput" },
 { "key": "ctrl+enter",            "command": "workbench.action.chat.submitWithCodebase",
                                      "when": "chatInputHasText && chatRequestIsPaused && inChatInput || chatInputHasText && inChatInput && !chatSessionRequestInProgress || chatPromptFileAttached && chatRequestIsPaused && inChatInput || chatPromptFileAttached && inChatInput && !chatSessionRequestInProgress" },
 { "key": "shift+alt+enter",       "command": "workbench.action.chat.submitWithoutDispatching",
                                      "when": "chatInputHasText && chatRequestIsPaused && inChatInput && chatMode == 'ask' || chatInputHasText && inChatInput && !chatSessionRequestInProgress && chatMode == 'ask' || chatPromptFileAttached && chatRequestIsPaused && inChatInput && chatMode == 'ask' || chatPromptFileAttached && inChatInput && !chatSessionRequestInProgress && chatMode == 'ask'" },
-{ "key": "ctrl+.",                "command": "workbench.action.chat.toggleAgentMode",
-                                     "when": "chatIsEnabled && inChatInput && !chatSessionRequestInProgress && chatLocation == 'panel'" },
 { "key": "alt+f5",                "command": "workbench.action.editor.nextChange",
                                      "when": "editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'" },
 { "key": "shift+alt+f5",          "command": "workbench.action.editor.previousChange",
                                      "when": "editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'" },
-{ "key": "enter",                 "command": "workbench.action.edits.submit",
-                                     "when": "inChatInput && chatMode != 'ask'" },
 { "key": "shift+escape",          "command": "workbench.action.hideComment",
                                      "when": "commentEditorFocused || commentFocused" },
 { "key": "escape",                "command": "workbench.action.hideComment",
                                      "when": "commentEditorFocused || commentFocused" },
 { "key": "ctrl+right",            "command": "editor.action.inlineSuggest.acceptNextWord",
-                                     "when": "inlineSuggestionVisible && !accessibilityModeEnabled && !editorReadonly" },
+                                     "when": "cursorBeforeGhostText && inlineSuggestionVisible && !accessibilityModeEnabled && !editorReadonly" },
 { "key": "escape",                "command": "inlineChat.close",
                                      "when": "inlineChatHasProvider && inlineChatVisible" },
 { "key": "alt+f8",                "command": "testing.goToNextMessage",
@@ -794,7 +792,7 @@
 { "key": "ctrl+k ctrl+k",         "command": "editor.action.defineKeybinding",
                                      "when": "resource == 'vscode-userdata:/home/runner/work/vscode-kb-macro/vscode-kb-macro/empty2/User/keybindings.json'" },
 { "key": "tab",                   "command": "editor.action.inlineSuggest.commit",
-                                     "when": "inlineEditIsVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible" },
+                                     "when": "inlineEditIsVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible" },
 { "key": "insert",                "command": "editor.action.toggleOvertypeInsertMode" },
 { "key": "shift+f9",              "command": "editor.debug.action.toggleInlineBreakpoint",
                                      "when": "editorTextFocus" },
@@ -1094,47 +1092,47 @@
 { "key": "ctrl+.",                "command": "problems.action.showQuickFixes",
                                      "when": "problemFocus" },
 { "key": "ctrl+alt+home",         "command": "quickInput.first",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+home",             "command": "quickInput.first",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+alt+end",          "command": "quickInput.last",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+end",              "command": "quickInput.last",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+down",             "command": "quickInput.next",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "down",                  "command": "quickInput.next",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+alt+down",         "command": "quickInput.nextSeparator",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "alt+down",              "command": "quickInput.nextSeparatorWithQuickAccessFallback",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+alt+pagedown",     "command": "quickInput.pageNext",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+pagedown",         "command": "quickInput.pageNext",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "alt+pagedown",          "command": "quickInput.pageNext",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "pagedown",              "command": "quickInput.pageNext",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+alt+pageup",       "command": "quickInput.pagePrevious",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+pageup",           "command": "quickInput.pagePrevious",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "alt+pageup",            "command": "quickInput.pagePrevious",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "pageup",                "command": "quickInput.pagePrevious",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+up",               "command": "quickInput.previous",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "up",                    "command": "quickInput.previous",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+alt+up",           "command": "quickInput.previousSeparator",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "alt+up",                "command": "quickInput.previousSeparatorWithQuickAccessFallback",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "ctrl+space",            "command": "quickInput.toggleHover",
-                                     "when": "inQuickInput && quickInputType == 'quickPick'" },
+                                     "when": "inQuickInput && quickInputType == 'quickPick' || inQuickInput && quickInputType == 'quickTree'" },
 { "key": "space",                 "command": "refactorPreview.toggleCheckedState",
                                      "when": "listFocus && refactorPreview.enabled && !inputFocus && !treestickyScrollFocused" },
 { "key": "ctrl+alt+r",            "command": "revealFileInOS",
@@ -1283,6 +1281,8 @@
                                      "when": "chatIsEnabled && inChat" },
 { "key": "ctrl+shift+f9",         "command": "workbench.action.chat.previousFileTree",
                                      "when": "chatIsEnabled && inChat" },
+{ "key": "delete",                "command": "workbench.action.chat.restoreCheckpoint",
+                                     "when": "inChat && !textInputFocus" },
 { "key": "ctrl+alt+meta+/",       "command": "workbench.action.chat.run-in-new-chat.prompt.current",
                                      "when": "chatIsEnabled && config.chat.promptFiles && editorTextFocus && resourceSet && resourceLangId == 'prompt'" },
 { "key": "alt+meta+/",            "command": "workbench.action.chat.run.prompt",
@@ -1508,16 +1508,8 @@
                                      "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalIsOpen || terminalFocus && terminalProcessSupported || terminalHasBeenCreated && terminalTabsFocus || terminalIsOpen && terminalTabsFocus || terminalProcessSupported && terminalTabsFocus" },
 { "key": "ctrl+pagedown",         "command": "workbench.action.terminal.focusNext",
                                      "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus" },
-{ "key": "alt+down",              "command": "workbench.action.terminal.focusNextPane",
-                                     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
-{ "key": "alt+right",             "command": "workbench.action.terminal.focusNextPane",
-                                     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
 { "key": "ctrl+pageup",           "command": "workbench.action.terminal.focusPrevious",
                                      "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus" },
-{ "key": "alt+up",                "command": "workbench.action.terminal.focusPreviousPane",
-                                     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
-{ "key": "alt+left",              "command": "workbench.action.terminal.focusPreviousPane",
-                                     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" },
 { "key": "ctrl+shift+\\",         "command": "workbench.action.terminal.focusTabs",
                                      "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported || terminalHasBeenCreated && terminalTabsFocus || terminalProcessSupported && terminalTabsFocus" },
 { "key": "ctrl+g",                "command": "workbench.action.terminal.goToRecentDirectory",
@@ -1739,9 +1731,9 @@
 { "key": "ctrl+enter",            "command": "workbench.action.chat.acceptTool",
                                      "when": "chatHasToolConfirmation && inChat" },
 { "key": "ctrl+l",                "command": "workbench.action.chat.newChat",
-                                     "when": "chatEditingParticipantRegistered && chatIsEnabled && inChat" },
+                                     "when": "chatIsEnabled && inChat" },
 { "key": "ctrl+n",                "command": "workbench.action.chat.newChat",
-                                     "when": "chatEditingParticipantRegistered && chatIsEnabled && inChat" },
+                                     "when": "chatIsEnabled && inChat" },
 { "key": "ctrl+pagedown",         "command": "workbench.action.debug.nextConsole",
                                      "when": "inDebugRepl" },
 { "key": "ctrl+pageup",           "command": "workbench.action.debug.prevConsole",
@@ -1749,9 +1741,17 @@
 { "key": "ctrl+n",                "command": "workbench.action.openChat",
                                      "when": "chatIsEnabled && inChat && inChatEditor" },
 { "key": "enter",                 "command": "workbench.action.terminal.acceptSelectedSuggestion",
-                                     "when": "simpleSuggestWidgetHasNavigated && terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || simpleSuggestWidgetHasNavigated && terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible || terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible && !simpleSuggestWidgetFirstSuggestionFocused || terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible && config.terminal.integrated.suggest.selectionMode != 'partial' || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible && !simpleSuggestWidgetFirstSuggestionFocused || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible && config.terminal.integrated.suggest.selectionMode != 'partial'" },
+                                     "when": "simpleSuggestWidgetHasFocusedSuggestion && simpleSuggestWidgetHasNavigated && terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || simpleSuggestWidgetHasFocusedSuggestion && simpleSuggestWidgetHasNavigated && terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible || simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible && !simpleSuggestWidgetFirstSuggestionFocused || simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible && config.terminal.integrated.suggest.selectionMode != 'partial' || simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible && !simpleSuggestWidgetFirstSuggestionFocused || simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible && config.terminal.integrated.suggest.selectionMode != 'partial'" },
 { "key": "enter",                 "command": "workbench.action.terminal.acceptSelectedSuggestionEnter",
                                      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible && config.terminal.integrated.suggest.runOnEnter != 'never' || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible && config.terminal.integrated.suggest.runOnEnter != 'never'" },
+{ "key": "alt+down",              "command": "workbench.action.terminal.focusNextPane",
+                                     "when": "terminalFocus && terminalHasBeenCreated && terminalSplitPaneActive || terminalFocus && terminalProcessSupported && terminalSplitPaneActive" },
+{ "key": "alt+right",             "command": "workbench.action.terminal.focusNextPane",
+                                     "when": "terminalFocus && terminalHasBeenCreated && terminalSplitPaneActive || terminalFocus && terminalProcessSupported && terminalSplitPaneActive" },
+{ "key": "alt+up",                "command": "workbench.action.terminal.focusPreviousPane",
+                                     "when": "terminalFocus && terminalHasBeenCreated && terminalSplitPaneActive || terminalFocus && terminalProcessSupported && terminalSplitPaneActive" },
+{ "key": "alt+left",              "command": "workbench.action.terminal.focusPreviousPane",
+                                     "when": "terminalFocus && terminalHasBeenCreated && terminalSplitPaneActive || terminalFocus && terminalProcessSupported && terminalSplitPaneActive" },
 { "key": "escape",                "command": "workbench.action.terminal.hideSuggestWidget",
                                      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible" },
 { "key": "ctrl+shift+o",          "command": "workbench.action.terminal.openDetectedLink",
@@ -2143,6 +2143,7 @@
 // - editor.action.removeDuplicateLines
 // - editor.action.resetSuggestSize
 // - editor.action.revealDeclaration
+// - editor.action.reverseLines
 // - editor.action.selectToBracket
 // - editor.action.selectionClipboardPaste
 // - editor.action.showDefinitionPreviewHover
@@ -2340,10 +2341,13 @@
 // - git.copyCommitMessage
 // - git.copyContentToClipboard
 // - git.createTag
+// - git.createWorktree
 // - git.deleteBranch
 // - git.deleteRemoteBranch
 // - git.deleteRemoteTag
 // - git.deleteTag
+// - git.deleteWorktree
+// - git.deleteWorktreeFromPalette
 // - git.diff.stageHunk
 // - git.diff.stageSelection
 // - git.fetch
@@ -2369,6 +2373,8 @@
 // - git.openRepositoriesInParentFolders
 // - git.openRepository
 // - git.openResource
+// - git.openWorktree
+// - git.openWorktreeInNewWindow
 // - git.publish
 // - git.pull
 // - git.pullFrom
@@ -2860,7 +2866,6 @@
 // - welcome.newWorkspaceChat
 // - welcome.showAllWalkthroughs
 // - welcome.showNewWelcome
-// - workbench.accounts.actions.signin
 // - workbench.action.acceptSelectedQuickOpenItem
 // - workbench.action.activityBarLocation.bottom
 // - workbench.action.activityBarLocation.default
@@ -2912,6 +2917,7 @@
 // - workbench.action.chat.logInputHistory
 // - workbench.action.chat.manage.mode
 // - workbench.action.chat.manageLanguageModelAuthentication
+// - workbench.action.chat.manageLanguageModels
 // - workbench.action.chat.manageOverages
 // - workbench.action.chat.manageSettings
 // - workbench.action.chat.markHelpful
@@ -2922,24 +2928,27 @@
 // - workbench.action.chat.openInEditor
 // - workbench.action.chat.openInNewWindow
 // - workbench.action.chat.openInSidebar
-// - workbench.action.chat.openModePicker
 // - workbench.action.chat.openQuotaExceededDialog
 // - workbench.action.chat.openStorageFolder
 // - workbench.action.chat.picker.configmode
 // - workbench.action.chat.quickVoiceChat
 // - workbench.action.chat.readChatResponseAloud
 // - workbench.action.chat.redoEdit
+// - workbench.action.chat.redoEdit2
 // - workbench.action.chat.reportIssueForBug
 // - workbench.action.chat.resetTrustedTools
+// - workbench.action.chat.restoreLastCheckpoint
 // - workbench.action.chat.retry
 // - workbench.action.chat.save-to-prompt
 // - workbench.action.chat.showExtensionsUsingCopilot
 // - workbench.action.chat.startParameterizedPrompt
 // - workbench.action.chat.switchToNextModel
 // - workbench.action.chat.toggle
+// - workbench.action.chat.toggleAgentMode
 // - workbench.action.chat.toggleDefaultVisibility
 // - workbench.action.chat.toggleRequestPaused
 // - workbench.action.chat.triggerSetup
+// - workbench.action.chat.triggerSetupForceSignIn
 // - workbench.action.chat.triggerSetupFromAccounts
 // - workbench.action.chat.triggerSetupWithoutDialog
 // - workbench.action.chat.undoEdit
@@ -3016,6 +3025,7 @@
 // - workbench.action.editorLayoutTwoRows
 // - workbench.action.editorLayoutTwoRowsRight
 // - workbench.action.edits.addFilesFromReferences
+// - workbench.action.edits.submit
 // - workbench.action.enableCompactAuxiliaryWindow
 // - workbench.action.enableWindowAlwaysOnTop
 // - workbench.action.evenEditorWidths
@@ -3222,7 +3232,6 @@
 // - workbench.action.quickchat.openInChatView
 // - workbench.action.reloadWindowWithExtensionsDisabled
 // - workbench.action.remote.close
-// - workbench.action.remote.extensions
 // - workbench.action.removeDynamicAuthenticationProviders
 // - workbench.action.removeLargeStorageDatabaseEntries
 // - workbench.action.removeRootFolder
@@ -3342,6 +3351,8 @@
 // - workbench.action.terminal.showEnvironmentContributions
 // - workbench.action.terminal.showTextureAtlas
 // - workbench.action.terminal.splitInActiveWorkspace
+// - workbench.action.terminal.startVoice
+// - workbench.action.terminal.stopVoice
 // - workbench.action.terminal.switchTerminal
 // - workbench.action.terminal.toggleStickyScroll
 // - workbench.action.terminal.unsplit
@@ -3383,6 +3394,7 @@
 // - workbench.action.zenHideEditorTabs
 // - workbench.action.zenShowEditorTab
 // - workbench.action.zenShowMultipleEditorTabs
+// - workbench.actions.accounts.signIn
 // - workbench.actions.sync.editMachineName
 // - workbench.actions.sync.loadActivity
 // - workbench.actions.sync.turnOffSyncOnMachine
@@ -3479,6 +3491,7 @@
 // - workbench.extensions.action.copyExtensionId
 // - workbench.extensions.action.copyLink
 // - workbench.extensions.action.debugExtensionHost
+// - workbench.extensions.action.devtoolsExtensionHost
 // - workbench.extensions.action.disableAll
 // - workbench.extensions.action.disableAllWorkspace
 // - workbench.extensions.action.disableAutoUpdate
@@ -3535,6 +3548,7 @@
 // - workbench.extensions.action.toggleIgnoreExtension
 // - workbench.extensions.action.undoIgnoredRecommendation
 // - workbench.extensions.action.updateAllExtensions
+// - workbench.extensions.actions.gallery.signIn
 // - workbench.extensions.command.installFromVSIX
 // - workbench.extensions.installMissingDependencies
 // - workbench.files.action.acceptLocalChanges
@@ -3715,6 +3729,8 @@
 // - workbench.views.extensions.installed.resetViewLocation
 // - workbench.views.extensions.marketplace.focus
 // - workbench.views.extensions.marketplace.resetViewLocation
+// - workbench.views.extensions.marketplaceAccess.focus
+// - workbench.views.extensions.marketplaceAccess.resetViewLocation
 // - workbench.views.extensions.otherRecommendations.focus
 // - workbench.views.extensions.otherRecommendations.resetViewLocation
 // - workbench.views.extensions.popular.focus
