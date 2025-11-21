@@ -738,7 +738,7 @@
 				"args": {
 					"command": "workbench.actions.workbench.panel.output.clearFilterText"
 				},
-				"when": "kb-macro.active && isWindows && outputFilterFocus"
+				"when": "kb-macro.active && isLinux && outputFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -3437,7 +3437,7 @@
 				"args": {
 					"command": "inlineChat2.keep"
 				},
-				"when": "kb-macro.active && chatEdits.hasEditorModifications && inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress && chatLocation == 'editor' && activeEditor != 'workbench.editor.notebook' || kb-macro.active && chatEdits.hasEditorModifications && inlineChatHasNotebookAgent && inlineChatVisible && !chatEdits.isRequestInProgress && activeEditor == 'workbench.editor.notebook' && chatLocation == 'editor'"
+				"when": "kb-macro.active && chatEdits.hasEditorModifications && inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress && activeEditor != 'workbench.editor.notebook' || kb-macro.active && chatEdits.hasEditorModifications && inlineChatHasNotebookAgent && inlineChatVisible && !chatEdits.isRequestInProgress && activeEditor == 'workbench.editor.notebook'"
 			},
 			{
 				"key": "ctrl+enter",
@@ -3843,7 +3843,7 @@
 				"args": {
 					"command": "inlineChat2.keep"
 				},
-				"when": "kb-macro.active && chatEdits.hasEditorModifications && chatInputHasFocus && inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress && !chatInputHasText && chatLocation == 'editor' && activeEditor != 'workbench.editor.notebook' || kb-macro.active && chatEdits.hasEditorModifications && chatInputHasFocus && inlineChatHasNotebookAgent && inlineChatVisible && !chatEdits.isRequestInProgress && !chatInputHasText && activeEditor == 'workbench.editor.notebook' && chatLocation == 'editor'"
+				"when": "kb-macro.active && chatEdits.hasEditorModifications && chatInputHasFocus && inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress && !chatInputHasText && activeEditor != 'workbench.editor.notebook' || kb-macro.active && chatEdits.hasEditorModifications && chatInputHasFocus && inlineChatHasNotebookAgent && inlineChatVisible && !chatEdits.isRequestInProgress && !chatInputHasText && activeEditor == 'workbench.editor.notebook'"
 			},
 			{
 				"key": "enter",
