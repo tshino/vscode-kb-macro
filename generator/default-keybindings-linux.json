@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.107.0 for Linux
+// Default Keybindings of Visual Studio Code 1.107.1 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -2008,6 +2008,7 @@
 // - agentSessions.filter.toggleExcludeState:0.agentsessionsviewerfiltersubmenu
 // - agentSessions.filter.toggleExcludeState:1.agentsessionsviewerfiltersubmenu
 // - agentSessions.filter.toggleExcludeState:2.agentsessionsviewerfiltersubmenu
+// - agentSessions.filter.toggleExcludeState:3.agentsessionsviewerfiltersubmenu
 // - agentSessions.hideAgentSessionsSidebar
 // - agentSessions.showAgentSessionsSidebar
 // - agentSessionsView.find
@@ -2025,7 +2026,9 @@
 // - chat.inlineSymbolAnchor.goToImplementations
 // - chat.inlineSymbolAnchor.goToReferences
 // - chat.inlineSymbolAnchor.goToTypeDefinitions
-// - chat.installRecommendation.openai.chatgpt
+// - chat.installRecommendation.github.copilot-chat.cli
+// - chat.installRecommendation.github.copilot-chat.cloud
+// - chat.installRecommendation.openai.chatgpt.codex
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.generateDocs
