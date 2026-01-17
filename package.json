@@ -9618,15 +9618,6 @@
 				"when": "kb-macro.active && accessibleViewIsShown && terminalHasBeenCreated && accessibleViewCurrentProviderId == 'terminal'"
 			},
 			{
-				"key": "ctrl+shift+g",
-				"mac": "shift+cmd+g",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "editor.action.announceCursorPosition"
-				},
-				"when": "kb-macro.active"
-			},
-			{
 				"key": "alt+home alt+home",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -9642,6 +9633,15 @@
 					"command": "chatEditor.action.acceptAllEdits"
 				},
 				"when": "kb-macro.active && chatEdits.hasEditorModifications && editorFocus && !chatEdits.isCurrentlyBeingModified || kb-macro.active && chatEdits.hasEditorModifications && notebookEditorFocused && !chatEdits.isCurrentlyBeingModified"
+			},
+			{
+				"key": "ctrl+shift+alt+g",
+				"mac": "shift+alt+cmd+g",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "editor.action.announceCursorPosition"
+				},
+				"when": "kb-macro.active && accessibilityModeEnabled && editorTextFocus"
 			},
 			{
 				"key": "shift+alt+f1",
