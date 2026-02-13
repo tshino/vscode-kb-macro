@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.109.0 for macOS
+// Default Keybindings of Visual Studio Code 1.109.3 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -607,11 +607,11 @@
 { "key": "ctrl+alt+enter",        "command": "workbench.action.chat.runInTerminal",
                                      "when": "accessibleViewInCodeBlock && chatIsEnabled || chatIsEnabled && inChat" },
 { "key": "enter",                 "command": "workbench.action.chat.submit",
-                                     "when": "chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff" },
+                                     "when": "chatInputHasText && chatSessionOptionsValid && inChatInput && !chatHasToolConfirmation && !chatSessionRequestInProgress && !withinEditSessionDiff" },
 { "key": "cmd+enter",             "command": "workbench.action.chat.submitWithCodebase",
-                                     "when": "chatInputHasText && inChatInput && !chatSessionRequestInProgress" },
+                                     "when": "chatInputHasText && inChatInput && !chatHasToolConfirmation && !chatSessionRequestInProgress" },
 { "key": "shift+alt+enter",       "command": "workbench.action.chat.submitWithoutDispatching",
-                                     "when": "chatInputHasText && inChatInput && !chatSessionRequestInProgress && chatAgentKind == 'ask'" },
+                                     "when": "chatInputHasText && inChatInput && !chatHasToolConfirmation && !chatSessionRequestInProgress && chatAgentKind == 'ask'" },
 { "key": "alt+f5",                "command": "workbench.action.editor.nextChange",
                                      "when": "editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'" },
 { "key": "shift+alt+f5",          "command": "workbench.action.editor.previousChange",
@@ -628,6 +628,10 @@
                                      "when": "editorFocus && testing.isPeekVisible" },
 { "key": "shift+alt+f8",          "command": "testing.goToPreviousMessage",
                                      "when": "editorFocus && testing.isPeekVisible" },
+{ "key": "alt+enter",             "command": "workbench.action.chat.queueMessage",
+                                     "when": "chatHasToolConfirmation && chatInputHasText && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest != 's' || chatInputHasText && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's' || chatHasToolConfirmation && chatInputHasText && chatSessionRequestInProgress && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest != 's' || chatHasToolConfirmation && chatInputHasText && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's'" },
+{ "key": "enter",                 "command": "workbench.action.chat.steerWithMessage",
+                                     "when": "chatHasToolConfirmation && chatInputHasText && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest != 's' || chatInputHasText && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's' || chatHasToolConfirmation && chatInputHasText && chatSessionRequestInProgress && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest != 's' || chatHasToolConfirmation && chatInputHasText && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's' || chatInputHasText && chatSessionRequestInProgress && config.chat.requestQueuing.enabled && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's'" },
 { "key": "shift+cmd+up",          "command": "workbench.chat.action.focusLastFocused",
                                      "when": "chatCursorAtTop && inChatInput && !quickChatHasFocus" },
 { "key": "shift+cmd+up",          "command": "workbench.chat.action.focusLastFocused",
@@ -1404,7 +1408,7 @@
 { "key": "f12",                   "command": "workbench.action.browser.toggleDevTools",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
 { "key": "cmd+escape",            "command": "workbench.action.chat.cancel",
-                                     "when": "chatSessionRequestInProgress && !chatRemoteJobCreating" },
+                                     "when": "chatHasToolConfirmation && !chatRemoteJobCreating || chatSessionRequestInProgress && !chatRemoteJobCreating" },
 { "key": "enter",                 "command": "workbench.action.chat.editRequests",
                                      "when": "inChat && !textInputFocus" },
 { "key": "shift+cmd+a",           "command": "workbench.action.chat.focusConfirmation",
@@ -2265,6 +2269,9 @@
 // - chat.inlineSymbolAnchor.goToImplementations
 // - chat.inlineSymbolAnchor.goToReferences
 // - chat.inlineSymbolAnchor.goToTypeDefinitions
+// - chat.installRecommendation.github.copilot-chat.cli
+// - chat.installRecommendation.github.copilot-chat.cloud
+// - chat.installRecommendation.openai.chatgpt.codex
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.generateDocs
@@ -2785,6 +2792,7 @@
 // - keybindings.editor.showDefaultKeybindings
 // - keybindings.editor.showExtensionKeybindings
 // - keybindings.editor.showUserKeybindings
+// - keywordActivation.status.command
 // - lastCursorLineSelect
 // - lastCursorLineSelectDrag
 // - lastCursorWordSelect
@@ -3146,11 +3154,19 @@
 // - typescript.restartTsServer
 // - typescript.selectTypeScriptVersion
 // - typescript.sortImports
+// - update.check
 // - update.checkForUpdate
+// - update.checking
+// - update.downloadNow
 // - update.downloadUpdate
+// - update.downloading
+// - update.install
 // - update.installUpdate
+// - update.restart
 // - update.restartToUpdate
 // - update.showCurrentReleaseNotes
+// - update.showUpdateReleaseNotes
+// - update.updating
 // - variables.collapse
 // - walkthroughs.selectStep
 // - watch.collapse
@@ -3195,6 +3211,7 @@
 // - workbench.action.chat.clearInputHistory
 // - workbench.action.chat.configure.customagents
 // - workbench.action.chat.configure.customagents.disabled
+// - workbench.action.chat.configure.hooks
 // - workbench.action.chat.configure.instructions
 // - workbench.action.chat.configure.prompts
 // - workbench.action.chat.configure.skills
@@ -3251,6 +3268,8 @@
 // - workbench.action.chat.readChatResponseAloud
 // - workbench.action.chat.redoEdit
 // - workbench.action.chat.redoEdit2
+// - workbench.action.chat.removeAllPendingRequests
+// - workbench.action.chat.removePendingRequest
 // - workbench.action.chat.reportIssueForBug
 // - workbench.action.chat.resetTrustedTools
 // - workbench.action.chat.restoreLastCheckpoint
@@ -3259,6 +3278,7 @@
 // - workbench.action.chat.save-as-agent
 // - workbench.action.chat.save-as-instructions
 // - workbench.action.chat.save-as-prompt
+// - workbench.action.chat.sendPendingImmediately
 // - workbench.action.chat.setAgentSessionsOrientationSideBySide
 // - workbench.action.chat.setAgentSessionsOrientationStacked
 // - workbench.action.chat.showExtensionsUsingCopilot
@@ -3280,6 +3300,7 @@
 // - workbench.action.clearCommandHistory
 // - workbench.action.clearEditorHistory
 // - workbench.action.clearEditorHistoryWithoutConfirm
+// - workbench.action.clearLocalePreference
 // - workbench.action.clearRecentFiles
 // - workbench.action.closeActivePinnedEditor
 // - workbench.action.closeAuxiliaryBar
@@ -3299,6 +3320,7 @@
 // - workbench.action.configureEditor
 // - workbench.action.configureEditorTabs
 // - workbench.action.configureLanguageBasedSettings
+// - workbench.action.configureLocale
 // - workbench.action.configureRuntimeArguments
 // - workbench.action.continueOn.extensions
 // - workbench.action.copyEditorGroupToNewWindow
@@ -3355,6 +3377,7 @@
 // - workbench.action.expandAllComments
 // - workbench.action.expandUnresolvedComments
 // - workbench.action.exportLogs
+// - workbench.action.extensionHostProfiler.stop
 // - workbench.action.files.newFile
 // - workbench.action.files.openFileFolderInNewWindow
 // - workbench.action.files.openFileInNewWindow
@@ -3393,6 +3416,7 @@
 // - workbench.action.gotoOffset
 // - workbench.action.hideEditorActions
 // - workbench.action.hideEditorTabs
+// - workbench.action.holdLockedScrolling
 // - workbench.action.importLog
 // - workbench.action.increaseViewHeight
 // - workbench.action.increaseViewSize
@@ -3419,6 +3443,7 @@
 // - workbench.action.lockEditorGroup
 // - workbench.action.logStorage
 // - workbench.action.logWorkingCopies
+// - workbench.action.manageAccounts
 // - workbench.action.manageTrustedDomain
 // - workbench.action.maximizeAuxiliaryBar
 // - workbench.action.maximizeEditorHideSidebar
@@ -3479,6 +3504,7 @@
 // - workbench.action.openFolderSettingsFile
 // - workbench.action.openGlobalKeybindingsFile
 // - workbench.action.openGlobalSettings
+// - workbench.action.openIssueReporter
 // - workbench.action.openLanguageModelsJson
 // - workbench.action.openLicenseUrl
 // - workbench.action.openLogFile
@@ -3560,10 +3586,12 @@
 // - workbench.action.quickchat.openInChatView
 // - workbench.action.reloadWindowWithExtensionsDisabled
 // - workbench.action.remote.close
+// - workbench.action.removeDynamicAuthenticationProviders
 // - workbench.action.removeLargeStorageDatabaseEntries
 // - workbench.action.removeRootFolder
 // - workbench.action.reopenTextEditor
 // - workbench.action.reopenWithEditor
+// - workbench.action.reportPerformanceIssueUsingReporter
 // - workbench.action.resetFocusedViewLocation
 // - workbench.action.resetViewLocations
 // - workbench.action.restartExtensionHost
@@ -3709,6 +3737,7 @@
 // - workbench.action.toggleKeepEditors
 // - workbench.action.toggleKeybindingsLog
 // - workbench.action.toggleLightDarkThemes
+// - workbench.action.toggleLockedScrolling
 // - workbench.action.toggleMaximizedAuxiliaryBar
 // - workbench.action.toggleMaximizedPanel
 // - workbench.action.toggleMultiCursorModifier
@@ -3734,6 +3763,16 @@
 // - workbench.action.zenHideEditorTabs
 // - workbench.action.zenShowEditorTab
 // - workbench.action.zenShowMultipleEditorTabs
+// - workbench.actions.sync.editMachineName
+// - workbench.actions.sync.loadActivity
+// - workbench.actions.sync.turnOffSyncOnMachine
+// - workbench.actions.sync.workbench.views.sync.localActivity.compareWithLocal
+// - workbench.actions.sync.workbench.views.sync.localActivity.replaceCurrent
+// - workbench.actions.sync.workbench.views.sync.localActivity.resolveResource
+// - workbench.actions.sync.workbench.views.sync.remoteActivity.compareWithLocal
+// - workbench.actions.sync.workbench.views.sync.remoteActivity.replaceCurrent
+// - workbench.actions.sync.workbench.views.sync.remoteActivity.resolveResource
+// - workbench.actions.syncData.reset
 // - workbench.actions.table.workbench.panel.markers.view.viewAsTable
 // - workbench.actions.table.workbench.panel.markers.view.viewAsTree
 // - workbench.actions.treeView.workbench.panel.markers.view.collapseAll
@@ -3791,6 +3830,17 @@
 // - workbench.debug.welcome.removeView
 // - workbench.debug.welcome.resetViewLocation
 // - workbench.debug.welcome.toggleVisibility
+// - workbench.editSessions.actions.delete
+// - workbench.editSessions.actions.deleteAll
+// - workbench.editSessions.actions.resetAuth
+// - workbench.editSessions.actions.resume
+// - workbench.editSessions.actions.resumeFromSerializedPayload
+// - workbench.editSessions.actions.resumeLatest
+// - workbench.editSessions.actions.showEditSessions
+// - workbench.editSessions.actions.showOutputChannel
+// - workbench.editSessions.actions.signIn
+// - workbench.editSessions.actions.store
+// - workbench.editSessions.actions.storeCurrent
 // - workbench.explorer.emptyView.removeView
 // - workbench.explorer.emptyView.resetViewLocation
 // - workbench.explorer.emptyView.toggleVisibility
@@ -3844,6 +3894,7 @@
 // - workbench.extensions.action.manageAuthorizedExtensionURIs
 // - workbench.extensions.action.manageTrustedPublishers
 // - workbench.extensions.action.openExtensionHostProfile
+// - workbench.extensions.action.openExtensionsFolder
 // - workbench.extensions.action.recentlyPublishedExtensions
 // - workbench.extensions.action.refreshExtension
 // - workbench.extensions.action.removeExtensionFromWorkspaceRecommendations
@@ -3872,6 +3923,7 @@
 // - workbench.extensions.action.updateAllExtensions
 // - workbench.extensions.actions.gallery.signIn
 // - workbench.extensions.command.installFromVSIX
+// - workbench.extensions.installMissingDependencies
 // - workbench.files.action.acceptLocalChanges
 // - workbench.files.action.collapseExplorerFolders
 // - workbench.files.action.compareFileWith
@@ -3952,6 +4004,14 @@
 // - workbench.profiles.actions.resetWorkspaces
 // - workbench.profiles.actions.switchProfile
 // - workbench.remote.action.closeUnusedPorts
+// - workbench.remoteTunnel.actions.configure
+// - workbench.remoteTunnel.actions.connecting
+// - workbench.remoteTunnel.actions.copyToClipboard
+// - workbench.remoteTunnel.actions.learnMore
+// - workbench.remoteTunnel.actions.manage
+// - workbench.remoteTunnel.actions.showLog
+// - workbench.remoteTunnel.actions.turnOff
+// - workbench.remoteTunnel.actions.turnOn
 // - workbench.scm.action.collapseAll
 // - workbench.scm.action.collapseAllRepositories
 // - workbench.scm.action.expandAllRepositories
@@ -3992,9 +4052,24 @@
 // - workbench.scm.toggleVisibility
 // - workbench.trust.configure
 // - workbench.trust.manage
+// - workbench.userData.actions.cancelTurnOn
 // - workbench.userData.actions.openSyncBackupsFolder
+// - workbench.userData.actions.signin
+// - workbench.userData.actions.turningOn
+// - workbench.userDataSync.actions.acceptMerges
+// - workbench.userDataSync.actions.configure
 // - workbench.userDataSync.actions.downloadSyncActivity
+// - workbench.userDataSync.actions.help
+// - workbench.userDataSync.actions.manage
+// - workbench.userDataSync.actions.settings
+// - workbench.userDataSync.actions.showConflicts
+// - workbench.userDataSync.actions.showLog
+// - workbench.userDataSync.actions.showSyncedData
+// - workbench.userDataSync.actions.syncNow
+// - workbench.userDataSync.actions.turnOff
+// - workbench.userDataSync.actions.turnOn
 // - workbench.view.debug.resetViewContainerLocation
+// - workbench.view.editSessions.resetViewContainerLocation
 // - workbench.view.explorer.resetViewContainerLocation
 // - workbench.view.extension.references-view
 // - workbench.view.extension.references-view.resetViewContainerLocation
@@ -4009,10 +4084,14 @@
 // - workbench.view.search.resetViewContainerLocation
 // - workbench.view.search.resetViewLocation
 // - workbench.view.search.toggleVisibility
+// - workbench.view.sync
+// - workbench.view.sync.resetViewContainerLocation
 // - workbench.view.testCoverage.focus
 // - workbench.view.testCoverage.resetViewLocation
 // - workbench.view.testing.focus
 // - workbench.view.testing.resetViewLocation
+// - workbench.views.editSessions.data.focus
+// - workbench.views.editSessions.data.resetViewLocation
 // - workbench.views.extensions.builtinFeatureExtensions.focus
 // - workbench.views.extensions.builtinFeatureExtensions.resetViewLocation
 // - workbench.views.extensions.builtinProgrammingLanguageExtensions.focus
@@ -4069,3 +4148,21 @@
 // - workbench.views.mcp.marketplace.resetViewLocation
 // - workbench.views.mcp.welcomeView.focus
 // - workbench.views.mcp.welcomeView.resetViewLocation
+// - workbench.views.sync.conflicts.focus
+// - workbench.views.sync.conflicts.resetViewLocation
+// - workbench.views.sync.externalActivity.focus
+// - workbench.views.sync.externalActivity.resetViewLocation
+// - workbench.views.sync.localActivity.focus
+// - workbench.views.sync.localActivity.resetViewLocation
+// - workbench.views.sync.machines.focus
+// - workbench.views.sync.machines.resetViewLocation
+// - workbench.views.sync.remoteActivity.focus
+// - workbench.views.sync.remoteActivity.resetViewLocation
+// - workbench.views.sync.troubleshoot.focus
+// - workbench.views.sync.troubleshoot.resetViewLocation
+// - ~remote.forwardedPorts.focus
+// - ~remote.forwardedPorts.removeView
+// - ~remote.forwardedPorts.resetViewLocation
+// - ~remote.forwardedPorts.toggleVisibility
+// - ~remote.forwardedPortsContainer
+// - ~remote.forwardedPortsContainer.resetViewContainerLocation
