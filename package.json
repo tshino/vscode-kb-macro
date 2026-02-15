@@ -2,10 +2,10 @@
 	"name": "kb-macro",
 	"displayName": "Keyboard Macro Beta",
 	"description": "Recordable keyboard macro for Visual Studio Code",
-	"version": "0.14.13",
+	"version": "0.14.14",
 	"publisher": "tshino",
 	"engines": {
-		"vscode": "^1.109.0"
+		"vscode": "^1.109.3"
 	},
 	"categories": [
 		"Keymaps"
