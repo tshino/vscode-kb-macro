@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.109.3 for macOS
+// Default Keybindings of Visual Studio Code 1.109.5 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -3300,7 +3300,6 @@
 // - workbench.action.clearCommandHistory
 // - workbench.action.clearEditorHistory
 // - workbench.action.clearEditorHistoryWithoutConfirm
-// - workbench.action.clearLocalePreference
 // - workbench.action.clearRecentFiles
 // - workbench.action.closeActivePinnedEditor
 // - workbench.action.closeAuxiliaryBar
@@ -3320,7 +3319,6 @@
 // - workbench.action.configureEditor
 // - workbench.action.configureEditorTabs
 // - workbench.action.configureLanguageBasedSettings
-// - workbench.action.configureLocale
 // - workbench.action.configureRuntimeArguments
 // - workbench.action.continueOn.extensions
 // - workbench.action.copyEditorGroupToNewWindow
@@ -3377,7 +3375,6 @@
 // - workbench.action.expandAllComments
 // - workbench.action.expandUnresolvedComments
 // - workbench.action.exportLogs
-// - workbench.action.extensionHostProfiler.stop
 // - workbench.action.files.newFile
 // - workbench.action.files.openFileFolderInNewWindow
 // - workbench.action.files.openFileInNewWindow
@@ -3416,7 +3413,6 @@
 // - workbench.action.gotoOffset
 // - workbench.action.hideEditorActions
 // - workbench.action.hideEditorTabs
-// - workbench.action.holdLockedScrolling
 // - workbench.action.importLog
 // - workbench.action.increaseViewHeight
 // - workbench.action.increaseViewSize
@@ -3737,7 +3733,6 @@
 // - workbench.action.toggleKeepEditors
 // - workbench.action.toggleKeybindingsLog
 // - workbench.action.toggleLightDarkThemes
-// - workbench.action.toggleLockedScrolling
 // - workbench.action.toggleMaximizedAuxiliaryBar
 // - workbench.action.toggleMaximizedPanel
 // - workbench.action.toggleMultiCursorModifier
