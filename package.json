@@ -357,14 +357,6 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "chat.models.action.clearSearchResults"
-				},
-				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "closeBreakpointWidget"
 				},
 				"when": "kb-macro.active && breakpointWidgetVisible && textInputFocus"
