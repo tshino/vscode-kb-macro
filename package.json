@@ -365,6 +365,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.closeModalEditor"
+				},
+				"when": "kb-macro.active && editorFocus && editorPartModal"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
 				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
@@ -456,6 +464,14 @@
 					"command": "inlayHints.stopReadingLineWithHint"
 				},
 				"when": "kb-macro.active && isReadingLineWithInlayHints"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "inlineChat.dismissEditorAffordance"
+				},
+				"when": "kb-macro.active && editorTextFocus && inlineChatAffordanceVisible && config.inlineChat.affordance == 'editor'"
 			},
 			{
 				"key": "escape",
@@ -842,7 +858,7 @@
 				"args": {
 					"command": "workbench.action.closeModalEditor"
 				},
-				"when": "kb-macro.active && editorPartModal"
+				"when": "kb-macro.active && editorPartModal && !editorFocus"
 			},
 			{
 				"key": "escape",
@@ -2333,7 +2349,7 @@
 				"args": {
 					"command": "workbench.action.chat.restoreCheckpoint"
 				},
-				"when": "kb-macro.active && inChat && !textInputFocus"
+				"when": "kb-macro.active && inChat && !inChatQuestionCarousel && !textInputFocus"
 			},
 			{
 				"key": "delete",
@@ -2342,7 +2358,7 @@
 				"args": {
 					"command": "workbench.action.chat.undoEdits"
 				},
-				"when": "kb-macro.active && inChat && !textInputFocus"
+				"when": "kb-macro.active && inChat && !inChatQuestionCarousel && !textInputFocus"
 			},
 			{
 				"key": "delete",
@@ -3827,7 +3843,7 @@
 				"args": {
 					"command": "workbench.action.chat.openSessionInEditorGroup"
 				},
-				"when": "kb-macro.active && agentSessionsViewerFocused"
+				"when": "kb-macro.active && agentSessionsViewerFocused && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+enter",
@@ -4022,7 +4038,7 @@
 				"args": {
 					"command": "workbench.action.chat.openSessionInNewEditorGroup"
 				},
-				"when": "kb-macro.active && agentSessionsViewerFocused"
+				"when": "kb-macro.active && agentSessionsViewerFocused && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+alt+enter",
@@ -5900,6 +5916,15 @@
 				"when": "kb-macro.active && inQuickOpen && inRecentFilesPicker"
 			},
 			{
+				"key": "ctrl+shift+r",
+				"mac": "shift+cmd+r",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.hardReload"
+				},
+				"when": "kb-macro.active && browserFocused && activeEditor == 'workbench.editor.browser'"
+			},
+			{
 				"key": "ctrl+alt+backspace",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -6159,15 +6184,6 @@
 					"command": "inlineChat.askInChat"
 				},
 				"when": "kb-macro.active && editorFocus && inlineChatFileBelongsToChat && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || kb-macro.active && editorFocus && inlineChatFileBelongsToChat && inlineChatHasNotebookAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook' || kb-macro.active && editorFocus && inlineChatFileBelongsToChat && inlineChatHasNotebookInline && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook'"
-			},
-			{
-				"key": "ctrl+i",
-				"mac": "cmd+i",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "inlineChat.holdForSpeech"
-				},
-				"when": "kb-macro.active && hasSpeechProvider && inlineChatVisible && textInputFocus"
 			},
 			{
 				"key": "ctrl+i",
@@ -7216,6 +7232,14 @@
 					"command": "workbench.action.debug.run"
 				},
 				"when": "kb-macro.active && debuggersAvailable && debugState != 'initializing'"
+			},
+			{
+				"key": "ctrl+f5",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.hardReload"
+				},
+				"when": "kb-macro.active && !isMac && browserFocused && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "f5",
