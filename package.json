@@ -3257,9 +3257,17 @@
 				"key": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.chat.queueMessage"
+				},
+				"when": "kb-macro.active && chatSessionRequestInProgress && inChatInput && chatInputHasText && chatSessionRequestInProgress && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's'"
+			},
+			{
+				"key": "enter",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.chat.steerWithMessage"
 				},
-				"when": "kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatSessionRequestInProgress && inChatInput && config.chat.requestQueuing.defaultAction == 'steer' && chatInputHasText && chatSessionRequestInProgress && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's'"
 			},
 			{
 				"key": "enter",
@@ -3906,7 +3914,15 @@
 				"args": {
 					"command": "workbench.action.chat.queueMessage"
 				},
-				"when": "kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'qs' && chatEditingSentRequest != 's'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatSessionRequestInProgress && inChatInput && config.chat.requestQueuing.defaultAction == 'steer' && chatInputHasText && chatSessionRequestInProgress && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's'"
+			},
+			{
+				"key": "alt+enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.chat.steerWithMessage"
+				},
+				"when": "kb-macro.active && chatSessionRequestInProgress && inChatInput && chatInputHasText && chatSessionRequestInProgress && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's'"
 			},
 			{
 				"key": "alt+enter",
@@ -9744,6 +9760,15 @@
 				"when": "kb-macro.active"
 			},
 			{
+				"key": "ctrl+numpad_add",
+				"mac": "cmd+numpad_add",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.zoomIn"
+				},
+				"when": "kb-macro.active && browserFocused && browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'"
+			},
+			{
 				"key": "ctrl+shift+=",
 				"mac": "shift+cmd+=",
 				"command": "kb-macro.wrap",
@@ -9751,6 +9776,15 @@
 					"command": "workbench.action.zoomIn"
 				},
 				"when": "kb-macro.active"
+			},
+			{
+				"key": "ctrl+shift+=",
+				"mac": "shift+cmd+=",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.zoomIn"
+				},
+				"when": "kb-macro.active && browserFocused && browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "ctrl+=",
@@ -9762,6 +9796,15 @@
 				"when": "kb-macro.active"
 			},
 			{
+				"key": "ctrl+=",
+				"mac": "cmd+=",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.zoomIn"
+				},
+				"when": "kb-macro.active && browserFocused && browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'"
+			},
+			{
 				"key": "ctrl+numpad_subtract",
 				"mac": "cmd+numpad_subtract",
 				"command": "kb-macro.wrap",
@@ -9769,6 +9812,15 @@
 					"command": "workbench.action.zoomOut"
 				},
 				"when": "kb-macro.active"
+			},
+			{
+				"key": "ctrl+numpad_subtract",
+				"mac": "cmd+numpad_subtract",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.zoomOut"
+				},
+				"when": "kb-macro.active && browserFocused && browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "ctrl+shift+-",
@@ -9788,6 +9840,15 @@
 				"when": "kb-macro.active"
 			},
 			{
+				"key": "ctrl+-",
+				"mac": "shift+cmd+-",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.zoomOut"
+				},
+				"when": "kb-macro.active && browserFocused && browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'"
+			},
+			{
 				"key": "ctrl+numpad0",
 				"mac": "cmd+numpad0",
 				"command": "kb-macro.wrap",
@@ -9795,6 +9856,15 @@
 					"command": "workbench.action.zoomReset"
 				},
 				"when": "kb-macro.active"
+			},
+			{
+				"key": "ctrl+numpad0",
+				"mac": "cmd+numpad0",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.resetZoom"
+				},
+				"when": "kb-macro.active && browserFocused && browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "ctrl+shift+m",
@@ -10724,6 +10794,14 @@
 				"when": "kb-macro.active && isWindows"
 			},
 			{
+				"key": "ctrl+shift+-",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.zoomOut"
+				},
+				"when": "kb-macro.active && isWindows && browserFocused && browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'"
+			},
+			{
 				"key": "ctrl+-",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -11536,6 +11614,14 @@
 					"command": "workbench.action.zoomOut"
 				},
 				"when": "kb-macro.active"
+			},
+			{
+				"key": "cmd+-",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.zoomOut"
+				},
+				"when": "kb-macro.active && browserFocused && browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "cmd+k",
