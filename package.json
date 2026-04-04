@@ -375,7 +375,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && isWindows && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -5023,6 +5023,14 @@
 				"key": "shift+enter",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "quickInput.accept"
+				},
+				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+			},
+			{
+				"key": "shift+enter",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.terminal.findNext"
 				},
 				"when": "kb-macro.active && terminalFindInputFocused && terminalHasBeenCreated || kb-macro.active && terminalFindInputFocused && terminalProcessSupported"
@@ -5319,6 +5327,14 @@
 					"command": "notebook.cell.insertCodeCellAbove"
 				},
 				"when": "kb-macro.active && notebookCellListFocused && !inputFocus"
+			},
+			{
+				"key": "ctrl+shift+enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "quickInput.accept"
+				},
+				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+shift+enter",
@@ -6754,6 +6770,14 @@
 				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatSessionRequestInProgress && chatAgentKind == 'ask'"
 			},
 			{
+				"key": "shift+alt+enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "quickInput.accept"
+				},
+				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+			},
+			{
 				"key": "ctrl+shift+1",
 				"mac": "shift+cmd+1",
 				"command": "kb-macro.wrap",
@@ -7723,6 +7747,14 @@
 					"command": "notifications.showList"
 				},
 				"when": "kb-macro.active"
+			},
+			{
+				"key": "ctrl+shift+alt+enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "quickInput.accept"
+				},
+				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+alt+home",
