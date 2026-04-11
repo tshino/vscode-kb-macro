@@ -768,6 +768,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.actions.workbench.panel.output.clearFilterText"
+				},
+				"when": "kb-macro.active && isLinux && outputFilterFocus"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.banner.focusBanner"
 				},
 				"when": "kb-macro.active && bannerFocused"
@@ -8234,7 +8242,7 @@
 				"args": {
 					"command": "workbench.action.closeFolder"
 				},
-				"when": "kb-macro.active && emptyWorkspaceSupport && workbenchState != 'empty'"
+				"when": "kb-macro.active && emptyWorkspaceSupport && !isSessionsWindow && workbenchState != 'empty'"
 			},
 			{
 				"key": "ctrl+k u",
@@ -8415,7 +8423,7 @@
 				"args": {
 					"command": "workbench.action.files.openFileFolder"
 				},
-				"when": "kb-macro.active && isMacNative && openFolderWorkspaceSupport"
+				"when": "kb-macro.active && isMacNative && openFolderWorkspaceSupport && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+o",
@@ -8424,7 +8432,7 @@
 				"args": {
 					"command": "workbench.action.files.openFolderViaWorkspace"
 				},
-				"when": "kb-macro.active && !openFolderWorkspaceSupport && workbenchState == 'workspace'"
+				"when": "kb-macro.active && !isSessionsWindow && !openFolderWorkspaceSupport && workbenchState == 'workspace'"
 			},
 			{
 				"key": "ctrl+o",
@@ -8440,7 +8448,7 @@
 				"args": {
 					"command": "workbench.action.files.openFolder"
 				},
-				"when": "kb-macro.active && !isMac && openFolderWorkspaceSupport"
+				"when": "kb-macro.active && !isMac && openFolderWorkspaceSupport && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+k ctrl+o",
@@ -8493,7 +8501,7 @@
 				"args": {
 					"command": "workbench.action.findInFiles"
 				},
-				"when": "kb-macro.active"
+				"when": "kb-macro.active && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+f",
@@ -9112,7 +9120,7 @@
 				"args": {
 					"command": "workbench.action.newWindow"
 				},
-				"when": "kb-macro.active"
+				"when": "kb-macro.active && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+n",
@@ -9228,7 +9236,7 @@
 				"args": {
 					"command": "workbench.action.openRecent"
 				},
-				"when": "kb-macro.active"
+				"when": "kb-macro.active && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+r",
@@ -9445,7 +9453,7 @@
 				"args": {
 					"command": "workbench.action.replaceInFiles"
 				},
-				"when": "kb-macro.active"
+				"when": "kb-macro.active && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+j",
@@ -9798,7 +9806,7 @@
 				"args": {
 					"command": "workbench.action.toggleZenMode"
 				},
-				"when": "kb-macro.active && !isAuxiliaryWindowFocusedContext"
+				"when": "kb-macro.active && !isAuxiliaryWindowFocusedContext && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+numpad_add",
@@ -10552,7 +10560,7 @@
 				"args": {
 					"command": "welcome.showNewFileEntries"
 				},
-				"when": "kb-macro.active"
+				"when": "kb-macro.active && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+a",
@@ -11017,7 +11025,7 @@
 				"args": {
 					"command": "welcome.showNewFileEntries"
 				},
-				"when": "kb-macro.active"
+				"when": "kb-macro.active && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+alt+i",
@@ -11535,7 +11543,7 @@
 				"args": {
 					"command": "welcome.showNewFileEntries"
 				},
-				"when": "kb-macro.active"
+				"when": "kb-macro.active && !isSessionsWindow"
 			},
 			{
 				"key": "shift+cmd+i",

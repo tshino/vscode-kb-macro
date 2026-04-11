@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.114.0 for Linux
+// Default Keybindings of Visual Studio Code 1.115.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -1272,7 +1272,8 @@
                                      "when": "searchViewletFocus" },
 { "key": "alt+w",                 "command": "toggleSearchWholeWord",
                                      "when": "searchViewletFocus" },
-{ "key": "ctrl+alt+meta+n",       "command": "welcome.showNewFileEntries" },
+{ "key": "ctrl+alt+meta+n",       "command": "welcome.showNewFileEntries",
+                                     "when": "!isSessionsWindow" },
 { "key": "ctrl+down",             "command": "widgetNavigation.focusNext",
                                      "when": "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'bottom'" },
 { "key": "ctrl+up",               "command": "widgetNavigation.focusPrevious",
@@ -1346,7 +1347,7 @@
 { "key": "ctrl+k ctrl+shift+w",   "command": "workbench.action.closeAllGroups" },
 { "key": "ctrl+k w",              "command": "workbench.action.closeEditorsInGroup" },
 { "key": "ctrl+k f",              "command": "workbench.action.closeFolder",
-                                     "when": "emptyWorkspaceSupport && workbenchState != 'empty'" },
+                                     "when": "emptyWorkspaceSupport && !isSessionsWindow && workbenchState != 'empty'" },
 { "key": "ctrl+w",                "command": "workbench.action.closeGroup",
                                      "when": "activeEditorGroupEmpty && multipleEditorGroups" },
 { "key": "shift+escape",          "command": "workbench.action.closeQuickOpen",
@@ -1389,11 +1390,11 @@
 { "key": "ctrl+o",                "command": "workbench.action.files.openFile",
                                      "when": "true" },
 { "key": "ctrl+o",                "command": "workbench.action.files.openFileFolder",
-                                     "when": "isMacNative && openFolderWorkspaceSupport" },
+                                     "when": "isMacNative && openFolderWorkspaceSupport && !isSessionsWindow" },
 { "key": "ctrl+k ctrl+o",         "command": "workbench.action.files.openFolder",
-                                     "when": "openFolderWorkspaceSupport" },
+                                     "when": "openFolderWorkspaceSupport && !isSessionsWindow" },
 { "key": "ctrl+o",                "command": "workbench.action.files.openFolderViaWorkspace",
-                                     "when": "!openFolderWorkspaceSupport && workbenchState == 'workspace'" },
+                                     "when": "!isSessionsWindow && !openFolderWorkspaceSupport && workbenchState == 'workspace'" },
 { "key": "ctrl+o",                "command": "workbench.action.files.openLocalFile",
                                      "when": "remoteFileDialogVisible" },
 { "key": "ctrl+k ctrl+o",         "command": "workbench.action.files.openLocalFolder",
@@ -1404,7 +1405,8 @@
 { "key": "ctrl+shift+s",          "command": "workbench.action.files.saveLocalFile",
                                      "when": "remoteFileDialogVisible" },
 { "key": "ctrl+k s",              "command": "workbench.action.files.saveWithoutFormatting" },
-{ "key": "ctrl+shift+f",          "command": "workbench.action.findInFiles" },
+{ "key": "ctrl+shift+f",          "command": "workbench.action.findInFiles",
+                                     "when": "!isSessionsWindow" },
 { "key": "ctrl+k ctrl+up",        "command": "workbench.action.focusAboveGroup" },
 { "key": "ctrl+k ctrl+down",      "command": "workbench.action.focusBelowGroup" },
 { "key": "ctrl+8",                "command": "workbench.action.focusEighthEditorGroup" },
@@ -1456,7 +1458,8 @@
 { "key": "ctrl+shift+-",          "command": "workbench.action.navigateForward",
                                      "when": "canNavigateForward" },
 { "key": "ctrl+k ctrl+q",         "command": "workbench.action.navigateToLastEditLocation" },
-{ "key": "ctrl+shift+n",          "command": "workbench.action.newWindow" },
+{ "key": "ctrl+shift+n",          "command": "workbench.action.newWindow",
+                                     "when": "!isSessionsWindow" },
 { "key": "ctrl+pagedown",         "command": "workbench.action.nextEditor" },
 { "key": "ctrl+k ctrl+pagedown",  "command": "workbench.action.nextEditorInGroup" },
 { "key": "ctrl+n",                "command": "workbench.action.openChat",
@@ -1471,7 +1474,8 @@
 { "key": "alt+8",                 "command": "workbench.action.openEditorAtIndex8" },
 { "key": "alt+9",                 "command": "workbench.action.openEditorAtIndex9" },
 { "key": "ctrl+k ctrl+s",         "command": "workbench.action.openGlobalKeybindings" },
-{ "key": "ctrl+r",                "command": "workbench.action.openRecent" },
+{ "key": "ctrl+r",                "command": "workbench.action.openRecent",
+                                     "when": "!isSessionsWindow" },
 { "key": "ctrl+,",                "command": "workbench.action.openSettings" },
 { "key": "ctrl+k ctrl+h",         "command": "workbench.action.output.toggleOutput",
                                      "when": "workbench.panel.output.active" },
@@ -1490,7 +1494,8 @@
 { "key": "ctrl+q",                "command": "workbench.action.quit" },
 { "key": "ctrl+alt+o",            "command": "workbench.action.remote.showMenu" },
 { "key": "ctrl+shift+t",          "command": "workbench.action.reopenClosedEditor" },
-{ "key": "ctrl+shift+h",          "command": "workbench.action.replaceInFiles" },
+{ "key": "ctrl+shift+h",          "command": "workbench.action.replaceInFiles",
+                                     "when": "!isSessionsWindow" },
 { "key": "ctrl+w",                "command": "workbench.action.restoreAuxiliaryBar",
                                      "when": "auxiliaryBarMaximized" },
 { "key": "ctrl+shift+j",          "command": "workbench.action.search.toggleQueryDetails",
@@ -1678,7 +1683,7 @@
 { "key": "ctrl+j",                "command": "workbench.action.togglePanel" },
 { "key": "ctrl+b",                "command": "workbench.action.toggleSidebarVisibility" },
 { "key": "ctrl+k z",              "command": "workbench.action.toggleZenMode",
-                                     "when": "!isAuxiliaryWindowFocusedContext" },
+                                     "when": "!isAuxiliaryWindowFocusedContext && !isSessionsWindow" },
 { "key": "ctrl+k shift+enter",    "command": "workbench.action.unpinEditor",
                                      "when": "activeEditorIsPinned" },
 { "key": "ctrl+numpad_add",       "command": "workbench.action.zoomIn" },
@@ -1689,6 +1694,8 @@
 { "key": "ctrl+numpad0",          "command": "workbench.action.zoomReset" },
 { "key": "ctrl+shift+m",          "command": "workbench.actions.view.problems",
                                      "when": "workbench.panel.markers.view.active" },
+{ "key": "escape",                "command": "workbench.actions.workbench.panel.output.clearFilterText",
+                                     "when": "outputFilterFocus" },
 { "key": "escape",                "command": "workbench.banner.focusBanner",
                                      "when": "bannerFocused" },
 { "key": "down",                  "command": "workbench.banner.focusNextAction",
@@ -2118,6 +2125,7 @@
 // - agentSessions.toggleAgentSessionsSidebar
 // - agentSessionsViewer.find
 // - agentSessionsViewer.refresh
+// - aiCustomization.generateDebugReport
 // - aiCustomization.openManagementEditor
 // - aiCustomizationManagement.copyPath
 // - aiCustomizationManagement.delete
@@ -2305,6 +2313,11 @@
 // - editor.action.reindentlines
 // - editor.action.reindentselectedlines
 // - editor.action.removeDuplicateLines
+// - editor.action.renderWhitespace.all
+// - editor.action.renderWhitespace.boundary
+// - editor.action.renderWhitespace.none
+// - editor.action.renderWhitespace.selection
+// - editor.action.renderWhitespace.trailing
 // - editor.action.resetSuggestSize
 // - editor.action.revealDeclaration
 // - editor.action.reverseLines
@@ -3066,6 +3079,7 @@
 // - update.restart
 // - update.restartToUpdate
 // - update.showCurrentReleaseNotes
+// - update.showUpdateInfo
 // - update.showUpdateReleaseNotes
 // - update.updating
 // - variables.collapse
@@ -3158,6 +3172,7 @@
 // - workbench.action.chat.insertSearchResults
 // - workbench.action.chat.insertTroubleshootCommand
 // - workbench.action.chat.inspectChatModel
+// - workbench.action.chat.inspectChatModelReferences
 // - workbench.action.chat.installPluginFromSource
 // - workbench.action.chat.logChatIndex
 // - workbench.action.chat.logInputHistory
@@ -3436,6 +3451,7 @@
 // - workbench.action.openActiveLogOutputFile
 // - workbench.action.openActiveLogOutputFileInNewWindow
 // - workbench.action.openAgentSessionsWelcome
+// - workbench.action.openAgentsWindow
 // - workbench.action.openApplicationSettingsJson
 // - workbench.action.openChat.commentIcon
 // - workbench.action.openChat.copilotIcon
@@ -3469,7 +3485,6 @@
 // - workbench.action.openRemoteSettings
 // - workbench.action.openRemoteSettingsFile
 // - workbench.action.openRequestFeatureUrl
-// - workbench.action.openSessionsWindow
 // - workbench.action.openSettings2
 // - workbench.action.openSettingsJson
 // - workbench.action.openSnippets
@@ -3589,6 +3604,7 @@
 // - workbench.action.splitEditorToNextGroup
 // - workbench.action.splitEditorToPreviousGroup
 // - workbench.action.splitEditorToRightGroup
+// - workbench.action.startTracing
 // - workbench.action.stopTracing
 // - workbench.action.switchWindow
 // - workbench.action.tasks.configureDefaultBuildTask
@@ -3699,6 +3715,7 @@
 // - workbench.action.toggleMaximizedPanel
 // - workbench.action.toggleMenuBar
 // - workbench.action.toggleModalEditorMaximized
+// - workbench.action.toggleModalEditorSidebar
 // - workbench.action.toggleMultiCursorModifier
 // - workbench.action.toggleNotebookClipboardLog
 // - workbench.action.toggleScreencastMode
@@ -3746,7 +3763,6 @@
 // - workbench.actions.workbench.panel.markers.view.toggleExcludedFiles
 // - workbench.actions.workbench.panel.markers.view.toggleInfos
 // - workbench.actions.workbench.panel.markers.view.toggleWarnings
-// - workbench.actions.workbench.panel.output.clearFilterText
 // - workbench.actions.workbench.panel.output.toggle.debug
 // - workbench.actions.workbench.panel.output.toggle.error
 // - workbench.actions.workbench.panel.output.toggle.info
