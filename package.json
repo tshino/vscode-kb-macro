@@ -373,14 +373,6 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "chat.models.action.clearSearchResults"
-				},
-				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "closeBreakpointWidget"
 				},
 				"when": "kb-macro.active && breakpointWidgetVisible && textInputFocus"
@@ -585,7 +577,7 @@
 					"command": "editor.action.inlineSuggest.hide",
 					"record": "side-effect"
 				},
-				"when": "kb-macro.active && inlineEditIsVisible || kb-macro.active && inlineSuggestionVisible"
+				"when": "kb-macro.active && editorTextFocus && inlineEditIsVisible || kb-macro.active && editorTextFocus && inlineSuggestionVisible"
 			},
 			{
 				"key": "escape",
@@ -763,14 +755,6 @@
 					"command": "workbench.action.terminal.hideFind"
 				},
 				"when": "kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalHasBeenCreated || kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalProcessSupported"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.actions.workbench.panel.output.clearFilterText"
-				},
-				"when": "kb-macro.active && isLinux && outputFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -3267,7 +3251,7 @@
 				"args": {
 					"command": "workbench.action.chat.queueMessage"
 				},
-				"when": "kb-macro.active && chatSessionRequestInProgress && inChatInput && chatInputHasText && chatSessionRequestInProgress && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
 			},
 			{
 				"key": "enter",
@@ -3275,7 +3259,7 @@
 				"args": {
 					"command": "workbench.action.chat.steerWithMessage"
 				},
-				"when": "kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatSessionRequestInProgress && inChatInput && config.chat.requestQueuing.defaultAction == 'steer' && chatInputHasText && chatSessionRequestInProgress && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && config.chat.requestQueuing.defaultAction == 'steer' && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st'"
 			},
 			{
 				"key": "enter",
@@ -3931,7 +3915,7 @@
 				"args": {
 					"command": "workbench.action.chat.queueMessage"
 				},
-				"when": "kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatSessionRequestInProgress && inChatInput && config.chat.requestQueuing.defaultAction == 'steer' && chatInputHasText && chatSessionRequestInProgress && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'st' || kb-macro.active && chatInputHasText && inChatInput && config.chat.requestQueuing.defaultAction == 'steer' && chatEditingSentRequest != 'q' && chatEditingSentRequest != 'st'"
 			},
 			{
 				"key": "alt+enter",
@@ -3939,7 +3923,7 @@
 				"args": {
 					"command": "workbench.action.chat.steerWithMessage"
 				},
-				"when": "kb-macro.active && chatSessionRequestInProgress && inChatInput && chatInputHasText && chatSessionRequestInProgress && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest == 'q' || kb-macro.active && chatInputHasText && inChatInput && chatEditingSentRequest != 'q' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
 			},
 			{
 				"key": "alt+enter",
@@ -4779,10 +4763,7 @@
 				"key": "ctrl+v",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.terminal.sendSequence",
-					"args": {
-						"text": "\u0016"
-					}
+					"command": "workbench.action.terminal.pastePwsh"
 				},
 				"when": "kb-macro.active && isWindows && terminalFocus && !accessibilityModeEnabled && terminalShellType == 'pwsh'"
 			},
@@ -8002,6 +7983,15 @@
 				"when": "kb-macro.active"
 			},
 			{
+				"key": "ctrl+alt+/",
+				"mac": "alt+cmd+/",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.openFromViewMenu"
+				},
+				"when": "kb-macro.active"
+			},
+			{
 				"key": "ctrl+shift+a",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -8078,7 +8068,7 @@
 				"args": {
 					"command": "workbench.action.chat.open"
 				},
-				"when": "kb-macro.active && !chatSetupDisabled && !chatSetupHidden"
+				"when": "kb-macro.active && !chatSetupDisabledInWorkspace && !chatSetupHidden"
 			},
 			{
 				"key": "ctrl+alt+i",
@@ -8104,7 +8094,7 @@
 				"args": {
 					"command": "workbench.action.chat.openagent"
 				},
-				"when": "kb-macro.active && isWindows && config.chat.agent.enabled && !chatSetupDisabled && !chatSetupHidden"
+				"when": "kb-macro.active && isWindows && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden"
 			},
 			{
 				"key": "ctrl+shift+i",
@@ -9607,7 +9597,7 @@
 				"args": {
 					"command": "workbench.action.terminal.openNativeConsole"
 				},
-				"when": "kb-macro.active && !terminalFocus"
+				"when": "kb-macro.active && !isSessionsWindow && !terminalFocus"
 			},
 			{
 				"key": "ctrl+shift+c",
@@ -10429,7 +10419,7 @@
 				"args": {
 					"command": "workbench.action.chat.cancel"
 				},
-				"when": "kb-macro.active && isWindows && chatHasQuestionCarousel && !chatRemoteJobCreating || kb-macro.active && isWindows && chatHasToolConfirmation && !chatRemoteJobCreating || kb-macro.active && isWindows && chatSessionRequestInProgress && !chatRemoteJobCreating"
+				"when": "kb-macro.active && isWindows && chatSessionHasActiveRequest && !chatRemoteJobCreating"
 			},
 			{
 				"key": "shift+alt+c",
@@ -10528,7 +10518,7 @@
 				"args": {
 					"command": "workbench.action.chat.cancel"
 				},
-				"when": "kb-macro.active && isLinux && chatHasQuestionCarousel && !chatRemoteJobCreating || kb-macro.active && isLinux && chatHasToolConfirmation && !chatRemoteJobCreating || kb-macro.active && isLinux && chatSessionRequestInProgress && !chatRemoteJobCreating"
+				"when": "kb-macro.active && isLinux && chatSessionHasActiveRequest && !chatRemoteJobCreating"
 			},
 			{
 				"key": "shift+alt+r",
@@ -10561,6 +10551,22 @@
 					"command": "welcome.showNewFileEntries"
 				},
 				"when": "kb-macro.active && !isSessionsWindow"
+			},
+			{
+				"key": "ctrl+alt+/",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.chat.run.prompt"
+				},
+				"when": "kb-macro.active && isMac && chatIsEnabled"
+			},
+			{
+				"key": "ctrl+alt+/",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.chat.run.prompt.current"
+				},
+				"when": "kb-macro.active && isMac && chatIsEnabled && editorTextFocus && resourceSet && resourceLangId == 'prompt'"
 			},
 			{
 				"key": "ctrl+shift+a",
@@ -11033,7 +11039,7 @@
 				"args": {
 					"command": "workbench.action.chat.openagent"
 				},
-				"when": "kb-macro.active && isLinux && config.chat.agent.enabled && !chatSetupDisabled && !chatSetupHidden"
+				"when": "kb-macro.active && isLinux && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden"
 			},
 			{
 				"key": "ctrl+alt+meta+/",
@@ -11295,7 +11301,7 @@
 				"args": {
 					"command": "workbench.action.chat.cancel"
 				},
-				"when": "kb-macro.active && chatHasQuestionCarousel && !chatRemoteJobCreating || kb-macro.active && chatHasToolConfirmation && !chatRemoteJobCreating || kb-macro.active && chatSessionRequestInProgress && !chatRemoteJobCreating"
+				"when": "kb-macro.active && chatSessionHasActiveRequest && !chatRemoteJobCreating"
 			},
 			{
 				"key": "shift+alt+cmd+c",
@@ -11551,7 +11557,7 @@
 				"args": {
 					"command": "workbench.action.chat.openagent"
 				},
-				"when": "kb-macro.active && config.chat.agent.enabled && !chatSetupDisabled && !chatSetupHidden"
+				"when": "kb-macro.active && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden"
 			},
 			{
 				"key": "ctrl+alt+cmd+/",
@@ -11560,22 +11566,6 @@
 					"command": "workbench.action.chat.run-in-new-chat.prompt.current"
 				},
 				"when": "kb-macro.active && chatIsEnabled && editorTextFocus && resourceSet && resourceLangId == 'prompt'"
-			},
-			{
-				"key": "ctrl+alt+/",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.chat.run.prompt"
-				},
-				"when": "kb-macro.active && isMac && chatIsEnabled"
-			},
-			{
-				"key": "ctrl+alt+/",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.chat.run.prompt.current"
-				},
-				"when": "kb-macro.active && isMac && chatIsEnabled && editorTextFocus && resourceSet && resourceLangId == 'prompt'"
 			},
 			{
 				"key": "alt+cmd+t",
