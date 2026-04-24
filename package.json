@@ -373,6 +373,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "chat.models.action.clearSearchResults"
+				},
+				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "closeBreakpointWidget"
 				},
 				"when": "kb-macro.active && breakpointWidgetVisible && textInputFocus"
@@ -722,7 +730,7 @@
 				"args": {
 					"command": "workbench.action.browser.addElementToChat"
 				},
-				"when": "kb-macro.active && browserElementSelectionActive && browserHasUrl && chatIsEnabled && config.chat.sendElementsToChat.enabled && !browserHasError && activeEditor == 'workbench.editor.browser'"
+				"when": "kb-macro.active && browserElementSelectionActive && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "escape",
@@ -755,6 +763,14 @@
 					"command": "workbench.action.terminal.hideFind"
 				},
 				"when": "kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalHasBeenCreated || kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalProcessSupported"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.actions.workbench.panel.output.clearFilterText"
+				},
+				"when": "kb-macro.active && isLinux && outputFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -3243,7 +3259,7 @@
 				"args": {
 					"command": "workbench.action.chat.submit"
 				},
-				"when": "kb-macro.active && chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff"
+				"when": "kb-macro.active && chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || kb-macro.active && chatInputHasText && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'"
 			},
 			{
 				"key": "enter",
@@ -9606,7 +9622,7 @@
 				"args": {
 					"command": "workbench.action.browser.addElementToChat"
 				},
-				"when": "kb-macro.active && browserHasUrl && chatIsEnabled && config.chat.sendElementsToChat.enabled && !browserHasError && activeEditor == 'workbench.editor.browser'"
+				"when": "kb-macro.active && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "ctrl+shift+`",
