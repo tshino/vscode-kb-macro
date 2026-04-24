@@ -1,7 +1,6 @@
 # Keyboard Macro Beta
 
 [![Node.js CI](https://github.com/tshino/vscode-kb-macro/actions/workflows/node.js.yml/badge.svg)](https://github.com/tshino/vscode-kb-macro/actions/workflows/node.js.yml)
-[![CodeQL](https://github.com/tshino/vscode-kb-macro/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tshino/vscode-kb-macro/actions/workflows/codeql-analysis.yml)
 
 With this Visual Studio Code extension, you can record and playback your keyboard inputs.
 
