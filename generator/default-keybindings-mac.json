@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.116.0 for macOS
+// Default Keybindings of Visual Studio Code 1.117.0 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -617,7 +617,7 @@
 { "key": "ctrl+alt+enter",        "command": "workbench.action.chat.runInTerminal",
                                      "when": "accessibleViewInCodeBlock && chatIsEnabled || chatIsEnabled && inChat" },
 { "key": "enter",                 "command": "workbench.action.chat.submit",
-                                     "when": "chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff" },
+                                     "when": "chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasText && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'" },
 { "key": "cmd+enter",             "command": "workbench.action.chat.submitWithCodebase",
                                      "when": "chatInputHasText && inChatInput && !chatSessionRequestInProgress" },
 { "key": "shift+alt+enter",       "command": "workbench.action.chat.submitWithoutDispatching",
@@ -1425,7 +1425,7 @@
 { "key": "cmd+up",                "command": "widgetNavigation.focusPrevious",
                                      "when": "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'top'" },
 { "key": "escape",                "command": "workbench.action.browser.addElementToChat",
-                                     "when": "browserElementSelectionActive && browserHasUrl && chatIsEnabled && config.chat.sendElementsToChat.enabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
+                                     "when": "browserElementSelectionActive && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
 { "key": "cmd+l",                 "command": "workbench.action.browser.focusUrlInput",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
 { "key": "alt+cmd+/",             "command": "workbench.action.browser.openFromViewMenu" },
@@ -2160,7 +2160,7 @@
 { "key": "right",                 "command": "quickInput.acceptInBackground",
                                      "when": "cursorAtEndOfQuickInputBox && inQuickInput && quickInputType == 'quickPick' || inQuickInput && !inputFocus && quickInputType == 'quickPick'" },
 { "key": "shift+cmd+c",           "command": "workbench.action.browser.addElementToChat",
-                                     "when": "browserHasUrl && chatIsEnabled && config.chat.sendElementsToChat.enabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
+                                     "when": "browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
 { "key": "cmd+enter",             "command": "workbench.action.browser.addFocusedElementToChat",
                                      "when": "browserElementSelectionActive && browserFocused" },
 { "key": "cmd+left",              "command": "workbench.action.browser.goBack",
@@ -2320,6 +2320,8 @@
 // - agentSessionSection.markRead
 // - agentSessionSection.unarchive
 // - agentSessions.filter.resetExcludes.agentsessionsviewerfiltersubmenu
+// - agentSessions.filter.sortByCreated.agentsessionsviewerfiltersubmenu
+// - agentSessions.filter.sortByUpdated.agentsessionsviewerfiltersubmenu
 // - agentSessions.filter.toggleExclude:local.agentsessionsviewerfiltersubmenu
 // - agentSessions.filter.toggleExcludeArchived.agentsessionsviewerfiltersubmenu
 // - agentSessions.filter.toggleExcludeRead.agentsessionsviewerfiltersubmenu
@@ -2343,6 +2345,7 @@
 // - aiCustomizationManagement.revealInOS
 // - aiCustomizationManagement.runPrompt
 // - aiCustomizationManagement.showPlugin
+// - aiCustomizationManagement.troubleshoot
 // - aiCustomizationManagement.uninstallPlugin
 // - breadcrumbs.copyPath
 // - breadcrumbs.toggle
@@ -3337,6 +3340,7 @@
 // - workbench.action.chat.discardCompareEdits
 // - workbench.action.chat.dismissTip
 // - workbench.action.chat.dismissTipToolbar
+// - workbench.action.chat.editPendingRequest
 // - workbench.action.chat.editToolApproval
 // - workbench.action.chat.executeHandoff
 // - workbench.action.chat.export
@@ -3711,6 +3715,7 @@
 // - workbench.action.output.show.shared
 // - workbench.action.output.show.tasks
 // - workbench.action.output.show.terminal
+// - workbench.action.output.show.tunnelHostService
 // - workbench.action.output.show.userDataSync
 // - workbench.action.output.show.vscode.git.Git.log
 // - workbench.action.output.show.vscode.github-authentication.GitHub Authentication.log
@@ -3797,6 +3802,8 @@
 // - workbench.action.splitEditorToRightGroup
 // - workbench.action.startTracing
 // - workbench.action.stopTracing
+// - workbench.action.switchToMainWindow
+// - workbench.action.syncAccountPolicy
 // - workbench.action.tasks.configureDefaultBuildTask
 // - workbench.action.tasks.configureDefaultTestTask
 // - workbench.action.tasks.configureTaskRunner

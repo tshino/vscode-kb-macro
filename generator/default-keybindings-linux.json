@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.116.0 for Linux
+// Default Keybindings of Visual Studio Code 1.117.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -138,6 +138,8 @@
                                      "when": "chatCursorAtTop && inChatInput && !quickChatHasFocus" },
 { "key": "ctrl+up",               "command": "chat.action.focus",
                                      "when": "inChatInput && isLinux && !quickChatHasFocus || inChatInput && isWindows && !quickChatHasFocus" },
+{ "key": "escape",                "command": "chat.models.action.clearSearchResults",
+                                     "when": "inModelsEditor && inModelsSearch" },
 { "key": "shift+escape",          "command": "closeBreakpointWidget",
                                      "when": "breakpointWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "closeBreakpointWidget",
@@ -545,7 +547,7 @@
 { "key": "ctrl+alt+enter",        "command": "workbench.action.chat.runInTerminal",
                                      "when": "accessibleViewInCodeBlock && chatIsEnabled || chatIsEnabled && inChat" },
 { "key": "enter",                 "command": "workbench.action.chat.submit",
-                                     "when": "chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff" },
+                                     "when": "chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasText && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'" },
 { "key": "ctrl+enter",            "command": "workbench.action.chat.submitWithCodebase",
                                      "when": "chatInputHasText && inChatInput && !chatSessionRequestInProgress" },
 { "key": "shift+alt+enter",       "command": "workbench.action.chat.submitWithoutDispatching",
@@ -1277,7 +1279,7 @@
 { "key": "ctrl+up",               "command": "widgetNavigation.focusPrevious",
                                      "when": "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'top'" },
 { "key": "escape",                "command": "workbench.action.browser.addElementToChat",
-                                     "when": "browserElementSelectionActive && browserHasUrl && chatIsEnabled && config.chat.sendElementsToChat.enabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
+                                     "when": "browserElementSelectionActive && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
 { "key": "ctrl+l",                "command": "workbench.action.browser.focusUrlInput",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
 { "key": "ctrl+alt+/",            "command": "workbench.action.browser.openFromViewMenu" },
@@ -1693,6 +1695,8 @@
 { "key": "ctrl+numpad0",          "command": "workbench.action.zoomReset" },
 { "key": "ctrl+shift+m",          "command": "workbench.actions.view.problems",
                                      "when": "workbench.panel.markers.view.active" },
+{ "key": "escape",                "command": "workbench.actions.workbench.panel.output.clearFilterText",
+                                     "when": "outputFilterFocus" },
 { "key": "escape",                "command": "workbench.banner.focusBanner",
                                      "when": "bannerFocused" },
 { "key": "down",                  "command": "workbench.banner.focusNextAction",
@@ -1959,7 +1963,7 @@
 { "key": "right",                 "command": "quickInput.acceptInBackground",
                                      "when": "cursorAtEndOfQuickInputBox && inQuickInput && quickInputType == 'quickPick' || inQuickInput && !inputFocus && quickInputType == 'quickPick'" },
 { "key": "ctrl+shift+c",          "command": "workbench.action.browser.addElementToChat",
-                                     "when": "browserHasUrl && chatIsEnabled && config.chat.sendElementsToChat.enabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
+                                     "when": "browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
 { "key": "ctrl+enter",            "command": "workbench.action.browser.addFocusedElementToChat",
                                      "when": "browserElementSelectionActive && browserFocused" },
 { "key": "browserback",           "command": "workbench.action.browser.goBack",
@@ -2110,6 +2114,8 @@
 // - agentSessionSection.markRead
 // - agentSessionSection.unarchive
 // - agentSessions.filter.resetExcludes.agentsessionsviewerfiltersubmenu
+// - agentSessions.filter.sortByCreated.agentsessionsviewerfiltersubmenu
+// - agentSessions.filter.sortByUpdated.agentsessionsviewerfiltersubmenu
 // - agentSessions.filter.toggleExclude:local.agentsessionsviewerfiltersubmenu
 // - agentSessions.filter.toggleExcludeArchived.agentsessionsviewerfiltersubmenu
 // - agentSessions.filter.toggleExcludeRead.agentsessionsviewerfiltersubmenu
@@ -2133,6 +2139,7 @@
 // - aiCustomizationManagement.revealInOS
 // - aiCustomizationManagement.runPrompt
 // - aiCustomizationManagement.showPlugin
+// - aiCustomizationManagement.troubleshoot
 // - aiCustomizationManagement.uninstallPlugin
 // - breadcrumbs.copyPath
 // - breadcrumbs.toggle
@@ -2153,7 +2160,6 @@
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.review
-// - chat.models.action.clearSearchResults
 // - chat.openFileSnapshot
 // - chat.openFileUpdatedBySnapshot
 // - chat.toolOutput.save
@@ -3144,6 +3150,7 @@
 // - workbench.action.chat.discardCompareEdits
 // - workbench.action.chat.dismissTip
 // - workbench.action.chat.dismissTipToolbar
+// - workbench.action.chat.editPendingRequest
 // - workbench.action.chat.editToolApproval
 // - workbench.action.chat.executeHandoff
 // - workbench.action.chat.export
@@ -3514,6 +3521,7 @@
 // - workbench.action.output.show.shared
 // - workbench.action.output.show.tasks
 // - workbench.action.output.show.terminal
+// - workbench.action.output.show.tunnelHostService
 // - workbench.action.output.show.userDataSync
 // - workbench.action.output.show.vscode.git.Git.log
 // - workbench.action.output.show.vscode.github-authentication.GitHub Authentication.log
@@ -3603,7 +3611,9 @@
 // - workbench.action.splitEditorToRightGroup
 // - workbench.action.startTracing
 // - workbench.action.stopTracing
+// - workbench.action.switchToMainWindow
 // - workbench.action.switchWindow
+// - workbench.action.syncAccountPolicy
 // - workbench.action.tasks.configureDefaultBuildTask
 // - workbench.action.tasks.configureDefaultTestTask
 // - workbench.action.tasks.configureTaskRunner
@@ -3766,7 +3776,6 @@
 // - workbench.actions.workbench.panel.markers.view.toggleExcludedFiles
 // - workbench.actions.workbench.panel.markers.view.toggleInfos
 // - workbench.actions.workbench.panel.markers.view.toggleWarnings
-// - workbench.actions.workbench.panel.output.clearFilterText
 // - workbench.actions.workbench.panel.output.toggle.debug
 // - workbench.actions.workbench.panel.output.toggle.error
 // - workbench.actions.workbench.panel.output.toggle.info
