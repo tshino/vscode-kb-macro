@@ -367,7 +367,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && isWindows && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -755,14 +755,6 @@
 					"command": "workbench.action.terminal.hideFind"
 				},
 				"when": "kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalHasBeenCreated || kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalProcessSupported"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.actions.workbench.panel.output.clearFilterText"
-				},
-				"when": "kb-macro.active && isWindows && outputFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -6660,9 +6652,9 @@
 				"mac": "shift+cmd+v",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "markdown.showPreview"
+					"command": "markdown.togglePreview"
 				},
-				"when": "kb-macro.active && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
+				"when": "kb-macro.active && !notebookEditorFocused && resourceLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
 			},
 			{
 				"key": "ctrl+alt+f",
@@ -9940,7 +9932,7 @@
 				"args": {
 					"command": "workbench.files.action.compareWithClipboard"
 				},
-				"when": "kb-macro.active"
+				"when": "kb-macro.active && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+k d",
@@ -10080,6 +10072,15 @@
 				"when": "kb-macro.active && editorTextFocus && !operationInProgress && resourceScheme == 'file'"
 			},
 			{
+				"key": "ctrl+k v",
+				"mac": "cmd+k v",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "markdown.showPreviewToSide"
+				},
+				"when": "kb-macro.active && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
+			},
+			{
 				"key": "shift+alt+f12",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -10095,15 +10096,6 @@
 					"command": "git.unstageSelectedRanges"
 				},
 				"when": "kb-macro.active && editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme == 'git'"
-			},
-			{
-				"key": "ctrl+k v",
-				"mac": "cmd+k v",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "markdown.showPreviewToSide"
-				},
-				"when": "kb-macro.active && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
 			},
 			{
 				"key": "ctrl+end",
