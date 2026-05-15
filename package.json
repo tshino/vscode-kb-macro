@@ -376,7 +376,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && isWindows && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -3496,15 +3496,6 @@
 					"command": "inlineChat2.keep"
 				},
 				"when": "kb-macro.active && chatEdits.hasEditorModifications && inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress || kb-macro.active && chatEdits.hasEditorModifications && inlineChatHasNotebookAgent && inlineChatVisible && !chatEdits.isRequestInProgress && activeEditor == 'workbench.editor.notebook'"
-			},
-			{
-				"key": "ctrl+enter",
-				"mac": "cmd+enter",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.browser.addFocusedElementToChat"
-				},
-				"when": "kb-macro.active && browserElementSelectionActive && browserFocused"
 			},
 			{
 				"key": "ctrl+enter",
@@ -6663,7 +6654,7 @@
 				"args": {
 					"command": "markdown.togglePreview"
 				},
-				"when": "kb-macro.active && !notebookEditorFocused && resourceLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
+				"when": "kb-macro.active && !terminalFocus && activeCustomEditorId == 'vscode.markdown.preview.editor' || kb-macro.active && editorFocus && !notebookEditorFocused && !terminalFocus && resourceLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
 			},
 			{
 				"key": "ctrl+alt+f",
@@ -8016,6 +8007,15 @@
 				"mac": "shift+cmd+a",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.openAgentsWindow"
+				},
+				"when": "kb-macro.active && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow"
+			},
+			{
+				"key": "ctrl+shift+a",
+				"mac": "shift+cmd+a",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "notification.acceptPrimaryAction"
 				},
 				"when": "kb-macro.active && notificationFocus || kb-macro.active && notificationToastsVisible"
@@ -8406,7 +8406,7 @@
 				"args": {
 					"command": "workbench.action.files.openFileFolder"
 				},
-				"when": "kb-macro.active && isMacNative && openFolderWorkspaceSupport && !isSessionsWindow"
+				"when": "kb-macro.active && isMacNative && openFolderWorkspaceSupport"
 			},
 			{
 				"key": "ctrl+o",
@@ -8415,7 +8415,7 @@
 				"args": {
 					"command": "workbench.action.files.openFolderViaWorkspace"
 				},
-				"when": "kb-macro.active && !isSessionsWindow && !openFolderWorkspaceSupport && workbenchState == 'workspace'"
+				"when": "kb-macro.active && !openFolderWorkspaceSupport && workbenchState == 'workspace'"
 			},
 			{
 				"key": "ctrl+o",
@@ -8431,7 +8431,7 @@
 				"args": {
 					"command": "workbench.action.files.openFolder"
 				},
-				"when": "kb-macro.active && !isMac && openFolderWorkspaceSupport && !isSessionsWindow"
+				"when": "kb-macro.active && !isMac && openFolderWorkspaceSupport"
 			},
 			{
 				"key": "ctrl+k ctrl+o",
@@ -9103,7 +9103,7 @@
 				"args": {
 					"command": "workbench.action.newWindow"
 				},
-				"when": "kb-macro.active && !isSessionsWindow"
+				"when": "kb-macro.active"
 			},
 			{
 				"key": "ctrl+shift+n",
@@ -9122,6 +9122,15 @@
 					"command": "workbench.action.nextEditorInGroup"
 				},
 				"when": "kb-macro.active"
+			},
+			{
+				"key": "ctrl+shift+alt+a",
+				"mac": "shift+alt+cmd+a",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.openAgentsWindow"
+				},
+				"when": "kb-macro.active && accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow"
 			},
 			{
 				"key": "alt+1",
@@ -9219,7 +9228,7 @@
 				"args": {
 					"command": "workbench.action.openRecent"
 				},
-				"when": "kb-macro.active && !isSessionsWindow"
+				"when": "kb-macro.active"
 			},
 			{
 				"key": "ctrl+r",
@@ -9789,7 +9798,7 @@
 				"args": {
 					"command": "workbench.action.toggleZenMode"
 				},
-				"when": "kb-macro.active && !isAuxiliaryWindowFocusedContext && !isSessionsWindow"
+				"when": "kb-macro.active && !isAuxiliaryWindowFocusedContext"
 			},
 			{
 				"key": "ctrl+numpad_add",
@@ -10087,7 +10096,7 @@
 				"args": {
 					"command": "markdown.showPreviewToSide"
 				},
-				"when": "kb-macro.active && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
+				"when": "kb-macro.active && editorFocus && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
 			},
 			{
 				"key": "shift+alt+f12",
