@@ -2,6 +2,10 @@
 
 All notable changes to the Keyboard Macro Bata extension will be documented in this file.
 
+### [Unreleased]
+- Update:
+  - Updated default keybindings wrappers based on VS Code 1.120.0 [#704](https://github.com/tshino/vscode-kb-macro/pull/704)
+
 ### [0.14.24] - 2026-05-10
 - Fix
   - Fixed: `ctrl+insert` was not recorded properly on Linux. [#702](https://github.com/tshino/vscode-kb-macro/issues/702)
