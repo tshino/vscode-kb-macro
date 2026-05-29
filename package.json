@@ -737,6 +737,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.browser.hideEmulationToolbar"
+				},
+				"when": "kb-macro.active && browserEmulationToolbarVisible && activeEditor == 'workbench.editor.browser'"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.closeQuickOpen"
 				},
 				"when": "kb-macro.active && inQuickOpen"
@@ -2517,6 +2525,15 @@
 					"record": "side-effect"
 				},
 				"when": "kb-macro.active && hasOtherSuggestions && textInputFocus && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
+			},
+			{
+				"key": "shift+tab",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "jumpToPrevSnippetPlaceholder",
+					"record": "side-effect"
+				},
+				"when": "kb-macro.active && hasPrevTabstop && inSnippetChoice && inSnippetMode && textInputFocus"
 			},
 			{
 				"key": "shift+tab",
@@ -5907,6 +5924,15 @@
 			},
 			{
 				"key": "ctrl+shift+r",
+				"mac": "shift+cmd+r",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.issueReporter.toggleRecording"
+				},
+				"when": "kb-macro.active && issueReporterOpen"
+			},
+			{
+				"key": "ctrl+shift+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.tasks.rerunForActiveTerminal"
@@ -8009,7 +8035,7 @@
 				"args": {
 					"command": "workbench.action.openAgentsWindow"
 				},
-				"when": "kb-macro.active && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow"
+				"when": "kb-macro.active && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+a",
@@ -8476,6 +8502,15 @@
 					"command": "workbench.action.files.saveLocalFile"
 				},
 				"when": "kb-macro.active && remoteFileDialogVisible"
+			},
+			{
+				"key": "ctrl+shift+s",
+				"mac": "shift+cmd+s",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.issueReporter.captureScreenshot"
+				},
+				"when": "kb-macro.active && issueReporterOpen"
 			},
 			{
 				"key": "ctrl+shift+f",
@@ -9130,7 +9165,7 @@
 				"args": {
 					"command": "workbench.action.openAgentsWindow"
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow"
+				"when": "kb-macro.active && accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
 			{
 				"key": "alt+1",

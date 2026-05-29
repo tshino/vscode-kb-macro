@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.120.0 for Linux
+// Default Keybindings of Visual Studio Code 1.122.1 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -678,6 +678,8 @@
                                      "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" },
 { "key": "ctrl+alt+space",        "command": "toggleSuggestionFocus",
                                      "when": "suggestWidgetVisible && textInputFocus" },
+{ "key": "shift+tab",             "command": "jumpToPrevSnippetPlaceholder",
+                                     "when": "hasPrevTabstop && inSnippetChoice && inSnippetMode && textInputFocus" },
 { "key": "enter",                 "command": "acceptRenameInput",
                                      "when": "editorFocus && renameInputVisible && !isComposing" },
 { "key": "ctrl+enter",            "command": "acceptRenameInputWithPreview",
@@ -1276,6 +1278,8 @@
                                      "when": "browserElementSelectionActive && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
 { "key": "ctrl+l",                "command": "workbench.action.browser.focusUrlInput",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
+{ "key": "escape",                "command": "workbench.action.browser.hideEmulationToolbar",
+                                     "when": "browserEmulationToolbarVisible && activeEditor == 'workbench.editor.browser'" },
 { "key": "ctrl+alt+/",            "command": "workbench.action.browser.openOrList" },
 { "key": "ctrl+shift+a",          "command": "workbench.action.browser.quickOpen",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
@@ -1430,6 +1434,10 @@
                                      "when": "interactivePlaygroundFocus && !editorTextFocus" },
 { "key": "pageup",                "command": "workbench.action.interactivePlayground.pageUp",
                                      "when": "interactivePlaygroundFocus && !editorTextFocus" },
+{ "key": "ctrl+shift+s",          "command": "workbench.action.issueReporter.captureScreenshot",
+                                     "when": "issueReporterOpen" },
+{ "key": "ctrl+shift+r",          "command": "workbench.action.issueReporter.toggleRecording",
+                                     "when": "issueReporterOpen" },
 { "key": "ctrl+k ctrl+shift+\\",  "command": "workbench.action.joinEditorInGroup",
                                      "when": "sideBySideEditorActive" },
 { "key": "ctrl+k enter",          "command": "workbench.action.keepEditor" },
@@ -1459,9 +1467,9 @@
 { "key": "ctrl+pagedown",         "command": "workbench.action.nextEditor" },
 { "key": "ctrl+k ctrl+pagedown",  "command": "workbench.action.nextEditorInGroup" },
 { "key": "ctrl+shift+a",          "command": "workbench.action.openAgentsWindow",
-                                     "when": "config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow" },
+                                     "when": "config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow" },
 { "key": "ctrl+shift+alt+a",      "command": "workbench.action.openAgentsWindow",
-                                     "when": "accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow" },
+                                     "when": "accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow" },
 { "key": "ctrl+n",                "command": "workbench.action.openChat",
                                      "when": "chatIsEnabled && inChat && inChatEditor" },
 { "key": "alt+1",                 "command": "workbench.action.openEditorAtIndex1" },
@@ -3109,6 +3117,7 @@
 // - workbench.action.blur
 // - workbench.action.browseColorThemesInMarketplace
 // - workbench.action.browser.addConsoleLogsToChat
+// - workbench.action.browser.addScreenshotToChat
 // - workbench.action.browser.clearEphemeralStorage
 // - workbench.action.browser.clearGlobalStorage
 // - workbench.action.browser.clearWorkspaceStorage
@@ -3116,9 +3125,16 @@
 // - workbench.action.browser.closeAllInGroup
 // - workbench.action.browser.open
 // - workbench.action.browser.openExternal
+// - workbench.action.browser.openFile
 // - workbench.action.browser.openSettings
+// - workbench.action.browser.pickDevicePreset
+// - workbench.action.browser.resetEmulation
+// - workbench.action.browser.setUserAgent
+// - workbench.action.browser.showEmulationToolbar
+// - workbench.action.browser.toggleMobileEmulation
 // - workbench.action.chat.addDynamicVariable
 // - workbench.action.chat.addToChatAction
+// - workbench.action.chat.agentHost.otel.exportAgentTracesDB
 // - workbench.action.chat.applyCompareEdits
 // - workbench.action.chat.archiveAllAgentSessions
 // - workbench.action.chat.assignSelectedAgent
@@ -3156,6 +3172,7 @@
 // - workbench.action.chat.executeHandoff
 // - workbench.action.chat.export
 // - workbench.action.chat.exportAgentDebugLog
+// - workbench.action.chat.exportAgentHostDebugLogs
 // - workbench.action.chat.exportAsZip
 // - workbench.action.chat.focusAgentSessionsViewer
 // - workbench.action.chat.forkConversation
@@ -3198,18 +3215,23 @@
 // - workbench.action.chat.nextTip
 // - workbench.action.chat.openAgentDebugPanel
 // - workbench.action.chat.openAgentDebugPanelForSession
+// - workbench.action.chat.openAgentHostAutoApprovePicker
+// - workbench.action.chat.openAgentHostBranchPicker
+// - workbench.action.chat.openAgentHostCustomAgentPicker
+// - workbench.action.chat.openAgentHostIsolationPicker
+// - workbench.action.chat.openAgentHostModePicker
+// - workbench.action.chat.openAgentHostPermissionModePicker
 // - workbench.action.chat.openCompareBlockInDiffEditor
-// - workbench.action.chat.openCopilotStatus
+// - workbench.action.chat.openCopilotCliStateFile
 // - workbench.action.chat.openDelegationPicker
 // - workbench.action.chat.openFeatureSettings
 // - workbench.action.chat.openImageInCarousel
 // - workbench.action.chat.openInEditor
 // - workbench.action.chat.openInNewWindow
 // - workbench.action.chat.openInSidebar
-// - workbench.action.chat.openNewChatSessionInPlace.agent-host-copilot
 // - workbench.action.chat.openNewChatSessionInPlace.local
-// - workbench.action.chat.openNewSessionEditor.agent-host-copilot
-// - workbench.action.chat.openNewSessionSidebar.agent-host-copilot
+// - workbench.action.chat.openNewSessionEditor.agent-host-copilotcli
+// - workbench.action.chat.openNewSessionSidebar.agent-host-copilotcli
 // - workbench.action.chat.openPermissionPicker
 // - workbench.action.chat.openQuotaExceededDialog
 // - workbench.action.chat.openSessionInNewWindow
@@ -3249,6 +3271,7 @@
 // - workbench.action.chat.startOver
 // - workbench.action.chat.startParameterizedPrompt
 // - workbench.action.chat.switchToNextModel
+// - workbench.action.chat.switchToNextPinnedModel
 // - workbench.action.chat.toggle
 // - workbench.action.chat.toggleAgentMode
 // - workbench.action.chat.toggleCompareBlockDiffViewMode
@@ -3790,6 +3813,7 @@
 // - workbench.agentPlugins.browse
 // - workbench.agentPlugins.checkForUpdates
 // - workbench.agentPlugins.forceUpdate
+// - workbench.chat.agentHostAgentPicker.configure
 // - workbench.command.new.agent
 // - workbench.command.new.instructions
 // - workbench.command.new.prompt
@@ -3813,6 +3837,7 @@
 // - workbench.debug.viewlet.action.addDataBreakpointOnAddress
 // - workbench.debug.viewlet.action.addFunctionBreakpointAction
 // - workbench.debug.viewlet.action.addWatchExpression
+// - workbench.debug.viewlet.action.copyAllWatchExpressions
 // - workbench.debug.viewlet.action.copyWorkspaceVariableValue
 // - workbench.debug.viewlet.action.disableAllBreakpoints
 // - workbench.debug.viewlet.action.editDataBreakpointOnAddress
@@ -3952,6 +3977,7 @@
 // - workbench.mcp.restartServer
 // - workbench.mcp.serverOptions
 // - workbench.mcp.serverOptionsInConfirmation
+// - workbench.mcp.setOAuthClientSecret
 // - workbench.mcp.showConfiguration
 // - workbench.mcp.showInstalledServers
 // - workbench.mcp.showOutput
