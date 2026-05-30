@@ -376,7 +376,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -2517,6 +2517,15 @@
 					"record": "side-effect"
 				},
 				"when": "kb-macro.active && hasOtherSuggestions && textInputFocus && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
+			},
+			{
+				"key": "shift+tab",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "jumpToPrevSnippetPlaceholder",
+					"record": "side-effect"
+				},
+				"when": "kb-macro.active && hasPrevTabstop && inSnippetChoice && inSnippetMode && textInputFocus"
 			},
 			{
 				"key": "shift+tab",
@@ -8009,7 +8018,7 @@
 				"args": {
 					"command": "workbench.action.openAgentsWindow"
 				},
-				"when": "kb-macro.active && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow"
+				"when": "kb-macro.active && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+a",
@@ -9130,7 +9139,7 @@
 				"args": {
 					"command": "workbench.action.openAgentsWindow"
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow"
+				"when": "kb-macro.active && accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
 			{
 				"key": "alt+1",

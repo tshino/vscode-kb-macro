@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.120.0 for Windows
+// Default Keybindings of Visual Studio Code 1.121.0 for Windows
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -148,8 +148,6 @@
                                      "when": "chatCursorAtTop && inChatInput && !quickChatHasFocus" },
 { "key": "ctrl+up",               "command": "chat.action.focus",
                                      "when": "inChatInput && isLinux && !quickChatHasFocus || inChatInput && isWindows && !quickChatHasFocus" },
-{ "key": "escape",                "command": "chat.models.action.clearSearchResults",
-                                     "when": "inModelsEditor && inModelsSearch" },
 { "key": "shift+escape",          "command": "closeBreakpointWidget",
                                      "when": "breakpointWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "closeBreakpointWidget",
@@ -686,6 +684,8 @@
                                      "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" },
 { "key": "ctrl+alt+space",        "command": "toggleSuggestionFocus",
                                      "when": "suggestWidgetVisible && textInputFocus" },
+{ "key": "shift+tab",             "command": "jumpToPrevSnippetPlaceholder",
+                                     "when": "hasPrevTabstop && inSnippetChoice && inSnippetMode && textInputFocus" },
 { "key": "enter",                 "command": "acceptRenameInput",
                                      "when": "editorFocus && renameInputVisible && !isComposing" },
 { "key": "ctrl+enter",            "command": "acceptRenameInputWithPreview",
@@ -1468,9 +1468,9 @@
 { "key": "ctrl+pagedown",         "command": "workbench.action.nextEditor" },
 { "key": "ctrl+k ctrl+pagedown",  "command": "workbench.action.nextEditorInGroup" },
 { "key": "ctrl+shift+a",          "command": "workbench.action.openAgentsWindow",
-                                     "when": "config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow" },
+                                     "when": "config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow" },
 { "key": "ctrl+shift+alt+a",      "command": "workbench.action.openAgentsWindow",
-                                     "when": "accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isSessionsWindow" },
+                                     "when": "accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow" },
 { "key": "ctrl+n",                "command": "workbench.action.openChat",
                                      "when": "chatIsEnabled && inChat && inChatEditor" },
 { "key": "alt+1",                 "command": "workbench.action.openEditorAtIndex1" },
@@ -2174,6 +2174,7 @@
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.review
+// - chat.models.action.clearSearchResults
 // - chat.openFileSnapshot
 // - chat.openFileUpdatedBySnapshot
 // - chat.toolOutput.save
@@ -3135,9 +3136,11 @@
 // - workbench.action.browser.closeAllInGroup
 // - workbench.action.browser.open
 // - workbench.action.browser.openExternal
+// - workbench.action.browser.openFile
 // - workbench.action.browser.openSettings
 // - workbench.action.chat.addDynamicVariable
 // - workbench.action.chat.addToChatAction
+// - workbench.action.chat.agentHost.otel.exportAgentTracesDB
 // - workbench.action.chat.applyCompareEdits
 // - workbench.action.chat.archiveAllAgentSessions
 // - workbench.action.chat.assignSelectedAgent
@@ -3175,6 +3178,7 @@
 // - workbench.action.chat.executeHandoff
 // - workbench.action.chat.export
 // - workbench.action.chat.exportAgentDebugLog
+// - workbench.action.chat.exportAgentHostDebugLogs
 // - workbench.action.chat.exportAsZip
 // - workbench.action.chat.focusAgentSessionsViewer
 // - workbench.action.chat.forkConversation
@@ -3217,8 +3221,13 @@
 // - workbench.action.chat.nextTip
 // - workbench.action.chat.openAgentDebugPanel
 // - workbench.action.chat.openAgentDebugPanelForSession
+// - workbench.action.chat.openAgentHostAutoApprovePicker
+// - workbench.action.chat.openAgentHostBranchPicker
+// - workbench.action.chat.openAgentHostIsolationPicker
+// - workbench.action.chat.openAgentHostModePicker
+// - workbench.action.chat.openAgentHostPermissionModePicker
 // - workbench.action.chat.openCompareBlockInDiffEditor
-// - workbench.action.chat.openCopilotStatus
+// - workbench.action.chat.openCopilotCliStateFile
 // - workbench.action.chat.openDelegationPicker
 // - workbench.action.chat.openFeatureSettings
 // - workbench.action.chat.openImageInCarousel
@@ -3268,6 +3277,7 @@
 // - workbench.action.chat.startOver
 // - workbench.action.chat.startParameterizedPrompt
 // - workbench.action.chat.switchToNextModel
+// - workbench.action.chat.switchToNextPinnedModel
 // - workbench.action.chat.toggle
 // - workbench.action.chat.toggleAgentMode
 // - workbench.action.chat.toggleCompareBlockDiffViewMode
