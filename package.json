@@ -376,7 +376,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
