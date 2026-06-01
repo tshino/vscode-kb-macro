@@ -737,6 +737,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.browser.hideEmulationToolbar"
+				},
+				"when": "kb-macro.active && browserEmulationToolbarVisible && activeEditor == 'workbench.editor.browser'"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.closeQuickOpen"
 				},
 				"when": "kb-macro.active && inQuickOpen"
@@ -5916,6 +5924,15 @@
 			},
 			{
 				"key": "ctrl+shift+r",
+				"mac": "shift+cmd+r",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.issueReporter.toggleRecording"
+				},
+				"when": "kb-macro.active && issueReporterOpen"
+			},
+			{
+				"key": "ctrl+shift+r",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.tasks.rerunForActiveTerminal"
@@ -8485,6 +8502,15 @@
 					"command": "workbench.action.files.saveLocalFile"
 				},
 				"when": "kb-macro.active && remoteFileDialogVisible"
+			},
+			{
+				"key": "ctrl+shift+s",
+				"mac": "shift+cmd+s",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.issueReporter.captureScreenshot"
+				},
+				"when": "kb-macro.active && issueReporterOpen"
 			},
 			{
 				"key": "ctrl+shift+f",
