@@ -3902,7 +3902,7 @@
 				"args": {
 					"command": "workbench.action.chat.submit"
 				},
-				"when": "kb-macro.active && chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || kb-macro.active && chatInputHasText && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'"
+				"when": "kb-macro.active && chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || kb-macro.active && chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'"
 			},
 			{
 				"key": "enter",
@@ -4495,6 +4495,24 @@
 					"command": "notebook.addFindMatchToSelection"
 				},
 				"when": "kb-macro.active && config.notebook.multiCursor.enabled && notebookCellEditorFocused && activeEditor == 'workbench.editor.notebook'"
+			},
+			{
+				"key": "ctrl+d",
+				"mac": "cmd+d",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.addFavorite"
+				},
+				"when": "kb-macro.active && browserHasUrl && !browserUrlIsFavorited && activeEditor == 'workbench.editor.browser'"
+			},
+			{
+				"key": "ctrl+d",
+				"mac": "cmd+d",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.removeFavorite"
+				},
+				"when": "kb-macro.active && browserUrlIsFavorited && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "shift+alt+.",
