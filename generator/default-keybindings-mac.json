@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.122.1 for macOS
+// Default Keybindings of Visual Studio Code 1.123.0 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -611,7 +611,7 @@
 { "key": "ctrl+alt+enter",        "command": "workbench.action.chat.runInTerminal",
                                      "when": "accessibleViewInCodeBlock && chatIsEnabled || chatIsEnabled && inChat" },
 { "key": "enter",                 "command": "workbench.action.chat.submit",
-                                     "when": "chatInputHasText && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasText && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'" },
+                                     "when": "chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !withinEditSessionDiff || chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !withinEditSessionDiff && chatEditingSentRequest == 's'" },
 { "key": "cmd+enter",             "command": "workbench.action.chat.submitWithCodebase",
                                      "when": "chatInputHasText && inChatInput && !chatSessionRequestInProgress" },
 { "key": "shift+alt+enter",       "command": "workbench.action.chat.submitWithoutDispatching",
@@ -1422,6 +1422,8 @@
                                      "when": "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'top'" },
 { "key": "escape",                "command": "workbench.action.browser.addElementToChat",
                                      "when": "browserElementSelectionActive && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
+{ "key": "cmd+d",                 "command": "workbench.action.browser.addFavorite",
+                                     "when": "browserHasUrl && !browserUrlIsFavorited && activeEditor == 'workbench.editor.browser'" },
 { "key": "cmd+l",                 "command": "workbench.action.browser.focusUrlInput",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
 { "key": "escape",                "command": "workbench.action.browser.hideEmulationToolbar",
@@ -1429,6 +1431,8 @@
 { "key": "alt+cmd+/",             "command": "workbench.action.browser.openOrList" },
 { "key": "shift+cmd+a",           "command": "workbench.action.browser.quickOpen",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
+{ "key": "cmd+d",                 "command": "workbench.action.browser.removeFavorite",
+                                     "when": "browserUrlIsFavorited && activeEditor == 'workbench.editor.browser'" },
 { "key": "f12",                   "command": "workbench.action.browser.toggleDevTools",
                                      "when": "browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'" },
 { "key": "cmd+escape",            "command": "workbench.action.chat.cancel",
@@ -3243,6 +3247,7 @@
 // - timeline.removeView
 // - timeline.resetViewLocation
 // - timeline.toggleVisibility
+// - toggle.chat.titleBar.openInAgentsWindow.enabled
 // - toggle.chat.titleBar.signIn.enabled
 // - toggle.chat.unifiedAgentsBar.enabled
 // - toggle.diff.ignoreTrimWhitespace
@@ -3308,7 +3313,9 @@
 // - workbench.action.askVScode
 // - workbench.action.blur
 // - workbench.action.browseColorThemesInMarketplace
+// - workbench.action.browser.addAreaScreenshotToChat
 // - workbench.action.browser.addConsoleLogsToChat
+// - workbench.action.browser.addFullPageScreenshotToChat
 // - workbench.action.browser.addScreenshotToChat
 // - workbench.action.browser.clearEphemeralStorage
 // - workbench.action.browser.clearGlobalStorage
@@ -3327,6 +3334,7 @@
 // - workbench.action.chat.addDynamicVariable
 // - workbench.action.chat.addToChatAction
 // - workbench.action.chat.agentHost.otel.exportAgentTracesDB
+// - workbench.action.chat.agentsHandoffTip.open
 // - workbench.action.chat.applyCompareEdits
 // - workbench.action.chat.archiveAllAgentSessions
 // - workbench.action.chat.assignSelectedAgent
@@ -3409,7 +3417,6 @@
 // - workbench.action.chat.openAgentDebugPanelForSession
 // - workbench.action.chat.openAgentHostAutoApprovePicker
 // - workbench.action.chat.openAgentHostBranchPicker
-// - workbench.action.chat.openAgentHostCustomAgentPicker
 // - workbench.action.chat.openAgentHostIsolationPicker
 // - workbench.action.chat.openAgentHostModePicker
 // - workbench.action.chat.openAgentHostPermissionModePicker
@@ -3426,6 +3433,7 @@
 // - workbench.action.chat.openNewSessionSidebar.agent-host-copilotcli
 // - workbench.action.chat.openPermissionPicker
 // - workbench.action.chat.openQuotaExceededDialog
+// - workbench.action.chat.openSessionInAgentsWindow
 // - workbench.action.chat.openSessionInNewWindow
 // - workbench.action.chat.openSessionTargetPicker
 // - workbench.action.chat.openStorageFolder
@@ -4002,7 +4010,6 @@
 // - workbench.agentPlugins.browse
 // - workbench.agentPlugins.checkForUpdates
 // - workbench.agentPlugins.forceUpdate
-// - workbench.chat.agentHostAgentPicker.configure
 // - workbench.command.new.agent
 // - workbench.command.new.instructions
 // - workbench.command.new.prompt
