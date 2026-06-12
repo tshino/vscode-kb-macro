@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.123.1 for macOS
+// Default Keybindings of Visual Studio Code 1.124.2 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -1422,19 +1422,17 @@
                                      "when": "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'top'" },
 { "key": "escape",                "command": "workbench.action.browser.addElementToChat",
                                      "when": "browserElementSelectionActive && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'" },
-{ "key": "cmd+d",                 "command": "workbench.action.browser.addFavorite",
-                                     "when": "browserHasUrl && !browserUrlIsFavorited && activeEditor == 'workbench.editor.browser'" },
 { "key": "cmd+l",                 "command": "workbench.action.browser.focusUrlInput",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
-{ "key": "escape",                "command": "workbench.action.browser.hideEmulationToolbar",
-                                     "when": "browserEmulationToolbarVisible && activeEditor == 'workbench.editor.browser'" },
 { "key": "alt+cmd+/",             "command": "workbench.action.browser.openOrList" },
 { "key": "shift+cmd+a",           "command": "workbench.action.browser.quickOpen",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
-{ "key": "cmd+d",                 "command": "workbench.action.browser.removeFavorite",
-                                     "when": "browserUrlIsFavorited && activeEditor == 'workbench.editor.browser'" },
+{ "key": "cmd+h",                 "command": "workbench.action.browser.showHistory",
+                                     "when": "activeEditor == 'workbench.editor.browser' && browserStorageScope != 'ephemeral'" },
 { "key": "f12",                   "command": "workbench.action.browser.toggleDevTools",
                                      "when": "browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'" },
+{ "key": "cmd+d",                 "command": "workbench.action.browser.toggleFavorite",
+                                     "when": "browserHasUrl && activeEditor == 'workbench.editor.browser'" },
 { "key": "cmd+escape",            "command": "workbench.action.chat.cancel",
                                      "when": "chatSessionHasActiveRequest && !chatRemoteJobCreating" },
 { "key": "enter",                 "command": "workbench.action.chat.editRequests",
@@ -1930,7 +1928,7 @@
 { "key": "cmd+backspace",         "command": "agentSession.archive",
                                      "when": "agentSessionsViewerFocused && !agentSessionIsArchived" },
 { "key": "enter",                 "command": "agentSession.rename",
-                                     "when": "agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType == 'local'" },
+                                     "when": "agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType == 'local' || agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType =~ /^agent-host-/ || agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType =~ /^remote-/" },
 { "key": "shift+cmd+backspace",   "command": "agentSession.unarchive",
                                      "when": "agentSessionIsArchived && agentSessionsViewerFocused" },
 { "key": "alt+right",             "command": "breadcrumbs.focusNextWithPicker",
@@ -1972,7 +1970,7 @@
 { "key": "ctrl+pageup",           "command": "notebook.focusPreviousEditor",
                                      "when": "accessibilityModeEnabled && notebookCellEditorFocused" },
 { "key": "shift+cmd+a",           "command": "notification.acceptPrimaryAction",
-                                     "when": "notificationFocus || notificationToastsVisible" },
+                                     "when": "accessibilityModeEnabled && notificationFocus || accessibilityModeEnabled && notificationToastsVisible" },
 { "key": "cmd+/",                 "command": "terminalSuggestToggleExplainMode",
                                      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible" },
 { "key": "cmd+k down",            "command": "views.moveViewDown",
@@ -2496,6 +2494,7 @@
 // - editor.action.inlineSuggest.acceptNextLine
 // - editor.action.inlineSuggest.cancelSnooze
 // - editor.action.inlineSuggest.dev.extractRepro
+// - editor.action.inlineSuggest.renameSymbol
 // - editor.action.inlineSuggest.snooze
 // - editor.action.inlineSuggest.toggleAlwaysShowToolbar
 // - editor.action.inlineSuggest.toggleShowCollapsed
@@ -3329,7 +3328,7 @@
 // - workbench.action.browser.pickDevicePreset
 // - workbench.action.browser.resetEmulation
 // - workbench.action.browser.setUserAgent
-// - workbench.action.browser.showEmulationToolbar
+// - workbench.action.browser.toggleDeviceEmulation
 // - workbench.action.browser.toggleMobileEmulation
 // - workbench.action.chat.addDynamicVariable
 // - workbench.action.chat.addToChatAction
@@ -3393,6 +3392,7 @@
 // - workbench.action.chat.insertIntoNotebook
 // - workbench.action.chat.insertSearchResults
 // - workbench.action.chat.insertTroubleshootCommand
+// - workbench.action.chat.inspectAgentHostSubscriptions
 // - workbench.action.chat.inspectChatModel
 // - workbench.action.chat.inspectChatModelReferences
 // - workbench.action.chat.installPluginFromSource
@@ -3416,8 +3416,6 @@
 // - workbench.action.chat.openAgentDebugPanel
 // - workbench.action.chat.openAgentDebugPanelForSession
 // - workbench.action.chat.openAgentHostAutoApprovePicker
-// - workbench.action.chat.openAgentHostBranchPicker
-// - workbench.action.chat.openAgentHostIsolationPicker
 // - workbench.action.chat.openAgentHostModePicker
 // - workbench.action.chat.openAgentHostPermissionModePicker
 // - workbench.action.chat.openCompareBlockInDiffEditor
@@ -3753,6 +3751,7 @@
 // - workbench.action.output.show.shared
 // - workbench.action.output.show.tasks
 // - workbench.action.output.show.terminal
+// - workbench.action.output.show.textModelChanges
 // - workbench.action.output.show.tunnelHostService
 // - workbench.action.output.show.userDataSync
 // - workbench.action.output.show.vscode.git.Git.log
