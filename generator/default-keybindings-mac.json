@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.124.2 for macOS
+// Default Keybindings of Visual Studio Code 1.125.1 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -780,6 +780,8 @@
                                      "when": "fileMatchOrMatchFocus && searchViewletVisible" },
 { "key": "escape",                "command": "agentSession.exitAgentSessionProjection",
                                      "when": "chatInAgentSessionProjection && chatIsEnabled" },
+{ "key": "space",                 "command": "agentsVoice.pushToTalk",
+                                     "when": "agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus" },
 { "key": "shift+cmd+;",           "command": "breadcrumbs.focus",
                                      "when": "breadcrumbsPossible && breadcrumbsVisible" },
 { "key": "shift+cmd+.",           "command": "breadcrumbs.focusAndSelect",
@@ -2339,6 +2341,9 @@
 // - agentSessions.toggleAgentSessionsSidebar
 // - agentSessionsViewer.find
 // - agentSessionsViewer.refresh
+// - agentsVoice.resetOnboarding
+// - agentsVoice.showTranscripts
+// - agentsVoice.toggleWindow
 // - aiCustomization.generateDebugReport
 // - aiCustomization.openManagementEditor
 // - aiCustomization.openMarketplace
@@ -2367,7 +2372,6 @@
 // - chat.installRecommendation.github.copilot-chat.cli
 // - chat.installRecommendation.github.copilot-chat.cloud
 // - chat.installRecommendation.openai.chatgpt.codex
-// - chat.internal.codeReview.run
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.review
@@ -3290,6 +3294,10 @@
 // - update.showUpdateReleaseNotes
 // - update.updating
 // - variables.collapse
+// - voiceTranscripts.archiveAll
+// - voiceTranscripts.deleteAll
+// - voiceTranscripts.focus
+// - voiceTranscripts.refresh
 // - walkthroughs.selectStep
 // - watch.collapse
 // - welcome.markStepComplete
@@ -3333,6 +3341,7 @@
 // - workbench.action.chat.addDynamicVariable
 // - workbench.action.chat.addToChatAction
 // - workbench.action.chat.agentHost.otel.exportAgentTracesDB
+// - workbench.action.chat.agentsHandoffTip.mute
 // - workbench.action.chat.agentsHandoffTip.open
 // - workbench.action.chat.applyCompareEdits
 // - workbench.action.chat.archiveAllAgentSessions
@@ -3416,6 +3425,7 @@
 // - workbench.action.chat.openAgentDebugPanel
 // - workbench.action.chat.openAgentDebugPanelForSession
 // - workbench.action.chat.openAgentHostAutoApprovePicker
+// - workbench.action.chat.openAgentHostFolderPicker
 // - workbench.action.chat.openAgentHostModePicker
 // - workbench.action.chat.openAgentHostPermissionModePicker
 // - workbench.action.chat.openCompareBlockInDiffEditor
@@ -4155,6 +4165,7 @@
 // - workbench.files.action.showActiveFileInExplorer
 // - workbench.getCodeExchangeProxyEndpoints
 // - workbench.mcp.addConfiguration
+// - workbench.mcp.agentHostServerOptions
 // - workbench.mcp.browseResources
 // - workbench.mcp.browseServers
 // - workbench.mcp.configureSamplingModels
@@ -4309,6 +4320,10 @@
 // - workbench.view.testCoverage.resetViewLocation
 // - workbench.view.testing.focus
 // - workbench.view.testing.resetViewLocation
+// - workbench.view.voiceTranscripts.focus
+// - workbench.view.voiceTranscripts.resetViewLocation
+// - workbench.view.voiceTranscriptsContainer
+// - workbench.view.voiceTranscriptsContainer.resetViewContainerLocation
 // - workbench.views.agentPlugins.default.marketplace.focus
 // - workbench.views.agentPlugins.default.marketplace.resetViewLocation
 // - workbench.views.agentPlugins.installed.focus
