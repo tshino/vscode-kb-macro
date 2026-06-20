@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.124.2 for Linux
+// Default Keybindings of Visual Studio Code 1.125.1 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -132,6 +132,8 @@
                                      "when": "chatCursorAtTop && inChatInput && !quickChatHasFocus" },
 { "key": "ctrl+up",               "command": "chat.action.focus",
                                      "when": "inChatInput && isLinux && !quickChatHasFocus || inChatInput && isWindows && !quickChatHasFocus" },
+{ "key": "escape",                "command": "chat.models.action.clearSearchResults",
+                                     "when": "inModelsEditor && inModelsSearch" },
 { "key": "shift+escape",          "command": "closeBreakpointWidget",
                                      "when": "breakpointWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "closeBreakpointWidget",
@@ -698,6 +700,8 @@
                                      "when": "fileMatchOrMatchFocus && searchViewletVisible" },
 { "key": "escape",                "command": "agentSession.exitAgentSessionProjection",
                                      "when": "chatInAgentSessionProjection && chatIsEnabled" },
+{ "key": "space",                 "command": "agentsVoice.pushToTalk",
+                                     "when": "agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus" },
 { "key": "ctrl+shift+;",          "command": "breadcrumbs.focus",
                                      "when": "breadcrumbsPossible && breadcrumbsVisible" },
 { "key": "ctrl+shift+[IntlBackslash]", "command": "breadcrumbs.focusAndSelect",
@@ -1701,6 +1705,8 @@
 { "key": "ctrl+numpad0",          "command": "workbench.action.zoomReset" },
 { "key": "ctrl+shift+m",          "command": "workbench.actions.view.problems",
                                      "when": "workbench.panel.markers.view.active" },
+{ "key": "escape",                "command": "workbench.actions.workbench.panel.output.clearFilterText",
+                                     "when": "outputFilterFocus" },
 { "key": "escape",                "command": "workbench.banner.focusBanner",
                                      "when": "bannerFocused" },
 { "key": "down",                  "command": "workbench.banner.focusNextAction",
@@ -2129,6 +2135,9 @@
 // - agentSessions.toggleAgentSessionsSidebar
 // - agentSessionsViewer.find
 // - agentSessionsViewer.refresh
+// - agentsVoice.resetOnboarding
+// - agentsVoice.showTranscripts
+// - agentsVoice.toggleWindow
 // - aiCustomization.generateDebugReport
 // - aiCustomization.openManagementEditor
 // - aiCustomization.openMarketplace
@@ -2157,11 +2166,9 @@
 // - chat.installRecommendation.github.copilot-chat.cli
 // - chat.installRecommendation.github.copilot-chat.cloud
 // - chat.installRecommendation.openai.chatgpt.codex
-// - chat.internal.codeReview.run
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.review
-// - chat.models.action.clearSearchResults
 // - chat.openFileSnapshot
 // - chat.openFileUpdatedBySnapshot
 // - chat.toolOutput.save
@@ -3097,6 +3104,10 @@
 // - update.showUpdateReleaseNotes
 // - update.updating
 // - variables.collapse
+// - voiceTranscripts.archiveAll
+// - voiceTranscripts.deleteAll
+// - voiceTranscripts.focus
+// - voiceTranscripts.refresh
 // - walkthroughs.selectStep
 // - watch.collapse
 // - welcome.markStepComplete
@@ -3140,6 +3151,7 @@
 // - workbench.action.chat.addDynamicVariable
 // - workbench.action.chat.addToChatAction
 // - workbench.action.chat.agentHost.otel.exportAgentTracesDB
+// - workbench.action.chat.agentsHandoffTip.mute
 // - workbench.action.chat.agentsHandoffTip.open
 // - workbench.action.chat.applyCompareEdits
 // - workbench.action.chat.archiveAllAgentSessions
@@ -3223,6 +3235,7 @@
 // - workbench.action.chat.openAgentDebugPanel
 // - workbench.action.chat.openAgentDebugPanelForSession
 // - workbench.action.chat.openAgentHostAutoApprovePicker
+// - workbench.action.chat.openAgentHostFolderPicker
 // - workbench.action.chat.openAgentHostModePicker
 // - workbench.action.chat.openAgentHostPermissionModePicker
 // - workbench.action.chat.openCompareBlockInDiffEditor
@@ -3810,7 +3823,6 @@
 // - workbench.actions.workbench.panel.markers.view.toggleExcludedFiles
 // - workbench.actions.workbench.panel.markers.view.toggleInfos
 // - workbench.actions.workbench.panel.markers.view.toggleWarnings
-// - workbench.actions.workbench.panel.output.clearFilterText
 // - workbench.actions.workbench.panel.output.toggle.debug
 // - workbench.actions.workbench.panel.output.toggle.error
 // - workbench.actions.workbench.panel.output.toggle.info
@@ -3966,6 +3978,7 @@
 // - workbench.files.action.showActiveFileInExplorer
 // - workbench.getCodeExchangeProxyEndpoints
 // - workbench.mcp.addConfiguration
+// - workbench.mcp.agentHostServerOptions
 // - workbench.mcp.browseResources
 // - workbench.mcp.browseServers
 // - workbench.mcp.configureSamplingModels
@@ -4120,6 +4133,10 @@
 // - workbench.view.testCoverage.resetViewLocation
 // - workbench.view.testing.focus
 // - workbench.view.testing.resetViewLocation
+// - workbench.view.voiceTranscripts.focus
+// - workbench.view.voiceTranscripts.resetViewLocation
+// - workbench.view.voiceTranscriptsContainer
+// - workbench.view.voiceTranscriptsContainer.resetViewContainerLocation
 // - workbench.views.agentPlugins.default.marketplace.focus
 // - workbench.views.agentPlugins.default.marketplace.resetViewLocation
 // - workbench.views.agentPlugins.installed.focus
