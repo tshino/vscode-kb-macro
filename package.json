@@ -45,7 +45,7 @@
 		"@vscode/test-electron": "^3.0.0",
 		"@vscode/vsce": "^3.9.2",
 		"eslint": "^10.5.0",
-		"globals": "^17.6.0",
+		"globals": "^17.7.0",
 		"json": "^11.0.0",
 		"mocha": "^11.7.6",
 		"process": "^0.11.10",
