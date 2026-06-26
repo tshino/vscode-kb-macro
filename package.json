@@ -376,7 +376,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && isWindows && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -771,7 +771,7 @@
 				"args": {
 					"command": "workbench.actions.workbench.panel.output.clearFilterText"
 				},
-				"when": "kb-macro.active && isLinux && outputFilterFocus"
+				"when": "kb-macro.active && isWindows && outputFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -2092,6 +2092,14 @@
 				"key": "up",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "settings.action.showPreviousSearch"
+				},
+				"when": "kb-macro.active && inSettingsSearch && !suggestWidgetVisible"
+			},
+			{
+				"key": "up",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "workbench.action.interactivePlayground.arrowUp"
 				},
 				"when": "kb-macro.active && interactivePlaygroundFocus && !editorTextFocus"
@@ -2119,6 +2127,14 @@
 					"command": "notebook.cell.nullAction"
 				},
 				"when": "kb-macro.active && notebookOutputInputFocused"
+			},
+			{
+				"key": "up",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "settings.action.focusSearchFromSettings"
+				},
+				"when": "kb-macro.active && inSettingsEditor && settingFirstRowFocus && settingRowFocus"
 			},
 			{
 				"key": "up",
@@ -4048,6 +4064,14 @@
 					"command": "settings.action.focusSettingControl"
 				},
 				"when": "kb-macro.active && inSettingsEditor && settingRowFocus"
+			},
+			{
+				"key": "enter",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "settings.action.focusSettingsFromSearchOnEnter"
+				},
+				"when": "kb-macro.active && inSettingsSearch && !suggestWidgetVisible"
 			},
 			{
 				"key": "enter",
@@ -6188,6 +6212,33 @@
 				"when": "kb-macro.active && editorHasSignatureHelpProvider && editorTextFocus"
 			},
 			{
+				"key": "ctrl+shift+space",
+				"mac": "shift+cmd+space",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "agentsVoice.pttStopInChat"
+				},
+				"when": "kb-macro.active && agentsVoiceActive && config.agents.voice.enabled && inChatInput"
+			},
+			{
+				"key": "ctrl+shift+space",
+				"mac": "shift+cmd+space",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "agentsVoice.pushToTalk"
+				},
+				"when": "kb-macro.active && agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus"
+			},
+			{
+				"key": "ctrl+shift+space",
+				"mac": "shift+cmd+space",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "agentsVoice.startVoiceInChat"
+				},
+				"when": "kb-macro.active && config.agents.voice.enabled && inChatInput"
+			},
+			{
 				"key": "ctrl+i",
 				"mac": "cmd+i",
 				"command": "kb-macro.wrap",
@@ -7170,12 +7221,13 @@
 				"when": "kb-macro.active && !textInputFocus"
 			},
 			{
-				"key": "space",
+				"key": "ctrl+shift+;",
+				"mac": "shift+cmd+;",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "agentsVoice.pushToTalk"
+					"command": "breadcrumbs.focus"
 				},
-				"when": "kb-macro.active && agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus"
+				"when": "kb-macro.active && breadcrumbsPossible && breadcrumbsVisible"
 			},
 			{
 				"key": "space",
@@ -7248,15 +7300,6 @@
 					"command": "toggleSectionCodeAction"
 				},
 				"when": "kb-macro.active && codeActionMenuVisible && !codeActionMenuFilterFocused"
-			},
-			{
-				"key": "ctrl+shift+;",
-				"mac": "shift+cmd+;",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "breadcrumbs.focus"
-				},
-				"when": "kb-macro.active && breadcrumbsPossible && breadcrumbsVisible"
 			},
 			{
 				"key": "shift+alt+f7",
