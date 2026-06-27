@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.125.1 for Linux
+// Default Keybindings of Visual Studio Code 1.126.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -132,8 +132,6 @@
                                      "when": "chatCursorAtTop && inChatInput && !quickChatHasFocus" },
 { "key": "ctrl+up",               "command": "chat.action.focus",
                                      "when": "inChatInput && isLinux && !quickChatHasFocus || inChatInput && isWindows && !quickChatHasFocus" },
-{ "key": "escape",                "command": "chat.models.action.clearSearchResults",
-                                     "when": "inModelsEditor && inModelsSearch" },
 { "key": "shift+escape",          "command": "closeBreakpointWidget",
                                      "when": "breakpointWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "closeBreakpointWidget",
@@ -700,8 +698,12 @@
                                      "when": "fileMatchOrMatchFocus && searchViewletVisible" },
 { "key": "escape",                "command": "agentSession.exitAgentSessionProjection",
                                      "when": "chatInAgentSessionProjection && chatIsEnabled" },
-{ "key": "space",                 "command": "agentsVoice.pushToTalk",
+{ "key": "ctrl+shift+space",      "command": "agentsVoice.pttStopInChat",
+                                     "when": "agentsVoiceActive && config.agents.voice.enabled && inChatInput" },
+{ "key": "ctrl+shift+space",      "command": "agentsVoice.pushToTalk",
                                      "when": "agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus" },
+{ "key": "ctrl+shift+space",      "command": "agentsVoice.startVoiceInChat",
+                                     "when": "config.agents.voice.enabled && inChatInput" },
 { "key": "ctrl+shift+;",          "command": "breadcrumbs.focus",
                                      "when": "breadcrumbsPossible && breadcrumbsVisible" },
 { "key": "ctrl+shift+[IntlBackslash]", "command": "breadcrumbs.focusAndSelect",
@@ -1216,12 +1218,16 @@
                                      "when": "inSettingsEditor && settingRowFocus" },
 { "key": "down",                  "command": "settings.action.focusSettingsFromSearch",
                                      "when": "inSettingsSearch && !suggestWidgetVisible" },
+{ "key": "enter",                 "command": "settings.action.focusSettingsFromSearchOnEnter",
+                                     "when": "inSettingsSearch && !suggestWidgetVisible" },
 { "key": "enter",                 "command": "settings.action.focusSettingsList",
                                      "when": "inSettingsEditor && settingsTocRowFocus" },
 { "key": "left",                  "command": "settings.action.focusTOC",
                                      "when": "inSettingsEditor && settingRowFocus" },
 { "key": "shift+f9",              "command": "settings.action.showContextMenu",
                                      "when": "inSettingsEditor" },
+{ "key": "up",                    "command": "settings.action.showPreviousSearch",
+                                     "when": "inSettingsSearch && !suggestWidgetVisible" },
 { "key": "ctrl+c",                "command": "suggestWidgetCopy",
                                      "when": "suggestWidgetDetailsFocused" },
 { "key": "ctrl+; ctrl+x",         "command": "testing.cancelRun" },
@@ -1705,8 +1711,6 @@
 { "key": "ctrl+numpad0",          "command": "workbench.action.zoomReset" },
 { "key": "ctrl+shift+m",          "command": "workbench.actions.view.problems",
                                      "when": "workbench.panel.markers.view.active" },
-{ "key": "escape",                "command": "workbench.actions.workbench.panel.output.clearFilterText",
-                                     "when": "outputFilterFocus" },
 { "key": "escape",                "command": "workbench.banner.focusBanner",
                                      "when": "bannerFocused" },
 { "key": "down",                  "command": "workbench.banner.focusNextAction",
@@ -1794,6 +1798,8 @@
                                      "when": "accessibilityModeEnabled && notebookCellEditorFocused" },
 { "key": "ctrl+shift+a",          "command": "notification.acceptPrimaryAction",
                                      "when": "accessibilityModeEnabled && notificationFocus || accessibilityModeEnabled && notificationToastsVisible" },
+{ "key": "up",                    "command": "settings.action.focusSearchFromSettings",
+                                     "when": "inSettingsEditor && settingFirstRowFocus && settingRowFocus" },
 { "key": "ctrl+/",                "command": "terminalSuggestToggleExplainMode",
                                      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible" },
 { "key": "ctrl+k down",           "command": "views.moveViewDown",
@@ -2135,8 +2141,11 @@
 // - agentSessions.toggleAgentSessionsSidebar
 // - agentSessionsViewer.find
 // - agentSessionsViewer.refresh
+// - agentsVoice.connecting
+// - agentsVoice.disconnect
 // - agentsVoice.resetOnboarding
 // - agentsVoice.showTranscripts
+// - agentsVoice.simulateConnection
 // - agentsVoice.toggleWindow
 // - aiCustomization.generateDebugReport
 // - aiCustomization.openManagementEditor
@@ -2169,6 +2178,7 @@
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.review
+// - chat.models.action.clearSearchResults
 // - chat.openFileSnapshot
 // - chat.openFileUpdatedBySnapshot
 // - chat.toolOutput.save
@@ -3165,6 +3175,7 @@
 // - workbench.action.chat.clearHistory
 // - workbench.action.chat.clearInputHistory
 // - workbench.action.chat.clearRecentlyUsedLanguageModels
+// - workbench.action.chat.compactAgentHostConversation
 // - workbench.action.chat.configure.customagents
 // - workbench.action.chat.configure.customagents.disabled
 // - workbench.action.chat.configure.hooks
@@ -3537,6 +3548,7 @@
 // - workbench.action.openSettings2
 // - workbench.action.openSettingsJson
 // - workbench.action.openSnippets
+// - workbench.action.openSurvey
 // - workbench.action.openTipsAndTricksUrl
 // - workbench.action.openVideoTutorialsUrl
 // - workbench.action.openView
@@ -3656,6 +3668,7 @@
 // - workbench.action.splitEditorToNextGroup
 // - workbench.action.splitEditorToPreviousGroup
 // - workbench.action.splitEditorToRightGroup
+// - workbench.action.startHeapTracing
 // - workbench.action.startTracing
 // - workbench.action.stopTracing
 // - workbench.action.switchToMainWindow
@@ -3823,6 +3836,7 @@
 // - workbench.actions.workbench.panel.markers.view.toggleExcludedFiles
 // - workbench.actions.workbench.panel.markers.view.toggleInfos
 // - workbench.actions.workbench.panel.markers.view.toggleWarnings
+// - workbench.actions.workbench.panel.output.clearFilterText
 // - workbench.actions.workbench.panel.output.toggle.debug
 // - workbench.actions.workbench.panel.output.toggle.error
 // - workbench.actions.workbench.panel.output.toggle.info
