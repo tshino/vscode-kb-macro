@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.126.0 for Linux
+// Default Keybindings of Visual Studio Code 1.127.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -132,6 +132,8 @@
                                      "when": "chatCursorAtTop && inChatInput && !quickChatHasFocus" },
 { "key": "ctrl+up",               "command": "chat.action.focus",
                                      "when": "inChatInput && isLinux && !quickChatHasFocus || inChatInput && isWindows && !quickChatHasFocus" },
+{ "key": "escape",                "command": "chat.models.action.clearSearchResults",
+                                     "when": "inModelsEditor && inModelsSearch" },
 { "key": "shift+escape",          "command": "closeBreakpointWidget",
                                      "when": "breakpointWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "closeBreakpointWidget",
@@ -1826,6 +1828,8 @@
                                      "when": "agentSessionsViewerFocused && !isSessionsWindow" },
 { "key": "ctrl+alt+enter",        "command": "workbench.action.chat.skipTool",
                                      "when": "chatHasToolConfirmation && inChat" },
+{ "key": "escape",                "command": "workbench.action.closeModalEditor",
+                                     "when": "editorPartModal && listFocus && !treeFindOpen && !treestickyScrollFocused" },
 { "key": "ctrl+pagedown",         "command": "workbench.action.debug.nextConsole",
                                      "when": "inDebugRepl" },
 { "key": "ctrl+pageup",           "command": "workbench.action.debug.prevConsole",
@@ -1948,7 +1952,7 @@
 { "key": "f2",                    "command": "renameFile",
                                      "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" },
 { "key": "escape",                "command": "workbench.action.closeModalEditor",
-                                     "when": "editorPartModal && !editorFocus" },
+                                     "when": "editorPartModal && !editorFocus && !listFocus" },
 { "key": "f5",                    "command": "workbench.action.debug.continue",
                                      "when": "debugState == 'stopped'" },
 { "key": "f11",                   "command": "workbench.action.debug.stepInto",
@@ -2144,9 +2148,9 @@
 // - agentsVoice.connecting
 // - agentsVoice.disconnect
 // - agentsVoice.resetOnboarding
+// - agentsVoice.selectMicrophone
 // - agentsVoice.showTranscripts
 // - agentsVoice.simulateConnection
-// - agentsVoice.toggleWindow
 // - aiCustomization.generateDebugReport
 // - aiCustomization.openManagementEditor
 // - aiCustomization.openMarketplace
@@ -2178,7 +2182,6 @@
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.review
-// - chat.models.action.clearSearchResults
 // - chat.openFileSnapshot
 // - chat.openFileUpdatedBySnapshot
 // - chat.toolOutput.save
@@ -3000,6 +3003,8 @@
 // - selectFirstSuggestion
 // - selectForCompare
 // - selectLastSuggestion
+// - sessions.tunnelHost.showOutput
+// - sessions.tunnelHost.toggleSharing
 // - setRootFolder
 // - setSelection
 // - settings.filterByOnline
@@ -3149,6 +3154,7 @@
 // - workbench.action.browser.clearWorkspaceStorage
 // - workbench.action.browser.closeAll
 // - workbench.action.browser.closeAllInGroup
+// - workbench.action.browser.managePermissions
 // - workbench.action.browser.open
 // - workbench.action.browser.openExternal
 // - workbench.action.browser.openFile
@@ -3226,6 +3232,7 @@
 // - workbench.action.chat.inspectChatModel
 // - workbench.action.chat.inspectChatModelReferences
 // - workbench.action.chat.installPluginFromSource
+// - workbench.action.chat.learnMoreAboutCreditUsage
 // - workbench.action.chat.logChatIndex
 // - workbench.action.chat.logInputHistory
 // - workbench.action.chat.manage
@@ -3273,6 +3280,7 @@
 // - workbench.action.chat.picker.customagents
 // - workbench.action.chat.picker.customagents.disabled
 // - workbench.action.chat.previousTip
+// - workbench.action.chat.profileAgentHost
 // - workbench.action.chat.quickVoiceChat
 // - workbench.action.chat.readChatResponseAloud
 // - workbench.action.chat.redoEdit
@@ -3299,6 +3307,7 @@
 // - workbench.action.chat.signInIndicator
 // - workbench.action.chat.startOver
 // - workbench.action.chat.startParameterizedPrompt
+// - workbench.action.chat.stopAgentHostProfile
 // - workbench.action.chat.switchToNextModel
 // - workbench.action.chat.switchToNextPinnedModel
 // - workbench.action.chat.toggle
@@ -3508,6 +3517,7 @@
 // - workbench.action.nextAuxiliaryBarView
 // - workbench.action.nextPanelView
 // - workbench.action.nextSideBarView
+// - workbench.action.onboarding.resetShownState
 // - workbench.action.openAccessibilitySettings
 // - workbench.action.openActiveLogOutputFile
 // - workbench.action.openActiveLogOutputFileInNewWindow

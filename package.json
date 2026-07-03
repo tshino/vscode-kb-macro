@@ -376,7 +376,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && isWindows && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -769,14 +769,6 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.actions.workbench.panel.output.clearFilterText"
-				},
-				"when": "kb-macro.active && isWindows && outputFilterFocus"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "workbench.banner.focusBanner"
 				},
 				"when": "kb-macro.active && bannerFocused"
@@ -812,6 +804,14 @@
 					"command": "inlineChat2.close"
 				},
 				"when": "kb-macro.active && chatInputHasFocus && inlineChatHasEditsAgent && inlineChatVisible || kb-macro.active && chatInputHasFocus && inlineChatHasNotebookAgent && inlineChatVisible && activeEditor == 'workbench.editor.notebook' || kb-macro.active && editorFocus && inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.hasEditorModifications || kb-macro.active && editorFocus && inlineChatHasNotebookAgent && inlineChatVisible && !chatEdits.hasEditorModifications && activeEditor == 'workbench.editor.notebook'"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.closeModalEditor"
+				},
+				"when": "kb-macro.active && editorPartModal && listFocus && !treeFindOpen && !treestickyScrollFocused"
 			},
 			{
 				"key": "escape",
@@ -859,7 +859,7 @@
 				"args": {
 					"command": "workbench.action.closeModalEditor"
 				},
-				"when": "kb-macro.active && editorPartModal && !editorFocus"
+				"when": "kb-macro.active && editorPartModal && !editorFocus && !listFocus"
 			},
 			{
 				"key": "escape",
@@ -2583,6 +2583,14 @@
 					"command": "redo"
 				},
 				"when": "kb-macro.active && !isMac"
+			},
+			{
+				"key": "cmd+y",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.showHistory"
+				},
+				"when": "kb-macro.active && activeEditor == 'workbench.editor.browser' && browserStorageScope != 'ephemeral'"
 			},
 			{
 				"key": "ctrl+y",
@@ -6171,12 +6179,11 @@
 			},
 			{
 				"key": "ctrl+h",
-				"mac": "cmd+h",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.browser.showHistory"
 				},
-				"when": "kb-macro.active && activeEditor == 'workbench.editor.browser' && browserStorageScope != 'ephemeral'"
+				"when": "kb-macro.active && !isMac && activeEditor == 'workbench.editor.browser' && browserStorageScope != 'ephemeral'"
 			},
 			{
 				"key": "ctrl+m",
