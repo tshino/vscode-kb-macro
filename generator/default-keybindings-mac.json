@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.126.0 for macOS
+// Default Keybindings of Visual Studio Code 1.127.0 for macOS
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -1437,7 +1437,7 @@
 { "key": "alt+cmd+/",             "command": "workbench.action.browser.openOrList" },
 { "key": "shift+cmd+a",           "command": "workbench.action.browser.quickOpen",
                                      "when": "activeEditor == 'workbench.editor.browser'" },
-{ "key": "cmd+h",                 "command": "workbench.action.browser.showHistory",
+{ "key": "cmd+y",                 "command": "workbench.action.browser.showHistory",
                                      "when": "activeEditor == 'workbench.editor.browser' && browserStorageScope != 'ephemeral'" },
 { "key": "f12",                   "command": "workbench.action.browser.toggleDevTools",
                                      "when": "browserHasUrl && !browserHasError && activeEditor == 'workbench.editor.browser'" },
@@ -2009,6 +2009,8 @@
                                      "when": "agentSessionsViewerFocused && !isSessionsWindow" },
 { "key": "alt+cmd+enter",         "command": "workbench.action.chat.skipTool",
                                      "when": "chatHasToolConfirmation && inChat" },
+{ "key": "escape",                "command": "workbench.action.closeModalEditor",
+                                     "when": "editorPartModal && listFocus && !treeFindOpen && !treestickyScrollFocused" },
 { "key": "shift+cmd+]",           "command": "workbench.action.debug.nextConsole",
                                      "when": "inDebugRepl" },
 { "key": "shift+cmd+[",           "command": "workbench.action.debug.prevConsole",
@@ -2137,7 +2139,7 @@
 { "key": "enter",                 "command": "renameFile",
                                      "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" },
 { "key": "escape",                "command": "workbench.action.closeModalEditor",
-                                     "when": "editorPartModal && !editorFocus" },
+                                     "when": "editorPartModal && !editorFocus && !listFocus" },
 { "key": "f5",                    "command": "workbench.action.debug.continue",
                                      "when": "debugState == 'stopped'" },
 { "key": "f11",                   "command": "workbench.action.debug.stepInto",
@@ -2354,9 +2356,9 @@
 // - agentsVoice.connecting
 // - agentsVoice.disconnect
 // - agentsVoice.resetOnboarding
+// - agentsVoice.selectMicrophone
 // - agentsVoice.showTranscripts
 // - agentsVoice.simulateConnection
-// - agentsVoice.toggleWindow
 // - aiCustomization.generateDebugReport
 // - aiCustomization.openManagementEditor
 // - aiCustomization.openMarketplace
@@ -3193,6 +3195,8 @@
 // - selectFirstSuggestion
 // - selectForCompare
 // - selectLastSuggestion
+// - sessions.tunnelHost.showOutput
+// - sessions.tunnelHost.toggleSharing
 // - setRootFolder
 // - setSelection
 // - settings.filterByOnline
@@ -3342,6 +3346,7 @@
 // - workbench.action.browser.clearWorkspaceStorage
 // - workbench.action.browser.closeAll
 // - workbench.action.browser.closeAllInGroup
+// - workbench.action.browser.managePermissions
 // - workbench.action.browser.open
 // - workbench.action.browser.openExternal
 // - workbench.action.browser.openFile
@@ -3419,6 +3424,7 @@
 // - workbench.action.chat.inspectChatModel
 // - workbench.action.chat.inspectChatModelReferences
 // - workbench.action.chat.installPluginFromSource
+// - workbench.action.chat.learnMoreAboutCreditUsage
 // - workbench.action.chat.logChatIndex
 // - workbench.action.chat.logInputHistory
 // - workbench.action.chat.manage
@@ -3466,6 +3472,7 @@
 // - workbench.action.chat.picker.customagents
 // - workbench.action.chat.picker.customagents.disabled
 // - workbench.action.chat.previousTip
+// - workbench.action.chat.profileAgentHost
 // - workbench.action.chat.quickVoiceChat
 // - workbench.action.chat.readChatResponseAloud
 // - workbench.action.chat.redoEdit
@@ -3492,6 +3499,7 @@
 // - workbench.action.chat.signInIndicator
 // - workbench.action.chat.startOver
 // - workbench.action.chat.startParameterizedPrompt
+// - workbench.action.chat.stopAgentHostProfile
 // - workbench.action.chat.switchToNextModel
 // - workbench.action.chat.switchToNextPinnedModel
 // - workbench.action.chat.toggle
@@ -3705,6 +3713,7 @@
 // - workbench.action.nextAuxiliaryBarView
 // - workbench.action.nextPanelView
 // - workbench.action.nextSideBarView
+// - workbench.action.onboarding.resetShownState
 // - workbench.action.openAccessibilitySettings
 // - workbench.action.openActiveLogOutputFile
 // - workbench.action.openActiveLogOutputFileInNewWindow
