@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.127.0 for Windows
+// Default Keybindings of Visual Studio Code 1.128.0 for Windows
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -148,8 +148,6 @@
                                      "when": "chatCursorAtTop && inChatInput && !quickChatHasFocus" },
 { "key": "ctrl+up",               "command": "chat.action.focus",
                                      "when": "inChatInput && isLinux && !quickChatHasFocus || inChatInput && isWindows && !quickChatHasFocus" },
-{ "key": "escape",                "command": "chat.models.action.clearSearchResults",
-                                     "when": "inModelsEditor && inModelsSearch" },
 { "key": "shift+escape",          "command": "closeBreakpointWidget",
                                      "when": "breakpointWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "closeBreakpointWidget",
@@ -1342,7 +1340,7 @@
 { "key": "ctrl+alt+up",           "command": "workbench.action.chat.previousUserPrompt",
                                      "when": "chatIsEnabled && inChat" },
 { "key": "delete",                "command": "workbench.action.chat.restoreCheckpoint",
-                                     "when": "inChat && !inChatQuestionCarousel && !textInputFocus" },
+                                     "when": "inChat && !chatIsReadonly && !inChatQuestionCarousel && !textInputFocus" },
 { "key": "ctrl+alt+win+/",        "command": "workbench.action.chat.run-in-new-chat.prompt.current",
                                      "when": "chatIsEnabled && editorTextFocus && resourceSet && resourceLangId == 'prompt'" },
 { "key": "alt+win+/",             "command": "workbench.action.chat.run.prompt",
@@ -1358,7 +1356,7 @@
 { "key": "alt+t",                 "command": "workbench.action.chat.toggleThinkingContentAccessibleView",
                                      "when": "accessibleViewIsShown && chatIsEnabled && accessibleViewCurrentProviderId == 'panelChat'" },
 { "key": "delete",                "command": "workbench.action.chat.undoEdits",
-                                     "when": "inChat && !inChatQuestionCarousel && !textInputFocus" },
+                                     "when": "inChat && !chatIsReadonly && !inChatQuestionCarousel && !textInputFocus" },
 { "key": "ctrl+w",                "command": "workbench.action.closeActiveEditor" },
 { "key": "ctrl+f4",               "command": "workbench.action.closeActiveEditor" },
 { "key": "ctrl+k ctrl+w",         "command": "workbench.action.closeAllEditors" },
@@ -2203,6 +2201,7 @@
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.review
+// - chat.models.action.clearSearchResults
 // - chat.openFileSnapshot
 // - chat.openFileUpdatedBySnapshot
 // - chat.toolOutput.save
@@ -3123,6 +3122,7 @@
 // - typescript.restartTsServer
 // - typescript.selectTypeScriptVersion
 // - typescript.sortImports
+// - update.cancelling
 // - update.check
 // - update.checkForUpdate
 // - update.checking
@@ -3275,6 +3275,7 @@
 // - workbench.action.chat.openAgentHostFolderPicker
 // - workbench.action.chat.openAgentHostModePicker
 // - workbench.action.chat.openAgentHostPermissionModePicker
+// - workbench.action.chat.openAutomationsWorkspacePicker
 // - workbench.action.chat.openCompareBlockInDiffEditor
 // - workbench.action.chat.openCopilotCliStateFile
 // - workbench.action.chat.openDelegationPicker
@@ -3459,6 +3460,7 @@
 // - workbench.action.focusSecondSideEditor
 // - workbench.action.focusStatusBar
 // - workbench.action.focusTitleBar
+// - workbench.action.focusWindow
 // - workbench.action.generateColorTheme
 // - workbench.action.getStartedWithAccessibilityFeatures
 // - workbench.action.gotoOffset
