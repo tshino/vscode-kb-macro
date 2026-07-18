@@ -350,6 +350,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "agentsVoice.disconnect"
+				},
+				"when": "kb-macro.active && agentsVoiceConnected && config.agents.voice.enabled && inChatInput && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "notebook.cell.quitEdit"
 				},
 				"when": "kb-macro.active && inputFocus && notebookEditorFocused && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible && !inlineChatFocused"
@@ -376,7 +384,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -771,7 +779,7 @@
 				"args": {
 					"command": "workbench.actions.workbench.panel.output.clearFilterText"
 				},
-				"when": "kb-macro.active && isLinux && outputFilterFocus"
+				"when": "kb-macro.active && !isMac && outputFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -6233,7 +6241,7 @@
 				"args": {
 					"command": "agentsVoice.pttStopInChat"
 				},
-				"when": "kb-macro.active && agentsVoiceActive && config.agents.voice.enabled && inChatInput"
+				"when": "kb-macro.active && agentsVoiceListening && config.agents.voice.enabled && inChatInput"
 			},
 			{
 				"key": "ctrl+shift+space",

@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.128.1 for Windows
+// Default Keybindings of Visual Studio Code 1.129.0 for Windows
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -132,6 +132,8 @@
                                      "when": "refactorPreview.enabled && refactorPreview.hasCheckedChanges && focusedView == 'refactorPreview'" },
 { "key": "alt+enter",             "command": "testing.editFocusedTest",
                                      "when": "focusedView == 'workbench.view.testing'" },
+{ "key": "escape",                "command": "agentsVoice.disconnect",
+                                     "when": "agentsVoiceConnected && config.agents.voice.enabled && inChatInput && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible" },
 { "key": "escape",                "command": "notebook.cell.quitEdit",
                                      "when": "inputFocus && notebookEditorFocused && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible && !inlineChatFocused" },
 { "key": "ctrl+alt+enter",        "command": "notebook.cell.quitEdit",
@@ -148,6 +150,8 @@
                                      "when": "chatCursorAtTop && inChatInput && !quickChatHasFocus" },
 { "key": "ctrl+up",               "command": "chat.action.focus",
                                      "when": "inChatInput && isLinux && !quickChatHasFocus || inChatInput && isWindows && !quickChatHasFocus" },
+{ "key": "escape",                "command": "chat.models.action.clearSearchResults",
+                                     "when": "inModelsEditor && inModelsSearch" },
 { "key": "shift+escape",          "command": "closeBreakpointWidget",
                                      "when": "breakpointWidgetVisible && textInputFocus" },
 { "key": "escape",                "command": "closeBreakpointWidget",
@@ -707,7 +711,7 @@
 { "key": "escape",                "command": "agentSession.exitAgentSessionProjection",
                                      "when": "chatInAgentSessionProjection && chatIsEnabled" },
 { "key": "ctrl+shift+space",      "command": "agentsVoice.pttStopInChat",
-                                     "when": "agentsVoiceActive && config.agents.voice.enabled && inChatInput" },
+                                     "when": "agentsVoiceListening && config.agents.voice.enabled && inChatInput" },
 { "key": "ctrl+shift+space",      "command": "agentsVoice.pushToTalk",
                                      "when": "agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus" },
 { "key": "ctrl+shift+space",      "command": "agentsVoice.startVoiceInChat",
@@ -1728,6 +1732,8 @@
 { "key": "ctrl+numpad0",          "command": "workbench.action.zoomReset" },
 { "key": "ctrl+shift+m",          "command": "workbench.actions.view.problems",
                                      "when": "workbench.panel.markers.view.active" },
+{ "key": "escape",                "command": "workbench.actions.workbench.panel.output.clearFilterText",
+                                     "when": "outputFilterFocus" },
 { "key": "escape",                "command": "workbench.banner.focusBanner",
                                      "when": "bannerFocused" },
 { "key": "down",                  "command": "workbench.banner.focusNextAction",
@@ -2165,7 +2171,7 @@
 // - agentSessionsViewer.find
 // - agentSessionsViewer.refresh
 // - agentsVoice.connecting
-// - agentsVoice.disconnect
+// - agentsVoice.openSettings
 // - agentsVoice.resetOnboarding
 // - agentsVoice.selectMicrophone
 // - agentsVoice.showTranscripts
@@ -2201,7 +2207,6 @@
 // - chat.internal.explain
 // - chat.internal.fix
 // - chat.internal.review
-// - chat.models.action.clearSearchResults
 // - chat.openFileSnapshot
 // - chat.openFileUpdatedBySnapshot
 // - chat.toolOutput.save
@@ -3186,6 +3191,7 @@
 // - workbench.action.chat.addDynamicVariable
 // - workbench.action.chat.addToChatAction
 // - workbench.action.chat.agentHost.otel.exportAgentTracesDB
+// - workbench.action.chat.agentHostNetworkDiagnostics
 // - workbench.action.chat.agentsHandoffTip.mute
 // - workbench.action.chat.agentsHandoffTip.open
 // - workbench.action.chat.applyCompareEdits
@@ -3275,7 +3281,8 @@
 // - workbench.action.chat.openAgentHostFolderPicker
 // - workbench.action.chat.openAgentHostModePicker
 // - workbench.action.chat.openAgentHostPermissionModePicker
-// - workbench.action.chat.openAutomationsWorkspacePicker
+// - workbench.action.chat.openAgentHostSettings
+// - workbench.action.chat.openAgentSessionSettings
 // - workbench.action.chat.openCompareBlockInDiffEditor
 // - workbench.action.chat.openCopilotCliStateFile
 // - workbench.action.chat.openDelegationPicker
@@ -3865,7 +3872,6 @@
 // - workbench.actions.workbench.panel.markers.view.toggleExcludedFiles
 // - workbench.actions.workbench.panel.markers.view.toggleInfos
 // - workbench.actions.workbench.panel.markers.view.toggleWarnings
-// - workbench.actions.workbench.panel.output.clearFilterText
 // - workbench.actions.workbench.panel.output.toggle.debug
 // - workbench.actions.workbench.panel.output.toggle.error
 // - workbench.actions.workbench.panel.output.toggle.info
