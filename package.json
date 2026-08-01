@@ -398,14 +398,6 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "chat.models.action.clearSearchResults"
-				},
-				"when": "kb-macro.active && isMac && inModelsEditor && inModelsSearch"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "closeBreakpointWidget"
 				},
 				"when": "kb-macro.active && breakpointWidgetVisible && textInputFocus"
@@ -1113,14 +1105,6 @@
 			},
 			{
 				"key": "down",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "settings.action.focusSettingsFile"
-				},
-				"when": "kb-macro.active && inSettingsSearch && !suggestWidgetVisible"
-			},
-			{
-				"key": "down",
 				"command": "showNextParameterHint",
 				"when": "kb-macro.active && editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
 			},
@@ -1217,14 +1201,6 @@
 				"key": "down",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "settings.action.focusSettingsFromSearch"
-				},
-				"when": "kb-macro.active && inSettingsSearch && !suggestWidgetVisible"
-			},
-			{
-				"key": "down",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "workbench.action.interactivePlayground.arrowDown"
 				},
 				"when": "kb-macro.active && interactivePlaygroundFocus && !editorTextFocus"
@@ -1252,6 +1228,14 @@
 					"command": "notebook.cell.nullAction"
 				},
 				"when": "kb-macro.active && notebookOutputInputFocused"
+			},
+			{
+				"key": "down",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "settings.action.focusSettingsFromSearch"
+				},
+				"when": "kb-macro.active && inSettingsSearch && !suggestWidgetVisible"
 			},
 			{
 				"key": "down",
@@ -2132,14 +2116,6 @@
 				"key": "up",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "settings.action.showPreviousSearch"
-				},
-				"when": "kb-macro.active && inSettingsSearch && !suggestWidgetVisible"
-			},
-			{
-				"key": "up",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "workbench.action.interactivePlayground.arrowUp"
 				},
 				"when": "kb-macro.active && interactivePlaygroundFocus && !editorTextFocus"
@@ -2175,6 +2151,14 @@
 					"command": "settings.action.focusSearchFromSettings"
 				},
 				"when": "kb-macro.active && inSettingsEditor && settingFirstRowFocus && settingRowFocus"
+			},
+			{
+				"key": "up",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "settings.action.showPreviousSearch"
+				},
+				"when": "kb-macro.active && inSettingsSearch && !suggestWidgetVisible"
 			},
 			{
 				"key": "up",
@@ -6259,6 +6243,33 @@
 				"when": "kb-macro.active && editorHasSignatureHelpProvider && editorTextFocus"
 			},
 			{
+				"key": "ctrl+shift+space",
+				"mac": "shift+cmd+space",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "agentsVoice.pushToTalk"
+				},
+				"when": "kb-macro.active && agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus"
+			},
+			{
+				"key": "ctrl+shift+space",
+				"mac": "shift+cmd+space",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "agentsVoice.startVoiceInChat"
+				},
+				"when": "kb-macro.active && config.agents.voice.enabled && config.agents.voice.handsFree && inChatInput && !chatIsEnabled || kb-macro.active && config.agents.voice.enabled && config.agents.voice.handsFree && inChatInput && !chatSpeechToTextConfigured || kb-macro.active && config.agents.voice.enabled && inChatInput && !agentsVoiceConnected && !chatIsEnabled || kb-macro.active && config.agents.voice.enabled && inChatInput && !agentsVoiceConnected && !chatSpeechToTextConfigured || kb-macro.active && chatIsEnabled && config.agents.voice.enabled && config.agents.voice.handsFree && inChatInput && !chatSpeechToTextConfigured || kb-macro.active && chatIsEnabled && config.agents.voice.enabled && inChatInput && !agentsVoiceConnected && !chatSpeechToTextConfigured || kb-macro.active && chatSpeechToTextConfigured && config.agents.voice.enabled && config.agents.voice.handsFree && inChatInput && !chatIsEnabled || kb-macro.active && chatSpeechToTextConfigured && config.agents.voice.enabled && inChatInput && !agentsVoiceConnected && !chatIsEnabled || kb-macro.active && config.agents.voice.enabled && config.agents.voice.handsFree && inChatInput && !agentsVoiceConnected && !chatIsEnabled || kb-macro.active && config.agents.voice.enabled && config.agents.voice.handsFree && inChatInput && !agentsVoiceConnected && !chatSpeechToTextConfigured"
+			},
+			{
+				"key": "ctrl+shift+space",
+				"mac": "shift+cmd+space",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.chat.voiceInputMode.holdToTalk"
+				},
+				"when": "kb-macro.active && config.agents.voice.enabled && inChatInput"
+			},
+			{
 				"key": "ctrl+i",
 				"mac": "cmd+i",
 				"command": "kb-macro.wrap",
@@ -6357,7 +6368,7 @@
 				"args": {
 					"command": "workbench.action.chat.startVoiceChat"
 				},
-				"when": "kb-macro.active && chatIsEnabled && hasSpeechProvider && inChatInput && !editorFocus && !notebookEditorFocused && !scopedVoiceChatGettingReady && !speechToTextInProgress || kb-macro.active && chatIsEnabled && hasSpeechProvider && inlineChatFocused && !editorFocus && !notebookEditorFocused && !scopedVoiceChatGettingReady && !speechToTextInProgress"
+				"when": "kb-macro.active && chatIsEnabled && hasSpeechProvider && inChatInput && !chatSpeechToTextConfigured && !editorFocus && !notebookEditorFocused && !scopedVoiceChatGettingReady && !speechToTextInProgress || kb-macro.active && chatIsEnabled && hasSpeechProvider && inlineChatFocused && !chatSpeechToTextConfigured && !editorFocus && !notebookEditorFocused && !scopedVoiceChatGettingReady && !speechToTextInProgress"
 			},
 			{
 				"key": "ctrl+i",
@@ -6375,7 +6386,7 @@
 				"args": {
 					"command": "workbench.action.chat.toggleSpeechToText"
 				},
-				"when": "kb-macro.active && chatIsEnabled && chatSpeechToTextConfigured && inChatInput"
+				"when": "kb-macro.active && chatIsEnabled && chatSpeechToTextConfigured && inChatInput && !editorFocus && !notebookEditorFocused"
 			},
 			{
 				"key": "ctrl+i",
@@ -8131,7 +8142,10 @@
 				"mac": "shift+cmd+a",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.openAgentsWindow"
+					"command": "workbench.action.openAgentsWindow",
+					"args": {
+						"source": "keyboardShortcut"
+					}
 				},
 				"when": "kb-macro.active && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
@@ -8460,7 +8474,7 @@
 				"args": {
 					"command": "workbench.action.editorDictation.start"
 				},
-				"when": "kb-macro.active && hasSpeechProvider && !editorReadonly && !speechToTextInProgress"
+				"when": "kb-macro.active && hasSpeechProvider && !editorReadonly && !speechToTextInProgress || kb-macro.active && chatIsEnabled && chatSpeechToTextConfigured && !editorReadonly && !speechToTextInProgress"
 			},
 			{
 				"key": "ctrl+k p",
@@ -9261,7 +9275,10 @@
 				"mac": "shift+alt+cmd+a",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.openAgentsWindow"
+					"command": "workbench.action.openAgentsWindow",
+					"args": {
+						"source": "keyboardShortcut"
+					}
 				},
 				"when": "kb-macro.active && accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
@@ -10533,22 +10550,6 @@
 				"when": "kb-macro.active && isMac && textInputFocus"
 			},
 			{
-				"key": "ctrl+shift+space",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "agentsVoice.pushToTalk"
-				},
-				"when": "kb-macro.active && isWindows && agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus"
-			},
-			{
-				"key": "ctrl+shift+space",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "agentsVoice.startVoiceInChat"
-				},
-				"when": "kb-macro.active && isWindows && config.agents.voice.enabled && inChatInput"
-			},
-			{
 				"key": "ctrl+k ctrl+alt+c",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -10797,7 +10798,7 @@
 				"args": {
 					"command": "workbench.action.editorDictation.start"
 				},
-				"when": "kb-macro.active && isWindows && hasSpeechProvider && !editorReadonly && !speechToTextInProgress"
+				"when": "kb-macro.active && isWindows && hasSpeechProvider && !editorReadonly && !speechToTextInProgress || kb-macro.active && isWindows && chatIsEnabled && chatSpeechToTextConfigured && !editorReadonly && !speechToTextInProgress"
 			},
 			{
 				"key": "ctrl+n",
@@ -11129,22 +11130,6 @@
 				"when": "kb-macro.active && isLinux && editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
 			},
 			{
-				"key": "ctrl+shift+alt+space",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "agentsVoice.pushToTalk"
-				},
-				"when": "kb-macro.active && isLinux && agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus"
-			},
-			{
-				"key": "ctrl+shift+alt+space",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "agentsVoice.startVoiceInChat"
-				},
-				"when": "kb-macro.active && isLinux && config.agents.voice.enabled && inChatInput"
-			},
-			{
 				"key": "ctrl+shift+alt+c",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -11437,22 +11422,6 @@
 					"command": "editor.action.smartSelect.shrink"
 				},
 				"when": "kb-macro.active && editorTextFocus"
-			},
-			{
-				"key": "shift+cmd+space",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "agentsVoice.pushToTalk"
-				},
-				"when": "kb-macro.active && agentsVoiceWidgetFocused && config.agents.voice.enabled && !inputFocus"
-			},
-			{
-				"key": "shift+cmd+space",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "agentsVoice.startVoiceInChat"
-				},
-				"when": "kb-macro.active && config.agents.voice.enabled && inChatInput"
 			},
 			{
 				"key": "cmd+k alt+cmd+c",
