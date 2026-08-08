@@ -216,7 +216,7 @@
 				"args": {
 					"command": "closeFindWidget"
 				},
-				"when": "kb-macro.active && editorFocus && findWidgetVisible && !isComposing"
+				"when": "kb-macro.active && editorFocus && findWidgetVisible"
 			},
 			{
 				"key": "shift+escape",
@@ -392,7 +392,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -528,7 +528,7 @@
 				"args": {
 					"command": "closeFindWidget"
 				},
-				"when": "kb-macro.active && editorFocus && findWidgetVisible && !isComposing"
+				"when": "kb-macro.active && editorFocus && findWidgetVisible"
 			},
 			{
 				"key": "escape",
@@ -745,9 +745,9 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.browser.addElementToChat"
+					"command": "workbench.action.browser.stopElementSelection"
 				},
-				"when": "kb-macro.active && browserElementSelectionActive && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'"
+				"when": "kb-macro.active && browserElementSelectionMode && activeEditor == 'workbench.editor.browser'"
 			},
 			{
 				"key": "escape",
@@ -787,7 +787,7 @@
 				"args": {
 					"command": "workbench.actions.workbench.panel.output.clearFilterText"
 				},
-				"when": "kb-macro.active && isLinux && outputFilterFocus"
+				"when": "kb-macro.active && isWindows && outputFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -937,25 +937,9 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.editorDictation.stop"
-				},
-				"when": "kb-macro.active && editorDictation.inProgress"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "workbench.action.speech.stopReadAloud"
 				},
 				"when": "kb-macro.active && scopedChatSynthesisInProgress && textToSpeechInProgress"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.action.terminal.stopVoice"
-				},
-				"when": "kb-macro.active && terminalDictationInProgress"
 			},
 			{
 				"key": "escape",
@@ -1139,7 +1123,7 @@
 				"args": {
 					"command": "history.showNext"
 				},
-				"when": "kb-macro.active && historyNavigationForwardsEnabled && historyNavigationWidgetFocus && !isComposing && !suggestWidgetVisible"
+				"when": "kb-macro.active && historyNavigationForwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible"
 			},
 			{
 				"key": "down",
@@ -2054,7 +2038,7 @@
 				"args": {
 					"command": "history.showPrevious"
 				},
-				"when": "kb-macro.active && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !isComposing && !suggestWidgetVisible"
+				"when": "kb-macro.active && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible"
 			},
 			{
 				"key": "up",
@@ -3405,7 +3389,7 @@
 				"args": {
 					"command": "acceptRenameInputWithPreview"
 				},
-				"when": "kb-macro.active && config.editor.rename.enablePreview && editorFocus && renameInputVisible && !isComposing"
+				"when": "kb-macro.active && config.editor.rename.enablePreview && editorFocus && renameInputVisible"
 			},
 			{
 				"key": "ctrl+enter",
@@ -3474,7 +3458,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "cmd+enter",
@@ -3482,7 +3466,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+enter",
@@ -3646,7 +3630,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "alt+enter",
@@ -3711,7 +3695,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "alt+cmd+enter",
@@ -3719,7 +3703,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+alt+enter",
@@ -3974,7 +3958,7 @@
 				"args": {
 					"command": "editor.action.replaceOne"
 				},
-				"when": "kb-macro.active && editorFocus && findWidgetVisible && replaceInputFocussed && !isComposing"
+				"when": "kb-macro.active && editorFocus && findWidgetVisible && replaceInputFocussed"
 			},
 			{
 				"key": "enter",
@@ -3991,7 +3975,7 @@
 				"args": {
 					"command": "acceptRenameInput"
 				},
-				"when": "kb-macro.active && editorFocus && renameInputVisible && !isComposing"
+				"when": "kb-macro.active && editorFocus && renameInputVisible"
 			},
 			{
 				"key": "enter",
@@ -4071,7 +4055,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "enter",
@@ -5072,7 +5056,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "shift+enter",
@@ -5381,7 +5365,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+shift+enter",
@@ -5512,7 +5496,7 @@
 				"args": {
 					"command": "history.showNext"
 				},
-				"when": "kb-macro.active && historyNavigationForwardsEnabled && historyNavigationWidgetFocus && !isComposing && !suggestWidgetVisible"
+				"when": "kb-macro.active && historyNavigationForwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible"
 			},
 			{
 				"key": "alt+down",
@@ -5609,7 +5593,7 @@
 				"args": {
 					"command": "history.showPrevious"
 				},
-				"when": "kb-macro.active && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !isComposing && !suggestWidgetVisible"
+				"when": "kb-macro.active && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible"
 			},
 			{
 				"key": "alt+up",
@@ -6875,7 +6859,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+shift+1",
@@ -7366,6 +7350,28 @@
 				"when": "kb-macro.active && !isMac && watchExpressionsExist && !expressionSelected && focusedView == 'workbench.debug.watchExpressionsView'"
 			},
 			{
+				"key": "ctrl+alt+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "search.action.copyPath"
+				},
+				"when": "kb-macro.active && isLinux && fileMatchOrFolderMatchWithResourceFocus"
+			},
+			{
+				"key": "ctrl+alt+c",
+				"mac": "alt+cmd+c",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.browser.addElementCommentToChat",
+					"args": {
+						"continuous": true,
+						"mode": "comment",
+						"highlightFocusedElement": true
+					}
+				},
+				"when": "kb-macro.active && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'"
+			},
+			{
 				"key": "ctrl+f5",
 				"mac": "cmd+f5",
 				"command": "kb-macro.wrap",
@@ -7854,7 +7860,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+alt+home",
@@ -8474,7 +8480,7 @@
 				"args": {
 					"command": "workbench.action.editorDictation.start"
 				},
-				"when": "kb-macro.active && hasSpeechProvider && !editorReadonly && !speechToTextInProgress || kb-macro.active && chatIsEnabled && chatSpeechToTextConfigured && !editorReadonly && !speechToTextInProgress"
+				"when": "kb-macro.active && editorDictation.inProgress && hasSpeechProvider && !editorReadonly || kb-macro.active && hasSpeechProvider && !editorReadonly && !speechToTextInProgress || kb-macro.active && chatIsEnabled && chatSpeechToTextConfigured && editorDictation.inProgress && !editorReadonly || kb-macro.active && chatIsEnabled && chatSpeechToTextConfigured && !editorReadonly && !speechToTextInProgress"
 			},
 			{
 				"key": "ctrl+k p",
@@ -9756,7 +9762,10 @@
 				"mac": "shift+cmd+c",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "workbench.action.browser.addElementToChat"
+					"command": "workbench.action.browser.addElementToChat",
+					"args": {
+						"highlightFocusedElement": true
+					}
 				},
 				"when": "kb-macro.active && browserHasUrl && chatIsEnabled && !browserHasError && activeEditor == 'workbench.editor.browser'"
 			},
@@ -10614,14 +10623,6 @@
 				"when": "kb-macro.active && isWindows && editorFocus"
 			},
 			{
-				"key": "ctrl+alt+c",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "search.action.copyPath"
-				},
-				"when": "kb-macro.active && isLinux && fileMatchOrFolderMatchWithResourceFocus"
-			},
-			{
 				"key": "ctrl+alt+pagedown",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -10798,7 +10799,7 @@
 				"args": {
 					"command": "workbench.action.editorDictation.start"
 				},
-				"when": "kb-macro.active && isWindows && hasSpeechProvider && !editorReadonly && !speechToTextInProgress || kb-macro.active && isWindows && chatIsEnabled && chatSpeechToTextConfigured && !editorReadonly && !speechToTextInProgress"
+				"when": "kb-macro.active && isWindows && editorDictation.inProgress && hasSpeechProvider && !editorReadonly || kb-macro.active && isWindows && hasSpeechProvider && !editorReadonly && !speechToTextInProgress || kb-macro.active && isWindows && chatIsEnabled && chatSpeechToTextConfigured && editorDictation.inProgress && !editorReadonly || kb-macro.active && isWindows && chatIsEnabled && chatSpeechToTextConfigured && !editorReadonly && !speechToTextInProgress"
 			},
 			{
 				"key": "ctrl+n",
@@ -11589,7 +11590,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+cmd+enter",
@@ -11597,7 +11598,7 @@
 				"args": {
 					"command": "quickInput.accept"
 				},
-				"when": "kb-macro.active && inQuickInput && !isComposing && quickInputType != 'quickWidget'"
+				"when": "kb-macro.active && inQuickInput && quickInputType != 'quickWidget'"
 			},
 			{
 				"key": "ctrl+alt+cmd+home",
