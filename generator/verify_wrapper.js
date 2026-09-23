@@ -61,8 +61,16 @@ const removeOSSpecificWhenContextsFor = function(keybinding, os) {
             os === 'linux' ? [ 'isLinux', '!isWindows', '!isMac' ] :
             os === 'mac' ? [ 'isMac', '!isWindows', '!isLinux' ] : []
         );
-        for (const context of contexts) {
-            keybinding.when = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, context);
+        let anyChange = true;
+        while (anyChange) {
+            anyChange = false;
+            for (const context of contexts) {
+                let newWhen = genWrapperUtil.removeCommonHeadingWhenContext(keybinding.when, context);
+                if (keybinding.when !== newWhen) {
+                    keybinding.when = newWhen;
+                    anyChange = true;
+                }
+            }
         }
     }
     if (keybinding.when === '') {
