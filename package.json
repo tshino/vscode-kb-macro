@@ -392,7 +392,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -788,14 +788,6 @@
 					"command": "workbench.action.terminal.hideFind"
 				},
 				"when": "kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalHasBeenCreated || kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalProcessSupported"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "workbench.actions.workbench.panel.output.clearFilterText"
-				},
-				"when": "kb-macro.active && isLinux && outputFilterFocus"
 			},
 			{
 				"key": "escape",
