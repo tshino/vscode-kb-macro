@@ -360,7 +360,7 @@
 				"args": {
 					"command": "agentsVoice.disconnect"
 				},
-				"when": "kb-macro.active && agentsVoiceConnected && agentsVoiceEntitled && agentsVoiceInitiatedHere && chatIsEnabled && config.agents.voice.enabled && inChatInput && !chatSessionHasActiveRequest && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible || kb-macro.active && agentsVoiceConnected && agentsVoiceEntitled && chatIsEnabled && config.agents.voice.enabled && inChatInput && !chatSessionHasActiveRequest && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible && !isSessionsWindow"
+				"when": "kb-macro.active && agentsVoiceConnected && agentsVoiceEntitled && agentsVoiceInitiatedHere && chatIsEnabled && config.agents.voice.enabled && inChatInput && !chatSessionHasActiveRequest && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible || kb-macro.active && agentsVoiceConnected && agentsVoiceEntitled && chatIsEnabled && config.agents.voice.enabled && inChatInput && !chatSessionHasActiveRequest && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible && !isSessionsWindow || kb-macro.active && agentsVoiceConnecting && agentsVoiceEntitled && agentsVoiceInitiatedHere && chatIsEnabled && config.agents.voice.enabled && inChatInput && !chatSessionHasActiveRequest && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible || kb-macro.active && agentsVoiceConnecting && agentsVoiceEntitled && chatIsEnabled && config.agents.voice.enabled && inChatInput && !chatSessionHasActiveRequest && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible && !isSessionsWindow || kb-macro.active && agentsVoiceConnected && agentsVoiceConnecting && agentsVoiceEntitled && agentsVoiceInitiatedHere && chatIsEnabled && config.agents.voice.enabled && inChatInput && !chatSessionHasActiveRequest && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible || kb-macro.active && agentsVoiceConnected && agentsVoiceConnecting && agentsVoiceEntitled && chatIsEnabled && config.agents.voice.enabled && inChatInput && !chatSessionHasActiveRequest && !editorHasMultipleSelections && !editorHasSelection && !editorHoverVisible && !isSessionsWindow"
 			},
 			{
 				"key": "escape",
@@ -392,7 +392,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -2930,7 +2930,7 @@
 				"args": {
 					"command": "agentSession.archive"
 				},
-				"when": "kb-macro.active && agentSessionsViewerFocused && !agentSessionIsArchived"
+				"when": "kb-macro.active && agentSessionsViewerFocused && !agentSessionIsArchived && !agentSessionIsChild"
 			},
 			{
 				"key": "delete",
@@ -4063,7 +4063,7 @@
 				"args": {
 					"command": "workbench.action.chat.queueMessage"
 				},
-				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'st' || kb-macro.active && chatInputHasText && inChatInput && !chatTranscriptProgressActive && config.chat.requestQueuing.defaultAction == 'steer' && chatEditingSentRequest != 'q' && chatEditingSentRequest != 'st'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest == 'st' || kb-macro.active && chatInputHasText && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && config.chat.requestQueuing.defaultAction == 'steer' && chatEditingSentRequest != 'q' && chatEditingSentRequest != 'st'"
 			},
 			{
 				"key": "alt+enter",
@@ -4071,7 +4071,7 @@
 				"args": {
 					"command": "workbench.action.chat.steerWithMessage"
 				},
-				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' || kb-macro.active && chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest != 'q' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' || kb-macro.active && chatInputHasText && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest != 'q' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
 			},
 			{
 				"key": "alt+enter",
@@ -4416,7 +4416,7 @@
 				"args": {
 					"command": "workbench.action.chat.submit"
 				},
-				"when": "kb-macro.active && chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatSessionRequestInProgress && !chatTranscriptProgressActive && !withinEditSessionDiff || kb-macro.active && chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatTranscriptProgressActive && !withinEditSessionDiff && chatEditingSentRequest == 's'"
+				"when": "kb-macro.active && chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatInputBlocked && !chatSessionRequestInProgress && !chatTranscriptProgressActive && !withinEditSessionDiff || kb-macro.active && chatInputHasSendableContent && chatSessionOptionsValid && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && !withinEditSessionDiff && chatEditingSentRequest == 's'"
 			},
 			{
 				"key": "enter",
@@ -4424,7 +4424,7 @@
 				"args": {
 					"command": "workbench.action.chat.queueMessage"
 				},
-				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st' && config.chat.requestQueuing.defaultAction != 'steer'"
 			},
 			{
 				"key": "enter",
@@ -4432,7 +4432,7 @@
 				"args": {
 					"command": "workbench.action.chat.steerWithMessage"
 				},
-				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatTranscriptProgressActive && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatTranscriptProgressActive && config.chat.requestQueuing.defaultAction == 'steer' && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st'"
+				"when": "kb-macro.active && chatInputHasText && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest == 'q' && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && chatEditingSentRequest == 'st' && chatEditingSentRequest != 's' || kb-macro.active && chatInputHasText && chatSessionRequestInProgress && inChatInput && !chatInputBlocked && !chatTranscriptProgressActive && config.chat.requestQueuing.defaultAction == 'steer' && chatEditingSentRequest != 'q' && chatEditingSentRequest != 's' && chatEditingSentRequest != 'st'"
 			},
 			{
 				"key": "enter",
@@ -4617,7 +4617,7 @@
 				"args": {
 					"command": "agentSession.rename"
 				},
-				"when": "kb-macro.active && isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType == 'local' || kb-macro.active && isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType =~ /^agent-host-/ || kb-macro.active && isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType =~ /^remote-/"
+				"when": "kb-macro.active && isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && !agentSessionIsChild && chatSessionType == 'local' || kb-macro.active && isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && !agentSessionIsChild && chatSessionType =~ /^agent-host-/ || kb-macro.active && isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && !agentSessionIsChild && chatSessionType =~ /^remote-/"
 			},
 			{
 				"key": "enter",
@@ -5305,7 +5305,7 @@
 				"args": {
 					"command": "agentSession.unarchive"
 				},
-				"when": "kb-macro.active && agentSessionIsArchived && agentSessionsViewerFocused"
+				"when": "kb-macro.active && agentSessionIsArchived && agentSessionsViewerFocused && !agentSessionIsChild"
 			},
 			{
 				"key": "alt+cmd+backspace",
@@ -6728,7 +6728,7 @@
 				"args": {
 					"command": "agentSession.rename"
 				},
-				"when": "kb-macro.active && !isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType == 'local' || kb-macro.active && !isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType =~ /^agent-host-/ || kb-macro.active && !isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && chatSessionType =~ /^remote-/"
+				"when": "kb-macro.active && !isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && !agentSessionIsChild && chatSessionType == 'local' || kb-macro.active && !isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && !agentSessionIsChild && chatSessionType =~ /^agent-host-/ || kb-macro.active && !isMac && agentSessionsViewerFocused && !agentSessionHasMultipleSelected && !agentSessionIsChild && chatSessionType =~ /^remote-/"
 			},
 			{
 				"key": "f2",
@@ -8965,7 +8965,28 @@
 			},
 			{
 				"key": "ctrl+shift+a",
-				"mac": "shift+cmd+a",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.openAgentsWindow",
+					"args": {
+						"source": "keyboardShortcut"
+					}
+				},
+				"when": "kb-macro.active && isWindows && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
+			},
+			{
+				"key": "ctrl+shift+a",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.openAgentsWindow",
+					"args": {
+						"source": "keyboardShortcut"
+					}
+				},
+				"when": "kb-macro.active && isLinux && config.chat.agent.enabled && editorReadonly && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow || kb-macro.active && isLinux && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !editorAreaFocus && !isAuxiliaryWindow && !isSessionsWindow"
+			},
+			{
+				"key": "shift+cmd+a",
 				"command": "kb-macro.wrap",
 				"args": {
 					"command": "workbench.action.openAgentsWindow",
@@ -9042,6 +9063,15 @@
 					"command": "workbench.action.chat.open"
 				},
 				"when": "kb-macro.active && !chatSetupDisabledInWorkspace && !chatSetupHidden"
+			},
+			{
+				"key": "ctrl+alt+i",
+				"mac": "ctrl+cmd+i",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.action.chat.showUpdateRequired"
+				},
+				"when": "kb-macro.active && workbench.panel.chat.updateRequired.active"
 			},
 			{
 				"key": "ctrl+alt+i",
@@ -12234,6 +12264,14 @@
 				"when": "kb-macro.active && false"
 			},
 			{
+				"key": "win+e",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "markdown.editor.toggleLocked"
+				},
+				"when": "kb-macro.active && false"
+			},
+			{
 				"key": "win+z",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -12554,6 +12592,14 @@
 				"when": "kb-macro.active && false"
 			},
 			{
+				"key": "meta+e",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "markdown.editor.toggleLocked"
+				},
+				"when": "kb-macro.active && false"
+			},
+			{
 				"key": "meta+z",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -12686,6 +12732,14 @@
 					"command": "quickInput.pagePrevious"
 				},
 				"when": "kb-macro.active && inQuickInput && quickInputType == 'quickPick' || kb-macro.active && inQuickInput && quickInputType == 'quickTree'"
+			},
+			{
+				"key": "cmd+e",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "markdown.editor.toggleLocked"
+				},
+				"when": "kb-macro.active && markdownEditorFocus && activeCustomEditorId == 'vscode.markdown.editor'"
 			},
 			{
 				"key": "cmd+backspace",
