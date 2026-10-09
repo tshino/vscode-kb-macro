@@ -8972,7 +8972,7 @@
 						"source": "keyboardShortcut"
 					}
 				},
-				"when": "kb-macro.active && isWindows && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
+				"when": "kb-macro.active && isWindows && chatHasCreatedSessionInAgentsWindow && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+a",
@@ -8983,7 +8983,7 @@
 						"source": "keyboardShortcut"
 					}
 				},
-				"when": "kb-macro.active && isLinux && config.chat.agent.enabled && editorReadonly && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow || kb-macro.active && isLinux && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !editorAreaFocus && !isAuxiliaryWindow && !isSessionsWindow"
+				"when": "kb-macro.active && isLinux && chatHasCreatedSessionInAgentsWindow && config.chat.agent.enabled && editorReadonly && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow || kb-macro.active && isLinux && chatHasCreatedSessionInAgentsWindow && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !editorAreaFocus && !isAuxiliaryWindow && !isSessionsWindow"
 			},
 			{
 				"key": "shift+cmd+a",
@@ -8994,7 +8994,7 @@
 						"source": "keyboardShortcut"
 					}
 				},
-				"when": "kb-macro.active && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
+				"when": "kb-macro.active && chatHasCreatedSessionInAgentsWindow && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
 			{
 				"key": "ctrl+shift+a",
@@ -10186,7 +10186,7 @@
 						"source": "keyboardShortcut"
 					}
 				},
-				"when": "kb-macro.active && accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
+				"when": "kb-macro.active && accessibilityModeEnabled && chatHasCreatedSessionInAgentsWindow && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow"
 			},
 			{
 				"key": "alt+1",
