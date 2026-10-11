@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.140.0 for Windows
+// Default Keybindings of Visual Studio Code 1.141.0 for Windows
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -1508,10 +1508,10 @@
 { "key": "ctrl+pagedown",         "command": "workbench.action.nextEditor" },
 { "key": "ctrl+k ctrl+pagedown",  "command": "workbench.action.nextEditorInGroup" },
 { "key": "ctrl+shift+a",          "command": "workbench.action.openAgentsWindow",
-                                     "when": "config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow",
+                                     "when": "chatHasCreatedSessionInAgentsWindow && config.chat.agent.enabled && !accessibilityModeEnabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow",
                                      "args": {"source":"keyboardShortcut"} },
 { "key": "ctrl+shift+alt+a",      "command": "workbench.action.openAgentsWindow",
-                                     "when": "accessibilityModeEnabled && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow",
+                                     "when": "accessibilityModeEnabled && chatHasCreatedSessionInAgentsWindow && config.chat.agent.enabled && !chatSetupDisabledInWorkspace && !chatSetupHidden && !isAuxiliaryWindow && !isSessionsWindow",
                                      "args": {"source":"keyboardShortcut"} },
 { "key": "ctrl+n",                "command": "workbench.action.openChat",
                                      "when": "chatIsEnabled && inChat && inChatEditor" },
@@ -2402,6 +2402,8 @@
 // - chat.internal.review
 // - chat.openFileSnapshot
 // - chat.openFileUpdatedBySnapshot
+// - chat.pet.blobby
+// - chat.pet.changeColor
 // - chat.pet.developer.resetAchievements
 // - chat.pet.developer.resetSize
 // - chat.pet.developer.unlockAllAchievements
