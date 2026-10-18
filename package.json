@@ -392,7 +392,7 @@
 				"args": {
 					"command": "chat.models.action.clearSearchResults"
 				},
-				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
+				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
 			},
 			{
 				"key": "escape",
@@ -788,6 +788,14 @@
 					"command": "workbench.action.terminal.hideFind"
 				},
 				"when": "kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalHasBeenCreated || kb-macro.active && terminalFindVisible && terminalFocusInAny && terminalProcessSupported"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "workbench.actions.workbench.panel.output.clearFilterText"
+				},
+				"when": "kb-macro.active && isLinux && outputFilterFocus"
 			},
 			{
 				"key": "escape",
@@ -2885,7 +2893,7 @@
 				"args": {
 					"command": "workbench.action.chat.restoreCheckpoint"
 				},
-				"when": "kb-macro.active && inChat && !chatIsReadonly && !inChatQuestionCarousel && !textInputFocus"
+				"when": "kb-macro.active && inChat && !chatIsReadonly && !inChatQuestionCarousel && !inputFocus && !textInputFocus"
 			},
 			{
 				"key": "delete",
@@ -2894,7 +2902,7 @@
 				"args": {
 					"command": "workbench.action.chat.undoEdits"
 				},
-				"when": "kb-macro.active && inChat && !chatIsReadonly && !inChatQuestionCarousel && !textInputFocus"
+				"when": "kb-macro.active && inChat && !chatIsReadonly && !inChatQuestionCarousel && !inputFocus && !textInputFocus"
 			},
 			{
 				"key": "delete",
@@ -6771,6 +6779,14 @@
 				"when": "kb-macro.active && !isMac && filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
 			},
 			{
+				"key": "f2",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "markdown.editor.rename"
+				},
+				"when": "kb-macro.active && markdownEditorFocus && activeCustomEditorId == 'vscode.markdown.editor'"
+			},
+			{
 				"key": "ctrl+k f12",
 				"mac": "cmd+k f12",
 				"command": "kb-macro.wrap",
@@ -7161,6 +7177,14 @@
 					"command": "workbench.action.terminal.triggerSuggest"
 				},
 				"when": "kb-macro.active && config.terminal.integrated.suggest.enabled && terminalFocus && terminalProcessSupported && !terminalSuggestWidgetVisible"
+			},
+			{
+				"key": "ctrl+space",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "markdown.editor.triggerSuggest"
+				},
+				"when": "kb-macro.active && markdownEditorFocus && activeCustomEditorId == 'vscode.markdown.editor'"
 			},
 			{
 				"key": "ctrl+space",
@@ -9313,7 +9337,7 @@
 				"args": {
 					"command": "workbench.action.debug.stepOut"
 				},
-				"when": "kb-macro.active && debugState == 'stopped'"
+				"when": "kb-macro.active && threadHasMultipleStackFrames && debugState == 'stopped'"
 			},
 			{
 				"key": "f10",
@@ -11206,15 +11230,6 @@
 				"when": "kb-macro.active && editorTextFocus && !operationInProgress && resourceScheme == 'file'"
 			},
 			{
-				"key": "ctrl+k v",
-				"mac": "cmd+k v",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "markdown.showPreviewToSide"
-				},
-				"when": "kb-macro.active && editorFocus && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
-			},
-			{
 				"key": "shift+alt+f12",
 				"command": "kb-macro.wrap",
 				"args": {
@@ -11230,6 +11245,15 @@
 					"command": "git.unstageSelectedRanges"
 				},
 				"when": "kb-macro.active && editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme == 'git'"
+			},
+			{
+				"key": "ctrl+k v",
+				"mac": "cmd+k v",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "markdown.showPreviewToSide"
+				},
+				"when": "kb-macro.active && editorFocus && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/"
 			},
 			{
 				"key": "ctrl+k",

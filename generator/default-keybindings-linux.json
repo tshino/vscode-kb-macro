@@ -1,4 +1,4 @@
-// Default Keybindings of Visual Studio Code 1.141.0 for Linux
+// Default Keybindings of Visual Studio Code 1.142.0 for Linux
 // Override key bindings by placing them into your key bindings file.
 [
 { "key": "escape escape",         "command": "workbench.action.exitZenMode",
@@ -1348,7 +1348,7 @@
 { "key": "ctrl+alt+up",           "command": "workbench.action.chat.previousUserPrompt",
                                      "when": "chatIsEnabled && inChat" },
 { "key": "delete",                "command": "workbench.action.chat.restoreCheckpoint",
-                                     "when": "inChat && !chatIsReadonly && !inChatQuestionCarousel && !textInputFocus" },
+                                     "when": "inChat && !chatIsReadonly && !inChatQuestionCarousel && !inputFocus && !textInputFocus" },
 { "key": "ctrl+alt+meta+/",       "command": "workbench.action.chat.run-in-new-chat.prompt.current",
                                      "when": "chatIsEnabled && editorTextFocus && resourceSet && resourceLangId == 'prompt'" },
 { "key": "alt+meta+/",            "command": "workbench.action.chat.run.prompt",
@@ -1372,7 +1372,7 @@
 { "key": "alt+t",                 "command": "workbench.action.chat.toggleThinkingContentAccessibleView",
                                      "when": "accessibleViewIsShown && chatIsEnabled && accessibleViewCurrentProviderId == 'panelChat'" },
 { "key": "delete",                "command": "workbench.action.chat.undoEdits",
-                                     "when": "inChat && !chatIsReadonly && !inChatQuestionCarousel && !textInputFocus" },
+                                     "when": "inChat && !chatIsReadonly && !inChatQuestionCarousel && !inputFocus && !textInputFocus" },
 { "key": "ctrl+shift+space",      "command": "workbench.action.chat.voiceInputMode.holdToTalk",
                                      "when": "agentsVoiceEntitled && chatIsEnabled && config.agents.voice.enabled && inChatInput" },
 { "key": "ctrl+w",                "command": "workbench.action.closeActiveEditor" },
@@ -1409,7 +1409,7 @@
 { "key": "ctrl+f11",              "command": "workbench.action.debug.stepIntoTarget",
                                      "when": "inDebugMode && stepIntoTargetsSupported && debugState == 'stopped'" },
 { "key": "shift+f11",             "command": "workbench.action.debug.stepOut",
-                                     "when": "debugState == 'stopped'" },
+                                     "when": "threadHasMultipleStackFrames && debugState == 'stopped'" },
 { "key": "f10",                   "command": "workbench.action.debug.stepOver",
                                      "when": "debugState == 'stopped'" },
 { "key": "shift+f5",              "command": "workbench.action.debug.stop",
@@ -1735,6 +1735,8 @@
 { "key": "ctrl+numpad0",          "command": "workbench.action.zoomReset" },
 { "key": "ctrl+shift+m",          "command": "workbench.actions.view.problems",
                                      "when": "workbench.panel.markers.view.active" },
+{ "key": "escape",                "command": "workbench.actions.workbench.panel.output.clearFilterText",
+                                     "when": "outputFilterFocus" },
 { "key": "escape",                "command": "workbench.banner.focusBanner",
                                      "when": "bannerFocused" },
 { "key": "down",                  "command": "workbench.banner.focusNextAction",
@@ -2087,28 +2089,32 @@
                                      "when": "!inDebugMode && debugConfigurationType == 'node' || !inDebugMode && debugConfigurationType == 'pwa-extensionHost' || !inDebugMode && debugConfigurationType == 'pwa-node'" },
 { "key": "ctrl+k ctrl+alt+s",     "command": "git.stageSelectedRanges",
                                      "when": "editorTextFocus && !operationInProgress && resourceScheme == 'file'" },
-{ "key": "ctrl+k v",              "command": "markdown.showPreviewToSide",
-                                     "when": "editorFocus && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/" },
+{ "key": "ctrl+space",            "command": "markdown.editor.triggerSuggest",
+                                     "when": "markdownEditorFocus && activeCustomEditorId == 'vscode.markdown.editor'" },
 { "key": "shift+alt+f12",         "command": "references-view.findReferences",
                                      "when": "editorHasReferenceProvider" },
 { "key": "f11",                   "command": "extension.node-debug.startWithStopOnEntry",
                                      "when": "!inDebugMode && activeViewlet == 'workbench.view.debug' && debugConfigurationType == 'node' || !inDebugMode && activeViewlet == 'workbench.view.debug' && debugConfigurationType == 'pwa-extensionHost' || !inDebugMode && activeViewlet == 'workbench.view.debug' && debugConfigurationType == 'pwa-node'" },
 { "key": "ctrl+k ctrl+n",         "command": "git.unstageSelectedRanges",
                                      "when": "editorTextFocus && isInDiffEditor && isInDiffRightEditor && !operationInProgress && resourceScheme == 'git'" },
-{ "key": "ctrl+shift+v",          "command": "markdown.togglePreview",
-                                     "when": "!terminalFocus && activeCustomEditorId == 'vscode.markdown.preview.editor' || editorFocus && !notebookEditorFocused && !terminalFocus && resourceLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/" },
+{ "key": "f2",                    "command": "markdown.editor.rename",
+                                     "when": "markdownEditorFocus && activeCustomEditorId == 'vscode.markdown.editor'" },
 { "key": "f4",                    "command": "references-view.next",
                                      "when": "reference-list.hasResult && references-view.canNavigate" },
 { "key": "ctrl+k ctrl+r",         "command": "git.revertSelectedRanges",
                                      "when": "editorTextFocus && !operationInProgress && resourceScheme == 'file'" },
-{ "key": "ctrl+b",                "command": "markdown.editor.cursorLeft",
-                                     "when": "false" },
+{ "key": "ctrl+k v",              "command": "markdown.showPreviewToSide",
+                                     "when": "editorFocus && !notebookEditorFocused && editorLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/" },
 { "key": "shift+f4",              "command": "references-view.prev",
                                      "when": "reference-list.hasResult && references-view.canNavigate" },
-{ "key": "left",                  "command": "markdown.editor.cursorLeft",
-                                     "when": "markdownEditorFocus && activeCustomEditorId == 'vscode.markdown.editor'" },
+{ "key": "ctrl+shift+v",          "command": "markdown.togglePreview",
+                                     "when": "!terminalFocus && activeCustomEditorId == 'vscode.markdown.preview.editor' || editorFocus && !notebookEditorFocused && !terminalFocus && resourceLangId =~ /^(markdown|prompt|instructions|chatagent|skill)$/" },
 { "key": "shift+alt+h",           "command": "references-view.showCallHierarchy",
                                      "when": "editorHasCallHierarchyProvider" },
+{ "key": "ctrl+b",                "command": "markdown.editor.cursorLeft",
+                                     "when": "false" },
+{ "key": "left",                  "command": "markdown.editor.cursorLeft",
+                                     "when": "markdownEditorFocus && activeCustomEditorId == 'vscode.markdown.editor'" },
 { "key": "ctrl+f",                "command": "markdown.editor.cursorRight",
                                      "when": "false" },
 { "key": "right",                 "command": "markdown.editor.cursorRight",
@@ -3388,12 +3394,10 @@
 // - workbench.action.chat.agentHost.signInToAgent
 // - workbench.action.chat.agentHost.signInToGitHubForAgent
 // - workbench.action.chat.agentHostNetworkDiagnostics
-// - workbench.action.chat.agentsHandoffTip.mute
-// - workbench.action.chat.agentsHandoffTip.open
 // - workbench.action.chat.agentsParallelWork.feedback
-// - workbench.action.chat.agentsParallelWork.ignore
 // - workbench.action.chat.agentsParallelWork.learnMore
-// - workbench.action.chat.agentsParallelWork.open
+// - workbench.action.chat.agentsWindowBanner.mute
+// - workbench.action.chat.agentsWindowBanner.open
 // - workbench.action.chat.applyCompareEdits
 // - workbench.action.chat.archiveAllAgentSessions
 // - workbench.action.chat.askInSideChat
@@ -3418,6 +3422,8 @@
 // - workbench.action.chat.configureDictationInstructions
 // - workbench.action.chat.configureTools
 // - workbench.action.chat.configureVoiceInstructions
+// - workbench.action.chat.connectMissionControlEnvironment
+// - workbench.action.chat.continueInCopilot
 // - workbench.action.chat.copyAll
 // - workbench.action.chat.copyCodeBlock
 // - workbench.action.chat.copyFinalResponse
@@ -3427,6 +3433,7 @@
 // - workbench.action.chat.createPlugin
 // - workbench.action.chat.debugAgentHostInDevTools
 // - workbench.action.chat.disablePromptCacheExpirationNotification
+// - workbench.action.chat.disableRemoteByokNotification
 // - workbench.action.chat.disableTips
 // - workbench.action.chat.discardCompareEdits
 // - workbench.action.chat.dismissTip
@@ -4109,7 +4116,6 @@
 // - workbench.actions.workbench.panel.markers.view.toggleExcludedFiles
 // - workbench.actions.workbench.panel.markers.view.toggleInfos
 // - workbench.actions.workbench.panel.markers.view.toggleWarnings
-// - workbench.actions.workbench.panel.output.clearFilterText
 // - workbench.actions.workbench.panel.output.toggle.debug
 // - workbench.actions.workbench.panel.output.toggle.error
 // - workbench.actions.workbench.panel.output.toggle.info
@@ -4428,10 +4434,6 @@
 // - workbench.view.voiceTranscripts.resetViewLocation
 // - workbench.view.voiceTranscriptsContainer
 // - workbench.view.voiceTranscriptsContainer.resetViewContainerLocation
-// - workbench.views.agentPlugins.default.marketplace.focus
-// - workbench.views.agentPlugins.default.marketplace.resetViewLocation
-// - workbench.views.agentPlugins.installed.focus
-// - workbench.views.agentPlugins.installed.resetViewLocation
 // - workbench.views.agentPlugins.marketplace.focus
 // - workbench.views.agentPlugins.marketplace.resetViewLocation
 // - workbench.views.editSessions.data.focus
@@ -4484,16 +4486,8 @@
 // - workbench.views.extensions.virtualUnsupportedExtensions.resetViewLocation
 // - workbench.views.extensions.workspaceRecommendations.focus
 // - workbench.views.extensions.workspaceRecommendations.resetViewLocation
-// - workbench.views.mcp.default.marketplace.focus
-// - workbench.views.mcp.default.marketplace.resetViewLocation
-// - workbench.views.mcp.default.welcomeView.focus
-// - workbench.views.mcp.default.welcomeView.resetViewLocation
-// - workbench.views.mcp.installed.focus
-// - workbench.views.mcp.installed.resetViewLocation
 // - workbench.views.mcp.marketplace.focus
 // - workbench.views.mcp.marketplace.resetViewLocation
-// - workbench.views.mcp.welcomeView.focus
-// - workbench.views.mcp.welcomeView.resetViewLocation
 // - workbench.views.sync.conflicts.focus
 // - workbench.views.sync.conflicts.resetViewLocation
 // - workbench.views.sync.externalActivity.focus
