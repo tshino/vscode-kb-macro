@@ -390,14 +390,6 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "chat.models.action.clearSearchResults"
-				},
-				"when": "kb-macro.active && isLinux && inModelsEditor && inModelsSearch"
-			},
-			{
-				"key": "escape",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "closeBreakpointWidget"
 				},
 				"when": "kb-macro.active && breakpointWidgetVisible && textInputFocus"
@@ -1347,14 +1339,6 @@
 				"key": "down",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "iconSelectBox.focusDown"
-				},
-				"when": "kb-macro.active && iconSelectBoxFocus"
-			},
-			{
-				"key": "down",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "interactive.history.next"
 				},
 				"when": "kb-macro.active && isCompositeNotebook && !notebookEditorFocused && !suggestWidgetVisible && interactiveInputCursorAtBoundary != 'none' && interactiveInputCursorAtBoundary != 'top'"
@@ -1751,14 +1735,6 @@
 				"key": "left",
 				"command": "kb-macro.wrap",
 				"args": {
-					"command": "iconSelectBox.focusPrevious"
-				},
-				"when": "kb-macro.active && iconSelectBoxFocus && iconSelectBoxInputEmpty || kb-macro.active && iconSelectBoxFocus && !iconSelectBoxInputFocus"
-			},
-			{
-				"key": "left",
-				"command": "kb-macro.wrap",
-				"args": {
 					"command": "list.collapse"
 				},
 				"when": "kb-macro.active && listFocus && treeElementCanCollapse && !inputFocus && !treestickyScrollFocused || kb-macro.active && listFocus && treeElementHasParent && !inputFocus && !treestickyScrollFocused"
@@ -2108,14 +2084,6 @@
 					"command": "breadcrumbs.focusNext"
 				},
 				"when": "kb-macro.active && breadcrumbsActive && breadcrumbsVisible"
-			},
-			{
-				"key": "right",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "iconSelectBox.focusNext"
-				},
-				"when": "kb-macro.active && iconSelectBoxFocus && iconSelectBoxInputEmpty || kb-macro.active && iconSelectBoxFocus && !iconSelectBoxInputFocus"
 			},
 			{
 				"key": "right",
@@ -2529,14 +2497,6 @@
 					"command": "history.showPrevious"
 				},
 				"when": "kb-macro.active && historyNavigationBackwardsEnabled && historyNavigationWidgetFocus && !suggestWidgetVisible"
-			},
-			{
-				"key": "up",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "iconSelectBox.focusUp"
-				},
-				"when": "kb-macro.active && iconSelectBoxFocus"
 			},
 			{
 				"key": "up",
@@ -4466,14 +4426,6 @@
 					"command": "breadcrumbs.selectFocused"
 				},
 				"when": "kb-macro.active && breadcrumbsActive && breadcrumbsVisible"
-			},
-			{
-				"key": "enter",
-				"command": "kb-macro.wrap",
-				"args": {
-					"command": "iconSelectBox.selectFocused"
-				},
-				"when": "kb-macro.active && iconSelectBoxFocus"
 			},
 			{
 				"key": "enter",
@@ -9060,7 +9012,7 @@
 				"args": {
 					"command": "workbench.action.chat.focusTip"
 				},
-				"when": "kb-macro.active && inChat || kb-macro.active && inChatComposer || kb-macro.active && inChat && inChatComposer || kb-macro.active && inChat && inChatTip || kb-macro.active && inChatComposer && inChatTip"
+				"when": "kb-macro.active && inChat || kb-macro.active && inChat && inChatTip"
 			},
 			{
 				"key": "ctrl+f9",
@@ -11177,6 +11129,22 @@
 					"command": "workbench.action.terminal.openDetectedLink"
 				},
 				"when": "kb-macro.active && accessibleViewIsShown && terminalHasBeenCreated && accessibleViewCurrentProviderId == 'terminal'"
+			},
+			{
+				"key": "shift+i",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "agentSession.markRead"
+				},
+				"when": "kb-macro.active && agentSessionsViewerFocused && listFocus && !inputFocus && !isSessionsWindow && !treestickyScrollFocused"
+			},
+			{
+				"key": "shift+u",
+				"command": "kb-macro.wrap",
+				"args": {
+					"command": "agentSession.markUnread"
+				},
+				"when": "kb-macro.active && agentSessionsViewerFocused && listFocus && !inputFocus && !isSessionsWindow && !treestickyScrollFocused"
 			},
 			{
 				"key": "alt+home alt+home",
