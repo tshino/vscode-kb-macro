@@ -390,6 +390,14 @@
 				"key": "escape",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "chat.models.action.clearSearchResults"
+				},
+				"when": "kb-macro.active && !isMac && inModelsEditor && inModelsSearch"
+			},
+			{
+				"key": "escape",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "closeBreakpointWidget"
 				},
 				"when": "kb-macro.active && breakpointWidgetVisible && textInputFocus"
@@ -2890,7 +2898,7 @@
 				"args": {
 					"command": "agentSession.archive"
 				},
-				"when": "kb-macro.active && agentSessionsViewerFocused && !agentSessionIsArchived && !agentSessionIsChild"
+				"when": "kb-macro.active && agentSessionChildCanArchive && agentSessionsViewerFocused && !agentSessionIsArchived || kb-macro.active && agentSessionsViewerFocused && !agentSessionIsArchived && !agentSessionIsChild"
 			},
 			{
 				"key": "delete",
@@ -4406,6 +4414,14 @@
 				"key": "enter",
 				"command": "kb-macro.wrap",
 				"args": {
+					"command": "workbench.action.chat.openInlineAttachment"
+				},
+				"when": "kb-macro.active && chatInputInlineAttachmentActive && chatIsEnabled && inChatInput"
+			},
+			{
+				"key": "enter",
+				"command": "kb-macro.wrap",
+				"args": {
 					"command": "acceptSelectedSuggestion",
 					"record": "side-effect"
 				},
@@ -5257,7 +5273,7 @@
 				"args": {
 					"command": "agentSession.unarchive"
 				},
-				"when": "kb-macro.active && agentSessionIsArchived && agentSessionsViewerFocused && !agentSessionIsChild"
+				"when": "kb-macro.active && agentSessionChildCanArchive && agentSessionIsArchived && agentSessionsViewerFocused || kb-macro.active && agentSessionIsArchived && agentSessionsViewerFocused && !agentSessionIsChild"
 			},
 			{
 				"key": "alt+cmd+backspace",
